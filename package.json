@@ -1,0 +1,55 @@
+{
+  "author": "Nicholas Jamieson <nicholas@cartant.com>",
+  "bugs": {
+    "url": "https://github.com/cartant/eslint-plugin-rxjs/issues"
+  },
+  "dependencies": {
+    "requireindex": "~1.2.0",
+    "tslib": "^1.8.0",
+    "tsutils": "^3.0.0",
+    "tsutils-etc": "^1.0.0"
+  },
+  "description": "RxJS rules for ESLint",
+  "devDependencies": {
+    "@types/eslint": "^4.16.6",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^10.0.0",
+    "eslint": "^5.14.1",
+    "mocha": "^6.0.1",
+    "rimraf": "^2.6.1",
+    "ts-node": "^8.0.2",
+    "tslint": "^5.1.0",
+    "typescript": "~3.3.1"
+  },
+  "homepage": "https://github.com/cartant/eslint-plugin-rxjs",
+  "keywords": [
+    "lint",
+    "rules",
+    "eslint"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "name": "eslint-plugin-rxjs",
+  "optionalDependencies": {},
+  "peerDependencies": {
+    "eslint": "^5.0.0",
+    "typescript": "^3.0.0"
+  },
+  "private": false,
+  "publishConfig": {
+    "tag": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cartant/eslint-plugin-rxjs.git"
+  },
+  "scripts": {
+    "dist": "yarn run lint && yarn run dist:build",
+    "dist:build": "yarn run dist:clean && tsc -p tsconfig-dist.json",
+    "dist:clean": "rimraf dist",
+    "lint": "tslint --project tsconfig.json source/**/*.ts",
+    "prepublishOnly": "yarn run test && yarn run dist",
+    "test": "mocha -r ts-node/register tests/**/*.ts"
+  },
+  "version": "0.0.0"
+}
