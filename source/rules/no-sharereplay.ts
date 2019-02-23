@@ -5,7 +5,7 @@
 
 import { Rule } from "eslint";
 
-export const rule: Rule.RuleModule = {
+const rule: Rule.RuleModule = {
     meta: {
         docs: {
             category: "Fill me in",
@@ -37,3 +37,5 @@ export const rule: Rule.RuleModule = {
         };
     }
 };
+
+export = rule;

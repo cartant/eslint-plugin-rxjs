@@ -4,16 +4,16 @@
  */
 
 import { RuleTester } from "eslint";
-import { rule } from "../../source/rules/no-sharereplay";
+import rule = require("../../source/rules/no-sharereplay");
 
 const ruleTester = new RuleTester();
-ruleTester.run("test", rule, {
+ruleTester.run("no-sharereplay", rule, {
     valid: [
         // give me some code that won't trigger a warning
     ],
     invalid: [
         {
-            code: "/*test*/",
+            code: "/*no-sharereplay*/",
             errors: [{
                 message: "Fill me in.",
                 type: "Me too"
