@@ -60,7 +60,7 @@ ruleTester.run("no-sharereplay", rule, {
             line: 3,
             messageId: "forbidden"
         }]
-    }, , {
+    }, {
         code: `
             const shared = of(42).pipe(
                 shareReplay(1, 100)
