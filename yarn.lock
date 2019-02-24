@@ -16,6 +16,10 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
+"@cartant/tslint-config@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@cartant/tslint-config/-/tslint-config-1.0.1.tgz#c542a8d2fa5dd87e292267a0521694eb4fd56894"
+
 "@types/eslint@^4.16.6":
   version "4.16.6"
   resolved "https://registry.yarnpkg.com/@types/eslint/-/eslint-4.16.6.tgz#96d4ecddbea618ab0b55eaf0dffedf387129b06c"
