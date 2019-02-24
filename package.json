@@ -47,7 +47,9 @@
     "dist": "yarn run lint && yarn run dist:build",
     "dist:build": "yarn run dist:clean && tsc -p tsconfig-dist.json",
     "dist:clean": "rimraf dist",
-    "lint": "tslint --project tsconfig.json source/**/*.ts",
+    "lint": "yarn run lint:source && yarn run lint:tests",
+    "lint:source": "tslint --project tsconfig.json source/**/*.ts",
+    "lint:tests": "tslint --project tsconfig.json tests/**/*.ts",
     "prepublishOnly": "yarn run test && yarn run dist",
     "test": "mocha -r ts-node/register tests/**/*.ts"
   },
