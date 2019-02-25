@@ -1,5 +1,8 @@
 {
-  "extends": "@cartant/tslint-config",
+  "extends": [
+    "@cartant/tslint-config",
+    "@cartant/tslint-config-etc"
+  ],
   "rules": {
     "object-literal-sort-keys": { "severity": "off" }
   }
