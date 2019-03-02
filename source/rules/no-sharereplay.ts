@@ -4,7 +4,7 @@
  */
 
 import { Rule } from "eslint";
-import * as ESTree from "estree";
+import * as es from "estree";
 
 const rule: Rule.RuleModule = {
     meta: {
@@ -29,12 +29,12 @@ const rule: Rule.RuleModule = {
         const [config] = context.options;
         const { allowConfig = false } = config || {};
         const sourceCode = context.getSourceCode();
-        function isShareReplayCall(node: ESTree.CallExpression): boolean {
+        function isShareReplayCall(node: es.CallExpression): boolean {
             const { callee } = node;
             return (callee.type === "Identifier") && (sourceCode.getText(callee) === "shareReplay");
         }
         return {
-            CallExpression: (node: ESTree.CallExpression) => {
+            CallExpression: (node: es.CallExpression) => {
                 if (isShareReplayCall(node)) {
                     let report = true;
                     if (allowConfig) {

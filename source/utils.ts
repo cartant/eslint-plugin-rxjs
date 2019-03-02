@@ -4,11 +4,11 @@
  */
 
 import { Rule } from "eslint";
-import * as ESTree from "estree";
+import * as es from "estree";
 import * as ts from "typescript";
 
 export function getParserServices(context: Rule.RuleContext): {
-    esTreeNodeToTSNodeMap: Map<ESTree.Node, ts.Node>,
+    esTreeNodeToTSNodeMap: Map<es.Node, ts.Node>,
     program: ts.Program
 } {
     if (

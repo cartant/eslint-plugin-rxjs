@@ -4,7 +4,7 @@
  */
 
 import { Rule } from "eslint";
-import * as ESTree from "estree";
+import * as es from "estree";
 import { couldBeFunction } from "tsutils-etc";
 import * as ts from "typescript";
 import { getParserServices } from "../utils";
@@ -25,11 +25,11 @@ const rule: Rule.RuleModule = {
         const service = getParserServices(context);
         const typeChecker = service.program.getTypeChecker();
         const sourceCode = context.getSourceCode();
-        function isConnectableCall(callee: ESTree.CallExpression["callee"]): boolean {
+        function isConnectableCall(callee: es.CallExpression["callee"]): boolean {
             return (callee.type === "Identifier") && /(multicast|publish|publishBehavior|publishLast|publishReplay)/.test(sourceCode.getText(callee));
         }
         return {
-            CallExpression: (node: ESTree.CallExpression) => {
+            CallExpression: (node: es.CallExpression) => {
                 const { callee } = node;
                 if (isConnectableCall(callee)) {
                     let report = false;
