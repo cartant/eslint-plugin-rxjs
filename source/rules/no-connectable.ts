@@ -23,6 +23,7 @@ const rule: Rule.RuleModule = {
     },
     create: context => {
         const service = getParserServices(context);
+        const nodeMap = service.esTreeNodeToTSNodeMap;
         const typeChecker = service.program.getTypeChecker();
         const sourceCode = context.getSourceCode();
         function isConnectableCall(callee: es.CallExpression["callee"]): boolean {
@@ -36,7 +37,7 @@ const rule: Rule.RuleModule = {
                     if (sourceCode.getText(callee) === "multicast") {
                         report = node.arguments.length === 1;
                     } else {
-                        const callExpression = service.esTreeNodeToTSNodeMap.get(node) as ts.CallExpression;
+                        const callExpression = nodeMap.get(node) as ts.CallExpression;
                         report = !callExpression.arguments.some(arg => {
                             const type = typeChecker.getTypeAtLocation(arg);
                             return couldBeFunction(type);
