@@ -10,7 +10,7 @@ import rule = require("../../source/rules/no-connectable");
 const ruleTester = new RuleTester({
     parser: "@typescript-eslint/parser",
     parserOptions: {
-        project: path.join(process.cwd(), "tests/tsconfig.json")
+        project: path.join(__dirname, "../tsconfig.json")
     }
 });
 ruleTester.run("no-connectable", rule, {
