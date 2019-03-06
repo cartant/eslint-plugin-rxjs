@@ -15,3 +15,7 @@ export const configWithTypes = {
         project: path.join(__dirname, "./tsconfig.json")
     }
 };
+
+export function lines(...lines: string[]): string {
+    return lines.join("\n");
+}

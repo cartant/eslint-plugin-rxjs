@@ -5,105 +5,105 @@
 
 import { RuleTester } from "eslint";
 import rule = require("../../source/rules/no-sharereplay");
-import { configWithoutTypes } from "../config";
+import { configWithoutTypes, lines } from "../utils";
 
 const ruleTester = new RuleTester({
     ...configWithoutTypes
 });
 ruleTester.run("no-sharereplay", rule, {
     valid: [{
-        code: `
-            const shared = of(42).pipe(
-                shareReplay({ refCount: true })
-            );
-        `,
+        code: lines(
+            "const shared = of(42).pipe(",
+            "    shareReplay({ refCount: true })",
+            ");"
+        ),
         options: [{ allowConfig: true }]
     }, {
-        code: `
-            const shared = of(42).pipe(
-                shareReplay({ refCount: false })
-            );
-        `,
+        code: lines(
+            "const shared = of(42).pipe(",
+            "    shareReplay({ refCount: false })",
+            ");"
+        ),
         options: [{ allowConfig: true }]
     }],
     invalid: [{
-        code: `
-            const shared = of(42).pipe(
-                shareReplay()
-            );
-        `,
+        code: lines(
+            "const shared = of(42).pipe(",
+            "    shareReplay()",
+            ");"
+        ),
         errors: [{
-            column: 17,
-            line: 3,
-            messageId: "forbidden"
+            messageId: "forbidden",
+            line: 2,
+            column: 5
         }]
     }, {
-        code: `
-            const shared = of(42).pipe(
-                shareReplay()
-            );
-        `,
+        code: lines(
+            "const shared = of(42).pipe(",
+            "    shareReplay()",
+            ");"
+        ),
         errors: [{
-            column: 17,
-            line: 3,
-            messageId: "forbiddenWithoutConfig"
+            messageId: "forbiddenWithoutConfig",
+            line: 2,
+            column: 5
         }],
         options: [{ allowConfig: true }]
     }, {
-        code: `
-            const shared = of(42).pipe(
-                shareReplay(1)
-            );
-        `,
+        code: lines(
+            "const shared = of(42).pipe(",
+            "    shareReplay(1)",
+            ");"
+        ),
         errors: [{
-            column: 17,
-            line: 3,
-            messageId: "forbidden"
+            messageId: "forbidden",
+            line: 2,
+            column: 5
         }]
     }, {
-        code: `
-            const shared = of(42).pipe(
-                shareReplay(1, 100)
-            );
-        `,
+        code: lines(
+            "const shared = of(42).pipe(",
+            "    shareReplay(1, 100)",
+            ");"
+        ),
         errors: [{
-            column: 17,
-            line: 3,
-            messageId: "forbidden"
+            messageId: "forbidden",
+            line: 2,
+            column: 5
         }]
     }, {
-        code: `
-            const shared = of(42).pipe(
-                shareReplay(1, 100, asapScheduler)
-            );
-        `,
+        code: lines(
+            "const shared = of(42).pipe(",
+            "    shareReplay(1, 100, asapScheduler)",
+            ");"
+        ),
         errors: [{
-            column: 17,
-            line: 3,
-            messageId: "forbidden"
+            messageId: "forbidden",
+            line: 2,
+            column: 5
         }]
     }, {
-        code: `
-            const shared = of(42).pipe(
-                shareReplay({ refCount: true })
-            );
-        `,
+        code: lines(
+            "const shared = of(42).pipe(",
+            "    shareReplay({ refCount: true })",
+            ");"
+        ),
         errors: [{
-            column: 17,
-            line: 3,
-            messageId: "forbidden"
+            messageId: "forbidden",
+            line: 2,
+            column: 5
         }],
         options: [{ allowConfig: false }]
     }, {
-        code: `
-            const shared = of(42).pipe(
-                shareReplay({ refCount: false })
-            );
-        `,
+        code: lines(
+            "const shared = of(42).pipe(",
+            "    shareReplay({ refCount: false })",
+            ");"
+        ),
         errors: [{
-            column: 17,
-            line: 3,
-            messageId: "forbidden"
+            messageId: "forbidden",
+            line: 2,
+            column: 5
         }],
         options: [{ allowConfig: false }]
     }]
