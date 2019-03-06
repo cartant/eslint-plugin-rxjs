@@ -29,13 +29,13 @@ const rule: Rule.RuleModule = {
         const [config] = context.options;
         const { allowConfig = false } = config || {};
         const sourceCode = context.getSourceCode();
-        function isShareReplayCall(node: es.CallExpression): boolean {
-            const { callee } = node;
+        function isShareReplayCall(callee: es.CallExpression["callee"]): boolean {
             return (callee.type === "Identifier") && (sourceCode.getText(callee) === "shareReplay");
         }
         return {
             CallExpression: (node: es.CallExpression) => {
-                if (isShareReplayCall(node)) {
+                const { callee } = node;
+                if (isShareReplayCall(callee)) {
                     let report = true;
                     if (allowConfig) {
                         report = (node.arguments.length !== 1) || (node.arguments[0].type !== "ObjectExpression");
@@ -45,7 +45,7 @@ const rule: Rule.RuleModule = {
                             messageId: allowConfig
                                 ? "forbiddenWithoutConfig"
                                 : "forbidden",
-                            node
+                            node: callee
                         });
                     }
                 }

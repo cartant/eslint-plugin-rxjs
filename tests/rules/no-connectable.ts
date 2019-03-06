@@ -52,7 +52,9 @@ ruleTester.run("no-connectable", rule, {
         errors: [{
             messageId: "forbidden",
             line: 2,
-            column: 5
+            column: 5,
+            endLine: 2,
+            endColumn: 12
         }]
     }, {
         code: lines(
@@ -63,7 +65,9 @@ ruleTester.run("no-connectable", rule, {
         errors: [{
             messageId: "forbidden",
             line: 2,
-            column: 5
+            column: 5,
+            endLine: 2,
+            endColumn: 20
         }]
     }, {
         code: lines(
@@ -74,7 +78,9 @@ ruleTester.run("no-connectable", rule, {
         errors: [{
             messageId: "forbidden",
             line: 2,
-            column: 5
+            column: 5,
+            endLine: 2,
+            endColumn: 16
         }]
     }, {
         code: lines(
@@ -85,7 +91,9 @@ ruleTester.run("no-connectable", rule, {
         errors: [{
             messageId: "forbidden",
             line: 2,
-            column: 5
+            column: 5,
+            endLine: 2,
+            endColumn: 18
         }]
     }, {
         code: lines(
@@ -96,7 +104,9 @@ ruleTester.run("no-connectable", rule, {
         errors: [{
             messageId: "forbidden",
             line: 2,
-            column: 5
+            column: 5,
+            endLine: 2,
+            endColumn: 14
         }]
     }, {
         code: lines(
@@ -107,7 +117,9 @@ ruleTester.run("no-connectable", rule, {
         errors: [{
             messageId: "forbidden",
             line: 2,
-            column: 5
+            column: 5,
+            endLine: 2,
+            endColumn: 14
         }]
     }]
 });

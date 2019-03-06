@@ -35,7 +35,9 @@ ruleTester.run("no-sharereplay", rule, {
         errors: [{
             messageId: "forbidden",
             line: 2,
-            column: 5
+            column: 5,
+            endLine: 2,
+            endColumn: 16
         }]
     }, {
         code: lines(
@@ -46,7 +48,9 @@ ruleTester.run("no-sharereplay", rule, {
         errors: [{
             messageId: "forbiddenWithoutConfig",
             line: 2,
-            column: 5
+            column: 5,
+            endLine: 2,
+            endColumn: 16
         }],
         options: [{ allowConfig: true }]
     }, {
@@ -58,7 +62,9 @@ ruleTester.run("no-sharereplay", rule, {
         errors: [{
             messageId: "forbidden",
             line: 2,
-            column: 5
+            column: 5,
+            endLine: 2,
+            endColumn: 16
         }]
     }, {
         code: lines(
@@ -69,7 +75,9 @@ ruleTester.run("no-sharereplay", rule, {
         errors: [{
             messageId: "forbidden",
             line: 2,
-            column: 5
+            column: 5,
+            endLine: 2,
+            endColumn: 16
         }]
     }, {
         code: lines(
@@ -80,7 +88,9 @@ ruleTester.run("no-sharereplay", rule, {
         errors: [{
             messageId: "forbidden",
             line: 2,
-            column: 5
+            column: 5,
+            endLine: 2,
+            endColumn: 16
         }]
     }, {
         code: lines(
@@ -91,7 +101,9 @@ ruleTester.run("no-sharereplay", rule, {
         errors: [{
             messageId: "forbidden",
             line: 2,
-            column: 5
+            column: 5,
+            endLine: 2,
+            endColumn: 16
         }],
         options: [{ allowConfig: false }]
     }, {
@@ -103,7 +115,9 @@ ruleTester.run("no-sharereplay", rule, {
         errors: [{
             messageId: "forbidden",
             line: 2,
-            column: 5
+            column: 5,
+            endLine: 2,
+            endColumn: 16
         }],
         options: [{ allowConfig: false }]
     }]
