@@ -4,14 +4,11 @@
  */
 
 import { RuleTester } from "eslint";
-import path = require("path");
 import rule = require("../../source/rules/no-connectable");
+import { configWithTypes } from "../config";
 
 const ruleTester = new RuleTester({
-    parser: "@typescript-eslint/parser",
-    parserOptions: {
-        project: path.join(__dirname, "../tsconfig.json")
-    }
+    ...configWithTypes
 });
 ruleTester.run("no-connectable", rule, {
     valid: [{

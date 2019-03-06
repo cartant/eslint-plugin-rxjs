@@ -5,9 +5,10 @@
 
 import { RuleTester } from "eslint";
 import rule = require("../../source/rules/no-sharereplay");
+import { configWithoutTypes } from "../config";
 
 const ruleTester = new RuleTester({
-    parserOptions: { ecmaVersion: 6 }
+    ...configWithoutTypes
 });
 ruleTester.run("no-sharereplay", rule, {
     valid: [{
