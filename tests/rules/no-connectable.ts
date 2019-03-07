@@ -13,18 +13,24 @@ const ruleTester = new RuleTester({
 ruleTester.run("no-connectable", rule, {
     valid: [{
         code: lines(
+            "import { of, Subject } from 'rxjs';",
+            "import { multicast } from 'rxjs/operators';",
             "const result = of(42).pipe(",
             "    multicast(new Subject(), p => p)",
             ");"
         )
     }, {
         code: lines(
+            "import { of, Subject } from 'rxjs';",
+            "import { multicast } from 'rxjs/operators';",
             "const result = of(42).pipe(",
             "    multicast(() => new Subject(), p => p)",
             ");"
         )
     }, {
         code: lines(
+            "import { of, Subject } from 'rxjs';",
+            "import { multicast } from 'rxjs/operators';",
             "const selector = p => p;",
             "const result = of(42).pipe(",
             "    multicast(() => new Subject(), selector)",
@@ -32,12 +38,16 @@ ruleTester.run("no-connectable", rule, {
         )
     }, {
         code: lines(
+            "import { of, Subject } from 'rxjs';",
+            "import { multicast } from 'rxjs/operators';",
             "const result = of(42).pipe(",
             "    publish(p => p)",
             ");"
         )
     }, {
         code: lines(
+            "import { of, Subject } from 'rxjs';",
+            "import { publishReplay } from 'rxjs/operators';",
             "const result = of(42).pipe(",
             "    publishReplay(1, p => p)",
             ");"
@@ -45,80 +55,92 @@ ruleTester.run("no-connectable", rule, {
     }],
     invalid: [{
         code: lines(
+            "import { of, Subject } from 'rxjs';",
+            "import { publish } from 'rxjs/operators';",
             "const result = of(42).pipe(",
             "    publish()",
             ");"
         ),
         errors: [{
             messageId: "forbidden",
-            line: 2,
+            line: 4,
             column: 5,
-            endLine: 2,
+            endLine: 4,
             endColumn: 12
         }]
     }, {
         code: lines(
+            "import { of, Subject } from 'rxjs';",
+            "import { publishBehavior } from 'rxjs/operators';",
             "const result = of(42).pipe(",
             "    publishBehavior(1)",
             ");"
         ),
         errors: [{
             messageId: "forbidden",
-            line: 2,
+            line: 4,
             column: 5,
-            endLine: 2,
+            endLine: 4,
             endColumn: 20
         }]
     }, {
         code: lines(
+            "import { of, Subject } from 'rxjs';",
+            "import { publishLast } from 'rxjs/operators';",
             "const result = of(42).pipe(",
             "    publishLast()",
             ");"
         ),
         errors: [{
             messageId: "forbidden",
-            line: 2,
+            line: 4,
             column: 5,
-            endLine: 2,
+            endLine: 4,
             endColumn: 16
         }]
     }, {
         code: lines(
+            "import { of, Subject } from 'rxjs';",
+            "import { publishReplay } from 'rxjs/operators';",
             "const result = of(42).pipe(",
             "    publishReplay(1)",
             ");"
         ),
         errors: [{
             messageId: "forbidden",
-            line: 2,
+            line: 4,
             column: 5,
-            endLine: 2,
+            endLine: 4,
             endColumn: 18
         }]
     }, {
         code: lines(
+            "import { of, Subject } from 'rxjs';",
+            "import { multicast } from 'rxjs/operators';",
             "const result = of(42).pipe(",
             "    multicast(new Subject<number>())",
             ");"
         ),
         errors: [{
             messageId: "forbidden",
-            line: 2,
+            line: 4,
             column: 5,
-            endLine: 2,
+            endLine: 4,
             endColumn: 14
         }]
     }, {
         code: lines(
+            "import { of, Subject } from 'rxjs';",
+            "import { multicast } from 'rxjs/operators';",
             "const result = of(42).pipe(",
             "    multicast(() => new Subject<number>())",
             ");"
         ),
         errors: [{
             messageId: "forbidden",
-            line: 2,
+            line: 4,
             column: 5,
-            endLine: 2,
+            endLine: 4,
             endColumn: 14
         }]
     }]

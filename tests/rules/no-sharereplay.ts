@@ -45,14 +45,14 @@ ruleTester.run("no-sharereplay", rule, {
             "    shareReplay()",
             ");"
         ),
+        options: [{ allowConfig: true }],
         errors: [{
             messageId: "forbiddenWithoutConfig",
             line: 2,
             column: 5,
             endLine: 2,
             endColumn: 16
-        }],
-        options: [{ allowConfig: true }]
+        }]
     }, {
         code: lines(
             "const shared = of(42).pipe(",
@@ -98,27 +98,27 @@ ruleTester.run("no-sharereplay", rule, {
             "    shareReplay({ refCount: true })",
             ");"
         ),
+        options: [{ allowConfig: false }],
         errors: [{
             messageId: "forbidden",
             line: 2,
             column: 5,
             endLine: 2,
             endColumn: 16
-        }],
-        options: [{ allowConfig: false }]
+        }]
     }, {
         code: lines(
             "const shared = of(42).pipe(",
             "    shareReplay({ refCount: false })",
             ");"
         ),
+        options: [{ allowConfig: false }],
         errors: [{
             messageId: "forbidden",
             line: 2,
             column: 5,
             endLine: 2,
             endColumn: 16
-        }],
-        options: [{ allowConfig: false }]
+        }]
     }]
 });
