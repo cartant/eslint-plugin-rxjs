@@ -44,9 +44,6 @@
     "eslint": "^5.0.0",
     "typescript": "^3.0.0"
   },
-  "prettier": {
-    "tabWidth": 2
-  },
   "private": false,
   "publishConfig": {
     "tag": "latest"
