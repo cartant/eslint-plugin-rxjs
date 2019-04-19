@@ -8,117 +8,130 @@ import rule = require("../../source/rules/no-sharereplay");
 import { configWithoutTypes, lines } from "../utils";
 
 const ruleTester = new RuleTester({
-    ...configWithoutTypes
+  ...configWithoutTypes
 });
 ruleTester.run("no-sharereplay", rule, {
-    valid: [{
-        code: lines(
-            "const shared = of(42).pipe(",
-            "    shareReplay({ refCount: true })",
-            ");"
-        ),
-        options: [{ allowConfig: true }]
-    }, {
-        code: lines(
-            "const shared = of(42).pipe(",
-            "    shareReplay({ refCount: false })",
-            ");"
-        ),
-        options: [{ allowConfig: true }]
-    }],
-    invalid: [{
-        code: lines(
-            "const shared = of(42).pipe(",
-            "    shareReplay()",
-            ");"
-        ),
-        errors: [{
-            messageId: "forbidden",
-            line: 2,
-            column: 5,
-            endLine: 2,
-            endColumn: 16
-        }]
-    }, {
-        code: lines(
-            "const shared = of(42).pipe(",
-            "    shareReplay()",
-            ");"
-        ),
-        options: [{ allowConfig: true }],
-        errors: [{
-            messageId: "forbiddenWithoutConfig",
-            line: 2,
-            column: 5,
-            endLine: 2,
-            endColumn: 16
-        }]
-    }, {
-        code: lines(
-            "const shared = of(42).pipe(",
-            "    shareReplay(1)",
-            ");"
-        ),
-        errors: [{
-            messageId: "forbidden",
-            line: 2,
-            column: 5,
-            endLine: 2,
-            endColumn: 16
-        }]
-    }, {
-        code: lines(
-            "const shared = of(42).pipe(",
-            "    shareReplay(1, 100)",
-            ");"
-        ),
-        errors: [{
-            messageId: "forbidden",
-            line: 2,
-            column: 5,
-            endLine: 2,
-            endColumn: 16
-        }]
-    }, {
-        code: lines(
-            "const shared = of(42).pipe(",
-            "    shareReplay(1, 100, asapScheduler)",
-            ");"
-        ),
-        errors: [{
-            messageId: "forbidden",
-            line: 2,
-            column: 5,
-            endLine: 2,
-            endColumn: 16
-        }]
-    }, {
-        code: lines(
-            "const shared = of(42).pipe(",
-            "    shareReplay({ refCount: true })",
-            ");"
-        ),
-        options: [{ allowConfig: false }],
-        errors: [{
-            messageId: "forbidden",
-            line: 2,
-            column: 5,
-            endLine: 2,
-            endColumn: 16
-        }]
-    }, {
-        code: lines(
-            "const shared = of(42).pipe(",
-            "    shareReplay({ refCount: false })",
-            ");"
-        ),
-        options: [{ allowConfig: false }],
-        errors: [{
-            messageId: "forbidden",
-            line: 2,
-            column: 5,
-            endLine: 2,
-            endColumn: 16
-        }]
-    }]
+  valid: [
+    {
+      code: lines(
+        "const shared = of(42).pipe(",
+        "    shareReplay({ refCount: true })",
+        ");"
+      ),
+      options: [{ allowConfig: true }]
+    },
+    {
+      code: lines(
+        "const shared = of(42).pipe(",
+        "    shareReplay({ refCount: false })",
+        ");"
+      ),
+      options: [{ allowConfig: true }]
+    }
+  ],
+  invalid: [
+    {
+      code: lines("const shared = of(42).pipe(", "    shareReplay()", ");"),
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 2,
+          column: 5,
+          endLine: 2,
+          endColumn: 16
+        }
+      ]
+    },
+    {
+      code: lines("const shared = of(42).pipe(", "    shareReplay()", ");"),
+      options: [{ allowConfig: true }],
+      errors: [
+        {
+          messageId: "forbiddenWithoutConfig",
+          line: 2,
+          column: 5,
+          endLine: 2,
+          endColumn: 16
+        }
+      ]
+    },
+    {
+      code: lines("const shared = of(42).pipe(", "    shareReplay(1)", ");"),
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 2,
+          column: 5,
+          endLine: 2,
+          endColumn: 16
+        }
+      ]
+    },
+    {
+      code: lines(
+        "const shared = of(42).pipe(",
+        "    shareReplay(1, 100)",
+        ");"
+      ),
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 2,
+          column: 5,
+          endLine: 2,
+          endColumn: 16
+        }
+      ]
+    },
+    {
+      code: lines(
+        "const shared = of(42).pipe(",
+        "    shareReplay(1, 100, asapScheduler)",
+        ");"
+      ),
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 2,
+          column: 5,
+          endLine: 2,
+          endColumn: 16
+        }
+      ]
+    },
+    {
+      code: lines(
+        "const shared = of(42).pipe(",
+        "    shareReplay({ refCount: true })",
+        ");"
+      ),
+      options: [{ allowConfig: false }],
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 2,
+          column: 5,
+          endLine: 2,
+          endColumn: 16
+        }
+      ]
+    },
+    {
+      code: lines(
+        "const shared = of(42).pipe(",
+        "    shareReplay({ refCount: false })",
+        ");"
+      ),
+      options: [{ allowConfig: false }],
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 2,
+          column: 5,
+          endLine: 2,
+          endColumn: 16
+        }
+      ]
+    }
+  ]
 });

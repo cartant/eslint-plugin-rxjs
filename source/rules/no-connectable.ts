@@ -10,49 +10,54 @@ import * as ts from "typescript";
 import { getParserServices } from "../utils";
 
 const rule: Rule.RuleModule = {
-    meta: {
-        docs: {
-            category: "RxJS",
-            description: "Disallows operators that return connectable observables.",
-            recommended: true
-        },
-        fixable: null,
-        messages: {
-            forbidden: "Connectable observables are forbidden."
-        }
+  meta: {
+    docs: {
+      category: "RxJS",
+      description: "Disallows operators that return connectable observables.",
+      recommended: true
     },
-    create: context => {
-        const service = getParserServices(context);
-        const nodeMap = service.esTreeNodeToTSNodeMap;
-        const typeChecker = service.program.getTypeChecker();
-        const sourceCode = context.getSourceCode();
-        function isConnectableCall(callee: es.CallExpression["callee"]): boolean {
-            return (callee.type === "Identifier") && /(multicast|publish|publishBehavior|publishLast|publishReplay)/.test(sourceCode.getText(callee));
-        }
-        return {
-            CallExpression: (node: es.CallExpression) => {
-                const { callee } = node;
-                if (isConnectableCall(callee)) {
-                    let report = false;
-                    if (sourceCode.getText(callee) === "multicast") {
-                        report = node.arguments.length === 1;
-                    } else {
-                        const callExpression = nodeMap.get(node) as ts.CallExpression;
-                        report = !callExpression.arguments.some(arg => {
-                            const type = typeChecker.getTypeAtLocation(arg);
-                            return couldBeFunction(type);
-                        });
-                    }
-                    if (report) {
-                        context.report({
-                            messageId: "forbidden",
-                            node: callee
-                        });
-                    }
-                }
-            }
-        };
+    fixable: null,
+    messages: {
+      forbidden: "Connectable observables are forbidden."
     }
+  },
+  create: context => {
+    const service = getParserServices(context);
+    const nodeMap = service.esTreeNodeToTSNodeMap;
+    const typeChecker = service.program.getTypeChecker();
+    const sourceCode = context.getSourceCode();
+    function isConnectableCall(callee: es.CallExpression["callee"]): boolean {
+      return (
+        callee.type === "Identifier" &&
+        /(multicast|publish|publishBehavior|publishLast|publishReplay)/.test(
+          sourceCode.getText(callee)
+        )
+      );
+    }
+    return {
+      CallExpression: (node: es.CallExpression) => {
+        const { callee } = node;
+        if (isConnectableCall(callee)) {
+          let report = false;
+          if (sourceCode.getText(callee) === "multicast") {
+            report = node.arguments.length === 1;
+          } else {
+            const callExpression = nodeMap.get(node) as ts.CallExpression;
+            report = !callExpression.arguments.some(arg => {
+              const type = typeChecker.getTypeAtLocation(arg);
+              return couldBeFunction(type);
+            });
+          }
+          if (report) {
+            context.report({
+              messageId: "forbidden",
+              node: callee
+            });
+          }
+        }
+      }
+    };
+  }
 };
 
 export = rule;

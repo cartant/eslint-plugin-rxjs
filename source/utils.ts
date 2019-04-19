@@ -7,16 +7,20 @@ import { Rule } from "eslint";
 import * as es from "estree";
 import * as ts from "typescript";
 
-export function getParserServices(context: Rule.RuleContext): {
-    esTreeNodeToTSNodeMap: Map<es.Node, ts.Node>,
-    program: ts.Program
+export function getParserServices(
+  context: Rule.RuleContext
+): {
+  esTreeNodeToTSNodeMap: Map<es.Node, ts.Node>;
+  program: ts.Program;
 } {
-    if (
-        !context.parserServices ||
-        !context.parserServices.program ||
-        !context.parserServices.esTreeNodeToTSNodeMap
-    ) {
-        throw new Error("This rule requires you to use `@typescript-eslint/parser` and to specify a `project` in `parserOptions`.");
-    }
-    return context.parserServices;
+  if (
+    !context.parserServices ||
+    !context.parserServices.program ||
+    !context.parserServices.esTreeNodeToTSNodeMap
+  ) {
+    throw new Error(
+      "This rule requires you to use `@typescript-eslint/parser` and to specify a `project` in `parserOptions`."
+    );
+  }
+  return context.parserServices;
 }

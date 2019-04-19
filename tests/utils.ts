@@ -6,22 +6,22 @@
 import path = require("path");
 
 export const configWithoutTypes = {
-    parser: "@typescript-eslint/parser",
-    parserOptions: {
-        ecmaVersion: 6,
-        sourceType: "module"
-    }
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaVersion: 6,
+    sourceType: "module"
+  }
 };
 
 export const configWithTypes = {
-    parser: "@typescript-eslint/parser",
-    parserOptions: {
-        ecmaVersion: 6,
-        project: path.join(__dirname, "./tsconfig.json"),
-        sourceType: "module"
-    }
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaVersion: 6,
+    project: path.join(__dirname, "./tsconfig.json"),
+    sourceType: "module"
+  }
 };
 
 export function lines(...lines: string[]): string {
-    return lines.join("\n");
+  return lines.join("\n");
 }
