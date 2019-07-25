@@ -5,8 +5,13 @@
 
 import path = require("path");
 
+const parser = path.resolve(
+  __dirname,
+  "../node_modules/@typescript-eslint/parser"
+);
+
 export const configWithoutTypes = {
-  parser: "@typescript-eslint/parser",
+  parser,
   parserOptions: {
     ecmaVersion: 6,
     sourceType: "module"
@@ -14,7 +19,7 @@ export const configWithoutTypes = {
 };
 
 export const configWithTypes = {
-  parser: "@typescript-eslint/parser",
+  parser,
   parserOptions: {
     ecmaVersion: 6,
     project: path.join(__dirname, "./tsconfig.json"),
