@@ -11,21 +11,21 @@
   },
   "description": "RxJS rules for ESLint",
   "devDependencies": {
-    "@cartant/tslint-config": "^1.0.1",
-    "@cartant/tslint-config-etc": "^1.0.1",
+    "@cartant/tslint-config": "^2.0.0",
+    "@cartant/tslint-config-etc": "^2.0.0",
     "@types/eslint": "^4.16.6",
     "@types/mocha": "^5.2.6",
-    "@types/node": "^11.0.0",
+    "@types/node": "^12.0.0",
     "@typescript-eslint/parser": "^1.4.2",
     "eslint": "^5.14.1",
-    "husky": "^1.3.1",
-    "lint-staged": "^8.1.5",
+    "husky": "^3.0.0",
+    "lint-staged": "^9.0.0",
     "mocha": "^6.0.1",
     "prettier": "^1.17.0",
     "rimraf": "^2.6.1",
     "ts-node": "^8.0.2",
     "tslint": "^5.1.0",
-    "typescript": "~3.4.1"
+    "typescript": "~3.5.3"
   },
   "homepage": "https://github.com/cartant/eslint-plugin-rxjs",
   "husky": {
@@ -40,7 +40,10 @@
   ],
   "license": "MIT",
   "lint-staged": {
-    "*.{js,ts}": ["prettier --write", "git add"]
+    "*.{js,ts}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "main": "./dist/index.js",
   "name": "eslint-plugin-rxjs",
