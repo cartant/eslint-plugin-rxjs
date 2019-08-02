@@ -3,9 +3,10 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
+import { stripIndent } from "common-tags";
 import { RuleTester } from "eslint";
 import rule = require("../../source/rules/no-sharereplay");
-import { configWithoutTypes, lines } from "../utils";
+import { configWithoutTypes } from "../utils";
 
 const ruleTester = new RuleTester({
   ...configWithoutTypes
@@ -13,123 +14,126 @@ const ruleTester = new RuleTester({
 ruleTester.run("no-sharereplay", rule, {
   valid: [
     {
-      code: lines(
-        "const shared = of(42).pipe(",
-        "    shareReplay({ refCount: true })",
-        ");"
-      ),
+      code: stripIndent`
+        const shared = of(42).pipe(
+          shareReplay({ refCount: true })
+        );`,
       options: [{ allowConfig: true }]
     },
     {
-      code: lines(
-        "const shared = of(42).pipe(",
-        "    shareReplay({ refCount: false })",
-        ");"
-      ),
+      code: stripIndent`
+        const shared = of(42).pipe(
+          shareReplay({ refCount: false })
+        );`,
       options: [{ allowConfig: true }]
     }
   ],
   invalid: [
     {
-      code: lines("const shared = of(42).pipe(", "    shareReplay()", ");"),
+      code: stripIndent`
+        const shared = of(42).pipe(
+          shareReplay()
+        );`,
       errors: [
         {
           messageId: "forbidden",
           line: 2,
-          column: 5,
+          column: 3,
           endLine: 2,
-          endColumn: 16
+          endColumn: 14
         }
       ]
     },
     {
-      code: lines("const shared = of(42).pipe(", "    shareReplay()", ");"),
+      code: stripIndent`
+        const shared = of(42).pipe(
+          shareReplay()
+        );`,
       options: [{ allowConfig: true }],
       errors: [
         {
           messageId: "forbiddenWithoutConfig",
           line: 2,
-          column: 5,
+          column: 3,
           endLine: 2,
-          endColumn: 16
+          endColumn: 14
         }
       ]
     },
     {
-      code: lines("const shared = of(42).pipe(", "    shareReplay(1)", ");"),
+      code: stripIndent`
+        const shared = of(42).pipe(
+          shareReplay(1)
+        );`,
       errors: [
         {
           messageId: "forbidden",
           line: 2,
-          column: 5,
+          column: 3,
           endLine: 2,
-          endColumn: 16
+          endColumn: 14
         }
       ]
     },
     {
-      code: lines(
-        "const shared = of(42).pipe(",
-        "    shareReplay(1, 100)",
-        ");"
-      ),
+      code: stripIndent`
+        const shared = of(42).pipe(
+          shareReplay(1, 100)
+        );`,
       errors: [
         {
           messageId: "forbidden",
           line: 2,
-          column: 5,
+          column: 3,
           endLine: 2,
-          endColumn: 16
+          endColumn: 14
         }
       ]
     },
     {
-      code: lines(
-        "const shared = of(42).pipe(",
-        "    shareReplay(1, 100, asapScheduler)",
-        ");"
-      ),
+      code: stripIndent`
+        const shared = of(42).pipe(
+          shareReplay(1, 100, asapScheduler)
+        );`,
       errors: [
         {
           messageId: "forbidden",
           line: 2,
-          column: 5,
+          column: 3,
           endLine: 2,
-          endColumn: 16
+          endColumn: 14
         }
       ]
     },
     {
-      code: lines(
-        "const shared = of(42).pipe(",
-        "    shareReplay({ refCount: true })",
-        ");"
-      ),
+      code: stripIndent`
+        const shared = of(42).pipe(
+          shareReplay({ refCount: true })
+        );`,
       options: [{ allowConfig: false }],
       errors: [
         {
           messageId: "forbidden",
           line: 2,
-          column: 5,
+          column: 3,
           endLine: 2,
-          endColumn: 16
+          endColumn: 14
         }
       ]
     },
     {
-      code: lines(
-        "const shared = of(42).pipe(",
-        "    shareReplay({ refCount: false })",
-        ");"
-      ),
+      code: stripIndent`
+        const shared = of(42).pipe(
+          shareReplay({ refCount: false })
+        );`,
       options: [{ allowConfig: false }],
       errors: [
         {
           messageId: "forbidden",
           line: 2,
-          column: 5,
+          column: 3,
           endLine: 2,
-          endColumn: 16
+          endColumn: 14
         }
       ]
     }
