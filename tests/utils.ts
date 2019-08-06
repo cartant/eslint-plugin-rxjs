@@ -1,28 +1,18 @@
 /**
  * @license Use of this source code is governed by an MIT-style license that
- * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
+ * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-etc
  */
 
-import path = require("path");
+import { RuleTester } from "eslint";
+import { join } from "path";
 
-const parser = path.resolve(
-  __dirname,
-  "../node_modules/@typescript-eslint/parser"
-);
-
-export const configWithoutTypes = {
-  parser,
-  parserOptions: {
-    ecmaVersion: 6,
-    sourceType: "module"
-  }
-};
-
-export const configWithTypes = {
-  parser,
-  parserOptions: {
-    ecmaVersion: 6,
-    project: path.join(__dirname, "./tsconfig.json"),
-    sourceType: "module"
-  }
-};
+export function ruleTester({ types }: { types: boolean }) {
+  return new RuleTester({
+    parser: join(__dirname, "../node_modules/@typescript-eslint/parser"),
+    parserOptions: {
+      ecmaVersion: 6,
+      project: types ? join(__dirname, "./tsconfig.json") : undefined,
+      sourceType: "module"
+    }
+  });
+}

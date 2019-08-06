@@ -4,14 +4,10 @@
  */
 
 import { stripIndent } from "common-tags";
-import { RuleTester } from "eslint";
 import rule = require("../../source/rules/no-sharereplay");
-import { configWithoutTypes } from "../utils";
+import { ruleTester } from "../utils";
 
-const ruleTester = new RuleTester({
-  ...configWithoutTypes
-});
-ruleTester.run("no-sharereplay", rule, {
+ruleTester({ types: false }).run("no-sharereplay", rule, {
   valid: [
     {
       code: stripIndent`

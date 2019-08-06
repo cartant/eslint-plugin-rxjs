@@ -4,14 +4,10 @@
  */
 
 import { stripIndent } from "common-tags";
-import { RuleTester } from "eslint";
 import rule = require("../../source/rules/no-connectable");
-import { configWithTypes } from "../utils";
+import { ruleTester } from "../utils";
 
-const ruleTester = new RuleTester({
-  ...configWithTypes
-});
-ruleTester.run("no-connectable", rule, {
+ruleTester({ types: true }).run("no-connectable", rule, {
   valid: [
     {
       code: stripIndent`
