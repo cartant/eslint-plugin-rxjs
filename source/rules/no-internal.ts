@@ -21,17 +21,13 @@ const rule: Rule.RuleModule = {
   },
   create: context => {
     return {
-      ImportDeclaration: (node: es.ImportDeclaration) => {
-        const { source } = node;
-        if (
-          typeof source.value === "string" &&
-          /^rxjs\/internal\/\w+/.test(source.value)
-        ) {
-          context.report({
-            messageId: "forbidden",
-            node: source
-          });
-        }
+      ["ImportDeclaration Literal[value=/^rxjs\\u002finternal/]"]: (
+        node: es.Literal
+      ) => {
+        context.report({
+          messageId: "forbidden",
+          node
+        });
       }
     };
   }
