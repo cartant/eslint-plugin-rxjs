@@ -7,7 +7,7 @@ import { Rule } from "eslint";
 import * as es from "estree";
 import * as ts from "typescript";
 import { couldBeType } from "tsutils-etc";
-import { getParserServices } from "../utils";
+import { getTypeCheckerAndNodeMap } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -27,9 +27,7 @@ const rule: Rule.RuleModule = {
       "ExpressionStatement[expression.callee.property.name='subscribe']:has([expression.arguments.length = 0]) > CallExpression > MemberExpression": (
         node: es.MemberExpression
       ) => {
-        const service = getParserServices(context);
-        const nodeMap = service.esTreeNodeToTSNodeMap;
-        const typeChecker = service.program.getTypeChecker();
+        const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
 
         const identifier = nodeMap.get(node.object) as ts.Identifier;
         const identifierType = typeChecker.getTypeAtLocation(identifier);

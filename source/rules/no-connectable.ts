@@ -7,7 +7,7 @@ import { Rule } from "eslint";
 import * as es from "estree";
 import { couldBeFunction } from "tsutils-etc";
 import * as ts from "typescript";
-import { getParserServices } from "../utils";
+import { getTypeCheckerAndNodeMap } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -22,9 +22,7 @@ const rule: Rule.RuleModule = {
     }
   },
   create: context => {
-    const service = getParserServices(context);
-    const nodeMap = service.esTreeNodeToTSNodeMap;
-    const typeChecker = service.program.getTypeChecker();
+    const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
     const sourceCode = context.getSourceCode();
     function isConnectableCall(callee: es.CallExpression["callee"]): boolean {
       return (

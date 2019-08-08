@@ -24,3 +24,14 @@ export function getParserServices(
   }
   return context.parserServices;
 }
+
+export function getTypeCheckerAndNodeMap(context: Rule.RuleContext) {
+  const service = getParserServices(context);
+  const nodeMap = service.esTreeNodeToTSNodeMap;
+  const typeChecker = service.program.getTypeChecker();
+
+  return {
+    nodeMap,
+    typeChecker
+  };
+}
