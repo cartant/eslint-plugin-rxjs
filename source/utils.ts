@@ -7,7 +7,7 @@ import { Rule } from "eslint";
 import * as es from "estree";
 import * as ts from "typescript";
 
-export function getParserServices(
+function getParserServices(
   context: Rule.RuleContext
 ): {
   esTreeNodeToTSNodeMap: Map<es.Node, ts.Node>;
