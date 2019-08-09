@@ -13,22 +13,22 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows ignoring the subscription returned by subscribe.",
-      recommended: true
+      description: "Disallows the calling of subscribe without specifying arguments.",
+      recommended: false
     },
     fixable: null,
     messages: {
-      forbidden: "Ignoring returned subscriptions is forbidden."
+      forbidden: "Calling subscribe without arguments is forbidden."
     },
     schema: []
   },
   create: context => {
+    const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
+
     return {
       "ExpressionStatement[expression.callee.property.name='subscribe']:has([expression.arguments.length = 0]) > CallExpression > MemberExpression": (
         node: es.MemberExpression
       ) => {
-        const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
-
         const identifier = nodeMap.get(node.object) as ts.Identifier;
         const identifierType = typeChecker.getTypeAtLocation(identifier);
 

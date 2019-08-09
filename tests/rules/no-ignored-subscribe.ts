@@ -4,10 +4,10 @@
  */
 
 import { stripIndent } from "common-tags";
-import rule = require("../../source/rules/no-ignored-subscription");
+import rule = require("../../source/rules/no-ignored-subscribe");
 import { ruleTester } from "../utils";
 
-ruleTester({ types: true }).run("no-ignored-subscription", rule, {
+ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
   valid: [
     stripIndent`
       import { of } from "rxjs";
