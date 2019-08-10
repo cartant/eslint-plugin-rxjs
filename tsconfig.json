@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "declaration": false,
+    "esModuleInterop": true,
     "importHelpers": true,
     "lib": ["es2017"],
     "module": "commonjs",
@@ -8,6 +10,9 @@
     "noEmitHelpers": true,
     "noImplicitAny": true,
     "outDir": "build",
+    "paths": {
+      "esquery": ["@types/esquery"]
+    },
     "removeComments": true,
     "skipLibCheck": true,
     "sourceMap": false,
