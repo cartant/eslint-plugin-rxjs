@@ -3,9 +3,9 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
+import { stripIndent } from "common-tags";
 import rule = require("../../source/rules/no-explicit-generics");
 import { ruleTester } from "../utils";
-import { stripIndent } from "common-tags";
 
 ruleTester({ types: false }).run("no-explicit-generics", rule, {
   valid: [

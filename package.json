@@ -6,6 +6,7 @@
   "dependencies": {
     "requireindex": "~1.2.0",
     "tslib": "^1.8.0",
+    "tslint-etc": "^1.6.0",
     "tsutils": "^3.0.0",
     "tsutils-etc": "^1.0.0"
   },

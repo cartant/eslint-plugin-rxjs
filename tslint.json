@@ -4,6 +4,13 @@
     "@cartant/tslint-config-etc"
   ],
   "rules": {
-    "object-literal-sort-keys": { "severity": "off" }
+    "object-literal-sort-keys": { "severity": "off" },
+    "typedef": {
+      "options": [
+        "parameter",
+        "property-declaration"
+      ],
+      "severity": "error"
+    }
   }
 }

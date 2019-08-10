@@ -5,15 +5,16 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
-import * as ts from "typescript";
 import { couldBeType } from "tsutils-etc";
+import * as ts from "typescript";
 import { getTypeCheckerAndNodeMap } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows the calling of subscribe without specifying arguments.",
+      description:
+        "Disallows the calling of subscribe without specifying arguments.",
       recommended: false
     },
     fixable: null,
