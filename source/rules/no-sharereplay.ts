@@ -31,29 +31,21 @@ const rule: Rule.RuleModule = {
   create: context => {
     const [config] = context.options;
     const { allowConfig = false } = config || {};
-    const sourceCode = context.getSourceCode();
-    function isShareReplayCall(callee: es.CallExpression["callee"]): boolean {
-      return (
-        callee.type === "Identifier" &&
-        sourceCode.getText(callee) === "shareReplay"
-      );
-    }
     return {
-      CallExpression: (node: es.CallExpression) => {
-        const { callee } = node;
-        if (isShareReplayCall(callee)) {
-          let report = true;
-          if (allowConfig) {
-            report =
-              node.arguments.length !== 1 ||
-              node.arguments[0].type !== "ObjectExpression";
-          }
-          if (report) {
-            context.report({
-              messageId: allowConfig ? "forbiddenWithoutConfig" : "forbidden",
-              node: callee
-            });
-          }
+      "CallExpression[callee.name='shareReplay']": (
+        node: es.CallExpression
+      ) => {
+        let report = true;
+        if (allowConfig) {
+          report =
+            node.arguments.length !== 1 ||
+            node.arguments[0].type !== "ObjectExpression";
+        }
+        if (report) {
+          context.report({
+            messageId: allowConfig ? "forbiddenWithoutConfig" : "forbidden",
+            node: node.callee
+          });
         }
       }
     };
