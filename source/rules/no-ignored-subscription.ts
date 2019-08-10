@@ -26,7 +26,7 @@ const rule: Rule.RuleModule = {
     const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
 
     return {
-      "ExpressionStatement[expression.callee.property.name='subscribe'] > CallExpression > MemberExpression": (
+      "ExpressionStatement > CallExpression > MemberExpression[property.name='subscribe']": (
         node: es.MemberExpression
       ) => {
         const identifier = nodeMap.get(node.object) as ts.Identifier;

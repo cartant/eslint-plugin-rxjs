@@ -13,7 +13,8 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows the calling of subscribe without specifying arguments.",
+      description:
+        "Disallows the calling of subscribe without specifying arguments.",
       recommended: false
     },
     fixable: null,
@@ -26,7 +27,7 @@ const rule: Rule.RuleModule = {
     const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
 
     return {
-      "ExpressionStatement[expression.callee.property.name='subscribe']:has([expression.arguments.length = 0]) > CallExpression > MemberExpression": (
+      "ExpressionStatement > CallExpression:has([arguments.length = 0]) > MemberExpression[property.name='subscribe']": (
         node: es.MemberExpression
       ) => {
         const identifier = nodeMap.get(node.object) as ts.Identifier;
