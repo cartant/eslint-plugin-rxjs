@@ -5,21 +5,20 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
-import { couldBeType } from "tsutils-etc";
 import * as ts from "typescript";
+import { couldBeType } from "tsutils-etc";
 import { getTypeCheckerAndNodeMap } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description:
-        "Disallows the calling of subscribe without specifying arguments.",
+      description: "Disallows ignoring the subscription returned by subscribe.",
       recommended: false
     },
     fixable: null,
     messages: {
-      forbidden: "Calling subscribe without arguments is forbidden."
+      forbidden: "Ignoring returned subscriptions is forbidden."
     },
     schema: []
   },
@@ -27,7 +26,7 @@ const rule: Rule.RuleModule = {
     const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
 
     return {
-      "ExpressionStatement > CallExpression:has([arguments.length = 0]) > MemberExpression[property.name='subscribe']": (
+      "ExpressionStatement > CallExpression > MemberExpression[property.name='subscribe']": (
         node: es.MemberExpression
       ) => {
         const identifier = nodeMap.get(node.object) as ts.Identifier;
