@@ -5,8 +5,8 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
-import * as ts from "typescript";
 import { couldBeType } from "tsutils-etc";
+import * as ts from "typescript";
 import { getTypeCheckerAndNodeMap } from "../utils";
 
 const rule: Rule.RuleModule = {

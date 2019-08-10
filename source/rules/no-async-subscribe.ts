@@ -5,8 +5,8 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
-import { getTypeCheckerAndNodeMap } from "../utils";
 import { couldBeType } from "tsutils-etc";
+import { getTypeCheckerAndNodeMap } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
