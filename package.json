@@ -4,6 +4,7 @@
     "url": "https://github.com/cartant/eslint-plugin-rxjs/issues"
   },
   "dependencies": {
+    "esquery": "^1.0.1",
     "requireindex": "~1.2.0",
     "tslib": "^1.8.0",
     "tslint-etc": "^1.6.0",
