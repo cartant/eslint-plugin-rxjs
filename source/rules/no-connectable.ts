@@ -23,35 +23,27 @@ const rule: Rule.RuleModule = {
   },
   create: context => {
     const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
-    const sourceCode = context.getSourceCode();
-    function isConnectableCall(callee: es.CallExpression["callee"]): boolean {
-      return (
-        callee.type === "Identifier" &&
-        /(multicast|publish|publishBehavior|publishLast|publishReplay)/.test(
-          sourceCode.getText(callee)
-        )
-      );
-    }
     return {
-      CallExpression: (node: es.CallExpression) => {
-        const { callee } = node;
-        if (isConnectableCall(callee)) {
-          let report = false;
-          if (sourceCode.getText(callee) === "multicast") {
-            report = node.arguments.length === 1;
-          } else {
-            const callExpression = nodeMap.get(node) as ts.CallExpression;
-            report = !callExpression.arguments.some(arg => {
-              const type = typeChecker.getTypeAtLocation(arg);
-              return couldBeFunction(type);
-            });
-          }
-          if (report) {
-            context.report({
-              messageId: "forbidden",
-              node: callee
-            });
-          }
+      "CallExpression[callee.name='multicast']": (node: es.CallExpression) => {
+        if (node.arguments.length === 1) {
+          context.report({
+            messageId: "forbidden",
+            node: node.callee
+          });
+        }
+      },
+      "CallExpression[callee.name=/^(publish|publishBehavior|publishLast|publishReplay)$/]": (
+        node: es.CallExpression
+      ) => {
+        const callExpression = nodeMap.get(node) as ts.CallExpression;
+        const report = !callExpression.arguments.some(arg =>
+          couldBeFunction(typeChecker.getTypeAtLocation(arg))
+        );
+        if (report) {
+          context.report({
+            messageId: "forbidden",
+            node: node.callee
+          });
         }
       }
     };
