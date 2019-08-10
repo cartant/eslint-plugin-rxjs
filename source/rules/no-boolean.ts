@@ -19,17 +19,16 @@ const rule: Rule.RuleModule = {
     },
     schema: []
   },
-  create: context => {
-    function report({ arguments: [node] }: es.CallExpression) {
+  create: context => ({
+    "CallExpression[callee.property.name='pipe'] > CallExpression[callee.name=/^(filter|find|first|last)$/][arguments.0.name='Boolean']": ({
+      arguments: [node]
+    }: es.CallExpression) => {
       context.report({
         messageId: "forbidden",
         node
       });
     }
-    return {
-      "CallExpression[callee.property.name='pipe'] > CallExpression[callee.name=/^(filter|find|first|last)$/][arguments.0.name='Boolean']": report
-    };
-  }
+  })
 };
 
 export = rule;
