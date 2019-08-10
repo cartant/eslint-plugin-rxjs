@@ -10,12 +10,12 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows passing Boolean as a predicate or projector.",
+      description: "Disallows passing Boolean as a predicate.",
       recommended: true
     },
     fixable: null,
     messages: {
-      forbidden: "Using Boolean as a predicate or projector is forbidden."
+      forbidden: "Using Boolean as a predicate is forbidden."
     },
     schema: []
   },
