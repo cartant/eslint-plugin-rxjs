@@ -67,9 +67,9 @@
   integrity sha512-OCutwjDZ4aFS6PB1UZ988C4YgwlBHJd6wCeQqaLdmadZ/7e+w79+hbMUFC1QXDNCmdyoRfAFdm0RypzwR+Qpag==
 
 "@types/eslint@^4.16.6":
-  version "4.16.7"
-  resolved "https://registry.yarnpkg.com/@types/eslint/-/eslint-4.16.7.tgz#723a2e53c6884204323ee44e80ea036857e34ef8"
-  integrity sha512-Xr50GH0b4cc/65IVQOJtbH8Ilob8HSmr9HW/OmxpNrqJwEp+FX8TL5V5lv6GJEXIlLd4eiWFt439hlImZ9PgdA==
+  version "4.16.8"
+  resolved "https://registry.yarnpkg.com/@types/eslint/-/eslint-4.16.8.tgz#856f0eb8a312d25a7989b6d0ab708e8d5f8cc7ee"
+  integrity sha512-n0ZvaIpPeBxproRvV+tZoCHRxIoNAk+k+XMvQefKgx3qM3IundoogQBAwiNEnqW0GDP1j1ATe5lFy9xxutFAHg==
   dependencies:
     "@types/estree" "*"
     "@types/json-schema" "*"
