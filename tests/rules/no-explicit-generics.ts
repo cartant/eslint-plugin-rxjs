@@ -9,23 +9,24 @@ import { stripIndent } from "common-tags";
 
 ruleTester({ types: false }).run("no-explicit-generics", rule, {
   valid: [
-    `import { BehaviorSubject, from, of, Notification } from "rxjs";`,
-    `import { scan } from "rxjs/operators";`,
-    `
-      const a = of(42, 54);
-      const b = a.pipe(
-          scan((acc: string, value: number) => acc + value, "")
-      );
-      const b2 = a.pipe(
-          scan((acc, value): string => acc + value, "")
-      );`,
-    `const c = new BehaviorSubject(42);`,
-    `const d = from([42, 54]);`,
-    `const e = of(42, 54);`,
-    `
-      const f = new Notification("N", 42);
-      const g = new Notification<number>("E", undefined, "Kaboom!");
-      const h = new Notification<number>("C");`
+    {
+      code: stripIndent`
+        import { BehaviorSubject, from, of, Notification } from "rxjs";
+        import { scan } from "rxjs/operators";
+        const a = of(42, 54);
+        const b1 = a.pipe(
+            scan((acc: string, value: number) => acc + value, "")
+        );
+        const b2 = a.pipe(
+            scan((acc, value): string => acc + value, "")
+        );
+        const c = new BehaviorSubject(42);
+        const d = from([42, 54]);
+        const e = of(42, 54);
+        const f = new Notification("N", 42);
+        const g = new Notification<number>("E", undefined, "Kaboom!");
+        const h = new Notification<number>("C");`
+    }
   ],
   invalid: [
     {

@@ -9,28 +9,31 @@ import { ruleTester } from "../utils";
 
 ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
   valid: [
-    stripIndent`
-      import { of } from "rxjs";
+    {
+      code: stripIndent`
+        import { of } from "rxjs";
 
-      const observable = of([1, 2]);
-      observable.subscribe(value => console.log(value));
-    `,
-    stripIndent`
-      import { Subject } from "rxjs";
+        const observable = of([1, 2]);
+        observable.subscribe(value => console.log(value));`
+    },
+    {
+      code: stripIndent`
+        import { Subject } from "rxjs";
 
-      const subject = new Subject<any>();
-      subject.subscribe(value => console.log(value));
-    `,
-    stripIndent`
-      import { of } from "rxjs";
+        const subject = new Subject<any>();
+        subject.subscribe(value => console.log(value));`
+    },
+    {
+      code: stripIndent`
+        import { of } from "rxjs";
 
-      function log(value) {
-        console.log(value)
-      }
+        function log(value) {
+          console.log(value)
+        }
 
-      const observable = of([1, 2]);
-      observable.subscribe(log);
-    `
+        const observable = of([1, 2]);
+        observable.subscribe(log);`
+    }
   ],
   invalid: [
     {
