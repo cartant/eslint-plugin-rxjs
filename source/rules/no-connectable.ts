@@ -36,10 +36,11 @@ const rule: Rule.RuleModule = {
         node: es.CallExpression
       ) => {
         const callExpression = nodeMap.get(node) as ts.CallExpression;
-        const report = !callExpression.arguments.some(arg =>
-          couldBeFunction(typeChecker.getTypeAtLocation(arg))
-        );
-        if (report) {
+        if (
+          !callExpression.arguments.some(arg =>
+            couldBeFunction(typeChecker.getTypeAtLocation(arg))
+          )
+        ) {
           context.report({
             messageId: "forbidden",
             node: node.callee
