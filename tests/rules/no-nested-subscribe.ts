@@ -9,14 +9,14 @@ import { ruleTester } from "../utils";
 
 ruleTester({ types: true }).run("no-nested-subscribe", rule, {
   valid: [
-    `
+    stripIndent`
       import { Observable } from "rxjs";
 
       of(47).subscribe(value => {
         console.log(value);
       })
     `,
-    `
+    stripIndent`
       import { Observable } from "rxjs";
 
       of(47).subscribe({
@@ -25,7 +25,7 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
         complete: value => console.log(value),
       })
     `,
-    `
+    stripIndent`
       import { Observable } from "rxjs";
 
       const observableSubscribe = Observable.prototype.subscribe;

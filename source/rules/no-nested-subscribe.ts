@@ -4,10 +4,10 @@
  */
 
 import { Rule } from "eslint";
+import esquery from "esquery";
 import * as es from "estree";
 import { couldBeType } from "tsutils-etc";
-import { getTypeCheckerAndNodeMap } from "../utils";
-const esquery = require("esquery");
+import { getParent, getTypeCheckerAndNodeMap } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -37,9 +37,9 @@ const rule: Rule.RuleModule = {
           return;
         }
 
-        const callExpression = (node as any).parent as es.CallExpression;
+        const callExpression = getParent<es.CallExpression>(node);
         callExpression.arguments.forEach(childNode => {
-          const childNodes: es.MemberExpression[] = esquery(
+          const childNodes = esquery<es.MemberExpression>(
             childNode,
             subscribeQuery
           );
