@@ -39,3 +39,11 @@ export function getTypeCheckerAndNodeMap(context: Rule.RuleContext) {
 export function getParent(node: es.Node): es.Node {
   return (node as any).parent;
 }
+
+export function isCallExpression(node: es.Node): node is es.CallExpression {
+  return node.type === "CallExpression";
+}
+
+export function isMemberExpression(node: es.Node): node is es.MemberExpression {
+  return node.type === "MemberExpression";
+}
