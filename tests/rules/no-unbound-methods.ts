@@ -5,7 +5,7 @@
 
 import { stripIndent } from "common-tags";
 import * as eslint from "eslint";
-import rule = require("../../source/rules/no-unbound-method");
+import rule = require("../../source/rules/no-unbound-methods");
 import { ruleTester } from "../utils";
 
 interface Tests {
@@ -367,7 +367,7 @@ const unboundTests: Tests = {
   ]
 };
 
-ruleTester({ types: true }).run("no-unbound-method", rule, {
+ruleTester({ types: true }).run("no-unbound-methods", rule, {
   valid: [
     ...arrowTests.valid,
     ...boundTests.valid,
