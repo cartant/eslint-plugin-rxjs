@@ -37,12 +37,12 @@ const rule: Rule.RuleModule = {
           return;
         }
 
-        const callExpression = getParent<es.CallExpression>(node);
+        const callExpression = getParent(node) as es.CallExpression;
         callExpression.arguments.forEach(childNode => {
-          const childNodes = esquery<es.MemberExpression>(
+          const childNodes = esquery(
             childNode,
             subscribeQuery
-          );
+          ) as es.MemberExpression[];
           childNodes.forEach(childNode => {
             const childIdentifier = nodeMap.get(childNode.object);
             const childIdentifierType = typeChecker.getTypeAtLocation(

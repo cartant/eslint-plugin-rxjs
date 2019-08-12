@@ -36,6 +36,6 @@ export function getTypeCheckerAndNodeMap(context: Rule.RuleContext) {
   };
 }
 
-export function getParent<T extends es.Node = es.Node>(node: es.Node): T {
+export function getParent(node: es.Node): es.Node {
   return (node as any).parent;
 }
