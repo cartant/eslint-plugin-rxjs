@@ -34,10 +34,10 @@ const rule: Rule.RuleModule = {
         const argNode = nodeMap.get(arg);
         const argType = typeChecker.getTypeAtLocation(argNode);
         if (argType.getCallSignatures().length > 0) {
-          const thisExpressions = esquery<es.ThisExpression>(
+          const thisExpressions = esquery(
             arg,
             "ThisExpression"
-          );
+          ) as es.ThisExpression[];
           if (thisExpressions.length > 0) {
             context.report({
               messageId: "forbidden",
