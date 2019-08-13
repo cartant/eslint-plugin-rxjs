@@ -35,3 +35,7 @@ export function getTypeCheckerAndNodeMap(context: Rule.RuleContext) {
     typeChecker
   };
 }
+
+export function getParent(node: es.Node): es.Node {
+  return (node as any).parent;
+}
