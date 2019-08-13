@@ -38,15 +38,7 @@ const rule: Rule.RuleModule = {
     }
 
     return {
-      "ThrowStatement[argument.type='Literal'] > Literal": (
-        node: es.Literal
-      ) => {
-        context.report({
-          messageId: "forbidden",
-          node
-        });
-      },
-      "ThrowStatement[argument.type='CallExpression'] > CallExpression": report,
+      "ThrowStatement > *": report,
       "CallExpression[callee.name='throwError']": (node: es.CallExpression) => {
         const tsNode = nodeMap.get(node);
         const tsType = typeChecker.getTypeAtLocation(tsNode);

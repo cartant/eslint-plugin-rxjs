@@ -81,6 +81,22 @@ ruleTester({ types: true }).run("throw-error", rule, {
     },
     {
       code: stripIndent`
+        const errorMessage = "Boom!";
+
+        const a = () => { throw errorMessage; };
+      `,
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 3,
+          column: 25,
+          endLine: 3,
+          endColumn: 37
+        }
+      ]
+    },
+    {
+      code: stripIndent`
         import { throwError } from "rxjs";
 
         const ob1 = throwError("Boom!");
