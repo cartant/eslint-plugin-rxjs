@@ -18,7 +18,7 @@ const rule: Rule.RuleModule = {
     docs: {
       category: "RxJS",
       description: "Disallows the passing of unbound methods.",
-      recommended: true
+      recommended: false
     },
     fixable: null,
     messages: {
