@@ -14,7 +14,7 @@ const rule: Rule.RuleModule = {
       category: "RxJS",
       description:
         "Enforces the passing of Error values to error notifications.",
-      recommended: true
+      recommended: false
     },
     fixable: null,
     messages: {
