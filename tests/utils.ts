@@ -6,8 +6,10 @@
 import { RuleTester } from "eslint";
 import { join } from "path";
 
+export const filename = join(__dirname, "file.ts");
+
 export function ruleTester({ types }: { types: boolean }) {
-  return new RuleTester({
+  const tester = new RuleTester({
     parser: join(__dirname, "../node_modules/@typescript-eslint/parser"),
     parserOptions: {
       ecmaVersion: 6,
@@ -15,4 +17,16 @@ export function ruleTester({ types }: { types: boolean }) {
       sourceType: "module"
     }
   });
+  const run = tester.run;
+  tester.run = (name, rule, { invalid = [], valid = [] }) => {
+    return run.call(tester, name, rule, {
+      invalid: invalid.map(test => ({ ...test, filename })),
+      valid: valid.map(test =>
+        typeof test === "string"
+          ? { code: test, filename }
+          : { ...test, filename }
+      )
+    });
+  };
+  return tester;
 }
