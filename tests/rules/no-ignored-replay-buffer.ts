@@ -52,6 +52,17 @@ ruleTester({ types: false }).run("no-ignored-replay-buffer", rule, {
       import * as Rx from "rxjs";
 
       const a = new Thing(new Rx.ReplaySubject<number>(1));
+    `,
+    stripIndent`
+      import * as Rx from "rxjs";
+
+      class Mock {
+        private valid: Rx.ReplaySubject<number>;
+
+        constructor(){
+            this.valid = new Rx.ReplaySubject<number>(1);
+        }
+      }
     `
   ],
   invalid: [
@@ -184,6 +195,28 @@ ruleTester({ types: false }).run("no-ignored-replay-buffer", rule, {
           column: 28,
           endLine: 3,
           endColumn: 41
+        }
+      ]
+    },
+    {
+      code: stripIndent`
+        import * as Rx from "rxjs";
+
+        class Mock {
+          private invalid: Rx.ReplaySubject<number>;
+
+          constructor(){
+              this.invalid = new Rx.ReplaySubject<number>();
+          }
+        }
+      `,
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 7,
+          column: 29,
+          endLine: 7,
+          endColumn: 42
         }
       ]
     }
