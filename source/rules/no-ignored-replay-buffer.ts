@@ -41,14 +41,14 @@ const rule: Rule.RuleModule = {
         const newExpression = getParent(node) as es.NewExpression;
         report(node, newExpression);
       },
-      "NewExpression MemberExpression Identifier[name='ReplaySubject']": (
+      "NewExpression > MemberExpression > Identifier[name='ReplaySubject']": (
         node: es.Identifier
       ) => {
         const memberExpression = getParent(node) as es.MemberExpression;
         const newExpression = getParent(memberExpression) as es.NewExpression;
         report(node, newExpression);
       },
-      "CallExpression Identifier[name=/(publishReplay|shareReplay)/]": (
+      "CallExpression > Identifier[name=/^(publishReplay|shareReplay)$/]": (
         node: es.Identifier
       ) => {
         const callExpression = getParent(node) as es.CallExpression;
