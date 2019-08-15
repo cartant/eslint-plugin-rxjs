@@ -6,9 +6,8 @@
 import { RuleTester } from "eslint";
 import { join } from "path";
 
-export const filename = join(__dirname, "file.ts");
-
 export function ruleTester({ types }: { types: boolean }) {
+  const filename = join(__dirname, "file.ts");
   const tester = new RuleTester({
     parser: join(__dirname, "../node_modules/@typescript-eslint/parser"),
     parserOptions: {
