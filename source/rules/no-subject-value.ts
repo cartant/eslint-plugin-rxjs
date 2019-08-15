@@ -27,7 +27,7 @@ const rule: Rule.RuleModule = {
     const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
 
     return {
-      "Identifier[name=/(value|getValue)/]": (node: es.Identifier) => {
+      "Identifier[name=/^(value|getValue)$/]": (node: es.Identifier) => {
         const parent = getParent(node);
 
         if (!("object" in parent)) {
