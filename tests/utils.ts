@@ -17,8 +17,8 @@ export function ruleTester({ types }: { types: boolean }) {
     }
   });
   const run = tester.run;
-  tester.run = (name, rule, { invalid = [], valid = [] }) => {
-    return run.call(tester, name, rule, {
+  tester.run = (name, rule, { invalid = [], valid = [] }) =>
+    run.call(tester, name, rule, {
       invalid: invalid.map(test => ({ ...test, filename })),
       valid: valid.map(test =>
         typeof test === "string"
@@ -26,6 +26,5 @@ export function ruleTester({ types }: { types: boolean }) {
           : { ...test, filename }
       )
     });
-  };
   return tester;
 }
