@@ -5,8 +5,7 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
-import { couldBeType, isAny } from "tsutils-etc";
-import { getTypeCheckerAndNodeMap } from "../utils";
+import { typecheck } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -23,13 +22,10 @@ const rule: Rule.RuleModule = {
     schema: []
   },
   create: context => {
-    const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
+    const { isAny, couldBeError, couldBeObservable } = typecheck(context);
 
     function report(node: es.Node) {
-      const tsNode = nodeMap.get(node);
-      const tsType = typeChecker.getTypeAtLocation(tsNode);
-
-      if (!isAny(tsType) && !couldBeType(tsType, "Error")) {
+      if (!isAny(node) && !couldBeError(node)) {
         context.report({
           messageId: "forbidden",
           node
@@ -40,10 +36,7 @@ const rule: Rule.RuleModule = {
     return {
       "ThrowStatement > *": report,
       "CallExpression[callee.name='throwError']": (node: es.CallExpression) => {
-        const tsNode = nodeMap.get(node);
-        const tsType = typeChecker.getTypeAtLocation(tsNode);
-
-        if (couldBeType(tsType, "Observable")) {
+        if (couldBeObservable(node)) {
           node.arguments.forEach(report);
         }
       }

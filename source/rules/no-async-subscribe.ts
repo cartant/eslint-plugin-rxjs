@@ -5,8 +5,7 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
-import { couldBeType } from "tsutils-etc";
-import { getTypeCheckerAndNodeMap } from "../utils";
+import { typecheck } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -22,15 +21,13 @@ const rule: Rule.RuleModule = {
     schema: []
   },
   create: context => {
-    const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
+    const { couldBeObservable } = typecheck(context);
 
     function report(node: es.FunctionExpression | es.ArrowFunctionExpression) {
       const parentNode = (node as any).parent as es.CallExpression;
       const callee = parentNode.callee as es.MemberExpression;
-      const identifier = nodeMap.get(callee.object);
-      const identifierType = typeChecker.getTypeAtLocation(identifier);
 
-      if (couldBeType(identifierType, "Observable")) {
+      if (couldBeObservable(callee.object)) {
         // only report the `async` keyword
         const asyncLoc = {
           start: node.loc.start,

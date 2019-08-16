@@ -6,8 +6,7 @@
 import { Rule } from "eslint";
 import esquery from "esquery";
 import * as es from "estree";
-import { couldBeType } from "tsutils-etc";
-import { getParent, getTypeCheckerAndNodeMap } from "../utils";
+import { getParent, typecheck } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -24,16 +23,14 @@ const rule: Rule.RuleModule = {
     schema: []
   },
   create: context => {
-    const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
+    const { couldBeObservable } = typecheck(context);
+
     const subscribeQuery =
       "CallExpression > MemberExpression[property.name='subscribe']";
 
     return {
       [subscribeQuery]: (node: es.MemberExpression) => {
-        const identifier = nodeMap.get(node.object);
-        const identifierType = typeChecker.getTypeAtLocation(identifier);
-
-        if (!couldBeType(identifierType, "Observable")) {
+        if (!couldBeObservable(node.object)) {
           return;
         }
 
@@ -44,12 +41,7 @@ const rule: Rule.RuleModule = {
             subscribeQuery
           ) as es.MemberExpression[];
           childNodes.forEach(childNode => {
-            const childIdentifier = nodeMap.get(childNode.object);
-            const childIdentifierType = typeChecker.getTypeAtLocation(
-              childIdentifier
-            );
-
-            if (couldBeType(childIdentifierType, "Observable")) {
+            if (couldBeObservable(childNode.object)) {
               context.report({
                 messageId: "forbidden",
                 node: childNode.property

@@ -5,6 +5,11 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
+import {
+  couldBeFunction as couldBeFunctionTS,
+  couldBeType as couldBeTypeTS,
+  isAny as isAnyTS
+} from "tsutils-etc";
 import * as ts from "typescript";
 
 function getParserServices(
@@ -25,14 +30,36 @@ function getParserServices(
   return context.parserServices;
 }
 
-export function getTypeCheckerAndNodeMap(context: Rule.RuleContext) {
+export function typecheck(context: Rule.RuleContext) {
   const service = getParserServices(context);
   const nodeMap = service.esTreeNodeToTSNodeMap;
   const typeChecker = service.program.getTypeChecker();
 
+  const getTSType = (node: es.Node) => {
+    const tsNode = nodeMap.get(node);
+    const tsType = typeChecker.getTypeAtLocation(tsNode);
+
+    return tsType;
+  };
+
+  const couldBeType = (node: es.Node, name: string | RegExp) => {
+    const tsType = getTSType(node);
+    return couldBeTypeTS(tsType, name);
+  };
+
   return {
     nodeMap,
-    typeChecker
+    typeChecker,
+    getTSType,
+    couldBeType,
+    couldBeObservable: (node: es.Node) => couldBeType(node, "Observable"),
+    couldBeSubscription: (node: es.Node) => couldBeType(node, "Subscription"),
+    couldBeSubject: (node: es.Node) => couldBeType(node, "Subject"),
+    couldBeBehaviorSubject: (node: es.Node) =>
+      couldBeType(node, "BehaviorSubject"),
+    couldBeError: (node: es.Node) => couldBeType(node, "Error"),
+    couldBeFunction: (node: es.Node) => couldBeFunctionTS(getTSType(node)),
+    isAny: (node: es.Node) => isAnyTS(getTSType(node))
   };
 }
 

@@ -5,9 +5,8 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
-import { couldBeType } from "tsutils-etc";
 import * as ts from "typescript";
-import { getTypeCheckerAndNodeMap } from "../utils";
+import { typecheck } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -23,16 +22,13 @@ const rule: Rule.RuleModule = {
     schema: []
   },
   create: context => {
-    const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
+    const { couldBeObservable } = typecheck(context);
 
     return {
       "ExpressionStatement > CallExpression > MemberExpression[property.name='subscribe']": (
         node: es.MemberExpression
       ) => {
-        const identifier = nodeMap.get(node.object) as ts.Identifier;
-        const identifierType = typeChecker.getTypeAtLocation(identifier);
-
-        if (couldBeType(identifierType, "Observable")) {
+        if (couldBeObservable(node.object)) {
           context.report({
             messageId: "forbidden",
             node: node.property

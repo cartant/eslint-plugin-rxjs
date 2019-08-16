@@ -5,8 +5,7 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
-import { couldBeType } from "tsutils-etc";
-import { getParent, getTypeCheckerAndNodeMap } from "../utils";
+import { getParent, typecheck } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -24,7 +23,7 @@ const rule: Rule.RuleModule = {
     schema: []
   },
   create: context => {
-    const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
+    const { couldBeBehaviorSubject } = typecheck(context);
 
     return {
       "Identifier[name=/^(value|getValue)$/]": (node: es.Identifier) => {
@@ -34,10 +33,7 @@ const rule: Rule.RuleModule = {
           return;
         }
 
-        const tsNode = nodeMap.get(parent.object);
-        const tsType = typeChecker.getTypeAtLocation(tsNode);
-
-        if (couldBeType(tsType, "BehaviorSubject")) {
+        if (couldBeBehaviorSubject(parent.object)) {
           context.report({
             messageId: "forbidden",
             node

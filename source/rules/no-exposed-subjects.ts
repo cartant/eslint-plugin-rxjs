@@ -5,8 +5,7 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
-import { couldBeType } from "tsutils-etc";
-import { getTypeCheckerAndNodeMap } from "../utils";
+import { typecheck } from "../utils";
 
 const defaultAllowedTypesRegExp = /^EventEmitter$/;
 
@@ -35,7 +34,7 @@ const rule: Rule.RuleModule = {
   create: context => {
     const [config] = context.options;
     const { allowProtected = false } = config || {};
-    const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
+    const { couldBeSubject, couldBeType } = typecheck(context);
 
     const messageId = allowProtected ? "forbiddenAllowProtected" : "forbidden";
     const accessibilityRexExp = allowProtected
@@ -43,12 +42,8 @@ const rule: Rule.RuleModule = {
       : /^private$/;
 
     function isSubject(node: es.Node) {
-      const tsNode = nodeMap.get(node);
-      const tsType = typeChecker.getTypeAtLocation(tsNode);
-
       return (
-        couldBeType(tsType, "Subject") &&
-        !couldBeType(tsType, defaultAllowedTypesRegExp)
+        couldBeSubject(node) && !couldBeType(node, defaultAllowedTypesRegExp)
       );
     }
 
