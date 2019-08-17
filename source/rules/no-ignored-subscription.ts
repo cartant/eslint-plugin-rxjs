@@ -5,7 +5,6 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
-import * as ts from "typescript";
 import { typecheck } from "../utils";
 
 const rule: Rule.RuleModule = {

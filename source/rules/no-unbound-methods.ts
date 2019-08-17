@@ -6,7 +6,7 @@
 import { Rule } from "eslint";
 import esquery from "esquery";
 import * as es from "estree";
-import { typecheck, isCallExpression, isMemberExpression } from "../utils";
+import { isCallExpression, isMemberExpression, typecheck } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
