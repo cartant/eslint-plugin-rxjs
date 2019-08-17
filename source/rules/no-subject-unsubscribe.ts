@@ -5,8 +5,7 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
-import { couldBeType } from "tsutils-etc";
-import { getTypeCheckerAndNodeMap } from "../utils";
+import { typecheck } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -23,16 +22,13 @@ const rule: Rule.RuleModule = {
     schema: []
   },
   create: context => {
-    const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
+    const { couldBeSubject, couldBeSubscription } = typecheck(context);
 
     return {
       "MemberExpression[property.name='unsubscribe']": (
         node: es.MemberExpression
       ) => {
-        const tsNode = nodeMap.get(node.object);
-        const tsType = typeChecker.getTypeAtLocation(tsNode);
-
-        if (couldBeType(tsType, "Subject")) {
+        if (couldBeSubject(node.object)) {
           context.report({
             messageId: "forbidden",
             node: node.property
@@ -43,15 +39,9 @@ const rule: Rule.RuleModule = {
         node: es.CallExpression
       ) => {
         const memberExpression = node.callee as es.MemberExpression;
-        const tsNode = nodeMap.get(memberExpression.object);
-        const tsType = typeChecker.getTypeAtLocation(tsNode);
-
-        if (couldBeType(tsType, "Subscription")) {
-          const arg = node.arguments[0] as es.Identifier;
-          const tsArgNode = nodeMap.get(arg);
-          const tsArgType = typeChecker.getTypeAtLocation(tsArgNode);
-
-          if (couldBeType(tsArgType, "Subject")) {
+        if (couldBeSubscription(memberExpression.object)) {
+          const [arg] = node.arguments;
+          if (couldBeSubject(arg)) {
             context.report({
               messageId: "forbidden",
               node: arg

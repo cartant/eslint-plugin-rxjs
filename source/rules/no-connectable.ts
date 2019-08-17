@@ -7,7 +7,7 @@ import { Rule } from "eslint";
 import * as es from "estree";
 import { couldBeFunction } from "tsutils-etc";
 import * as ts from "typescript";
-import { getTypeCheckerAndNodeMap } from "../utils";
+import { typecheck } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -22,7 +22,7 @@ const rule: Rule.RuleModule = {
     }
   },
   create: context => {
-    const { nodeMap, typeChecker } = getTypeCheckerAndNodeMap(context);
+    const { nodeMap, typeChecker } = typecheck(context);
     return {
       "CallExpression[callee.name='multicast']": (node: es.CallExpression) => {
         if (node.arguments.length === 1) {
