@@ -28,6 +28,7 @@ const rule: Rule.RuleModule = {
     ]
   },
   create: context => {
+    const invalidOperatorsRegExp = /^takeUntil$/;
     const allowedOperators = [
       "count",
       "defaultIfEmpty",
@@ -57,7 +58,7 @@ const rule: Rule.RuleModule = {
     const { couldBeObservable, isReferenceType } = typecheck(context);
 
     return {
-      "CallExpression[callee.property.name='pipe'][arguments]:has(CallExpression[callee.name='takeUntil'])": (
+      [`CallExpression[callee.property.name='pipe'][arguments]:has(CallExpression[callee.name=${invalidOperatorsRegExp}])`]: (
         node: es.CallExpression
       ) => {
         if (!isReferenceType(node) || !couldBeObservable(node)) {
@@ -73,8 +74,7 @@ const rule: Rule.RuleModule = {
             return isError;
           }
 
-          const name = arg.callee.name;
-          if (isError && name === "takeUntil") {
+          if (isError && invalidOperatorsRegExp.test(arg.callee.name)) {
             context.report({
               messageId: "forbidden",
               node: arg.callee
