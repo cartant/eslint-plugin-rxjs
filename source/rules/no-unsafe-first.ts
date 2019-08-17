@@ -30,7 +30,7 @@ const rule: Rule.RuleModule = {
   },
   create: context => {
     const defaultObservable = "action(s|\\$)?";
-    const invalidOperators = ["take", "first"];
+    const invalidOperatorsRegExp = /^(take|first)$/;
 
     const [config] = context.options;
     const { observable = defaultObservable } = config || {};
@@ -39,7 +39,7 @@ const rule: Rule.RuleModule = {
     const { couldBeObservable, isReferenceType } = typecheck(context);
 
     return {
-      [`VariableDeclarator CallExpression:has(MemberExpression:matches([object.name=${observableRegExp}], [object.property.name=${observableRegExp}]))[callee.property.name='pipe'][arguments]:has(CallExpression[callee.name=/^(take|first)$/])`]: (
+      [`VariableDeclarator CallExpression:has(MemberExpression:matches([object.name=${observableRegExp}], [object.property.name=${observableRegExp}]))[callee.property.name='pipe'][arguments]:has(CallExpression[callee.name=${invalidOperatorsRegExp}])`]: (
         node: es.CallExpression
       ) => {
         if (!isReferenceType(node) || !couldBeObservable(node)) {
@@ -48,7 +48,7 @@ const rule: Rule.RuleModule = {
 
         node.arguments.forEach(arg => {
           if (isCallExpression(arg) && isIdentifier(arg.callee)) {
-            if (invalidOperators.includes(arg.callee.name)) {
+            if (invalidOperatorsRegExp.test(arg.callee.name)) {
               context.report({
                 messageId: "forbidden",
                 node: arg.callee
