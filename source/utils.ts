@@ -8,7 +8,8 @@ import * as es from "estree";
 import {
   couldBeFunction as couldBeFunctionTS,
   couldBeType as couldBeTypeTS,
-  isAny as isAnyTS
+  isAny as isAnyTS,
+  isReferenceType as isReferenceTypeTS
 } from "tsutils-etc";
 import * as ts from "typescript";
 
@@ -59,7 +60,8 @@ export function typecheck(context: Rule.RuleContext) {
       couldBeType(node, "BehaviorSubject"),
     couldBeError: (node: es.Node) => couldBeType(node, "Error"),
     couldBeFunction: (node: es.Node) => couldBeFunctionTS(getTSType(node)),
-    isAny: (node: es.Node) => isAnyTS(getTSType(node))
+    isAny: (node: es.Node) => isAnyTS(getTSType(node)),
+    isReferenceType: (node: es.Node) => isReferenceTypeTS(getTSType(node))
   };
 }
 
@@ -69,6 +71,10 @@ export function getParent(node: es.Node): es.Node {
 
 export function isCallExpression(node: es.Node): node is es.CallExpression {
   return node.type === "CallExpression";
+}
+
+export function isIdentifier(node: es.Node): node is es.Identifier {
+  return node.type === "Identifier";
 }
 
 export function isMemberExpression(node: es.Node): node is es.MemberExpression {
