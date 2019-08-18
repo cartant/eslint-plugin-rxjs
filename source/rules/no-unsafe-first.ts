@@ -6,6 +6,7 @@
 import { Rule } from "eslint";
 import * as es from "estree";
 import { isCallExpression, isIdentifier, typecheck } from "../utils";
+import { stripIndent } from "common-tags";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -24,7 +25,10 @@ const rule: Rule.RuleModule = {
         properties: {
           observable: { type: "string" }
         },
-        type: "object"
+        type: "object",
+        description: stripIndent`
+          An optional object with an optional \`observable\` property.
+          The property can be specified as a regular expression string and is used to identify the action observables from which effects and epics are composed.`
       }
     ]
   },
