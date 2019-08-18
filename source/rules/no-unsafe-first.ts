@@ -38,25 +38,30 @@ const rule: Rule.RuleModule = {
 
     const { couldBeObservable, isReferenceType } = typecheck(context);
 
-    return {
-      [`VariableDeclarator CallExpression:has(MemberExpression:matches([object.name=${observableRegExp}], [object.property.name=${observableRegExp}]))[callee.property.name='pipe'][arguments]:has(CallExpression[callee.name=${invalidOperatorsRegExp}])`]: (
-        node: es.CallExpression
-      ) => {
-        if (!isReferenceType(node) || !couldBeObservable(node)) {
-          return;
-        }
-
-        node.arguments.forEach(arg => {
-          if (isCallExpression(arg) && isIdentifier(arg.callee)) {
-            if (invalidOperatorsRegExp.test(arg.callee.name)) {
-              context.report({
-                messageId: "forbidden",
-                node: arg.callee
-              });
-            }
-          }
-        });
+    function report(node: es.CallExpression) {
+      if (
+        !isReferenceType(node) ||
+        !couldBeObservable(node) ||
+        !node.arguments
+      ) {
+        return;
       }
+
+      node.arguments.forEach(arg => {
+        if (isCallExpression(arg) && isIdentifier(arg.callee)) {
+          if (invalidOperatorsRegExp.test(arg.callee.name)) {
+            context.report({
+              messageId: "forbidden",
+              node: arg.callee
+            });
+          }
+        }
+      });
+    }
+
+    return {
+      [`CallExpression[callee.property.name='pipe'][callee.object.name=${observableRegExp}]`]: report,
+      [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]`]: report
     };
   }
 };
