@@ -44,9 +44,9 @@ const rule: Rule.RuleModule = {
 
     function report(node: es.CallExpression) {
       if (
+        !node.arguments ||
         !isReferenceType(node) ||
-        !couldBeObservable(node) ||
-        !node.arguments
+        !couldBeObservable(node)
       ) {
         return;
       }
