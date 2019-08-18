@@ -3,10 +3,10 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
+import { stripIndent } from "common-tags";
 import { Rule } from "eslint";
 import * as es from "estree";
 import { isCallExpression, isIdentifier, typecheck } from "../utils";
-import { stripIndent } from "common-tags";
 
 const rule: Rule.RuleModule = {
   meta: {
