@@ -3,6 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
+import { stripIndent } from "common-tags";
 import { Rule } from "eslint";
 import * as es from "estree";
 import { isCallExpression, isIdentifier, typecheck } from "../utils";
@@ -23,7 +24,10 @@ const rule: Rule.RuleModule = {
         properties: {
           allow: { type: "array", items: { type: "string" } }
         },
-        type: "object"
+        type: "object",
+        description: stripIndent`
+          An optional object with an optional \`allow\` property.
+          The property is an array containing the names of the operators that are allowed to follow \`takeUntil\`.`
       }
     ]
   },
@@ -61,7 +65,11 @@ const rule: Rule.RuleModule = {
       [`CallExpression[callee.property.name='pipe'][arguments]:has(CallExpression[callee.name=${invalidOperatorsRegExp}])`]: (
         node: es.CallExpression
       ) => {
-        if (!isReferenceType(node) || !couldBeObservable(node)) {
+        if (
+          !node.arguments ||
+          !isReferenceType(node) ||
+          !couldBeObservable(node)
+        ) {
           return;
         }
 

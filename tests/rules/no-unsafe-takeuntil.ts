@@ -190,6 +190,7 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
       ]
     },
     {
+      // https://github.com/cartant/rxjs-tslint-rules/issues/49
       code: stripIndent`
         import { fromEventPattern, NEVER } from "rxjs";
         import { map, startWith, takeUntil } from "rxjs/operators";
