@@ -5,7 +5,7 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
-import { typecheck } from "../utils";
+import { getParent, typecheck } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -24,7 +24,7 @@ const rule: Rule.RuleModule = {
     const { couldBeObservable } = typecheck(context);
 
     function report(node: es.FunctionExpression | es.ArrowFunctionExpression) {
-      const parentNode = (node as any).parent as es.CallExpression;
+      const parentNode = getParent(node) as es.CallExpression;
       const callee = parentNode.callee as es.MemberExpression;
 
       if (couldBeObservable(callee.object)) {
