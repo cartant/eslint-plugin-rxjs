@@ -66,12 +66,13 @@ const rule: Rule.RuleModule = {
         node: es.Identifier
       ) => {
         if (isSubject(node)) {
+          const { loc } = node;
           context.report({
             messageId,
             loc: {
-              start: node.loc.start,
+              ...loc,
               end: {
-                line: node.loc.start.line,
+                ...loc.end,
                 column: node.loc.start.column + node.name.length
               }
             },

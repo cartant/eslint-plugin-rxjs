@@ -28,12 +28,14 @@ const rule: Rule.RuleModule = {
       const callee = parentNode.callee as es.MemberExpression;
 
       if (couldBeObservable(callee.object)) {
+        const { loc } = node;
         // only report the `async` keyword
         const asyncLoc = {
-          start: node.loc.start,
+          ...loc,
           end: {
+            ...loc.end,
             line: node.loc.start.line,
-            column: node.loc.start.column + 4
+            column: loc.start.column + 4
           }
         };
 
