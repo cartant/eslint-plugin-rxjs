@@ -24,13 +24,14 @@ const rule: Rule.RuleModule = {
       "ImportDeclaration[source.value='rxjs/operators'] > ImportSpecifier[imported.name='tap']": (
         node: es.ImportSpecifier
       ) => {
+        const { loc } = node;
         context.report({
           messageId: "forbidden",
           loc: {
-            start: node.loc.start,
+            ...loc,
             end: {
-              line: node.loc.start.line,
-              column: node.loc.start.column + 3
+              ...loc.end,
+              column: loc.start.column + 3
             }
           }
         });
