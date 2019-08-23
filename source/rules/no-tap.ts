@@ -30,7 +30,7 @@ const rule: Rule.RuleModule = {
           loc: {
             ...loc,
             end: {
-              ...loc.end,
+              ...loc.start,
               column: loc.start.column + 3
             }
           }

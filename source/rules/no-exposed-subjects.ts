@@ -72,8 +72,8 @@ const rule: Rule.RuleModule = {
             loc: {
               ...loc,
               end: {
-                ...loc.end,
-                column: node.loc.start.column + node.name.length
+                ...loc.start,
+                column: loc.start.column + node.name.length
               }
             },
             data: {

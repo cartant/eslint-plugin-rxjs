@@ -33,8 +33,7 @@ const rule: Rule.RuleModule = {
         const asyncLoc = {
           ...loc,
           end: {
-            ...loc.end,
-            line: node.loc.start.line,
+            ...loc.start,
             column: loc.start.column + 4
           }
         };
