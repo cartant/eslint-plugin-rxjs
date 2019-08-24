@@ -74,12 +74,8 @@ const rule: Rule.RuleModule = {
         }
 
         node.arguments.reduceRight((isError, arg) => {
-          if (!isCallExpression(arg)) {
+          if (!isCallExpression(arg) || !isIdentifier(arg.callee)) {
             return true;
-          }
-
-          if (!isIdentifier(arg.callee)) {
-            return isError;
           }
 
           if (isError && invalidOperatorsRegExp.test(arg.callee.name)) {
