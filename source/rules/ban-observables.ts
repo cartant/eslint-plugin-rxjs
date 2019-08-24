@@ -31,16 +31,18 @@ const rule: Rule.RuleModule = {
     let bans: { explanation: string; regExp: RegExp }[] = [];
 
     const [config] = context.options;
-    if (config) {
-      Object.entries(config).forEach(([key, value]) => {
-        if (value !== false) {
-          bans.push({
-            explanation: typeof value === "string" ? value : "",
-            regExp: new RegExp(`^${key}$`)
-          });
-        }
-      });
+    if (!config) {
+      return {};
     }
+
+    Object.entries(config).forEach(([key, value]) => {
+      if (value !== false) {
+        bans.push({
+          explanation: typeof value === "string" ? value : "",
+          regExp: new RegExp(`^${key}$`)
+        });
+      }
+    });
 
     function getFailure(name: string) {
       for (let b = 0, length = bans.length; b < length; ++b) {
