@@ -80,3 +80,15 @@ export function isIdentifier(node: es.Node): node is es.Identifier {
 export function isMemberExpression(node: es.Node): node is es.MemberExpression {
   return node.type === "MemberExpression";
 }
+
+export function isFunctionDeclaration(
+  node: es.Node
+): node is es.FunctionDeclaration {
+  return node.type === "FunctionDeclaration";
+}
+
+export function isArrowFunctionExpression(
+  node: es.Node
+): node is es.ArrowFunctionExpression {
+  return node.type === "ArrowFunctionExpression";
+}
