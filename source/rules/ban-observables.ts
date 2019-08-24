@@ -39,7 +39,7 @@ const rule: Rule.RuleModule = {
       if (value !== false) {
         bans.push({
           explanation: typeof value === "string" ? value : "",
-          regExp: new RegExp(`^${key}$`)
+          regExp: new RegExp(`^${key}$`, "i")
         });
       }
     });
