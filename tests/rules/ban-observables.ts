@@ -14,8 +14,8 @@ ruleTester({ types: false }).run("ban-observables", rule, {
       options: [
         {
           of: true,
-          observable: "because I say so",
-          subject: false
+          Observable: "because I say so",
+          Subject: false
         }
       ],
       errors: [
