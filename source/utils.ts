@@ -43,9 +43,18 @@ export function typecheck(context: Rule.RuleContext) {
     return tsType;
   };
 
-  const couldBeType = (node: es.Node, name: string | RegExp) => {
+  const couldBeType = (
+    node: es.Node,
+    name: string | RegExp,
+    qualified?: { name: RegExp }
+  ) => {
     const tsType = getTSType(node);
-    return couldBeTypeTS(tsType, name);
+
+    return couldBeTypeTS(
+      tsType,
+      name,
+      qualified ? { ...qualified, typeChecker } : undefined
+    );
   };
 
   return {
