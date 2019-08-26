@@ -15,6 +15,7 @@ ruleTester({ types: true }).run("no-subclass", rule, {
         import { Scheduler } from "rxjs/internal/Scheduler";
 
         class GenericObservable<T> extends Observable<T> {}
+        class StringObservable extends Observable<string> {}
       `,
       errors: [
         {
@@ -23,22 +24,12 @@ ruleTester({ types: true }).run("no-subclass", rule, {
           column: 36,
           endLine: 4,
           endColumn: 46
-        }
-      ]
-    },
-    {
-      code: stripIndent`
-        import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, Subscriber } from "rxjs";
-        import { Scheduler } from "rxjs/internal/Scheduler";
-
-        class StringObservable extends Observable<string> {}
-      `,
-      errors: [
+        },
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 32,
-          endLine: 4,
+          endLine: 5,
           endColumn: 42
         }
       ]
@@ -48,31 +39,22 @@ ruleTester({ types: true }).run("no-subclass", rule, {
         import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, Subscriber } from "rxjs";
         import { Scheduler } from "rxjs/internal/Scheduler";
 
-        class GenericObservable<T> extends Subject<T> {}
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 36,
-          endLine: 4,
-          endColumn: 43
-        }
-      ]
-    },
-    {
-      code: stripIndent`
-        import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, Subscriber } from "rxjs";
-        import { Scheduler } from "rxjs/internal/Scheduler";
-
+        class GenericSubject<T> extends Subject<T> {}
         class StringSubject extends Subject<string> {}
       `,
       errors: [
         {
           messageId: "forbidden",
           line: 4,
-          column: 29,
+          column: 33,
           endLine: 4,
+          endColumn: 40
+        },
+        {
+          messageId: "forbidden",
+          line: 5,
+          column: 29,
+          endLine: 5,
           endColumn: 36
         }
       ]
@@ -83,6 +65,7 @@ ruleTester({ types: true }).run("no-subclass", rule, {
         import { Scheduler } from "rxjs/internal/Scheduler";
 
         class GenericSubscriber<T> extends Subscriber<T> {}
+        class StringSubscriber extends Subscriber<string> {}
       `,
       errors: [
         {
@@ -91,22 +74,12 @@ ruleTester({ types: true }).run("no-subclass", rule, {
           column: 36,
           endLine: 4,
           endColumn: 46
-        }
-      ]
-    },
-    {
-      code: stripIndent`
-        import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, Subscriber } from "rxjs";
-        import { Scheduler } from "rxjs/internal/Scheduler";
-
-        class StringSubscriber extends Subscriber<string> {}
-      `,
-      errors: [
+        },
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 32,
-          endLine: 4,
+          endLine: 5,
           endColumn: 42
         }
       ]
@@ -117,6 +90,7 @@ ruleTester({ types: true }).run("no-subclass", rule, {
         import { Scheduler } from "rxjs/internal/Scheduler";
 
         class GenericAsyncSubject<T> extends AsyncSubject<T> {}
+        class StringAsyncSubject extends AsyncSubject<string> {}
       `,
       errors: [
         {
@@ -125,22 +99,12 @@ ruleTester({ types: true }).run("no-subclass", rule, {
           column: 38,
           endLine: 4,
           endColumn: 50
-        }
-      ]
-    },
-    {
-      code: stripIndent`
-        import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, Subscriber } from "rxjs";
-        import { Scheduler } from "rxjs/internal/Scheduler";
-
-        class StringAsyncSubject extends AsyncSubject<string> {}
-      `,
-      errors: [
+        },
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 34,
-          endLine: 4,
+          endLine: 5,
           endColumn: 46
         }
       ]
@@ -151,6 +115,7 @@ ruleTester({ types: true }).run("no-subclass", rule, {
         import { Scheduler } from "rxjs/internal/Scheduler";
 
         class GenericBehaviorSubject<T> extends BehaviorSubject<T> {}
+        class StringBehaviorSubject extends BehaviorSubject<string> {}
       `,
       errors: [
         {
@@ -159,22 +124,12 @@ ruleTester({ types: true }).run("no-subclass", rule, {
           column: 41,
           endLine: 4,
           endColumn: 56
-        }
-      ]
-    },
-    {
-      code: stripIndent`
-        import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, Subscriber } from "rxjs";
-        import { Scheduler } from "rxjs/internal/Scheduler";
-
-        class StringBehaviorSubject extends BehaviorSubject<string> {}
-      `,
-      errors: [
+        },
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 37,
-          endLine: 4,
+          endLine: 5,
           endColumn: 52
         }
       ]
@@ -185,6 +140,7 @@ ruleTester({ types: true }).run("no-subclass", rule, {
         import { Scheduler } from "rxjs/internal/Scheduler";
 
         class GenericReplaySubject<T> extends ReplaySubject<T> {}
+        class StringReplaySubject extends ReplaySubject<string> {}
       `,
       errors: [
         {
@@ -193,22 +149,12 @@ ruleTester({ types: true }).run("no-subclass", rule, {
           column: 39,
           endLine: 4,
           endColumn: 52
-        }
-      ]
-    },
-    {
-      code: stripIndent`
-        import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, Subscriber } from "rxjs";
-        import { Scheduler } from "rxjs/internal/Scheduler";
-
-        class StringReplaySubject extends ReplaySubject<string> {}
-      `,
-      errors: [
+        },
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 35,
-          endLine: 4,
+          endLine: 5,
           endColumn: 48
         }
       ]
