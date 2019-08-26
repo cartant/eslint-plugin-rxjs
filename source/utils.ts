@@ -59,7 +59,15 @@ export function typecheck(context: Rule.RuleContext) {
     couldBeBehaviorSubject: (node: es.Node) =>
       couldBeType(node, "BehaviorSubject"),
     couldBeError: (node: es.Node) => couldBeType(node, "Error"),
-    couldBeFunction: (node: es.Node) => couldBeFunctionTS(getTSType(node)),
+    couldBeFunction: (node: es.Node) => {
+      // Fast check
+      if (isArrowFunctionExpression(node) || isFunctionDeclaration(node)) {
+        return true;
+      }
+
+      // Check with a type checker
+      return couldBeFunctionTS(getTSType(node));
+    },
     isAny: (node: es.Node) => isAnyTS(getTSType(node)),
     isReferenceType: (node: es.Node) => isReferenceTypeTS(getTSType(node))
   };

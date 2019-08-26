@@ -31,16 +31,6 @@ const rule: Rule.RuleModule = {
       context
     );
 
-    function nodeIsLikelyAFunction(node: es.Node): boolean {
-      // Fast check
-      if (isArrowFunctionExpression(node) || isFunctionDeclaration(node)) {
-        return true;
-      }
-
-      // Check with a type checker
-      return couldBeFunction(node);
-    }
-
     return {
       "CallExpression[arguments.length > 0] > MemberExpression > Identifier[name='subscribe']": (
         node: es.Identifier
@@ -52,7 +42,7 @@ const rule: Rule.RuleModule = {
           callExpression.arguments.length < 2 &&
           isReferenceType(memberExpression.object) &&
           couldBeObservable(memberExpression.object) &&
-          nodeIsLikelyAFunction(callExpression.arguments[0])
+          couldBeFunction(callExpression.arguments[0])
         ) {
           context.report({
             messageId: "forbidden",
