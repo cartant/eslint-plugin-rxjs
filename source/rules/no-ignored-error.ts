@@ -5,12 +5,7 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
-import {
-  getParent,
-  isArrowFunctionExpression,
-  isFunctionDeclaration,
-  typecheck
-} from "../utils";
+import { getParent, typecheck } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
