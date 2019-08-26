@@ -68,6 +68,8 @@ export function typecheck(context: Rule.RuleContext) {
       // Check with a type checker
       return couldBeFunctionTS(getTSType(node));
     },
+    couldBeMonoTypeOperatorFunction: (node: es.Node) =>
+      couldBeType(node, "MonoTypeOperatorFunction"),
     isAny: (node: es.Node) => isAnyTS(getTSType(node)),
     isReferenceType: (node: es.Node) => isReferenceTypeTS(getTSType(node))
   };
@@ -99,4 +101,10 @@ export function isArrowFunctionExpression(
   node: es.Node
 ): node is es.ArrowFunctionExpression {
   return node.type === "ArrowFunctionExpression";
+}
+
+export function isFunctionExpression(
+  node: es.Node
+): node is es.FunctionExpression {
+  return node.type === "FunctionExpression";
 }
