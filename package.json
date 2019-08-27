@@ -5,6 +5,7 @@
   },
   "dependencies": {
     "common-tags": "^1.8.0",
+    "decamelize": "3.0.0",
     "esquery": "^1.0.1",
     "requireindex": "~1.2.0",
     "tslib": "^1.8.0",
