@@ -8,6 +8,13 @@ import rule = require("../../source/rules/no-subclass");
 import { ruleTester } from "../utils";
 
 ruleTester({ types: true }).run("no-subclass", rule, {
+  valid: [
+    stripIndent`
+      class Observable<T> { t: T; }
+
+      class StringObservable extends Observable<string> {}
+    `
+  ],
   invalid: [
     {
       code: stripIndent`
