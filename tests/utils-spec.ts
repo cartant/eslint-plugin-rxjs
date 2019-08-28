@@ -7,7 +7,7 @@ import { expect } from "chai";
 import decamelize from "decamelize";
 import { createRegExp } from "../source/utils";
 
-describe("rxjs-no-unsafe-switchmap", () => {
+describe("utils", () => {
   describe("createRegExp", () => {
     const regExp = createRegExp(["add"]);
 
