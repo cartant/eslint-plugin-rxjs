@@ -8,7 +8,13 @@ import decamelize from "decamelize";
 import { Rule } from "eslint";
 import esquery from "esquery";
 import * as es from "estree";
-import { isCallExpression, isIdentifier, isLiteral, typecheck } from "../utils";
+import {
+  createRegExp,
+  isCallExpression,
+  isIdentifier,
+  isLiteral,
+  typecheck
+} from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -66,19 +72,6 @@ const rule: Rule.RuleModule = {
       "set",
       "update"
     ];
-
-    function createRegExp(value: any): RegExp | null {
-      if (!value || !value.length) {
-        return null;
-      }
-      const flags = "i";
-      if (typeof value === "string") {
-        return new RegExp(value, flags);
-      }
-      const words = value as string[];
-      const joined = words.map(word => `(\\b|_)${word}(\\b|_)`).join("|");
-      return new RegExp(`(${joined})`, flags);
-    }
 
     let allowRegExp: RegExp | null;
     let disallowRegExp: RegExp | null;
