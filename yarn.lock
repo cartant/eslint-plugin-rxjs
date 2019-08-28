@@ -24,9 +24,9 @@
   integrity sha512-5KfYtlxMWEAwj6RLyfxCScS/qqLVqQTDARKbaZVZy5Ydd1r98oL9oXS5vrxzPXQt6OjYC8UeDh6GUvi3Aak6Cg==
 
 "@cartant/tslint-config@^2.0.0":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@cartant/tslint-config/-/tslint-config-2.0.3.tgz#b088eafffd8b3c3905f42178bb0d759197e1f75c"
-  integrity sha512-kpjCE4l7rvenIH0g5Di+Bs8+OvQW6z+sLHLeo7ckrKUMtoJtwBZ652mUyriPHHbWvxgxvcdtaO7fv/ENcgMbVw==
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@cartant/tslint-config/-/tslint-config-2.0.4.tgz#9e37ca37b44199f231deab3d812b79ed2c480729"
+  integrity sha512-7JN0V4hvBCKgXFNYEhXRPkMfUPDROMWajdiQJ9kxPOGNUZTo4j8aXqtRGJvkVfGcpth8bCq1HWJkXZk58G/8nQ==
 
 "@nodelib/fs.scandir@2.1.1":
   version "2.1.1"
