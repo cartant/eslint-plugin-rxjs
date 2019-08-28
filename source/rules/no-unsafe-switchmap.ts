@@ -109,7 +109,6 @@ const rule: Rule.RuleModule = {
 
           return "";
         })
-        // tslint:disable-next-line: no-unnecessary-callback-wrapper
         .map(name => decamelize(name));
 
       if (allowRegExp) {
