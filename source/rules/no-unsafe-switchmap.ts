@@ -61,7 +61,7 @@ const rule: Rule.RuleModule = {
     ]
   },
   create: context => {
-    const defaultObservable = "action(s|\\$)?";
+    const defaultObservable = "[Aa]ction(s|\\$)?";
     const defaultDisallow = [
       "add",
       "create",
