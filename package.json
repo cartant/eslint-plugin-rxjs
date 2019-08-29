@@ -75,7 +75,9 @@
     "lint:source": "tslint --project tsconfig.json source/**/*.ts",
     "lint:tests": "tslint --project tsconfig.json tests/**/*.ts",
     "prepublishOnly": "yarn run test && yarn run dist",
-    "test": "mocha -r ts-node/register -t 5000 tests/**/*.ts"
+    "test": "yarn run test:rules && yarn run test:specs",
+    "test:rules": "mocha -r ts-node/register tests/rules/*.ts",
+    "test:specs": "mocha -r ts-node/register tests/*-spec.ts"
   },
   "version": "0.0.1-beta.0"
 }
