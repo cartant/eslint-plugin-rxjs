@@ -5,6 +5,7 @@
   },
   "dependencies": {
     "common-tags": "^1.8.0",
+    "decamelize": "3.0.0",
     "esquery": "^1.0.1",
     "requireindex": "~1.2.0",
     "tslib": "^1.8.0",
@@ -15,11 +16,13 @@
   "devDependencies": {
     "@cartant/tslint-config": "^2.0.0",
     "@cartant/tslint-config-etc": "^2.0.0",
+    "@types/chai": "^4.2.0",
     "@types/common-tags": "^1.8.0",
     "@types/eslint": "^6.1.0",
     "@types/mocha": "^5.2.6",
     "@types/node": "^12.0.0",
     "@typescript-eslint/parser": "^2.0.0",
+    "chai": "^4.2.0",
     "eslint": "^6.1.0",
     "husky": "^3.0.0",
     "lint-staged": "^9.0.0",

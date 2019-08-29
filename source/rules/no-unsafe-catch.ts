@@ -38,7 +38,7 @@ const rule: Rule.RuleModule = {
     ]
   },
   create: context => {
-    const defaultObservable = "action(s|\\$)?";
+    const defaultObservable = "[Aa]ction(s|\\$)?";
     const invalidOperatorsRegExp = /^(catchError)$/;
 
     const [config] = context.options;

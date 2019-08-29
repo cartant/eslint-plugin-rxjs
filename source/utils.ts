@@ -96,6 +96,10 @@ export function isIdentifier(node: es.Node): node is es.Identifier {
   return node.type === "Identifier";
 }
 
+export function isLiteral(node: es.Node): node is es.Literal {
+  return node.type === "Literal";
+}
+
 export function isMemberExpression(node: es.Node): node is es.MemberExpression {
   return node.type === "MemberExpression";
 }
@@ -116,4 +120,17 @@ export function isFunctionExpression(
   node: es.Node
 ): node is es.FunctionExpression {
   return node.type === "FunctionExpression";
+}
+
+export function createRegExp(value: any): RegExp | null {
+  if (!value || !value.length) {
+    return null;
+  }
+  const flags = "i";
+  if (typeof value === "string") {
+    return new RegExp(value, flags);
+  }
+  const words = value as string[];
+  const joined = words.map(word => `(\\b|_)${word}(\\b|_)`).join("|");
+  return new RegExp(`(${joined})`, flags);
 }
