@@ -24,7 +24,7 @@ const rule: Rule.RuleModule = {
     },
     fixable: null,
     messages: {
-      forbidden: "Unsafe `catchError` usage in Effects and epics are forbidden."
+      forbidden: "Unsafe `catchError` usage in effects and epics are forbidden."
     },
     schema: [
       {
