@@ -122,15 +122,15 @@ export function isFunctionExpression(
   return node.type === "FunctionExpression";
 }
 
-export function createRegExp(value: any): RegExp | null {
-  if (!value || !value.length) {
+export function createRegExpForWords(config: string | string[]): RegExp | null {
+  if (!config || !config.length) {
     return null;
   }
   const flags = "i";
-  if (typeof value === "string") {
-    return new RegExp(value, flags);
+  if (typeof config === "string") {
+    return new RegExp(config, flags);
   }
-  const words = value as string[];
+  const words = config;
   const joined = words.map(word => `(\\b|_)${word}(\\b|_)`).join("|");
   return new RegExp(`(${joined})`, flags);
 }

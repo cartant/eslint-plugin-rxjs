@@ -9,7 +9,7 @@ import { Rule } from "eslint";
 import esquery from "esquery";
 import * as es from "estree";
 import {
-  createRegExp,
+  createRegExpForWords,
   isCallExpression,
   isIdentifier,
   isLiteral,
@@ -79,12 +79,12 @@ const rule: Rule.RuleModule = {
 
     const [config] = context.options;
     if (config && (config.allow || config.disallow)) {
-      allowRegExp = createRegExp(config.allow);
-      disallowRegExp = createRegExp(config.disallow);
+      allowRegExp = createRegExpForWords(config.allow);
+      disallowRegExp = createRegExpForWords(config.disallow);
       observableRegExp = new RegExp(config.observable || defaultObservable);
     } else {
       allowRegExp = null;
-      disallowRegExp = createRegExp(defaultDisallow);
+      disallowRegExp = createRegExpForWords(defaultDisallow);
       observableRegExp = new RegExp(defaultObservable);
     }
 

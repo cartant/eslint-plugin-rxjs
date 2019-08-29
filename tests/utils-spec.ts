@@ -5,11 +5,11 @@
 
 import { expect } from "chai";
 import decamelize from "decamelize";
-import { createRegExp } from "../source/utils";
+import { createRegExpForWords } from "../source/utils";
 
 describe("utils", () => {
-  describe("createRegExp", () => {
-    const regExp = createRegExp(["add"]);
+  describe("createRegExpForWords", () => {
+    const regExp = createRegExpForWords(["add"]);
 
     it("should match action literals", () => {
       expect(`"ADD"`).to.match(regExp);
@@ -47,7 +47,7 @@ describe("utils", () => {
     });
 
     it("should create a RegExp from a string", () => {
-      expect(createRegExp(".").toString()).to.equal("/./i");
+      expect(createRegExpForWords(".").toString()).to.equal("/./i");
     });
   });
 });
