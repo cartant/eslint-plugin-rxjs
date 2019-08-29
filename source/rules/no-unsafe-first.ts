@@ -6,6 +6,7 @@
 import { stripIndent } from "common-tags";
 import { Rule } from "eslint";
 import * as es from "estree";
+import { defaultObservable } from "../constants";
 import { isCallExpression, isIdentifier, typecheck } from "../utils";
 
 const rule: Rule.RuleModule = {
@@ -33,7 +34,6 @@ const rule: Rule.RuleModule = {
     ]
   },
   create: context => {
-    const defaultObservable = "[Aa]ction(s|\\$)?";
     const invalidOperatorsRegExp = /^(take|first)$/;
 
     const [config] = context.options;

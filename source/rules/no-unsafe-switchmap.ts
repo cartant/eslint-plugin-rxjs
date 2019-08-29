@@ -8,6 +8,7 @@ import decamelize from "decamelize";
 import { Rule } from "eslint";
 import esquery from "esquery";
 import * as es from "estree";
+import { defaultObservable } from "../constants";
 import {
   createRegExpForWords,
   isCallExpression,
@@ -61,7 +62,6 @@ const rule: Rule.RuleModule = {
     ]
   },
   create: context => {
-    const defaultObservable = "[Aa]ction(s|\\$)?";
     const defaultDisallow = [
       "add",
       "create",

@@ -6,6 +6,7 @@
 import { stripIndent } from "common-tags";
 import { Rule } from "eslint";
 import * as es from "estree";
+import { defaultObservable } from "../constants";
 import {
   isArrowFunctionExpression,
   isCallExpression,
@@ -38,7 +39,6 @@ const rule: Rule.RuleModule = {
     ]
   },
   create: context => {
-    const defaultObservable = "[Aa]ction(s|\\$)?";
     const invalidOperatorsRegExp = /^(catchError)$/;
 
     const [config] = context.options;
