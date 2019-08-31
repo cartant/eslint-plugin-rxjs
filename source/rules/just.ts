@@ -3,10 +3,8 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import esquery from "esquery";
+import { Rule, Scope } from "eslint";
 import * as es from "estree";
-import { getParent, typecheck } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -15,43 +13,55 @@ const rule: Rule.RuleModule = {
       description: "Enforces the use of a `just` alias for `of`.",
       recommended: false
     },
-    fixable: null,
+    fixable: "code",
     messages: {
       forbidden: "Use just alias."
     },
     schema: []
   },
   create: context => {
-    const { couldBeObservable } = typecheck(context);
+    const scope = context.getScope();
+
+    function findOfModuleVariables(
+      scope: Scope.Scope,
+      ofVariables: Scope.Variable[]
+    ): Scope.Variable[] {
+      if (scope.type === "module") {
+        const ofVariable = scope.variables.find(
+          variable => variable.name === "of"
+        );
+        if (ofVariable) {
+          ofVariables.push(ofVariable);
+        }
+      }
+
+      scope.childScopes.forEach(childScope =>
+        findOfModuleVariables(childScope, ofVariables)
+      );
+      return ofVariables;
+    }
 
     return {
       "ImportDeclaration[source.value='rxjs'] > ImportSpecifier[imported.name='of']": (
         node: es.ImportSpecifier
       ) => {
-        const { loc } = node;
+        if (node.local.name !== "of") {
+          return;
+        }
+
         context.report({
           messageId: "forbidden",
-          loc: {
-            ...loc,
-            end: {
-              ...loc.start,
-              column: loc.start.column + 2
-            }
-          }
+          node,
+          fix: fixer => fixer.replaceTextRange(node.range, "of as just")
         });
 
-        const ofIdentifiers = esquery(
-          context.getSourceCode().ast,
-          "CallExpression > Identifier[name='of']"
-        ) as es.Identifier[];
-        ofIdentifiers.forEach(ofIdentifier => {
-          const callExpression = getParent(ofIdentifier);
-          if (couldBeObservable(callExpression)) {
-            context.report({
-              messageId: "forbidden",
-              node: ofIdentifier
-            });
-          }
+        const [ofImport] = findOfModuleVariables(scope, []);
+        ofImport.references.forEach(ref => {
+          context.report({
+            messageId: "forbidden",
+            node: ref.identifier,
+            fix: fixer => fixer.replaceTextRange(ref.identifier.range, "just")
+          });
         });
       }
     };
