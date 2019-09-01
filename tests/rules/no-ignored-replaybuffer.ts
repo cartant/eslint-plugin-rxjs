@@ -4,7 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
-import rule = require("../../source/rules/no-ignored-replay-buffer");
+import rule = require("../../source/rules/no-ignored-replaybuffer");
 import { ruleTester } from "../utils";
 
 ruleTester({ types: false }).run("no-ignored-replay-buffer", rule, {
