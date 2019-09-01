@@ -4,6 +4,43 @@ This repo is a WIP.
 
 Eventually, it will contain ESLint versions of the rules in the `tslint-rules` package.
 
+# Install
+
+Install the ESLint TypeScript parser using npm:
+
+```
+npm install @typescript-eslint/parser --save-dev
+```
+
+Install the package using npm:
+
+```
+npm install eslint-plugin-rxjs --save-dev
+```
+
+Configure the `parser` and the `parserOptions` for ESLint. Here, I use a `.eslintrc.js` file for the configuration:
+
+```js
+const { join } = require("path");
+module.exports = {
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaVersion: 2019,
+    project: join(__dirname, "./tsconfig.json"),
+    sourceType: "module"
+  },
+  plugins: ["rxjs"],
+  extends: [],
+  rules: {
+    "rxjs/no-async-subscribe": "error",
+    "rxjs/no-ignored-observable": "error",
+    "rxjs/no-ignored-subscription": "error",
+    "rxjs/no-nested-subscribe": "error",
+    "rxjs/no-unbound-methods": "error",
+    "rxjs/throw-error": "error"
+  }
+```
+
 # Rules
 
 The package includes the following rules:
