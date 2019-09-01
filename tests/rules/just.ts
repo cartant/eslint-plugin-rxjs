@@ -28,6 +28,11 @@ ruleTester({ types: true }).run("just", rule, {
       import { of as bar } from "rxjs";
 
       const a = bar("a");
+    `,
+    stripIndent`
+      import { of as of } from "rxjs";
+
+      const a = of("a");
     `
   ],
   invalid: [
@@ -49,34 +54,6 @@ ruleTester({ types: true }).run("just", rule, {
           column: 10,
           endLine: 1,
           endColumn: 12
-        },
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 11,
-          endLine: 3,
-          endColumn: 13
-        }
-      ]
-    },
-    {
-      code: stripIndent`
-        import { of as of } from "rxjs";
-
-        const a = of("a");
-      `,
-      output: stripIndent`
-        import { of as just } from "rxjs";
-
-        const a = just("a");
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 1,
-          column: 10,
-          endLine: 1,
-          endColumn: 18
         },
         {
           messageId: "forbidden",

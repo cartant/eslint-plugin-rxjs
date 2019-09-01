@@ -45,7 +45,11 @@ const rule: Rule.RuleModule = {
       "ImportDeclaration[source.value='rxjs'] > ImportSpecifier[imported.name='of']": (
         node: es.ImportSpecifier
       ) => {
-        if (node.local.name !== "of") {
+        // import declaration has been renamed
+        if (
+          node.local.range[0] !== node.imported.range[0] &&
+          node.local.range[1] !== node.imported.range[1]
+        ) {
           return;
         }
 
