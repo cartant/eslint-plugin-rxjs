@@ -12,7 +12,7 @@ const rule: Rule.RuleModule = {
     docs: {
       category: "RxJS",
       description:
-        "Enforces the passing of Error values to error notifications.",
+        "Enforces the passing of `Error` values to error notifications.",
       recommended: false
     },
     fixable: null,

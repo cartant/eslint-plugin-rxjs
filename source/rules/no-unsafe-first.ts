@@ -13,13 +13,13 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Forbids unsafe first/take usage in effects and epics.",
+      description: "Forbids unsafe `first`/`take` usage in effects and epics.",
       recommended: false
     },
     fixable: null,
     messages: {
       forbidden:
-        "Unsafe `first` and `take` usage in effects and epics are forbidden."
+        "Unsafe first and take usage in effects and epics are forbidden."
     },
     schema: [
       {

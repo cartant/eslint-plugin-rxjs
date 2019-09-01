@@ -11,7 +11,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Forbids the calling of Observable.create.",
+      description: "Forbids the calling of `Observable.create`.",
       recommended: false
     },
     fixable: null,

@@ -12,7 +12,7 @@ const rule: Rule.RuleModule = {
     docs: {
       category: "RxJS",
       description:
-        "Forbids calling the unsubscribe method of a subject instance.",
+        "Forbids calling the `unsubscribe` method of a subject instance.",
       recommended: true
     },
     fixable: null,

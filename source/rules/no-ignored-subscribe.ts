@@ -12,7 +12,7 @@ const rule: Rule.RuleModule = {
     docs: {
       category: "RxJS",
       description:
-        "Forbids the calling of subscribe without specifying arguments.",
+        "Forbids the calling of `subscribe` without specifying arguments.",
       recommended: false
     },
     fixable: null,

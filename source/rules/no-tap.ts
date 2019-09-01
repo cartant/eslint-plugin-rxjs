@@ -10,12 +10,12 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Forbids the use of the tap operator.",
+      description: "Forbids the use of the `tap` operator.",
       recommended: false
     },
     fixable: null,
     messages: {
-      forbidden: "The `tap` operator is forbidden."
+      forbidden: "The tap operator is forbidden."
     },
     schema: []
   },

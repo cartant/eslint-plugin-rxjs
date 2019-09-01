@@ -11,12 +11,12 @@ const rule: Rule.RuleModule = {
     docs: {
       category: "RxJS",
       description:
-        "Forbids importation from locations that depend upon 'rxjs-compat'.",
+        "Forbids importation from locations that depend upon `rxjs-compat`.",
       recommended: true
     },
     fixable: null,
     messages: {
-      forbidden: "'rxjs-compat' dependent import locations are forbidden."
+      forbidden: "'rxjs-compat'-dependent import locations are forbidden."
     },
     schema: []
   },
