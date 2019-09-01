@@ -49,10 +49,9 @@ const rule: Rule.RuleModule = {
         node: es.Identifier
       ) => {
         const parent = getParent(node) as es.ArrowFunctionExpression;
-        if (node === parent.body) {
-          return false;
+        if (node !== parent.body) {
+          reportIfObservable(node, node);
         }
-        return reportIfObservable(node, node);
       },
       "FunctionDeclaration > Identifier[name=/[$]+$/]": (node: es.Identifier) =>
         reportIfObservable(getParent(node), node),
