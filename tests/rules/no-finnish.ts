@@ -10,26 +10,49 @@ import { ruleTester } from "../utils";
 ruleTester({ types: true }).run("no-finnish", rule, {
   valid: [
     stripIndent`
-      import { of } from "rxjs";
+      import { Observable, of } from "rxjs";
 
-      const a = of('a');
-      const { b$: b } = {} as any;
-      const [{ c$: c }] = [] as any;
+      const someObservable = of(0);
+      declare const hasSomeKey$: { someKey$: Observable<number> };
+      const { someKey$: anotherObservable } = hasSomeKey$;
+      const [{ someKey$: yetAnotherObservable }] = [hasSomeKey$];
+
+      const someEmptyObject = {};
+      const someObject = { ...someEmptyObject, someKey: someObservable };
+      const { someKey } = someObject;
+      const { someKey: someRenamedKey } = someObject;
+
+      const someArray = [someObservable];
+      const [someElement] = someArray;
+      someArray.forEach(function (element: Observable<any>): void {});
+      someArray.forEach((element: Observable<any>) => {});
+
+      function someFunction(someParam: Observable<any>): Observable<any> { return someParam; }
+      const someArrowFunction = (someParam: Observable<any>): Observable<any> => someParam;
+
+      class SomeClass {
+        someProperty: Observable<any>;
+        constructor (someParam: Observable<any>) {}
+        get someGetter(): Observable<any> { throw new Error("Some error."); }
+        set someSetter(someParam: Observable<any>) {}
+        someMethod(someParam: Observable<any>): Observable<any> { return someParam; }
+      }
+
+      interface SomeInterface {
+        someProperty: Observable<any>;
+        someMethod(someParam: Observable<any>): Observable<any>;
+      }
     `
   ],
   invalid: [
     {
       code: stripIndent`
-        import { of } from "rxjs";
+        import { Observable, of } from "rxjs";
 
         const someObservable$ = of(0);
-        const someEmptyObject = {};
-        const someObject = { ...someEmptyObject, someKey$: someObservable$ };
-
-        const { someKey$ } = someObject;
-
-        const someArray = [someObservable$];
-        const [someElement$] = someArray;
+        declare const hasSomeKey$: { someKey$: Observable<number> };
+        const { someKey$: anotherObservable$ } = hasSomeKey$;
+        const [{ someKey$: yetAnotherObservable$ }] = [hasSomeKey$];
       `,
       errors: [
         {
@@ -42,8 +65,43 @@ ruleTester({ types: true }).run("no-finnish", rule, {
         {
           messageId: "forbidden",
           line: 5,
-          column: 42,
+          column: 19,
           endLine: 5,
+          endColumn: 37
+        },
+        {
+          messageId: "forbidden",
+          line: 6,
+          column: 20,
+          endLine: 6,
+          endColumn: 41
+        }
+      ]
+    },
+    {
+      code: stripIndent`
+        import { Observable, of } from "rxjs";
+
+        const someObservable$ = of(0);
+
+        const someEmptyObject = {};
+        const someObject = { ...someEmptyObject, someKey$: someObservable$ };
+        const { someKey$ } = someObject;
+        const { someKey$: someRenamedKey$ } = someObject;
+      `,
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 3,
+          column: 7,
+          endLine: 3,
+          endColumn: 22
+        },
+        {
+          messageId: "forbidden",
+          line: 6,
+          column: 42,
+          endLine: 6,
           endColumn: 50
         },
         {
@@ -55,77 +113,89 @@ ruleTester({ types: true }).run("no-finnish", rule, {
         },
         {
           messageId: "forbidden",
-          line: 10,
-          column: 8,
-          endLine: 10,
-          endColumn: 20
+          line: 8,
+          column: 19,
+          endLine: 8,
+          endColumn: 34
         }
       ]
     },
     {
       code: stripIndent`
-        import { of, Observable } from "rxjs";
+        import { Observable, of } from "rxjs";
 
-        const someObservable = of(0);
+        const someObservable$ = of(0);
 
-        const someArray = [someObservable];
+        const someArray = [someObservable$];
+        const [someElement$] = someArray;
         someArray.forEach(function (element$: Observable<any>): void {});
         someArray.forEach((element$: Observable<any>) => {});
       `,
       errors: [
         {
           messageId: "forbidden",
+          line: 3,
+          column: 7,
+          endLine: 3,
+          endColumn: 22
+        },
+        {
+          messageId: "forbidden",
           line: 6,
-          column: 29,
+          column: 8,
           endLine: 6,
-          endColumn: 54
+          endColumn: 20
         },
         {
           messageId: "forbidden",
           line: 7,
-          column: 20,
+          column: 29,
           endLine: 7,
+          endColumn: 54
+        },
+        {
+          messageId: "forbidden",
+          line: 8,
+          column: 20,
+          endLine: 8,
           endColumn: 45
         }
       ]
     },
     {
       code: stripIndent`
-        import { Observable } from 'rxjs';
-        function someFunction$(someParam$: Observable<any>): Observable<any> { return someParam; }
+        import { Observable } from "rxjs";
+
+        function someFunction$(someParam$: Observable<any>): Observable<any> { return someParam$; }
       `,
       errors: [
         {
           messageId: "forbidden",
-          line: 2,
+          line: 3,
           column: 10,
-          endLine: 2,
+          endLine: 3,
           endColumn: 23
         },
         {
           messageId: "forbidden",
-          line: 2,
+          line: 3,
           column: 24,
-          endLine: 2,
+          endLine: 3,
           endColumn: 51
         }
       ]
     },
     {
       code: stripIndent`
-      import { Observable } from 'rxjs';
+        import { Observable } from "rxjs";
 
-      class SomeClass {
-        someProperty$: Observable<any>;
-
-        constructor (someParam$: Observable<any>) {}
-
-        get someGetter$(): Observable<any> { throw new Error("Some error."); }
-
-        set someSetter$(someParam$: Observable<any>) {}
-
-        someMethod$(someParam$: Observable<any>): Observable<any> { return someParam; }
-      }
+        class SomeClass {
+          someProperty$: Observable<any>;
+          constructor (someParam$: Observable<any>) {}
+          get someGetter$(): Observable<any> { throw new Error("Some error."); }
+          set someSetter$(someParam$: Observable<any>) {}
+          someMethod$(someParam$: Observable<any>): Observable<any> { return someParam; }
+        }
       `,
       errors: [
         {
@@ -137,56 +207,56 @@ ruleTester({ types: true }).run("no-finnish", rule, {
         },
         {
           messageId: "forbidden",
-          line: 6,
+          line: 5,
           column: 16,
-          endLine: 6,
+          endLine: 5,
           endColumn: 43
         },
         {
           messageId: "forbidden",
-          line: 8,
+          line: 6,
           column: 7,
-          endLine: 8,
+          endLine: 6,
           endColumn: 18
         },
         {
           messageId: "forbidden",
-          line: 10,
+          line: 7,
           column: 7,
-          endLine: 10,
+          endLine: 7,
           endColumn: 18
         },
         {
           messageId: "forbidden",
-          line: 10,
+          line: 7,
           column: 19,
-          endLine: 10,
+          endLine: 7,
           endColumn: 46
         },
         {
           messageId: "forbidden",
-          line: 12,
+          line: 8,
           column: 3,
-          endLine: 12,
+          endLine: 8,
           endColumn: 14
         },
         {
           messageId: "forbidden",
-          line: 12,
+          line: 8,
           column: 15,
-          endLine: 12,
+          endLine: 8,
           endColumn: 42
         }
       ]
     },
     {
       code: stripIndent`
-      import { Observable } from 'rxjs';
+        import { Observable } from "rxjs";
 
-      interface SomeInterface {
-        someProperty$: Observable<any>;
-        someMethod$(someParam$: Observable<any>, abc$: () => Observable<any>): Observable<any>;
-      }
+        interface SomeInterface {
+          someProperty$: Observable<any>;
+          someMethod$(someParam$: Observable<any>, abc$: () => Observable<any>): Observable<any>;
+        }
       `,
       errors: [
         {
