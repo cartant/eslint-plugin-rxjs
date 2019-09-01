@@ -79,5 +79,5 @@
     "test:rules": "mocha -r ts-node/register tests/rules/*.ts",
     "test:specs": "mocha -r ts-node/register tests/*-spec.ts"
   },
-  "version": "0.0.1-beta.0"
+  "version": "0.0.1-beta.1"
 }
