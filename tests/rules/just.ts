@@ -41,11 +41,13 @@ ruleTester({ types: true }).run("just", rule, {
         import { of } from "rxjs";
 
         const a = of("a");
+        const b = of("b");
       `,
       output: stripIndent`
         import { of as just } from "rxjs";
 
         const a = just("a");
+        const b = just("b");
       `,
       errors: [
         {
@@ -60,6 +62,13 @@ ruleTester({ types: true }).run("just", rule, {
           line: 3,
           column: 11,
           endLine: 3,
+          endColumn: 13
+        },
+        {
+          messageId: "forbidden",
+          line: 4,
+          column: 11,
+          endLine: 4,
           endColumn: 13
         }
       ]

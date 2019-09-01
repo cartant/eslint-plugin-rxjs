@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule, Scope } from "eslint";
+import { Rule } from "eslint";
 import * as es from "estree";
 
 const rule: Rule.RuleModule = {
@@ -20,27 +20,6 @@ const rule: Rule.RuleModule = {
     schema: []
   },
   create: context => {
-    const scope = context.getScope();
-
-    function findOfModuleVariables(
-      scope: Scope.Scope,
-      ofVariables: Scope.Variable[]
-    ): Scope.Variable[] {
-      if (scope.type === "module") {
-        const ofVariable = scope.variables.find(
-          variable => variable.name === "of"
-        );
-        if (ofVariable) {
-          ofVariables.push(ofVariable);
-        }
-      }
-
-      scope.childScopes.forEach(childScope =>
-        findOfModuleVariables(childScope, ofVariables)
-      );
-      return ofVariables;
-    }
-
     return {
       "ImportDeclaration[source.value='rxjs'] > ImportSpecifier[imported.name='of']": (
         node: es.ImportSpecifier
@@ -59,7 +38,7 @@ const rule: Rule.RuleModule = {
           fix: fixer => fixer.replaceTextRange(node.range, "of as just")
         });
 
-        const [ofImport] = findOfModuleVariables(scope, []);
+        const [ofImport] = context.getDeclaredVariables(node);
         ofImport.references.forEach(ref => {
           context.report({
             messageId: "forbidden",
