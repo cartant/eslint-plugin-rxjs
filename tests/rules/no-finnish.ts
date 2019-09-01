@@ -167,6 +167,7 @@ ruleTester({ types: true }).run("no-finnish", rule, {
         import { Observable } from "rxjs";
 
         function someFunction$(someParam$: Observable<any>): Observable<any> { return someParam$; }
+        const someArrowFunction$ = (someParam$: Observable<any>): Observable<any> => someParam$;
       `,
       errors: [
         {
@@ -182,6 +183,20 @@ ruleTester({ types: true }).run("no-finnish", rule, {
           column: 24,
           endLine: 3,
           endColumn: 51
+        },
+        {
+          messageId: "forbidden",
+          line: 4,
+          column: 7,
+          endLine: 4,
+          endColumn: 25
+        },
+        {
+          messageId: "forbidden",
+          line: 4,
+          column: 29,
+          endLine: 4,
+          endColumn: 56
         }
       ]
     },

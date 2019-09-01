@@ -31,7 +31,7 @@ const rule: Rule.RuleModule = {
 
     return {
       "VariableDeclarator[id.name=/[$]+$/]": (node: es.VariableDeclarator) =>
-        reportIfObservable(node, node.id),
+        reportIfObservable(node.init || node, node.id),
       "ObjectExpression > Property[computed=false][key.name=/[$]+$/]": (
         node: es.Property
       ) => reportIfObservable(node.key, node.key),
@@ -47,7 +47,13 @@ const rule: Rule.RuleModule = {
         reportIfObservable(node, node),
       "ArrowFunctionExpression > Identifier[name=/[$]+$/]": (
         node: es.Identifier
-      ) => reportIfObservable(node, node),
+      ) => {
+        const parent = getParent(node) as es.ArrowFunctionExpression;
+        if (node === parent.body) {
+          return false;
+        }
+        return reportIfObservable(node, node);
+      },
       "FunctionDeclaration > Identifier[name=/[$]+$/]": (node: es.Identifier) =>
         reportIfObservable(getParent(node), node),
       "ClassProperty[key.name=/[$]+$/] > Identifier": (node: es.Identifier) =>
