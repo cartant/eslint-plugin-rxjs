@@ -13,6 +13,8 @@ ruleTester({ types: true }).run("no-finnish", rule, {
       import { of } from "rxjs";
 
       const a = of('a');
+      const { b$: b } = {} as any;
+      const [{ c$: c }] = [] as any;
     `
   ],
   invalid: [
@@ -207,6 +209,13 @@ ruleTester({ types: true }).run("no-finnish", rule, {
           column: 15,
           endLine: 5,
           endColumn: 42
+        },
+        {
+          messageId: "forbidden",
+          line: 5,
+          column: 44,
+          endLine: 5,
+          endColumn: 71
         }
       ]
     }

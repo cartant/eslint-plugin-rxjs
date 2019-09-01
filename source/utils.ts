@@ -39,7 +39,6 @@ export function typecheck(context: Rule.RuleContext) {
   const getTSType = (node: es.Node) => {
     const tsNode = nodeMap.get(node);
     const tsType = typeChecker.getTypeAtLocation(tsNode);
-
     return tsType;
   };
 
@@ -49,7 +48,6 @@ export function typecheck(context: Rule.RuleContext) {
     qualified?: { name: RegExp }
   ) => {
     const tsType = getTSType(node);
-
     return couldBeTypeTS(
       tsType,
       name,
@@ -57,12 +55,41 @@ export function typecheck(context: Rule.RuleContext) {
     );
   };
 
+  const couldReturnType = (
+    node: es.Node,
+    name: string | RegExp,
+    qualified?: { name: RegExp }
+  ) => {
+    const tsNode = nodeMap.get(node);
+    if (
+      ts.isArrowFunction(tsNode) ||
+      ts.isFunctionDeclaration(tsNode) ||
+      ts.isMethodDeclaration(tsNode) ||
+      ts.isFunctionExpression(tsNode) ||
+      ts.isCallSignatureDeclaration(tsNode) ||
+      ts.isMethodSignature(tsNode)
+    ) {
+      return (
+        tsNode.type &&
+        couldBeTypeTS(
+          typeChecker.getTypeAtLocation(tsNode.type),
+          name,
+          qualified ? { ...qualified, typeChecker } : undefined
+        )
+      );
+    }
+    return false;
+  };
+
   return {
     nodeMap,
     typeChecker,
     getTSType,
     couldBeType,
+    couldReturnType,
     couldBeObservable: (node: es.Node) => couldBeType(node, "Observable"),
+    couldReturnObservable: (node: es.Node) =>
+      couldReturnType(node, "Observable"),
     couldBeSubscription: (node: es.Node) => couldBeType(node, "Subscription"),
     couldBeSubject: (node: es.Node) => couldBeType(node, "Subject"),
     couldBeBehaviorSubject: (node: es.Node) =>
