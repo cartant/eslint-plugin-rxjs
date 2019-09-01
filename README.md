@@ -23,7 +23,7 @@ The package includes the following rules:
 [`no-ignored-error`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-ignored-error.ts) | Forbids the calling of subscribe without specifying an error handler. | TBD |
 [`no-ignored-notifier`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-ignored-notifier.ts) | Forbids observables not composed from the `repeatWhen` or `retryWhen` notifier. | TBD |
 [`no-ignored-observable`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-ignored-observable.ts) | Forbids the ignoring of observables returned by functions. | TBD |
-[`no-ignored-replaybuffer`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-ignored-replaybuffer.ts) | Forbids using `ReplaySubject`, `publishReplay` or `shareReplay` without specifying the buffer size. | TBD |
+[`no-ignored-replay-buffer`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-ignored-replay-buffer.ts) | Forbids using `ReplaySubject`, `publishReplay` or `shareReplay` without specifying the buffer size. | TBD |
 [`no-ignored-subscribe`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-ignored-subscribe.ts) | Forbids the calling of subscribe without specifying arguments. | TBD |
 [`no-ignored-subscription`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-ignored-subscription.ts) | Forbids ignoring the subscription returned by subscribe. | TBD |
 [`no-internal`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-internal.ts) | Forbids the importation of internals. | TBD |
