@@ -18,7 +18,7 @@ const rule: Rule.RuleModule = {
     },
     fixable: null,
     messages: {
-      forbidden: "Finnish notation is forbidden"
+      forbidden: "Finnish notation is forbidden."
     },
     schema: []
   },
