@@ -10,7 +10,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows explicit generic type arguments.",
+      description: "Forbids explicit generic type arguments.",
       recommended: true
     },
     fixable: null,

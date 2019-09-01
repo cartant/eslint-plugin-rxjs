@@ -10,7 +10,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows the importation of internals.",
+      description: "Forbids the importation of internals.",
       recommended: true
     },
     fixable: null,

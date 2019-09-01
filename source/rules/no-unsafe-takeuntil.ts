@@ -12,7 +12,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows the application of operators after takeUntil.",
+      description: "Forbids the application of operators after takeUntil.",
       recommended: false
     },
     fixable: null,

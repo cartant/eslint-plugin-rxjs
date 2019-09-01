@@ -11,8 +11,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description:
-        "Disallows the ignoring of observables returned by functions.",
+      description: "Forbids the ignoring of observables returned by functions.",
       recommended: false
     },
     fixable: null,

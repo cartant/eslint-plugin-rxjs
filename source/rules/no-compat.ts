@@ -11,7 +11,7 @@ const rule: Rule.RuleModule = {
     docs: {
       category: "RxJS",
       description:
-        "Disallows importation from locations that depend upon 'rxjs-compat'.",
+        "Forbids importation from locations that depend upon 'rxjs-compat'.",
       recommended: true
     },
     fixable: null,

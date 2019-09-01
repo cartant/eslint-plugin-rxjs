@@ -13,7 +13,7 @@ const rule: Rule.RuleModule = {
     docs: {
       category: "RxJS",
       description:
-        "Disallows the calling of `subscribe` within a `subscribe` callback.",
+        "Forbids the calling of `subscribe` within a `subscribe` callback.",
       recommended: true
     },
     fixable: null,

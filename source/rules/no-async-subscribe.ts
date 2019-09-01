@@ -11,7 +11,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows passing async functions to subscribe.",
+      description: "Forbids passing async functions to subscribe.",
       recommended: true
     },
     fixable: null,

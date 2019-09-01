@@ -13,7 +13,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows operators that return connectable observables.",
+      description: "Forbids operators that return connectable observables.",
       recommended: true
     },
     fixable: null,

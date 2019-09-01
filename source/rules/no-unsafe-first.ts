@@ -13,7 +13,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows unsafe first/take usage in effects and epics.",
+      description: "Forbids unsafe first/take usage in effects and epics.",
       recommended: false
     },
     fixable: null,

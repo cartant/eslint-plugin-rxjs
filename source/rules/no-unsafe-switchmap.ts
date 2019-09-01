@@ -21,7 +21,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows unsafe switchMap usage in effects and epics.",
+      description: "Forbids unsafe switchMap usage in effects and epics.",
       recommended: false
     },
     fixable: null,

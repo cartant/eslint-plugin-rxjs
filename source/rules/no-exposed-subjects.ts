@@ -13,7 +13,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows exposed subjects.",
+      description: "Forbids exposed subjects.",
       recommended: false
     },
     fixable: null,

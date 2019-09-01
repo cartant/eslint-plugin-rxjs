@@ -13,7 +13,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows the use of Finnish notation.",
+      description: "Forbids the use of Finnish notation.",
       recommended: false
     },
     fixable: null,

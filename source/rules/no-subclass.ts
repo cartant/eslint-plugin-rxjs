@@ -11,7 +11,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows subclassing RxJS classes.",
+      description: "Forbids subclassing RxJS classes.",
       recommended: false
     },
     fixable: null,

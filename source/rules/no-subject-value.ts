@@ -12,7 +12,7 @@ const rule: Rule.RuleModule = {
     docs: {
       category: "RxJS",
       description:
-        "Disallows accessing the value property of a BehaviorSubject instance.",
+        "Forbids accessing the value property of a BehaviorSubject instance.",
       recommended: false
     },
     fixable: null,

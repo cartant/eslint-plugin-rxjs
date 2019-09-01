@@ -18,7 +18,7 @@ const rule: Rule.RuleModule = {
     docs: {
       category: "RxJS",
       description:
-        "Disallows observables not composed from the `repeatWhen` or `retryWhen` notifier.",
+        "Forbids observables not composed from the `repeatWhen` or `retryWhen` notifier.",
       recommended: false
     },
     fixable: null,

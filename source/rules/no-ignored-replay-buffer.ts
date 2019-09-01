@@ -12,7 +12,7 @@ const rule: Rule.RuleModule = {
     docs: {
       category: "RxJS",
       description:
-        "Disallows using `ReplaySubject`, `publishReplay` or `shareReplay` without specifying the buffer size.",
+        "Forbids using `ReplaySubject`, `publishReplay` or `shareReplay` without specifying the buffer size.",
       recommended: false
     },
     fixable: null,

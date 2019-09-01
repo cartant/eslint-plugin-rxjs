@@ -19,7 +19,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows unsafe catchError usage in effects and epics.",
+      description: "Forbids unsafe catchError usage in effects and epics.",
       recommended: false
     },
     fixable: null,

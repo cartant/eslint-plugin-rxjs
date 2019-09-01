@@ -11,7 +11,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows ignoring the subscription returned by subscribe.",
+      description: "Forbids ignoring the subscription returned by subscribe.",
       recommended: false
     },
     fixable: null,

@@ -11,7 +11,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows the use of banned observables.",
+      description: "Forbids the use of banned observables.",
       recommended: false
     },
     fixable: null,

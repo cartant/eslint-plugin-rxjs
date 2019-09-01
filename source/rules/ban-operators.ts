@@ -11,7 +11,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows the use of banned operators.",
+      description: "Forbids the use of banned operators.",
       recommended: false
     },
     fixable: null,

@@ -12,7 +12,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Disallows the passing of unbound methods.",
+      description: "Forbids the passing of unbound methods.",
       recommended: false
     },
     fixable: null,
