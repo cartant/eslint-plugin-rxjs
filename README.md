@@ -39,6 +39,7 @@ module.exports = {
     "rxjs/no-unbound-methods": "error",
     "rxjs/throw-error": "error"
   }
+};
 ```
 
 # Rules
