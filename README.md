@@ -2,7 +2,7 @@
 
 This repo is a WIP.
 
-Eventually, it will contain ESLint versions of the rules in the `tslint-rules` package.
+Eventually, it will contain ESLint versions of the rules in the [`rxjs-tslint-rules`](https://github.com/cartant/rxjs-tslint-rules) package.
 
 # Install
 
