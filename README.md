@@ -64,6 +64,7 @@ The package includes the following rules:
 [`no-ignored-replay-buffer`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-ignored-replay-buffer.ts) | Forbids using `ReplaySubject`, `publishReplay` or `shareReplay` without specifying the buffer size. | TBD |
 [`no-ignored-subscribe`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-ignored-subscribe.ts) | Forbids the calling of `subscribe` without specifying arguments. | TBD |
 [`no-ignored-subscription`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-ignored-subscription.ts) | Forbids ignoring the subscription returned by `subscribe`. | TBD |
+[`no-index`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-index.ts) | Forbids the importation from index modules - for the reason, see [this issue](https://github.com/ReactiveX/rxjs/issues/4230). | TBD |
 [`no-internal`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-internal.ts) | Forbids the importation of internals. | TBD |
 [`no-nested-subscribe`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-nested-subscribe.ts) | Forbids the calling of `subscribe` within a `subscribe` callback. | TBD |
 [`no-sharereplay`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-sharereplay.ts) | Forbids using the `shareReplay` operator. | TBD |
