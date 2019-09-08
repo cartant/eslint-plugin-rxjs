@@ -35,7 +35,7 @@ const rule: Rule.RuleModule = {
           });
         }
       },
-      "ExpressionStatement > CallExpression[callee.property.name='add'][arguments.length > 0]": (
+      "CallExpression[callee.property.name='add'][arguments.length > 0]": (
         node: es.CallExpression
       ) => {
         const memberExpression = node.callee as es.MemberExpression;

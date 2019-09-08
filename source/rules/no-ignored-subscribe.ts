@@ -25,7 +25,7 @@ const rule: Rule.RuleModule = {
     const { couldBeObservable } = typecheck(context);
 
     return {
-      "ExpressionStatement > CallExpression:has([arguments.length = 0]) > MemberExpression[property.name='subscribe']": (
+      "CallExpression:has([arguments.length = 0]) > MemberExpression[property.name='subscribe']": (
         node: es.MemberExpression
       ) => {
         if (couldBeObservable(node.object)) {

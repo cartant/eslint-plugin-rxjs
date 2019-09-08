@@ -45,8 +45,8 @@ const rule: Rule.RuleModule = {
       }
     }
     return {
-      "ExpressionStatement > CallExpression:has(MemberExpression[property.name='subscribe']) > FunctionExpression[async=true]": report,
-      "ExpressionStatement > CallExpression:has(MemberExpression[property.name='subscribe']) > ArrowFunctionExpression[async=true]": report
+      "CallExpression:has(MemberExpression[property.name='subscribe']) > FunctionExpression[async=true]": report,
+      "CallExpression:has(MemberExpression[property.name='subscribe']) > ArrowFunctionExpression[async=true]": report
     };
   }
 };
