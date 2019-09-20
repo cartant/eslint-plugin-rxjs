@@ -10,14 +10,22 @@ import { ruleTester } from "../utils";
 ruleTester({ types: true }).run("no-async-subscribe", rule, {
   valid: [
     stripIndent`
+      // sync arrow function
       import { of } from "rxjs";
 
       of("a").subscribe(() => {});
+    `,
+    stripIndent`
+      // sync function
+      import { of } from "rxjs";
+
+      of("a").subscribe(function() {});
     `
   ],
   invalid: [
     {
       code: stripIndent`
+        // async arrow function
         import { of } from "rxjs";
 
         of("a").subscribe(async () => {
@@ -27,15 +35,16 @@ ruleTester({ types: true }).run("no-async-subscribe", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 3,
+          line: 4,
           column: 19,
-          endLine: 3,
+          endLine: 4,
           endColumn: 23
         }
       ]
     },
     {
       code: stripIndent`
+        // async function
         import { of } from "rxjs";
 
         of("a").subscribe(async function() {
@@ -45,9 +54,9 @@ ruleTester({ types: true }).run("no-async-subscribe", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 3,
+          line: 4,
           column: 19,
-          endLine: 3,
+          endLine: 4,
           endColumn: 23
         }
       ]

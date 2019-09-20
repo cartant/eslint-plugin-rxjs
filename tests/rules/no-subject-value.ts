@@ -10,16 +10,16 @@ import { ruleTester } from "../utils";
 ruleTester({ types: true }).run("no-subject-value", rule, {
   valid: [
     stripIndent`
+      // no value
       import { BehaviorSubject } from "rxjs";
-
       const subject = new BehaviorSubject<number>(1);
     `
   ],
   invalid: [
     {
       code: stripIndent`
+        // value property
         import { BehaviorSubject } from "rxjs";
-
         const subject = new BehaviorSubject<number>(1);
         console.log(subject.value);
       `,
@@ -35,8 +35,8 @@ ruleTester({ types: true }).run("no-subject-value", rule, {
     },
     {
       code: stripIndent`
+        // getValue method
         import { BehaviorSubject } from "rxjs";
-
         const subject = new BehaviorSubject<number>(1);
         console.log(subject.getValue());
       `,

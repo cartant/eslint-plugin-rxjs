@@ -11,6 +11,7 @@ ruleTester({ types: true }).run("no-connectable", rule, {
   valid: [
     {
       code: stripIndent`
+        // multicast with selector
         import { of, Subject } from "rxjs";
         import { multicast } from "rxjs/operators";
         const result = of(42).pipe(
@@ -19,6 +20,7 @@ ruleTester({ types: true }).run("no-connectable", rule, {
     },
     {
       code: stripIndent`
+        // multicast with factory and selector
         import { of, Subject } from "rxjs";
         import { multicast } from "rxjs/operators";
         const result = of(42).pipe(
@@ -27,6 +29,7 @@ ruleTester({ types: true }).run("no-connectable", rule, {
     },
     {
       code: stripIndent`
+        // multicast with selector variable
         import { of, Subject } from "rxjs";
         import { multicast } from "rxjs/operators";
         const selector = p => p;
@@ -36,6 +39,7 @@ ruleTester({ types: true }).run("no-connectable", rule, {
     },
     {
       code: stripIndent`
+        // publish with selector
         import { of, Subject } from "rxjs";
         import { multicast } from "rxjs/operators";
         const result = of(42).pipe(
@@ -44,6 +48,7 @@ ruleTester({ types: true }).run("no-connectable", rule, {
     },
     {
       code: stripIndent`
+        // publishReplay with selector
         import { of, Subject } from "rxjs";
         import { publishReplay } from "rxjs/operators";
         const result = of(42).pipe(
@@ -54,6 +59,7 @@ ruleTester({ types: true }).run("no-connectable", rule, {
   invalid: [
     {
       code: stripIndent`
+        // publish
         import { of, Subject } from "rxjs";
         import { publish } from "rxjs/operators";
         const result = of(42).pipe(
@@ -62,15 +68,16 @@ ruleTester({ types: true }).run("no-connectable", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 3,
-          endLine: 4,
+          endLine: 5,
           endColumn: 10
         }
       ]
     },
     {
       code: stripIndent`
+        // publishBehavior
         import { of, Subject } from "rxjs";
         import { publishBehavior } from "rxjs/operators";
         const result = of(42).pipe(
@@ -79,15 +86,16 @@ ruleTester({ types: true }).run("no-connectable", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 3,
-          endLine: 4,
+          endLine: 5,
           endColumn: 18
         }
       ]
     },
     {
       code: stripIndent`
+        // publishLast
         import { of, Subject } from "rxjs";
         import { publishLast } from "rxjs/operators";
         const result = of(42).pipe(
@@ -96,15 +104,16 @@ ruleTester({ types: true }).run("no-connectable", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 3,
-          endLine: 4,
+          endLine: 5,
           endColumn: 14
         }
       ]
     },
     {
       code: stripIndent`
+        // publishReplay
         import { of, Subject } from "rxjs";
         import { publishReplay } from "rxjs/operators";
         const result = of(42).pipe(
@@ -113,15 +122,16 @@ ruleTester({ types: true }).run("no-connectable", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 3,
-          endLine: 4,
+          endLine: 5,
           endColumn: 16
         }
       ]
     },
     {
       code: stripIndent`
+        // multicast
         import { of, Subject } from "rxjs";
         import { multicast } from "rxjs/operators";
         const result = of(42).pipe(
@@ -130,15 +140,16 @@ ruleTester({ types: true }).run("no-connectable", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 3,
-          endLine: 4,
+          endLine: 5,
           endColumn: 12
         }
       ]
     },
     {
       code: stripIndent`
+        // multicast with factory
         import { of, Subject } from "rxjs";
         import { multicast } from "rxjs/operators";
         const result = of(42).pipe(
@@ -147,9 +158,9 @@ ruleTester({ types: true }).run("no-connectable", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 3,
-          endLine: 4,
+          endLine: 5,
           endColumn: 12
         }
       ]

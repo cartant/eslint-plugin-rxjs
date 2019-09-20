@@ -11,6 +11,7 @@ ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
   valid: [
     {
       code: stripIndent`
+        // not ignored
         import { of } from "rxjs";
 
         const observable = of([1, 2]);
@@ -18,6 +19,7 @@ ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
     },
     {
       code: stripIndent`
+        // subject not ignored
         import { Subject } from "rxjs";
 
         const subject = new Subject<any>();
@@ -25,6 +27,7 @@ ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
     },
     {
       code: stripIndent`
+        // not ignored non-arrow
         import { of } from "rxjs";
 
         function log(value) {
@@ -38,6 +41,7 @@ ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
   invalid: [
     {
       code: stripIndent`
+        // ignored
         import { of } from "rxjs";
 
         const observable = of([1, 2]);
@@ -46,15 +50,16 @@ ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 12,
-          endLine: 4,
+          endLine: 5,
           endColumn: 21
         }
       ]
     },
     {
       code: stripIndent`
+        // subject ignored
         import { Subject } from "rxjs";
 
         const subject = new Subject<any>();
@@ -63,9 +68,9 @@ ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 9,
-          endLine: 4,
+          endLine: 5,
           endColumn: 18
         }
       ]

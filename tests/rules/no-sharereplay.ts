@@ -11,6 +11,7 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
   valid: [
     {
       code: stripIndent`
+        // config allowed refCount
         const shared = of(42).pipe(
           shareReplay({ refCount: true })
         );`,
@@ -18,6 +19,7 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
     },
     {
       code: stripIndent`
+        // config allowed no refCount
         const shared = of(42).pipe(
           shareReplay({ refCount: false })
         );`,
@@ -27,21 +29,23 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
   invalid: [
     {
       code: stripIndent`
+        // no arguments
         const shared = of(42).pipe(
           shareReplay()
         );`,
       errors: [
         {
           messageId: "forbidden",
-          line: 2,
+          line: 3,
           column: 3,
-          endLine: 2,
+          endLine: 3,
           endColumn: 14
         }
       ]
     },
     {
       code: stripIndent`
+        // config allowed no arguments
         const shared = of(42).pipe(
           shareReplay()
         );`,
@@ -49,60 +53,64 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
       errors: [
         {
           messageId: "forbiddenWithoutConfig",
-          line: 2,
+          line: 3,
           column: 3,
-          endLine: 2,
+          endLine: 3,
           endColumn: 14
         }
       ]
     },
     {
       code: stripIndent`
+        // one argument
         const shared = of(42).pipe(
           shareReplay(1)
         );`,
       errors: [
         {
           messageId: "forbidden",
-          line: 2,
+          line: 3,
           column: 3,
-          endLine: 2,
+          endLine: 3,
           endColumn: 14
         }
       ]
     },
     {
       code: stripIndent`
+        // two arguments
         const shared = of(42).pipe(
           shareReplay(1, 100)
         );`,
       errors: [
         {
           messageId: "forbidden",
-          line: 2,
+          line: 3,
           column: 3,
-          endLine: 2,
+          endLine: 3,
           endColumn: 14
         }
       ]
     },
     {
       code: stripIndent`
+        // three arguments
         const shared = of(42).pipe(
           shareReplay(1, 100, asapScheduler)
         );`,
       errors: [
         {
           messageId: "forbidden",
-          line: 2,
+          line: 3,
           column: 3,
-          endLine: 2,
+          endLine: 3,
           endColumn: 14
         }
       ]
     },
     {
       code: stripIndent`
+        // config argument refCount
         const shared = of(42).pipe(
           shareReplay({ refCount: true })
         );`,
@@ -110,15 +118,16 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 2,
+          line: 3,
           column: 3,
-          endLine: 2,
+          endLine: 3,
           endColumn: 14
         }
       ]
     },
     {
       code: stripIndent`
+        // config argument no refCount
         const shared = of(42).pipe(
           shareReplay({ refCount: false })
         );`,
@@ -126,9 +135,9 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 2,
+          line: 3,
           column: 3,
-          endLine: 2,
+          endLine: 3,
           endColumn: 14
         }
       ]

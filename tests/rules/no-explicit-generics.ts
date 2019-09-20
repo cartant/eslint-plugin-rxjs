@@ -11,6 +11,7 @@ ruleTester({ types: false }).run("no-explicit-generics", rule, {
   valid: [
     {
       code: stripIndent`
+        // without type arguments
         import { BehaviorSubject, from, of, Notification } from "rxjs";
         import { scan } from "rxjs/operators";
         const a = of(42, 54);
@@ -31,6 +32,7 @@ ruleTester({ types: false }).run("no-explicit-generics", rule, {
   invalid: [
     {
       code: stripIndent`
+        // scan with type arguments
         const a = of(42, 54);
         const b = a.pipe(
             scan<number, string>((acc, value) => acc + value, "")
@@ -38,9 +40,9 @@ ruleTester({ types: false }).run("no-explicit-generics", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 3,
+          line: 4,
           column: 5,
-          endLine: 3,
+          endLine: 4,
           endColumn: 9
         }
       ]

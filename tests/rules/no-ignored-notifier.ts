@@ -10,6 +10,7 @@ import { ruleTester } from "../utils";
 ruleTester({ types: true }).run("no-ignored-notifier", rule, {
   valid: [
     stripIndent`
+      // repeatWhen not ignored
       import { of } from "rxjs";
       import { repeatWhen } from "rxjs/operators";
 
@@ -28,6 +29,7 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       );
     `,
     stripIndent`
+      // retryWhen not ignored
       import { of } from "rxjs";
       import { retryWhen } from "rxjs/operators";
 
@@ -49,6 +51,7 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
   invalid: [
     {
       code: stripIndent`
+        // repeatWhen ignored parameter
         import { of, range } from "rxjs";
         import { repeatWhen } from "rxjs/operators";
 
@@ -60,15 +63,16 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       `,
       errors: [
         {
-          line: 7,
+          line: 8,
           column: 3,
-          endLine: 7,
+          endLine: 8,
           endColumn: 13
         }
       ]
     },
     {
       code: stripIndent`
+        // repeatWhen no parameter
         import { of, range } from "rxjs";
         import { repeatWhen } from "rxjs/operators";
 
@@ -80,15 +84,16 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       `,
       errors: [
         {
-          line: 7,
+          line: 8,
           column: 3,
-          endLine: 7,
+          endLine: 8,
           endColumn: 13
         }
       ]
     },
     {
       code: stripIndent`
+        // repeatWhen non-arrow ignored parameter
         import { of, range } from "rxjs";
         import { repeatWhen } from "rxjs/operators";
 
@@ -104,15 +109,16 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       `,
       errors: [
         {
-          line: 7,
+          line: 8,
           column: 3,
-          endLine: 7,
+          endLine: 8,
           endColumn: 13
         }
       ]
     },
     {
       code: stripIndent`
+        // repeatWhen non-arrow no parameter
         import { of, range } from "rxjs";
         import { repeatWhen } from "rxjs/operators";
 
@@ -128,39 +134,16 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       `,
       errors: [
         {
-          line: 7,
+          line: 8,
           column: 3,
-          endLine: 7,
+          endLine: 8,
           endColumn: 13
         }
       ]
     },
     {
       code: stripIndent`
-        import { of, range } from "rxjs";
-        import { repeatWhen } from "rxjs/operators";
-
-        const source = of(42);
-
-        const c = source.pipe(
-          repeatWhen(
-              function () {
-                return range(0, 3);
-              }
-          )
-        );
-      `,
-      errors: [
-        {
-          line: 7,
-          column: 3,
-          endLine: 7,
-          endColumn: 13
-        }
-      ]
-    },
-    {
-      code: stripIndent`
+        // retryWhen ignored parameter
         import { of } from "rxjs";
         import { retryWhen } from "rxjs/operators";
 
@@ -172,15 +155,16 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       `,
       errors: [
         {
-          line: 7,
+          line: 8,
           column: 3,
-          endLine: 7,
+          endLine: 8,
           endColumn: 12
         }
       ]
     },
     {
       code: stripIndent`
+        // retryWhen no parameter
         import { of } from "rxjs";
         import { retryWhen } from "rxjs/operators";
 
@@ -192,15 +176,16 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       `,
       errors: [
         {
-          line: 7,
+          line: 8,
           column: 3,
-          endLine: 7,
+          endLine: 8,
           endColumn: 12
         }
       ]
     },
     {
       code: stripIndent`
+        // retryWhen non-arrow ignored parameter
         import { of } from "rxjs";
         import { retryWhen } from "rxjs/operators";
 
@@ -216,15 +201,16 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       `,
       errors: [
         {
-          line: 7,
+          line: 8,
           column: 3,
-          endLine: 7,
+          endLine: 8,
           endColumn: 12
         }
       ]
     },
     {
       code: stripIndent`
+        // retryWhen non-arrow no parameter
         import { of } from "rxjs";
         import { retryWhen } from "rxjs/operators";
 
@@ -240,9 +226,9 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       `,
       errors: [
         {
-          line: 7,
+          line: 8,
           column: 3,
-          endLine: 7,
+          endLine: 8,
           endColumn: 12
         }
       ]

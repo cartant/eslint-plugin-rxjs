@@ -10,6 +10,7 @@ import { ruleTester } from "../utils";
 ruleTester({ types: true }).run("no-finnish", rule, {
   valid: [
     stripIndent`
+      // without $
       import { Observable, of } from "rxjs";
 
       const someObservable = of(0);
@@ -47,8 +48,8 @@ ruleTester({ types: true }).run("no-finnish", rule, {
   invalid: [
     {
       code: stripIndent`
+        // variables with $
         import { Observable, of } from "rxjs";
-
         const someObservable$ = of(0);
         declare const hasSomeKey$: { someKey$: Observable<number> };
         const { someKey$: anotherObservable$ } = hasSomeKey$;
@@ -80,10 +81,9 @@ ruleTester({ types: true }).run("no-finnish", rule, {
     },
     {
       code: stripIndent`
+        // objects with $
         import { Observable, of } from "rxjs";
-
         const someObservable$ = of(0);
-
         const someEmptyObject = {};
         const someObject = { ...someEmptyObject, someKey$: someObservable$ };
         const { someKey$ } = someObject;
@@ -99,33 +99,32 @@ ruleTester({ types: true }).run("no-finnish", rule, {
         },
         {
           messageId: "forbidden",
-          line: 6,
+          line: 5,
           column: 42,
-          endLine: 6,
+          endLine: 5,
           endColumn: 50
         },
         {
           messageId: "forbidden",
-          line: 7,
+          line: 6,
           column: 9,
-          endLine: 7,
+          endLine: 6,
           endColumn: 17
         },
         {
           messageId: "forbidden",
-          line: 8,
+          line: 7,
           column: 19,
-          endLine: 8,
+          endLine: 7,
           endColumn: 34
         }
       ]
     },
     {
       code: stripIndent`
+        // arrays with $
         import { Observable, of } from "rxjs";
-
         const someObservable$ = of(0);
-
         const someArray = [someObservable$];
         const [someElement$] = someArray;
         someArray.forEach(function (element$: Observable<any>): void {});
@@ -141,31 +140,31 @@ ruleTester({ types: true }).run("no-finnish", rule, {
         },
         {
           messageId: "forbidden",
-          line: 6,
+          line: 5,
           column: 8,
-          endLine: 6,
+          endLine: 5,
           endColumn: 20
         },
         {
           messageId: "forbidden",
-          line: 7,
+          line: 6,
           column: 29,
-          endLine: 7,
+          endLine: 6,
           endColumn: 54
         },
         {
           messageId: "forbidden",
-          line: 8,
+          line: 7,
           column: 20,
-          endLine: 8,
+          endLine: 7,
           endColumn: 45
         }
       ]
     },
     {
       code: stripIndent`
+        // functions with $
         import { Observable } from "rxjs";
-
         function someFunction$(someParam$: Observable<any>): Observable<any> { return someParam$; }
         const someArrowFunction$ = (someParam$: Observable<any>): Observable<any> => someParam$;
       `,
@@ -202,8 +201,8 @@ ruleTester({ types: true }).run("no-finnish", rule, {
     },
     {
       code: stripIndent`
+        // class with $
         import { Observable } from "rxjs";
-
         class SomeClass {
           someProperty$: Observable<any>;
           constructor (someParam$: Observable<any>) {}
@@ -266,8 +265,8 @@ ruleTester({ types: true }).run("no-finnish", rule, {
     },
     {
       code: stripIndent`
+        // interface with $
         import { Observable } from "rxjs";
-
         interface SomeInterface {
           someProperty$: Observable<any>;
           someMethod$(someParam$: Observable<any>, abc$: () => Observable<any>): Observable<any>;

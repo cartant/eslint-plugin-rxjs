@@ -10,6 +10,7 @@ import { ruleTester } from "../utils";
 ruleTester({ types: true }).run("no-ignored-observable", rule, {
   valid: [
     stripIndent`
+      // not ignored
       import { Observable, of } from "rxjs";
 
       function functionSource() {
@@ -23,20 +24,22 @@ ruleTester({ types: true }).run("no-ignored-observable", rule, {
       sink(functionSource());
     `,
     stripIndent`
-        import { Observable, of } from "rxjs";
+      // not ignored arrow
+      import { Observable, of } from "rxjs";
 
-        const arrowSource = () => of(42);
+      const arrowSource = () => of(42);
 
-        function sink(source: Observable<number>) {
-        }
+      function sink(source: Observable<number>) {
+      }
 
-        const a = arrowSource();
-        sink(arrowSource());
-      `
+      const a = arrowSource();
+      sink(arrowSource());
+    `
   ],
   invalid: [
     {
       code: stripIndent`
+        // ignored
         import { Observable, of } from "rxjs";
 
         function functionSource() {
@@ -48,15 +51,16 @@ ruleTester({ types: true }).run("no-ignored-observable", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 7,
+          line: 8,
           column: 1,
-          endLine: 7,
+          endLine: 8,
           endColumn: 17
         }
       ]
     },
     {
       code: stripIndent`
+        // ignored arrow
         import { Observable, of } from "rxjs";
 
         const arrowSource = () => of(42);
@@ -66,9 +70,9 @@ ruleTester({ types: true }).run("no-ignored-observable", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 5,
+          line: 6,
           column: 1,
-          endLine: 5,
+          endLine: 6,
           endColumn: 14
         }
       ]

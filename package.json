@@ -76,7 +76,8 @@
     "lint:tests": "tslint --project tsconfig.json tests/**/*.ts",
     "prepublishOnly": "yarn run test && yarn run dist",
     "test": "yarn run test:rules && yarn run test:specs",
-    "test:rules": "mocha -r ts-node/register tests/rules/*.ts",
+    "test:debug": "mocha -r ts-node/register -t 5000 tests/rules/no-unsafe-catch.ts",
+    "test:rules": "mocha -r ts-node/register -t 5000 tests/rules/*.ts",
     "test:specs": "mocha -r ts-node/register tests/*-spec.ts"
   },
   "version": "0.0.1-beta.4"

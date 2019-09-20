@@ -10,175 +10,168 @@ import { ruleTester } from "../utils";
 ruleTester({ types: true }).run("no-subclass", rule, {
   valid: [
     stripIndent`
+      // non-RxJS Observable
       class Observable<T> { t: T; }
-
       class StringObservable extends Observable<string> {}
     `
   ],
   invalid: [
     {
       code: stripIndent`
-        import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, Subscriber } from "rxjs";
-        import { Scheduler } from "rxjs/internal/Scheduler";
-
+        // Observable
+        import { Observable } from "rxjs";
         class GenericObservable<T> extends Observable<T> {}
         class StringObservable extends Observable<string> {}
       `,
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 3,
           column: 36,
-          endLine: 4,
+          endLine: 3,
           endColumn: 46
         },
         {
           messageId: "forbidden",
-          line: 5,
+          line: 4,
           column: 32,
-          endLine: 5,
+          endLine: 4,
           endColumn: 42
         }
       ]
     },
     {
       code: stripIndent`
-        import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, Subscriber } from "rxjs";
-        import { Scheduler } from "rxjs/internal/Scheduler";
-
+        // Subject
+        import { Subject } from "rxjs";
         class GenericSubject<T> extends Subject<T> {}
         class StringSubject extends Subject<string> {}
       `,
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 3,
           column: 33,
-          endLine: 4,
+          endLine: 3,
           endColumn: 40
         },
         {
           messageId: "forbidden",
-          line: 5,
+          line: 4,
           column: 29,
-          endLine: 5,
+          endLine: 4,
           endColumn: 36
         }
       ]
     },
     {
       code: stripIndent`
-        import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, Subscriber } from "rxjs";
-        import { Scheduler } from "rxjs/internal/Scheduler";
-
+        // Subscriber
+        import { Subscriber } from "rxjs";
         class GenericSubscriber<T> extends Subscriber<T> {}
         class StringSubscriber extends Subscriber<string> {}
       `,
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 3,
           column: 36,
-          endLine: 4,
+          endLine: 3,
           endColumn: 46
         },
         {
           messageId: "forbidden",
-          line: 5,
+          line: 4,
           column: 32,
-          endLine: 5,
+          endLine: 4,
           endColumn: 42
         }
       ]
     },
     {
       code: stripIndent`
-        import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, Subscriber } from "rxjs";
-        import { Scheduler } from "rxjs/internal/Scheduler";
-
+        // AsyncSubject
+        import { AsyncSubject } from "rxjs";
         class GenericAsyncSubject<T> extends AsyncSubject<T> {}
         class StringAsyncSubject extends AsyncSubject<string> {}
       `,
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 3,
           column: 38,
-          endLine: 4,
+          endLine: 3,
           endColumn: 50
         },
         {
           messageId: "forbidden",
-          line: 5,
+          line: 4,
           column: 34,
-          endLine: 5,
+          endLine: 4,
           endColumn: 46
         }
       ]
     },
     {
       code: stripIndent`
-        import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, Subscriber } from "rxjs";
-        import { Scheduler } from "rxjs/internal/Scheduler";
-
+        // BehaviorSubject
+        import { BehaviorSubject } from "rxjs";
         class GenericBehaviorSubject<T> extends BehaviorSubject<T> {}
         class StringBehaviorSubject extends BehaviorSubject<string> {}
       `,
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 3,
           column: 41,
-          endLine: 4,
+          endLine: 3,
           endColumn: 56
         },
         {
           messageId: "forbidden",
-          line: 5,
+          line: 4,
           column: 37,
-          endLine: 5,
+          endLine: 4,
           endColumn: 52
         }
       ]
     },
     {
       code: stripIndent`
-        import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, Subscriber } from "rxjs";
-        import { Scheduler } from "rxjs/internal/Scheduler";
-
+        // ReplaySubject
+        import { ReplaySubject } from "rxjs";
         class GenericReplaySubject<T> extends ReplaySubject<T> {}
         class StringReplaySubject extends ReplaySubject<string> {}
       `,
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 3,
           column: 39,
-          endLine: 4,
+          endLine: 3,
           endColumn: 52
         },
         {
           messageId: "forbidden",
-          line: 5,
+          line: 4,
           column: 35,
-          endLine: 5,
+          endLine: 4,
           endColumn: 48
         }
       ]
     },
     {
       code: stripIndent`
-        import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, Subscriber } from "rxjs";
+        // Scheduler
         import { Scheduler } from "rxjs/internal/Scheduler";
-
         class AnotherScheduler extends Scheduler {}
       `,
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 3,
           column: 32,
-          endLine: 4,
+          endLine: 3,
           endColumn: 41
         }
       ]

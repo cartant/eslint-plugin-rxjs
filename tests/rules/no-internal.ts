@@ -9,48 +9,60 @@ import { ruleTester } from "../utils";
 
 ruleTester({ types: false }).run("no-internal", rule, {
   valid: [
-    `import { Observable } from "rxjs";`,
-    `import { map } from "rxjs/operators";`
+    stripIndent`
+      // no internal double quote
+      import { concat } from "rxjs";
+      import { map } from "rxjs/operators";
+    `,
+    stripIndent`
+      // no internal single quote
+      import { concat } from 'rxjs';
+      import { map } from 'rxjs/operators';
+    `
   ],
   invalid: [
     {
       code: stripIndent`
+        // internal double quote
         import { concat } from "rxjs/internal/observable/concat";
-        import { map } from "rxjs/internal/operators/map";`,
+        import { map } from "rxjs/internal/operators/map";
+      `,
       errors: [
         {
           messageId: "forbidden",
-          line: 1,
+          line: 2,
           column: 24,
-          endLine: 1,
+          endLine: 2,
           endColumn: 57
         },
         {
           messageId: "forbidden",
-          line: 2,
+          line: 3,
           column: 21,
-          endLine: 2,
+          endLine: 3,
           endColumn: 50
         }
       ]
     },
     {
       code: stripIndent`
+        // internal single quote
         import { concat } from 'rxjs/internal/observable/concat';
-        import { map } from 'rxjs/internal/operators/map';`,
+        import { map } from 'rxjs/internal/operators/map';
+      `,
       errors: [
         {
           messageId: "forbidden",
-          line: 1,
+          line: 2,
           column: 24,
-          endLine: 1,
+          endLine: 2,
           endColumn: 57
         },
         {
           messageId: "forbidden",
-          line: 2,
+          line: 3,
           column: 21,
-          endLine: 2,
+          endLine: 3,
           endColumn: 50
         }
       ]

@@ -10,12 +10,15 @@ import { ruleTester } from "../utils";
 ruleTester({ types: true }).run("throw-error", rule, {
   valid: [
     stripIndent`
+      // throw Error
       const a = () => { throw new Error("error"); };
     `,
     stripIndent`
+      // throw any
       const a = () => { throw "error" as any };
     `,
     stripIndent`
+      // throw returned any
       const a = () => { throw errorMessage(); };
 
       function errorMessage(): any {
@@ -23,16 +26,19 @@ ruleTester({ types: true }).run("throw-error", rule, {
       }
     `,
     stripIndent`
+      // throwError Error
       import { throwError } from "rxjs";
 
       const ob1 = throwError(new Error("Boom!"));
     `,
     stripIndent`
+      // throwError any
       import { throwError } from "rxjs";
 
       const ob1 = throwError("Boom!" as any);
     `,
     stripIndent`
+      // throwError returned any
       import { throwError } from "rxjs";
 
       const ob1 = throwError(errorMessage());
@@ -42,27 +48,32 @@ ruleTester({ types: true }).run("throw-error", rule, {
       }
     `,
     stripIndent`
+      // no signature
       // There will be no signature for callback and
-      // that should not effect and internal error.
+      // that should not effect an internal error.
       declare const callback: Function;
       callback();
     `
   ],
   invalid: [
     {
-      code: `const a = () => { throw "error"; };`,
+      code: stripIndent`
+        // throw string
+        const a = () => { throw "error"; };
+      `,
       errors: [
         {
           messageId: "forbidden",
-          line: 1,
+          line: 2,
           column: 25,
-          endLine: 1,
+          endLine: 2,
           endColumn: 32
         }
       ]
     },
     {
       code: stripIndent`
+        // throw returned string
         const a = () => { throw errorMessage(); };
 
         function errorMessage() {
@@ -72,15 +83,16 @@ ruleTester({ types: true }).run("throw-error", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 1,
+          line: 2,
           column: 25,
-          endLine: 1,
+          endLine: 2,
           endColumn: 39
         }
       ]
     },
     {
       code: stripIndent`
+        // throw string variable
         const errorMessage = "Boom!";
 
         const a = () => { throw errorMessage; };
@@ -88,15 +100,16 @@ ruleTester({ types: true }).run("throw-error", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 3,
+          line: 4,
           column: 25,
-          endLine: 3,
+          endLine: 4,
           endColumn: 37
         }
       ]
     },
     {
       code: stripIndent`
+        // throwError string
         import { throwError } from "rxjs";
 
         const ob1 = throwError("Boom!");
@@ -104,15 +117,16 @@ ruleTester({ types: true }).run("throw-error", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 3,
+          line: 4,
           column: 24,
-          endLine: 3,
+          endLine: 4,
           endColumn: 31
         }
       ]
     },
     {
       code: stripIndent`
+        // throwError returned string
         import { throwError } from "rxjs";
 
         const ob1 = throwError(errorMessage());
@@ -124,9 +138,9 @@ ruleTester({ types: true }).run("throw-error", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 3,
+          line: 4,
           column: 24,
-          endLine: 3,
+          endLine: 4,
           endColumn: 38
         }
       ]

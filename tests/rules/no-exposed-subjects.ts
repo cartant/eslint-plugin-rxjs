@@ -10,11 +10,13 @@ import { ruleTester } from "../utils";
 ruleTester({ types: true }).run("no-exposed-subjects", rule, {
   valid: [
     stripIndent`
+      // variable
       import { Subject } from 'rxjs';
 
       const variable = new Subject<void>();
     `,
     stripIndent`
+      // parameter and return type
       import { Subject } from 'rxjs';
 
       function foo(a$: Subject<any>): Subject<any> {
@@ -22,6 +24,7 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
       }
     `,
     stripIndent`
+      // private
       import { Observable, Subject } from 'rxjs';
 
       class Mock {
@@ -50,6 +53,7 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
     `,
     {
       code: stripIndent`
+        // allowed protected
         import { Subject } from 'rxjs';
 
         class Mock {
@@ -73,21 +77,12 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
         }
       `,
       options: [{ allowProtected: true }]
-    },
-    stripIndent`
-      import { Subject } from "rxjs";
-
-      class EventEmitter<T> extends Subject<T> {}
-
-      class Something {
-          public a: EventEmitter<any>;
-          protected b: EventEmitter<any>;
-      }
-    `
+    }
   ],
   invalid: [
     {
       code: stripIndent`
+        // public and protected
         import { Subject } from 'rxjs';
 
         class Mock {
@@ -101,9 +96,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 10,
-          endLine: 4,
+          endLine: 5,
           endColumn: 11,
           data: {
             subject: "a"
@@ -111,9 +106,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
         },
         {
           messageId: "forbidden",
-          line: 5,
+          line: 6,
           column: 13,
-          endLine: 5,
+          endLine: 6,
           endColumn: 14,
           data: {
             subject: "b"
@@ -121,9 +116,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
         },
         {
           messageId: "forbidden",
-          line: 6,
+          line: 7,
           column: 3,
-          endLine: 6,
+          endLine: 7,
           endColumn: 4,
           data: {
             subject: "c"
@@ -131,9 +126,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
         },
         {
           messageId: "forbidden",
-          line: 7,
+          line: 8,
           column: 19,
-          endLine: 7,
+          endLine: 8,
           endColumn: 20,
           data: {
             subject: "d"
@@ -141,9 +136,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
         },
         {
           messageId: "forbidden",
-          line: 8,
+          line: 9,
           column: 12,
-          endLine: 8,
+          endLine: 9,
           endColumn: 13,
           data: {
             subject: "e"
@@ -153,6 +148,7 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
     },
     {
       code: stripIndent`
+        // public and protected via constructor
         import { Subject } from 'rxjs';
 
         class Mock {
@@ -165,9 +161,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 5,
+          line: 6,
           column: 12,
-          endLine: 5,
+          endLine: 6,
           endColumn: 13,
           data: {
             subject: "a"
@@ -175,9 +171,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
         },
         {
           messageId: "forbidden",
-          line: 6,
+          line: 7,
           column: 15,
-          endLine: 6,
+          endLine: 7,
           endColumn: 16,
           data: {
             subject: "b"
@@ -187,6 +183,7 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
     },
     {
       code: stripIndent`
+        // public via getter/setter
         import { Subject } from 'rxjs';
 
         class Mock {
@@ -202,9 +199,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 7,
-          endLine: 4,
+          endLine: 5,
           endColumn: 8,
           data: {
             subject: "a"
@@ -212,9 +209,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
         },
         {
           messageId: "forbidden",
-          line: 8,
+          line: 9,
           column: 7,
-          endLine: 8,
+          endLine: 9,
           endColumn: 8,
           data: {
             subject: "a"
@@ -224,6 +221,7 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
     },
     {
       code: stripIndent`
+        // public return type
         import { Subject } from 'rxjs';
 
         class Mock {
@@ -239,9 +237,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 10,
-          endLine: 4,
+          endLine: 5,
           endColumn: 11,
           data: {
             subject: "a"
@@ -249,9 +247,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
         },
         {
           messageId: "forbidden",
-          line: 8,
+          line: 9,
           column: 3,
-          endLine: 8,
+          endLine: 9,
           endColumn: 4,
           data: {
             subject: "b"
@@ -261,6 +259,7 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
     },
     {
       code: stripIndent`
+        // public but allow protected
         import { Subject } from 'rxjs';
 
         class Mock {
@@ -287,9 +286,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
       errors: [
         {
           messageId: "forbiddenAllowProtected",
-          line: 4,
+          line: 5,
           column: 10,
-          endLine: 4,
+          endLine: 5,
           endColumn: 11,
           data: {
             subject: "a"
@@ -297,9 +296,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
         },
         {
           messageId: "forbiddenAllowProtected",
-          line: 7,
+          line: 8,
           column: 12,
-          endLine: 7,
+          endLine: 8,
           endColumn: 13,
           data: {
             subject: "b"
@@ -307,9 +306,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
         },
         {
           messageId: "forbiddenAllowProtected",
-          line: 10,
+          line: 11,
           column: 7,
-          endLine: 10,
+          endLine: 11,
           endColumn: 8,
           data: {
             subject: "c"
@@ -317,9 +316,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
         },
         {
           messageId: "forbiddenAllowProtected",
-          line: 14,
+          line: 15,
           column: 7,
-          endLine: 14,
+          endLine: 15,
           endColumn: 8,
           data: {
             subject: "c"
@@ -327,9 +326,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
         },
         {
           messageId: "forbiddenAllowProtected",
-          line: 18,
+          line: 19,
           column: 3,
-          endLine: 18,
+          endLine: 19,
           endColumn: 4,
           data: {
             subject: "d"
@@ -339,34 +338,37 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
     },
     {
       code: stripIndent`
+        // EventEmitter
         import { Subject } from "rxjs";
 
         class EventEmitter<T> extends Subject<T> {}
 
         class Something {
-            public a: Subject<any>;
-            protected b: Subject<any>;
+          public a: EventEmitter<any>;
+          protected b: EventEmitter<any>;
+          public c: Subject<any>;
+          protected d: Subject<any>;
         }
       `,
       errors: [
         {
           messageId: "forbidden",
-          line: 6,
-          column: 12,
-          endLine: 6,
-          endColumn: 13,
+          line: 9,
+          column: 10,
+          endLine: 9,
+          endColumn: 11,
           data: {
-            subject: "a"
+            subject: "c"
           }
         },
         {
           messageId: "forbidden",
-          line: 7,
-          column: 15,
-          endLine: 7,
-          endColumn: 16,
+          line: 10,
+          column: 13,
+          endLine: 10,
+          endColumn: 14,
           data: {
-            subject: "b"
+            subject: "d"
           }
         }
       ]

@@ -12,7 +12,7 @@ const setup = stripIndent`
   import { switchMap, tap } from "rxjs/operators";
 
   function ofType<T>(type: string, ...moreTypes: string[]): (source: Observable<T>) => Observable<T> {
-      return source => source;
+    return source => source;
   }
 
   type Actions = Observable<any>;
@@ -29,32 +29,32 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
   valid: [
     {
       code: stripIndent`
+        // effect GET string
         ${setup}
-
         const pipedGetEffect = actions.pipe(ofType("GET_SOMETHING"), tap(() => {}), switchMap(() => EMPTY));
         const pipedMoreGetEffect = actions.pipe(ofType("DO_SOMETHING", "GET_SOMETHING"), tap(() => {}), switchMap(() => EMPTY));
       `
     },
     {
       code: stripIndent`
+        // epic GET string
         ${setup}
-
         const pipedGetEpic = (action$: Actions) => action$.pipe(ofType("GET_SOMETHING"), tap(() => {}), switchMap(() => EMPTY));
         const pipedMoreGetEpic = (action$: Actions) => action$.pipe(ofType("DO_SOMETHING", "GET_SOMETHING"), tap(() => {}), switchMap(() => EMPTY));
       `
     },
     {
       code: stripIndent`
+        // effect GET symbol
         ${setup}
-
         const pipedSymbolGetEffect = actions.pipe(ofType(GET_SOMETHING), tap(() => {}), switchMap(() => EMPTY));
         const pipedOfTypeCamelCaseGetEffect = actions.pipe(ofType(GetSomething), tap(() => {}), switchMap(() => EMPTY));
       `
     },
     {
       code: stripIndent`
+        // matching allow in options
         ${setup}
-
         const fooEffect = actions.pipe(ofType("FOO"), tap(() => {}), switchMap(() => EMPTY));
       `,
       options: [
@@ -65,8 +65,8 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
     },
     {
       code: stripIndent`
+        // non-matching disallow in options
         ${setup}
-
         const barEffect = actions.pipe(ofType("BAR"), tap(() => {}), switchMap(() => EMPTY));
         const bazEffect = actions.pipe(ofType("BAZ"), tap(() => {}), switchMap(() => EMPTY));
       `,
@@ -80,8 +80,8 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
   invalid: [
     {
       code: stripIndent`
+        // effect PUT string
         ${setup}
-
         const pipedPutEffect = actions.pipe(ofType("PUT_SOMETHING"), tap(() => {}), switchMap(() => EMPTY));
         const pipedMorePutEffect = actions.pipe(ofType("DO_SOMETHING", "PUT_SOMETHING"), tap(() => {}), switchMap(() => EMPTY));
       `,
@@ -104,8 +104,8 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
     },
     {
       code: stripIndent`
+        // epic PUT string
         ${setup}
-
         const pipedPutEpic = (action$: Actions) => action$.pipe(ofType("PUT_SOMETHING"), tap(() => {}), switchMap(() => EMPTY));
         const pipedMorePutEpic = (action$: Actions) => action$.pipe(ofType("DO_SOMETHING", "PUT_SOMETHING"), tap(() => {}), switchMap(() => EMPTY));
       `,
@@ -128,8 +128,8 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
     },
     {
       code: stripIndent`
+        // effect PUT symbol
         ${setup}
-
         const pipedSymbolPutEffect = actions.pipe(ofType(PUT_SOMETHING), tap(() => {}), switchMap(() => EMPTY));
         const pipedOfTypeCamelCasePutEffect = actions.pipe(ofType(PutSomething), tap(() => {}), switchMap(() => EMPTY));
       `,
@@ -152,8 +152,8 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
     },
     {
       code: stripIndent`
+        // non-matching allow in options
         ${setup}
-
         const barEffect = actions.pipe(ofType("BAR"), tap(() => {}), switchMap(() => EMPTY));
         const bazEffect = actions.pipe(ofType("BAZ"), tap(() => {}), switchMap(() => EMPTY));
       `,
@@ -181,8 +181,8 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
     },
     {
       code: stripIndent`
+        // matching disallow in options
         ${setup}
-
         const fooEffect = actions.pipe(ofType("FOO"), tap(() => {}), switchMap(() => EMPTY));
       `,
       options: [

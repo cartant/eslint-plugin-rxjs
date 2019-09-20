@@ -11,6 +11,7 @@ ruleTester({ types: true }).run("no-create", rule, {
   invalid: [
     {
       code: stripIndent`
+        // create
         import { Observable, Observer } from "rxjs";
 
         const ob = Observable.create((observer: Observer<string>) => {
@@ -22,9 +23,9 @@ ruleTester({ types: true }).run("no-create", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 3,
+          line: 4,
           column: 23,
-          endLine: 3,
+          endLine: 4,
           endColumn: 29
         }
       ]

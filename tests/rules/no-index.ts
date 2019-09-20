@@ -9,12 +9,25 @@ import { ruleTester } from "../utils";
 
 ruleTester({ types: false }).run("no-index", rule, {
   valid: [
-    `import { Observable } from "rxjs";`,
-    `import { map } from "rxjs/operators";`
+    stripIndent`
+      // no index double quote
+      import { Observable } from "rxjs";
+      import { map } from "rxjs/operators";
+      import { TestScheduler } from "rxjs/testing";
+      import { WebSocketSubject } from "rxjs/webSocket";
+    `,
+    stripIndent`
+      // no index single quote
+      import { Observable } from 'rxjs';
+      import { map } from 'rxjs/operators';
+      import { TestScheduler } from 'rxjs/testing';
+      import { WebSocketSubject } from 'rxjs/webSocket';
+    `
   ],
   invalid: [
     {
       code: stripIndent`
+        // index double quote
         import { Observable } from "rxjs/index";
         import { map } from "rxjs/operators/index";
         import { TestScheduler } from "rxjs/testing/index";
@@ -23,36 +36,37 @@ ruleTester({ types: false }).run("no-index", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 1,
+          line: 2,
           column: 28,
-          endLine: 1,
+          endLine: 2,
           endColumn: 40
         },
         {
           messageId: "forbidden",
-          line: 2,
+          line: 3,
           column: 21,
-          endLine: 2,
+          endLine: 3,
           endColumn: 43
         },
         {
           messageId: "forbidden",
-          line: 3,
+          line: 4,
           column: 31,
-          endLine: 3,
+          endLine: 4,
           endColumn: 51
         },
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 34,
-          endLine: 4,
+          endLine: 5,
           endColumn: 56
         }
       ]
     },
     {
       code: stripIndent`
+        // index single quote
         import { Observable } from 'rxjs/index';
         import { map } from 'rxjs/operators/index';
         import { TestScheduler } from 'rxjs/testing/index';
@@ -61,30 +75,30 @@ ruleTester({ types: false }).run("no-index", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 1,
+          line: 2,
           column: 28,
-          endLine: 1,
+          endLine: 2,
           endColumn: 40
         },
         {
           messageId: "forbidden",
-          line: 2,
+          line: 3,
           column: 21,
-          endLine: 2,
+          endLine: 3,
           endColumn: 43
         },
         {
           messageId: "forbidden",
-          line: 3,
+          line: 4,
           column: 31,
-          endLine: 3,
+          endLine: 4,
           endColumn: 51
         },
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 34,
-          endLine: 4,
+          endLine: 5,
           endColumn: 56
         }
       ]

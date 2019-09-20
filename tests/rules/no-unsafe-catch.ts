@@ -12,19 +12,20 @@ const setup = stripIndent`
   import { first, switchMap, take, tap } from "rxjs/operators";
 
   function ofType<T>(type: string, ...moreTypes: string[]): (source: Observable<T>) => Observable<T> {
-      return source => source;
+    return source => source;
   }
 
   type Actions = Observable<any>;
   const actions = of({});
-  const that = { actions };`;
+  const that = { actions };
+`;
 
 ruleTester({ types: true }).run("no-unsafe-catch", rule, {
   valid: [
     {
       code: stripIndent`
+        // actions with caught
         ${setup}
-
         const safePipedOfTypeEffect = actions.pipe(
           ofType("DO_SOMETHING"),
           tap(() => {}),
@@ -35,8 +36,8 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
     },
     {
       code: stripIndent`
+        // actions property with caught
         ${setup}
-
         const safePipedOfTypeEffect = that.actions.pipe(
           ofType("DO_SOMETHING"),
           tap(() => {}),
@@ -47,8 +48,8 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
     },
     {
       code: stripIndent`
+        // epic with caught
         ${setup}
-
         const safePipedOfTypeEpic = (action$: Actions) => action$.pipe(
           ofType("DO_SOMETHING"),
           tap(() => {}),
@@ -59,8 +60,8 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
     },
     {
       code: stripIndent`
+        // actions nested
         ${setup}
-
         const safePipedOfTypeEffect = actions.pipe(
           ofType("DO_SOMETHING"),
           tap(() => {}),
@@ -70,8 +71,8 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
     },
     {
       code: stripIndent`
+        // actions property nested
         ${setup}
-
         const safePipedOfTypeEffect = that.actions.pipe(
           ofType("DO_SOMETHING"),
           tap(() => {}),
@@ -81,8 +82,8 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
     },
     {
       code: stripIndent`
+        // epic nested
         ${setup}
-
         const safePipedOfTypeEpic = (action$: Actions) => action$.pipe(
           ofType("DO_SOMETHING"),
           tap(() => {}),
@@ -92,9 +93,9 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
     },
     {
       code: stripIndent`
+        // non-matching options
         ${setup}
-
-        const safePipedOfTypeFirstEffect = actions.pipe(
+        const effect = actions.pipe(
           ofType("DO_SOMETHING"),
           tap(() => {}),
           catchError(() => EMPTY)
@@ -106,8 +107,8 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
   invalid: [
     {
       code: stripIndent`
+        // unsafe actions
         ${setup}
-
         const unsafePipedOfTypeEffect = actions.pipe(
           ofType("DO_SOMETHING"),
           tap(() => {}),
@@ -127,8 +128,8 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
     },
     {
       code: stripIndent`
+        // unsafe actions property
         ${setup}
-
         const unsafePipedOfTypeEffect = that.actions.pipe(
           ofType("DO_SOMETHING"),
           tap(() => {}),
@@ -148,8 +149,8 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
     },
     {
       code: stripIndent`
+        // unsafe epic
         ${setup}
-
         const unsafePipedOfTypeEpic = (action$: Actions) => action$.pipe(
           ofType("DO_SOMETHING"),
           tap(() => {}),
@@ -169,8 +170,8 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
     },
     {
       code: stripIndent`
+        // matching options
         ${setup}
-
         const unsafePipedOfTypeTakeEpic = (foo: Actions) => foo.pipe(
           ofType("DO_SOMETHING"),
           tap(() => {}),

@@ -10,24 +10,33 @@ import { ruleTester } from "../utils";
 ruleTester({ types: true }).run("no-nested-subscribe", rule, {
   valid: [
     stripIndent`
+      // not nested in next argument
       import { Observable } from "rxjs";
-
       of(47).subscribe(value => {
         console.log(value);
       })
     `,
     stripIndent`
+      // not nested in observer properties
       import { Observable } from "rxjs";
-
       of(47).subscribe({
         next: value => console.log(value),
         error: value => console.log(value),
-        complete: value => console.log(value),
+        complete: () => console.log(value)
       })
     `,
     stripIndent`
+      // not nested in observer methods
       import { Observable } from "rxjs";
-
+      of(47).subscribe({
+        next(value) { console.log(value); },
+        error(value) { console.log(value); },
+        complete() { console.log(value); }
+      })
+    `,
+    stripIndent`
+      // prototype property
+      import { Observable } from "rxjs";
       const observableSubscribe = Observable.prototype.subscribe;
       expect(Observable.prototype.subscribe).to.equal(observableSubscribe);
     `
@@ -35,8 +44,8 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
   invalid: [
     {
       code: stripIndent`
+        // nested in next argument
         import { of } from "rxjs";
-
         of("foo").subscribe(
             value => of("bar").subscribe()
         );
@@ -53,8 +62,8 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
     },
     {
       code: stripIndent`
+        // nested in next property
         import { of } from "rxjs";
-
         of("foo").subscribe({
             next: value => of("bar").subscribe()
         });
@@ -71,8 +80,8 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
     },
     {
       code: stripIndent`
+        // nested in next method
         import { of } from "rxjs";
-
         of("foo").subscribe({
             next(value) { of("bar").subscribe(); }
         });
@@ -89,8 +98,8 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
     },
     {
       code: stripIndent`
+        // nested in error argument
         import { of } from "rxjs";
-
         of("foo").subscribe(
             undefined,
             error => of("bar").subscribe()
@@ -108,8 +117,8 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
     },
     {
       code: stripIndent`
+        // nested in error property
         import { of } from "rxjs";
-
         of("foo").subscribe({
           error: error => of("bar").subscribe()
         });
@@ -126,8 +135,8 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
     },
     {
       code: stripIndent`
+        // nested in error method
         import { of } from "rxjs";
-
         of("foo").subscribe({
           error(error) { of("bar").subscribe(); }
         });
@@ -144,8 +153,8 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
     },
     {
       code: stripIndent`
+        // nested in complete argument
         import { of } from "rxjs";
-
         of("foo").subscribe(
           undefined,
           undefined,
@@ -164,8 +173,8 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
     },
     {
       code: stripIndent`
+        // nested in complete property
         import { of } from "rxjs";
-
         of("foo").subscribe({
           complete: () => of("bar").subscribe()
         });
@@ -182,8 +191,8 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
     },
     {
       code: stripIndent`
+        // nested in complete method
         import { of } from "rxjs";
-
         of("foo").subscribe({
           complete() { of("bar").subscribe(); }
         });
