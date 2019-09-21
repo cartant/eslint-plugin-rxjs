@@ -77,8 +77,8 @@ const rule: Rule.RuleModule = {
     let disallowRegExp: RegExp | null;
     let observableRegExp: RegExp;
 
-    const [config] = context.options;
-    if (config && (config.allow || config.disallow)) {
+    const [config = {}] = context.options;
+    if (config.allow || config.disallow) {
       allowRegExp = createRegExpForWords(config.allow);
       disallowRegExp = createRegExpForWords(config.disallow);
       observableRegExp = new RegExp(config.observable || defaultObservable);

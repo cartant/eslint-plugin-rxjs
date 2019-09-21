@@ -29,8 +29,8 @@ const rule: Rule.RuleModule = {
     ]
   },
   create: context => {
-    const [config] = context.options;
-    const { allowConfig = false } = config || {};
+    const [config = {}] = context.options;
+    const { allowConfig = false } = config;
     return {
       "CallExpression[callee.name='shareReplay']": (
         node: es.CallExpression

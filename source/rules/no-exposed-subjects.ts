@@ -32,8 +32,8 @@ const rule: Rule.RuleModule = {
     ]
   },
   create: context => {
-    const [config] = context.options;
-    const { allowProtected = false } = config || {};
+    const [config = {}] = context.options;
+    const { allowProtected = false } = config;
     const { couldBeSubject, couldBeType } = typecheck(context);
 
     const messageId = allowProtected ? "forbiddenAllowProtected" : "forbidden";

@@ -36,8 +36,8 @@ const rule: Rule.RuleModule = {
   create: context => {
     const invalidOperatorsRegExp = /^(take|first)$/;
 
-    const [config] = context.options;
-    const { observable = defaultObservable } = config || {};
+    const [config = {}] = context.options;
+    const { observable = defaultObservable } = config;
     const observableRegExp = new RegExp(observable);
 
     const { couldBeObservable, isReferenceType } = typecheck(context);

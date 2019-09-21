@@ -56,8 +56,8 @@ const rule: Rule.RuleModule = {
       "throwIfEmpty",
       "toArray"
     ];
-    const [config] = context.options;
-    const { allow = allowedOperators } = config || {};
+    const [config = {}] = context.options;
+    const { allow = allowedOperators } = config;
 
     const { couldBeObservable, isReferenceType } = typecheck(context);
 
