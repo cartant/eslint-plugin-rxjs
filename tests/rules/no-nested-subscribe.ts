@@ -39,6 +39,16 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
       import { Observable } from "rxjs";
       const observableSubscribe = Observable.prototype.subscribe;
       expect(Observable.prototype.subscribe).to.equal(observableSubscribe);
+    `,
+    stripIndent`
+      // https://github.com/cartant/eslint-plugin-rxjs/issues/38
+      import {of} from "rxjs";
+      of(3).subscribe(result => {
+        const test = result as boolean;
+        if(test > 1) {
+          console.log(test);
+        }
+      });
     `
   ],
   invalid: [
