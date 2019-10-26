@@ -4,7 +4,7 @@
  */
 
 import { Rule } from "eslint";
-import esquery from "esquery";
+import { query } from "eslint-etc";
 import * as es from "estree";
 import { getParent, typecheck } from "../utils";
 
@@ -36,7 +36,7 @@ const rule: Rule.RuleModule = {
 
         const callExpression = getParent(node) as es.CallExpression;
         callExpression.arguments.forEach(childNode => {
-          const childNodes = esquery(
+          const childNodes = query(
             childNode,
             subscribeQuery
           ) as es.MemberExpression[];

@@ -4,7 +4,7 @@
  */
 
 import { Rule } from "eslint";
-import esquery from "esquery";
+import { query } from "eslint-etc";
 import * as es from "estree";
 import {
   getParent,
@@ -42,8 +42,7 @@ const rule: Rule.RuleModule = {
             let fail = false;
             if (param) {
               fail =
-                esquery(arg.body, `Identifier[name=${param.name}]`).length ===
-                0;
+                query(arg.body, `Identifier[name=${param.name}]`).length === 0;
             } else {
               fail = true;
             }

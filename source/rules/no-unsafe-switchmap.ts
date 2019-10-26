@@ -6,7 +6,7 @@
 import { stripIndent } from "common-tags";
 import decamelize from "decamelize";
 import { Rule } from "eslint";
-import esquery from "esquery";
+import { query } from "eslint-etc";
 import * as es from "estree";
 import { defaultObservable } from "../constants";
 import {
@@ -134,7 +134,7 @@ const rule: Rule.RuleModule = {
       });
 
       if (hasInvalidOfType) {
-        const switchMapNodes = esquery(
+        const switchMapNodes = query(
           node,
           "[arguments] > CallExpression > Identifier[name='switchMap']"
         ) as es.Identifier[];

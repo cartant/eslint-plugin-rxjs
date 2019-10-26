@@ -4,7 +4,7 @@
  */
 
 import { Rule } from "eslint";
-import esquery from "esquery";
+import { query } from "eslint-etc";
 import * as es from "estree";
 import { isCallExpression, isMemberExpression, typecheck } from "../utils";
 
@@ -30,7 +30,7 @@ const rule: Rule.RuleModule = {
       node.arguments.filter(isMemberExpression).forEach(arg => {
         const argType = getTSType(arg);
         if (argType.getCallSignatures().length > 0) {
-          const thisExpressions = esquery(
+          const thisExpressions = query(
             arg,
             "ThisExpression"
           ) as es.ThisExpression[];
