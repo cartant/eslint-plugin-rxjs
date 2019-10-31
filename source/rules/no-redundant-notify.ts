@@ -5,6 +5,7 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
+import { isCallExpression, isIdentifier, isMemberExpression } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -21,7 +22,25 @@ const rule: Rule.RuleModule = {
     schema: []
   },
   create: context => {
-    return {};
+    return {
+      "ExpressionStatement[expression.callee.property.name=/(complete|error)/] ~ ExpressionStatement[expression.callee.property.name=/(next|complete|error)/]": (
+        node: es.ExpressionStatement
+      ) => {
+        const { expression } = node;
+        if (isCallExpression(expression)) {
+          const { callee } = expression;
+          if (isMemberExpression(callee)) {
+            const { property } = callee;
+            if (isIdentifier(property)) {
+              context.report({
+                messageId: "forbidden",
+                node: property
+              });
+            }
+          }
+        }
+      }
+    };
   }
 };
 
