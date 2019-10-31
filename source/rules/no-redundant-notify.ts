@@ -23,7 +23,7 @@ const rule: Rule.RuleModule = {
   },
   create: context => {
     return {
-      "ExpressionStatement[expression.callee.property.name=/(complete|error)/] ~ ExpressionStatement[expression.callee.property.name=/(next|complete|error)/]": (
+      "ExpressionStatement[expression.callee.property.name=/^(complete|error)$/] ~ ExpressionStatement[expression.callee.property.name=/^(next|complete|error)$/]": (
         node: es.ExpressionStatement
       ) => {
         const { expression } = node;
