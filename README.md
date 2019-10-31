@@ -67,6 +67,7 @@ The package includes the following rules:
 [`no-index`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-index.ts) | Forbids the importation from index modules - for the reason, see [this issue](https://github.com/ReactiveX/rxjs/issues/4230). | TBD |
 [`no-internal`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-internal.ts) | Forbids the importation of internals. | TBD |
 [`no-nested-subscribe`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-nested-subscribe.ts) | Forbids the calling of `subscribe` within a `subscribe` callback. | TBD |
+[`no-redundant-notify`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-redundant-notify.ts) | Disallows redundant notifications from completed or errored observables. | TBD |
 [`no-sharereplay`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-sharereplay.ts) | Forbids using the `shareReplay` operator. | TBD |
 [`no-subclass`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-subclass.ts) | Forbids subclassing RxJS classes. | TBD |
 [`no-subject-unsubscribe`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-subject-unsubscribe.ts) | Forbids calling the `unsubscribe` method of a subject instance. | TBD |
