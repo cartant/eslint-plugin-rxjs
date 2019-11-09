@@ -75,6 +75,8 @@
     "lint:source": "tslint --project tsconfig.json source/**/*.ts",
     "lint:tests": "tslint --project tsconfig.json tests/**/*.ts",
     "prepublishOnly": "yarn run test && yarn run dist",
+    "prettier": "prettier --write \"./{src,tests}/**/*.{js,json,ts,tsx}\"",
+    "prettier:ci": "prettier --check \"./{src,tests}/**/*.{js,json,ts,tsx}\"",
     "test": "yarn run test:rules && yarn run test:specs",
     "test:debug": "mocha -r ts-node/register -t 5000 tests/rules/no-nested-subscribe.ts",
     "test:rules": "mocha -r ts-node/register -t 5000 tests/rules/*.ts",
