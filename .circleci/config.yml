@@ -19,5 +19,8 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run:
+          name: Check Formatting
+          command: yarn prettier:ci
+      - run:
           name: Test
           command: yarn test
