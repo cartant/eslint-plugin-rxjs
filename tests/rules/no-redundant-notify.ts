@@ -7,10 +7,11 @@ import { stripIndent } from "common-tags";
 import rule = require("../../source/rules/no-redundant-notify");
 import { ruleTester } from "../utils";
 
-ruleTester({ types: false }).run("no-redundant-notify", rule, {
+ruleTester({ types: true }).run("no-redundant-notify", rule, {
   valid: [
     stripIndent`
       // observable next + complete
+      import { Observable } from "rxjs";
       const observable = new Observable<number>(observer => {
         observer.next(42);
         observer.complete();
@@ -18,6 +19,7 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
     `,
     stripIndent`
       // observable next + error
+      import { Observable } from "rxjs";
       const observable = new Observable<number>(observer => {
         observer.next(42);
         observer.error(new Error("Kaboom!"));
@@ -25,21 +27,44 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
     `,
     stripIndent`
       // subject next + complete
+      import { Subject } from "rxjs";
       const subject = new Subject<number>();
       subject.next(42);
       subject.complete();
     `,
     stripIndent`
       // subject next + error
+      import { Subject } from "rxjs";
       const subject = new Subject<number>();
       subject.next(42);
       subject.error(new Error("Kaboom!"));
+    `,
+    stripIndent`
+      // different names with error
+      const a = new Subject<number>();
+      const b = new Subject<number>();
+      a.error(new Error("Kaboom!"));
+      b.error(new Error("Kaboom!"));
+    `,
+    stripIndent`
+      // different names with complete
+      const a = new Subject<number>();
+      const b = new Subject<number>();
+      a.complete();
+      b.complete();
+    `,
+    stripIndent`
+      // non-observer
+      const subject = new Subject<number>();
+      subject.error(new Error("Kaboom!"));
+      console.error(new Error("Kaboom!"));
     `
   ],
   invalid: [
     {
       code: stripIndent`
         // observable complete + next
+        import { Observable } from "rxjs";
         const observable = new Observable<number>(observer => {
           observer.complete();
           observer.next(42);
@@ -48,9 +73,9 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 12,
-          endLine: 4,
+          endLine: 5,
           endColumn: 16
         }
       ]
@@ -58,6 +83,7 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
     {
       code: stripIndent`
         // observable complete + complete
+        import { Observable } from "rxjs";
         const observable = new Observable<number>(observer => {
           observer.complete();
           observer.complete();
@@ -66,9 +92,9 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 12,
-          endLine: 4,
+          endLine: 5,
           endColumn: 20
         }
       ]
@@ -76,6 +102,7 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
     {
       code: stripIndent`
         // observable complete + error
+        import { Observable } from "rxjs";
         const observable = new Observable<number>(observer => {
           observer.complete();
           observer.error(new Error("Kaboom!"));
@@ -84,9 +111,9 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 12,
-          endLine: 4,
+          endLine: 5,
           endColumn: 17
         }
       ]
@@ -94,6 +121,7 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
     {
       code: stripIndent`
         // observable error + next
+        import { Observable } from "rxjs";
         const observable = new Observable<number>(observer => {
           observer.error(new Error("Kaboom!"));
           observer.next(42);
@@ -102,9 +130,9 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 12,
-          endLine: 4,
+          endLine: 5,
           endColumn: 16
         }
       ]
@@ -112,6 +140,7 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
     {
       code: stripIndent`
         // observable error + complete
+        import { Observable } from "rxjs";
         const observable = new Observable<number>(observer => {
           observer.error(new Error("Kaboom!"));
           observer.complete();
@@ -120,9 +149,9 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 12,
-          endLine: 4,
+          endLine: 5,
           endColumn: 20
         }
       ]
@@ -130,6 +159,7 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
     {
       code: stripIndent`
         // observable error + error
+        import { Observable } from "rxjs";
         const observable = new Observable<number>(observer => {
           observer.error(new Error("Kaboom!"));
           observer.error(new Error("Kaboom!"));
@@ -138,9 +168,9 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 12,
-          endLine: 4,
+          endLine: 5,
           endColumn: 17
         }
       ]
@@ -148,6 +178,7 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
     {
       code: stripIndent`
         // subject complete + next
+        import { Subject } from "rxjs";
         const subject = new Subject<number>();
         subject.complete();
         subject.next(42);
@@ -155,9 +186,9 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 9,
-          endLine: 4,
+          endLine: 5,
           endColumn: 13
         }
       ]
@@ -165,6 +196,7 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
     {
       code: stripIndent`
         // subject complete + complete
+        import { Subject } from "rxjs";
         const subject = new Subject<number>();
         subject.complete();
         subject.complete();
@@ -172,9 +204,9 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 9,
-          endLine: 4,
+          endLine: 5,
           endColumn: 17
         }
       ]
@@ -182,6 +214,7 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
     {
       code: stripIndent`
         // subject complete + error
+        import { Subject } from "rxjs";
         const subject = new Subject<number>();
         subject.complete();
         subject.error(new Error("Kaboom!"));
@@ -189,9 +222,9 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 9,
-          endLine: 4,
+          endLine: 5,
           endColumn: 14
         }
       ]
@@ -199,6 +232,7 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
     {
       code: stripIndent`
         // subject error + next
+        import { Subject } from "rxjs";
         const subject = new Subject<number>();
         subject.error(new Error("Kaboom!"));
         subject.next(42);
@@ -206,9 +240,9 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 9,
-          endLine: 4,
+          endLine: 5,
           endColumn: 13
         }
       ]
@@ -216,6 +250,7 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
     {
       code: stripIndent`
         // subject error + complete
+        import { Subject } from "rxjs";
         const subject = new Subject<number>();
         subject.error(new Error("Kaboom!"));
         subject.complete();
@@ -223,9 +258,9 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 9,
-          endLine: 4,
+          endLine: 5,
           endColumn: 17
         }
       ]
@@ -233,6 +268,7 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
     {
       code: stripIndent`
         // subject error + error
+        import { Subject } from "rxjs";
         const subject = new Subject<number>();
         subject.error(new Error("Kaboom!"));
         subject.error(new Error("Kaboom!"));
@@ -240,9 +276,9 @@ ruleTester({ types: false }).run("no-redundant-notify", rule, {
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
+          line: 5,
           column: 9,
-          endLine: 4,
+          endLine: 5,
           endColumn: 14
         }
       ]

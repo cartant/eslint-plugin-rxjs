@@ -5,12 +5,7 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
-import {
-  couldBeFunction as couldBeFunctionTS,
-  couldBeType as couldBeTypeTS,
-  isAny as isAnyTS,
-  isReferenceType as isReferenceTypeTS
-} from "tsutils-etc";
+import * as tsutils from "tsutils-etc";
 import * as ts from "typescript";
 
 function getParserServices(
@@ -48,7 +43,7 @@ export function typecheck(context: Rule.RuleContext) {
     qualified?: { name: RegExp }
   ) => {
     const tsType = getTSType(node);
-    return couldBeTypeTS(
+    return tsutils.couldBeType(
       tsType,
       name,
       qualified ? { ...qualified, typeChecker } : undefined
@@ -71,7 +66,7 @@ export function typecheck(context: Rule.RuleContext) {
     ) {
       return (
         tsNode.type &&
-        couldBeTypeTS(
+        tsutils.couldBeType(
           typeChecker.getTypeAtLocation(tsNode.type),
           name,
           qualified ? { ...qualified, typeChecker } : undefined
@@ -100,19 +95,26 @@ export function typecheck(context: Rule.RuleContext) {
       if (isArrowFunctionExpression(node) || isFunctionDeclaration(node)) {
         return true;
       }
-
       // Check with a type checker
-      return couldBeFunctionTS(getTSType(node));
+      return tsutils.couldBeFunction(getTSType(node));
     },
     couldBeMonoTypeOperatorFunction: (node: es.Node) =>
       couldBeType(node, "MonoTypeOperatorFunction"),
-    isAny: (node: es.Node) => isAnyTS(getTSType(node)),
-    isReferenceType: (node: es.Node) => isReferenceTypeTS(getTSType(node))
+    isAny: (node: es.Node) => tsutils.isAny(getTSType(node)),
+    isReferenceType: (node: es.Node) => tsutils.isReferenceType(getTSType(node))
   };
 }
 
 export function getParent(node: es.Node): es.Node {
   return (node as any).parent;
+}
+
+export function isBlockStatement(node: es.Node): node is es.BlockStatement {
+  return node.type === "BlockStatement";
+}
+
+export function isProgram(node: es.Node): node is es.Program {
+  return node.type === "Program";
 }
 
 export function isCallExpression(node: es.Node): node is es.CallExpression {
