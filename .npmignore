@@ -1,3 +1,4 @@
+/.circleci
 /build
 /node_modules
 /source
