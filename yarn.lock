@@ -650,10 +650,10 @@ escape-string-regexp@1.0.5, escape-string-regexp@^1.0.2, escape-string-regexp@^1
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-etc@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-0.0.7.tgz#56848f1b6338a24e941e698acda64f414ddb03bd"
-  integrity sha512-O3dvZsp2j3PSUwYQOVMmwOKArvyWjsdpxJ9qh1LO3xKhDiiIwB1Q++0OQUfCxtiFKOe40Ux0i59V9eZigNac2w==
+eslint-etc@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-0.0.8.tgz#598c0d9e21734d5878fa101c9e4864667571412f"
+  integrity sha512-UVFu7R13167Gi/m4yggsajygDQAW1ABTlfknXXVIYGAw8Kr0VHFCg7aIaYIOETi6fgiEwtDQe+SSOam4g3QfsA==
   dependencies:
     esquery "^1.0.1"
 
