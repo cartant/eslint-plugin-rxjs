@@ -41,6 +41,7 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
     `,
     stripIndent`
       // different names with error
+      import { Subject } from "rxjs";
       const a = new Subject<number>();
       const b = new Subject<number>();
       a.error(new Error("Kaboom!"));
@@ -48,6 +49,7 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
     `,
     stripIndent`
       // different names with complete
+      import { Subject } from "rxjs";
       const a = new Subject<number>();
       const b = new Subject<number>();
       a.complete();
@@ -55,9 +57,23 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
     `,
     stripIndent`
       // non-observer
+      import { Subject } from "rxjs";
       const subject = new Subject<number>();
       subject.error(new Error("Kaboom!"));
       console.error(new Error("Kaboom!"));
+    `,
+    stripIndent`
+      // multiple subjects
+      import { Subject } from "rxjs";
+      class SomeClass {
+        private a = new Subject<number>();
+        private b = new Subject<number>();
+        someMethod() {
+          this.a.complete();
+          this.b.next();
+          this.b.complete();
+        }
+      }
     `
   ],
   invalid: [
