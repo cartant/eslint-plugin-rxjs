@@ -43,7 +43,8 @@
   "keywords": [
     "lint",
     "rules",
-    "eslint"
+    "eslint",
+    "rxjs"
   ],
   "license": "MIT",
   "lint-staged": {
