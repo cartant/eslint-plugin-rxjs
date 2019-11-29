@@ -160,6 +160,6 @@ export function createRegExpForWords(config: string | string[]): RegExp | null {
     return new RegExp(config, flags);
   }
   const words = config;
-  const joined = words.map(word => `(\\b|_)${word}(\\b|_)`).join("|");
+  const joined = words.map(word => String.raw`(\b|_)${word}(\b|_)`).join("|");
   return new RegExp(`(${joined})`, flags);
 }

@@ -21,7 +21,7 @@ const rule: Rule.RuleModule = {
   },
   create: context => {
     return {
-      "ImportDeclaration Literal[value=/^rxjs(?:\\u002f\\w+)?\\u002findex/]": (
+      [String.raw`ImportDeclaration Literal[value=/^rxjs(?:\u002f\w+)?\u002findex/]`]: (
         node: es.Literal
       ) => {
         context.report({

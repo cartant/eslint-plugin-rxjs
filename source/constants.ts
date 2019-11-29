@@ -3,4 +3,4 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-export const defaultObservable = "[Aa]ction(s|\\$)?";
+export const defaultObservable = String.raw`[Aa]ction(s|\$)?`;
