@@ -100,6 +100,18 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
         );
       `,
       options: [{ observable: "foo" }]
+    },
+    {
+      code: stripIndent`
+        // mid-identifier action
+        ${setup}
+        const safe = transactionSource.pipe(
+          ofType("DO_SOMETHING"),
+          tap(() => {}),
+          first()
+        );
+      `,
+      options: [{ observable: "foo" }]
     }
   ],
   invalid: [
