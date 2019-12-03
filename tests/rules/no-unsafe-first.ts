@@ -112,6 +112,18 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
         );
       `,
       options: [{ observable: "foo" }]
+    },
+    {
+      code: stripIndent`
+        // mid-identifier action
+        import { of } from "rxjs";
+        import { first, tap } from "rxjs/operators";
+        const transactionSource = of();
+        const safe = transactionSource.pipe(
+          tap(() => {}),
+          first()
+        );
+      `
     }
   ],
   invalid: [
