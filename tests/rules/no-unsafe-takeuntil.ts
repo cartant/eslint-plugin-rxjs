@@ -122,6 +122,26 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
           allow: ["tap"]
         }
       ]
+    },
+    {
+      code: stripIndent`
+        // after switchMap as alias
+        import { of } from "rxjs";
+        import { switchMap, takeUntil } from "rxjs/operators";
+
+        declare const untilDestroyed: Function;
+
+        const a = of("a");
+        const b = of("b");
+        const c = of("d");
+
+        const d = a.pipe(switchMap(_ => b), untilDestroyed()).subscribe();
+      `,
+      options: [
+        {
+          alias: ["untilDestroyed"]
+        }
+      ]
     }
   ],
   invalid: [
@@ -230,6 +250,35 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
           column: 7,
           endLine: 16,
           endColumn: 16
+        }
+      ]
+    },
+    {
+      code: stripIndent`
+        // before switchMap as an alias
+        import { of } from "rxjs";
+        import { switchMap, takeUntil } from "rxjs/operators";
+
+        declare const untilDestroyed: Function;
+
+        const a = of("a");
+        const b = of("b");
+        const c = of("d");
+
+        const d = a.pipe(untilDestroyed(), switchMap(_ => b)).subscribe();
+      `,
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 11,
+          column: 18,
+          endLine: 11,
+          endColumn: 32
+        }
+      ],
+      options: [
+        {
+          alias: ["untilDestroyed"]
         }
       ]
     }

@@ -22,17 +22,19 @@ const rule: Rule.RuleModule = {
     schema: [
       {
         properties: {
+          alias: { type: "array", items: { type: "string" } },
           allow: { type: "array", items: { type: "string" } }
         },
         type: "object",
         description: stripIndent`
-          An optional object with an optional \`allow\` property.
-          The property is an array containing the names of the operators that are allowed to follow \`takeUntil\`.`
+          An optional object with optional \`alias\` and \`allow\` properties.
+          The \`alias\` property is an array containing the names of operators that aliases for \`takeUntil\`.
+          The \`allow\` property is an array containing the names of the operators that are allowed to follow \`takeUntil\`.`
       }
     ]
   },
   create: context => {
-    const invalidOperatorsRegExp = /^takeUntil$/;
+    let checkedOperatorsRegExp = /^takeUntil$/;
     const allowedOperators = [
       "count",
       "defaultIfEmpty",
@@ -57,12 +59,18 @@ const rule: Rule.RuleModule = {
       "toArray"
     ];
     const [config = {}] = context.options;
-    const { allow = allowedOperators } = config;
+    const { alias, allow = allowedOperators } = config;
+
+    if (alias) {
+      checkedOperatorsRegExp = new RegExp(
+        `^(${alias.concat("takeUntil").join("|")})$`
+      );
+    }
 
     const { couldBeObservable, isReferenceType } = typecheck(context);
 
     return {
-      [`CallExpression[callee.property.name='pipe'][arguments]:has(CallExpression[callee.name=${invalidOperatorsRegExp}])`]: (
+      [`CallExpression[callee.property.name='pipe'][arguments]:has(CallExpression[callee.name=${checkedOperatorsRegExp}])`]: (
         node: es.CallExpression
       ) => {
         if (
@@ -78,7 +86,7 @@ const rule: Rule.RuleModule = {
             return true;
           }
 
-          if (isError && invalidOperatorsRegExp.test(arg.callee.name)) {
+          if (isError && checkedOperatorsRegExp.test(arg.callee.name)) {
             context.report({
               messageId: "forbidden",
               node: arg.callee
