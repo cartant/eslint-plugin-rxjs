@@ -5,6 +5,7 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
+import { getParent, isArrayExpression, isObjectExpression } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -27,11 +28,33 @@ const rule: Rule.RuleModule = {
       });
     }
 
+    function reportBehaviorSubjects(node: es.Node) {
+      const parent = getParent(node) as es.NewExpression;
+      const {
+        arguments: [value]
+      } = parent;
+      if (isArrayExpression(value) || isObjectExpression(value)) {
+        return;
+      }
+      report(node);
+    }
+
+    function reportNotifications(node: es.Node) {
+      const parent = getParent(node) as es.NewExpression;
+      const {
+        arguments: [, value]
+      } = parent;
+      if (isArrayExpression(value) || isObjectExpression(value)) {
+        return;
+      }
+      report(node);
+    }
+
     return {
       "CallExpression[callee.property.name='pipe'] > CallExpression[typeParameters.params.length > 0] > Identifier": report,
-      "NewExpression[typeParameters.params.length > 0] > Identifier[name='BehaviorSubject']": report,
+      "NewExpression[typeParameters.params.length > 0] > Identifier[name='BehaviorSubject']": reportBehaviorSubjects,
       "CallExpression[typeParameters.params.length > 0] > Identifier[name=/^(from|of)$/]": report,
-      "NewExpression[typeParameters.params.length > 0]:has(Literal:first-child[value='N']) > Identifier[name='Notification']": report
+      "NewExpression[typeParameters.params.length > 0]:has(Literal:first-child[value='N']) > Identifier[name='Notification']": reportNotifications
     };
   }
 };

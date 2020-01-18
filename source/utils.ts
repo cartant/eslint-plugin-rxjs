@@ -109,6 +109,14 @@ export function getParent(node: es.Node): es.Node {
   return (node as any).parent;
 }
 
+export function isArrayExpression(node: es.Node): node is es.ArrayExpression {
+  return node.type === "ArrayExpression";
+}
+
+export function isObjectExpression(node: es.Node): node is es.ObjectExpression {
+  return node.type === "ObjectExpression";
+}
+
 export function isBlockStatement(node: es.Node): node is es.BlockStatement {
   return node.type === "BlockStatement";
 }
