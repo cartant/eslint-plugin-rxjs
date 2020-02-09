@@ -22,7 +22,7 @@ const rule: Rule.RuleModule = {
   },
   create: context => {
     return {
-      [String.raw`ImportDeclaration Literal[value=/^rxjs\u002f/]:not(Literal[value=/^rxjs\u002f(ajax|operators|testing|webSocket)/])`]: (
+      [String.raw`ImportDeclaration Literal[value=/^rxjs\u002f/]:not(Literal[value=/^rxjs\u002f(ajax|fetch|operators|testing|webSocket)/])`]: (
         node: es.Literal
       ) => {
         context.report({
