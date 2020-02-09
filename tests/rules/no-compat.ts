@@ -10,6 +10,7 @@ ruleTester({ types: false }).run("no-compat", rule, {
   valid: [
     `import { Observable } from "rxjs";`,
     `import { ajax } from "rxjs/ajax";`,
+    `import { fromFetch } from "rxjs/fetch";`,
     `import { concatMap } from "rxjs/operators";`,
     `import { TestScheduler } from "rxjs/testing";`,
     `import { webSocket } from "rxjs/webSocket";`,
