@@ -19,7 +19,7 @@
     "@types/chai": "^4.2.0",
     "@types/common-tags": "^1.8.0",
     "@types/eslint": "^6.1.0",
-    "@types/mocha": "^5.2.6",
+    "@types/mocha": "^7.0.0",
     "@types/node": "^13.0.0",
     "@typescript-eslint/parser": "^2.0.0",
     "chai": "^4.2.0",
@@ -30,7 +30,7 @@
     "prettier": "^1.17.0",
     "rimraf": "^3.0.0",
     "ts-node": "^8.0.2",
-    "tslint": "^5.1.0",
+    "tslint": "^6.0.0",
     "tslint-etc": "^1.6.0",
     "typescript": "~3.7.2"
   },
