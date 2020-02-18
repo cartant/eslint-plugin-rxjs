@@ -73,6 +73,7 @@ The package includes the following rules:
 [`no-subject-unsubscribe`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-subject-unsubscribe.ts) | Forbids calling the `unsubscribe` method of a subject instance. | TBD |
 [`no-subject-value`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-subject-value.ts) | Forbids accessing the `value` property of a `BehaviorSubject` instance. | TBD |
 [`no-tap`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-tap.ts) | Forbids the use of the `tap` operator. | TBD |
+[`no-topromise`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-topromise.ts) | Forbids the use of the `toPromise` method. | TBD |
 [`no-unbound-methods`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-unbound-methods.ts) | Forbids the passing of unbound methods. | TBD |
 [`no-unsafe-catch`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-unsafe-catch.ts) | Forbids unsafe `catchError` usage in effects and epics. | TBD |
 [`no-unsafe-first`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-unsafe-first.ts) | Forbids unsafe `first`/`take` usage in effects and epics. | TBD |

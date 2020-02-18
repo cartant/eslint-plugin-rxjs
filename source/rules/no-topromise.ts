@@ -11,7 +11,7 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Forbids the use of `toPromise`.",
+      description: "Forbids the use of the `toPromise` method.",
       recommended: false
     },
     fixable: null,
