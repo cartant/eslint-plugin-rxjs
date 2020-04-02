@@ -76,8 +76,8 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           }
         }
       `,
-      options: [{ allowProtected: true }]
-    }
+      options: [{ allowProtected: true }],
+    },
   ],
   invalid: [
     {
@@ -101,8 +101,8 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 5,
           endColumn: 11,
           data: {
-            subject: "a"
-          }
+            subject: "a",
+          },
         },
         {
           messageId: "forbidden",
@@ -111,8 +111,8 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 6,
           endColumn: 14,
           data: {
-            subject: "b"
-          }
+            subject: "b",
+          },
         },
         {
           messageId: "forbidden",
@@ -121,8 +121,8 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 7,
           endColumn: 4,
           data: {
-            subject: "c"
-          }
+            subject: "c",
+          },
         },
         {
           messageId: "forbidden",
@@ -131,8 +131,8 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 8,
           endColumn: 20,
           data: {
-            subject: "d"
-          }
+            subject: "d",
+          },
         },
         {
           messageId: "forbidden",
@@ -141,10 +141,10 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 9,
           endColumn: 13,
           data: {
-            subject: "e"
-          }
-        }
-      ]
+            subject: "e",
+          },
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -166,8 +166,8 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 6,
           endColumn: 13,
           data: {
-            subject: "a"
-          }
+            subject: "a",
+          },
         },
         {
           messageId: "forbidden",
@@ -176,10 +176,10 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 7,
           endColumn: 16,
           data: {
-            subject: "b"
-          }
-        }
-      ]
+            subject: "b",
+          },
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -204,8 +204,8 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 5,
           endColumn: 8,
           data: {
-            subject: "a"
-          }
+            subject: "a",
+          },
         },
         {
           messageId: "forbidden",
@@ -214,10 +214,10 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 9,
           endColumn: 8,
           data: {
-            subject: "a"
-          }
-        }
-      ]
+            subject: "a",
+          },
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -242,8 +242,8 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 5,
           endColumn: 11,
           data: {
-            subject: "a"
-          }
+            subject: "a",
+          },
         },
         {
           messageId: "forbidden",
@@ -252,10 +252,10 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 9,
           endColumn: 4,
           data: {
-            subject: "b"
-          }
-        }
-      ]
+            subject: "b",
+          },
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -291,8 +291,8 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 5,
           endColumn: 11,
           data: {
-            subject: "a"
-          }
+            subject: "a",
+          },
         },
         {
           messageId: "forbiddenAllowProtected",
@@ -301,8 +301,8 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 8,
           endColumn: 13,
           data: {
-            subject: "b"
-          }
+            subject: "b",
+          },
         },
         {
           messageId: "forbiddenAllowProtected",
@@ -311,8 +311,8 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 11,
           endColumn: 8,
           data: {
-            subject: "c"
-          }
+            subject: "c",
+          },
         },
         {
           messageId: "forbiddenAllowProtected",
@@ -321,8 +321,8 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 15,
           endColumn: 8,
           data: {
-            subject: "c"
-          }
+            subject: "c",
+          },
         },
         {
           messageId: "forbiddenAllowProtected",
@@ -331,10 +331,10 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 19,
           endColumn: 4,
           data: {
-            subject: "d"
-          }
-        }
-      ]
+            subject: "d",
+          },
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -358,8 +358,8 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 9,
           endColumn: 11,
           data: {
-            subject: "c"
-          }
+            subject: "c",
+          },
         },
         {
           messageId: "forbidden",
@@ -368,10 +368,10 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           endLine: 10,
           endColumn: 14,
           data: {
-            subject: "d"
-          }
-        }
-      ]
-    }
-  ]
+            subject: "d",
+          },
+        },
+      ],
+    },
+  ],
 });

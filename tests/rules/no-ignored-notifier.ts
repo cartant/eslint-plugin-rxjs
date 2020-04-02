@@ -46,7 +46,7 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
               }
           )
       );
-    `
+    `,
   ],
   invalid: [
     {
@@ -66,9 +66,9 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
           line: 8,
           column: 3,
           endLine: 8,
-          endColumn: 13
-        }
-      ]
+          endColumn: 13,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -87,9 +87,9 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
           line: 8,
           column: 3,
           endLine: 8,
-          endColumn: 13
-        }
-      ]
+          endColumn: 13,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -112,9 +112,9 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
           line: 8,
           column: 3,
           endLine: 8,
-          endColumn: 13
-        }
-      ]
+          endColumn: 13,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -137,9 +137,9 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
           line: 8,
           column: 3,
           endLine: 8,
-          endColumn: 13
-        }
-      ]
+          endColumn: 13,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -158,9 +158,9 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
           line: 8,
           column: 3,
           endLine: 8,
-          endColumn: 12
-        }
-      ]
+          endColumn: 12,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -179,9 +179,9 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
           line: 8,
           column: 3,
           endLine: 8,
-          endColumn: 12
-        }
-      ]
+          endColumn: 12,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -204,9 +204,9 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
           line: 8,
           column: 3,
           endLine: 8,
-          endColumn: 12
-        }
-      ]
+          endColumn: 12,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -229,9 +229,9 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
           line: 8,
           column: 3,
           endLine: 8,
-          endColumn: 12
-        }
-      ]
-    }
-  ]
+          endColumn: 12,
+        },
+      ],
+    },
+  ],
 });

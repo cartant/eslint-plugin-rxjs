@@ -20,7 +20,7 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
         const c = of("d");
 
         const d = a.pipe(switchMap(_ => b), takeUntil(c)).subscribe();
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -34,7 +34,7 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
         const d = of("d");
 
         const e = a.pipe(s => combineLatest(s, b, c), takeUntil(d)).subscribe();
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -47,7 +47,7 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
         const c = of("d");
 
         const d = a.pipe(switchMap(_ => b), pipe(takeUntil(d), switchMap(_ => b))).subscribe();
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -102,7 +102,7 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
         r = a.pipe(takeUntil(b), takeLast(1)).subscribe();
         r = a.pipe(takeUntil(b), throwIfEmpty()).subscribe();
         r = a.pipe(takeUntil(b), toArray()).subscribe();
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -119,9 +119,9 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
       `,
       options: [
         {
-          allow: ["tap"]
-        }
-      ]
+          allow: ["tap"],
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -139,10 +139,10 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
       `,
       options: [
         {
-          alias: ["untilDestroyed"]
-        }
-      ]
-    }
+          alias: ["untilDestroyed"],
+        },
+      ],
+    },
   ],
   invalid: [
     {
@@ -163,9 +163,9 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
           line: 9,
           column: 18,
           endLine: 9,
-          endColumn: 27
-        }
-      ]
+          endColumn: 27,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -186,9 +186,9 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
           line: 10,
           column: 18,
           endLine: 10,
-          endColumn: 27
-        }
-      ]
+          endColumn: 27,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -204,8 +204,8 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
       `,
       options: [
         {
-          allow: ["tap"]
-        }
+          allow: ["tap"],
+        },
       ],
       errors: [
         {
@@ -213,9 +213,9 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
           line: 9,
           column: 18,
           endLine: 9,
-          endColumn: 27
-        }
-      ]
+          endColumn: 27,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -249,9 +249,9 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
           line: 16,
           column: 7,
           endLine: 16,
-          endColumn: 16
-        }
-      ]
+          endColumn: 16,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -273,14 +273,14 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
           line: 11,
           column: 18,
           endLine: 11,
-          endColumn: 32
-        }
+          endColumn: 32,
+        },
       ],
       options: [
         {
-          alias: ["untilDestroyed"]
-        }
-      ]
-    }
-  ]
+          alias: ["untilDestroyed"],
+        },
+      ],
+    },
+  ],
 });

@@ -32,7 +32,7 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
           switchMap(() => EMPTY),
           catchError((error, caught) => caught)
         );
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -44,7 +44,7 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
           switchMap(() => EMPTY),
           catchError((error, caught) => caught)
         );
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -56,7 +56,7 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
           switchMap(() => EMPTY),
           catchError((error, caught) => caught)
         );
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -67,7 +67,7 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
           tap(() => {}),
           switchMap(() => EMPTY.pipe(catchError(() => EMPTY)))
         );
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -78,7 +78,7 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
           tap(() => {}),
           switchMap(() => EMPTY.pipe(catchError(() => EMPTY)))
         );
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -89,7 +89,7 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
           tap(() => {}),
           switchMap(() => EMPTY.pipe(catchError(() => EMPTY)))
         );
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -101,8 +101,8 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
           catchError(() => EMPTY)
         );
       `,
-      options: [{ observable: "foo" }]
-    }
+      options: [{ observable: "foo" }],
+    },
   ],
   invalid: [
     {
@@ -122,9 +122,9 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
           line: 16,
           column: 11,
           endLine: 16,
-          endColumn: 21
-        }
-      ]
+          endColumn: 21,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -143,9 +143,9 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
           line: 16,
           column: 11,
           endLine: 16,
-          endColumn: 21
-        }
-      ]
+          endColumn: 21,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -164,9 +164,9 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
           line: 16,
           column: 11,
           endLine: 16,
-          endColumn: 21
-        }
-      ]
+          endColumn: 21,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -181,8 +181,8 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
       `,
       options: [
         {
-          observable: "foo"
-        }
+          observable: "foo",
+        },
       ],
       errors: [
         {
@@ -190,9 +190,9 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
           line: 16,
           column: 11,
           endLine: 16,
-          endColumn: 21
-        }
-      ]
-    }
-  ]
+          endColumn: 21,
+        },
+      ],
+    },
+  ],
 });

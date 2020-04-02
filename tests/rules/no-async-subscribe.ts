@@ -20,7 +20,7 @@ ruleTester({ types: true }).run("no-async-subscribe", rule, {
       import { of } from "rxjs";
 
       of("a").subscribe(function() {});
-    `
+    `,
   ],
   invalid: [
     {
@@ -38,9 +38,9 @@ ruleTester({ types: true }).run("no-async-subscribe", rule, {
           line: 4,
           column: 19,
           endLine: 4,
-          endColumn: 23
-        }
-      ]
+          endColumn: 23,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -57,9 +57,9 @@ ruleTester({ types: true }).run("no-async-subscribe", rule, {
           line: 4,
           column: 19,
           endLine: 4,
-          endColumn: 23
-        }
-      ]
-    }
-  ]
+          endColumn: 23,
+        },
+      ],
+    },
+  ],
 });

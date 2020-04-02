@@ -43,7 +43,7 @@ ruleTester({ types: true }).run("no-finnish", rule, {
         someProperty: Observable<any>;
         someMethod(someParam: Observable<any>): Observable<any>;
       }
-    `
+    `,
   ],
   invalid: [
     {
@@ -61,23 +61,23 @@ ruleTester({ types: true }).run("no-finnish", rule, {
           line: 3,
           column: 7,
           endLine: 3,
-          endColumn: 22
+          endColumn: 22,
         },
         {
           messageId: "forbidden",
           line: 5,
           column: 19,
           endLine: 5,
-          endColumn: 37
+          endColumn: 37,
         },
         {
           messageId: "forbidden",
           line: 6,
           column: 20,
           endLine: 6,
-          endColumn: 41
-        }
-      ]
+          endColumn: 41,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -95,30 +95,30 @@ ruleTester({ types: true }).run("no-finnish", rule, {
           line: 3,
           column: 7,
           endLine: 3,
-          endColumn: 22
+          endColumn: 22,
         },
         {
           messageId: "forbidden",
           line: 5,
           column: 42,
           endLine: 5,
-          endColumn: 50
+          endColumn: 50,
         },
         {
           messageId: "forbidden",
           line: 6,
           column: 9,
           endLine: 6,
-          endColumn: 17
+          endColumn: 17,
         },
         {
           messageId: "forbidden",
           line: 7,
           column: 19,
           endLine: 7,
-          endColumn: 34
-        }
-      ]
+          endColumn: 34,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -136,30 +136,30 @@ ruleTester({ types: true }).run("no-finnish", rule, {
           line: 3,
           column: 7,
           endLine: 3,
-          endColumn: 22
+          endColumn: 22,
         },
         {
           messageId: "forbidden",
           line: 5,
           column: 8,
           endLine: 5,
-          endColumn: 20
+          endColumn: 20,
         },
         {
           messageId: "forbidden",
           line: 6,
           column: 29,
           endLine: 6,
-          endColumn: 54
+          endColumn: 54,
         },
         {
           messageId: "forbidden",
           line: 7,
           column: 20,
           endLine: 7,
-          endColumn: 45
-        }
-      ]
+          endColumn: 45,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -174,30 +174,30 @@ ruleTester({ types: true }).run("no-finnish", rule, {
           line: 3,
           column: 10,
           endLine: 3,
-          endColumn: 23
+          endColumn: 23,
         },
         {
           messageId: "forbidden",
           line: 3,
           column: 24,
           endLine: 3,
-          endColumn: 51
+          endColumn: 51,
         },
         {
           messageId: "forbidden",
           line: 4,
           column: 7,
           endLine: 4,
-          endColumn: 25
+          endColumn: 25,
         },
         {
           messageId: "forbidden",
           line: 4,
           column: 29,
           endLine: 4,
-          endColumn: 56
-        }
-      ]
+          endColumn: 56,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -217,51 +217,51 @@ ruleTester({ types: true }).run("no-finnish", rule, {
           line: 4,
           column: 3,
           endLine: 4,
-          endColumn: 16
+          endColumn: 16,
         },
         {
           messageId: "forbidden",
           line: 5,
           column: 16,
           endLine: 5,
-          endColumn: 43
+          endColumn: 43,
         },
         {
           messageId: "forbidden",
           line: 6,
           column: 7,
           endLine: 6,
-          endColumn: 18
+          endColumn: 18,
         },
         {
           messageId: "forbidden",
           line: 7,
           column: 7,
           endLine: 7,
-          endColumn: 18
+          endColumn: 18,
         },
         {
           messageId: "forbidden",
           line: 7,
           column: 19,
           endLine: 7,
-          endColumn: 46
+          endColumn: 46,
         },
         {
           messageId: "forbidden",
           line: 8,
           column: 3,
           endLine: 8,
-          endColumn: 14
+          endColumn: 14,
         },
         {
           messageId: "forbidden",
           line: 8,
           column: 15,
           endLine: 8,
-          endColumn: 42
-        }
-      ]
+          endColumn: 42,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -278,30 +278,30 @@ ruleTester({ types: true }).run("no-finnish", rule, {
           line: 4,
           column: 3,
           endLine: 4,
-          endColumn: 16
+          endColumn: 16,
         },
         {
           messageId: "forbidden",
           line: 5,
           column: 3,
           endLine: 5,
-          endColumn: 14
+          endColumn: 14,
         },
         {
           messageId: "forbidden",
           line: 5,
           column: 15,
           endLine: 5,
-          endColumn: 42
+          endColumn: 42,
         },
         {
           messageId: "forbidden",
           line: 5,
           column: 44,
           endLine: 5,
-          endColumn: 71
-        }
-      ]
-    }
-  ]
+          endColumn: 71,
+        },
+      ],
+    },
+  ],
 });

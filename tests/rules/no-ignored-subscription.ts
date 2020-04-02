@@ -30,7 +30,7 @@ ruleTester({ types: true }).run("no-ignored-subscription", rule, {
       // object property
       import { of } from "rxjs";
       const d = { subscription: of(42).subscribe() };
-    `
+    `,
   ],
   invalid: [
     {
@@ -45,9 +45,9 @@ ruleTester({ types: true }).run("no-ignored-subscription", rule, {
           line: 3,
           column: 8,
           endLine: 3,
-          endColumn: 17
-        }
-      ]
+          endColumn: 17,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -62,9 +62,9 @@ ruleTester({ types: true }).run("no-ignored-subscription", rule, {
           line: 4,
           column: 3,
           endLine: 4,
-          endColumn: 12
-        }
-      ]
-    }
-  ]
+          endColumn: 12,
+        },
+      ],
+    },
+  ],
 });

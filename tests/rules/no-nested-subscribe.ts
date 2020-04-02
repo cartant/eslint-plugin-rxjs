@@ -49,7 +49,7 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
           console.log(test);
         }
       });
-    `
+    `,
   ],
   invalid: [
     {
@@ -66,9 +66,9 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
           line: 4,
           column: 24,
           endLine: 4,
-          endColumn: 33
-        }
-      ]
+          endColumn: 33,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -84,9 +84,9 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
           line: 4,
           column: 30,
           endLine: 4,
-          endColumn: 39
-        }
-      ]
+          endColumn: 39,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -102,9 +102,9 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
           line: 4,
           column: 29,
           endLine: 4,
-          endColumn: 38
-        }
-      ]
+          endColumn: 38,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -121,9 +121,9 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
           line: 5,
           column: 24,
           endLine: 5,
-          endColumn: 33
-        }
-      ]
+          endColumn: 33,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -139,9 +139,9 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
           line: 4,
           column: 29,
           endLine: 4,
-          endColumn: 38
-        }
-      ]
+          endColumn: 38,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -157,9 +157,9 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
           line: 4,
           column: 28,
           endLine: 4,
-          endColumn: 37
-        }
-      ]
+          endColumn: 37,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -177,9 +177,9 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
           line: 6,
           column: 19,
           endLine: 6,
-          endColumn: 28
-        }
-      ]
+          endColumn: 28,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -195,9 +195,9 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
           line: 4,
           column: 29,
           endLine: 4,
-          endColumn: 38
-        }
-      ]
+          endColumn: 38,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -213,9 +213,9 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
           line: 4,
           column: 26,
           endLine: 4,
-          endColumn: 35
-        }
-      ]
-    }
-  ]
+          endColumn: 35,
+        },
+      ],
+    },
+  ],
 });

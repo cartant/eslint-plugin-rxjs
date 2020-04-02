@@ -45,9 +45,9 @@ const arrowTests: Tests = {
         next<T>(t: T): void {}
         tearDown(): void {}
       }
-    `
+    `,
   ],
-  invalid: []
+  invalid: [],
 };
 
 const boundTests: Tests = {
@@ -82,9 +82,9 @@ const boundTests: Tests = {
         next<T>(t: T): void {}
         tearDown(): void {}
       }
-    `
+    `,
   ],
-  invalid: []
+  invalid: [],
 };
 
 const deepTests: Tests = {
@@ -127,44 +127,44 @@ const deepTests: Tests = {
           line: 18,
           column: 11,
           endLine: 18,
-          endColumn: 24
+          endColumn: 24,
         },
         {
           messageId: "forbidden",
           line: 19,
           column: 16,
           endLine: 19,
-          endColumn: 29
+          endColumn: 29,
         },
         {
           messageId: "forbidden",
           line: 21,
           column: 18,
           endLine: 21,
-          endColumn: 38
+          endColumn: 38,
         },
         {
           messageId: "forbidden",
           line: 23,
           column: 7,
           endLine: 23,
-          endColumn: 21
+          endColumn: 21,
         },
         {
           messageId: "forbidden",
           line: 24,
           column: 7,
           endLine: 24,
-          endColumn: 22
+          endColumn: 22,
         },
         {
           messageId: "forbidden",
           line: 25,
           column: 7,
           endLine: 25,
-          endColumn: 25
-        }
-      ]
+          endColumn: 25,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -188,18 +188,18 @@ const deepTests: Tests = {
           line: 10,
           column: 43,
           endLine: 10,
-          endColumn: 61
+          endColumn: 61,
         },
         {
           messageId: "forbidden",
           line: 11,
           column: 22,
           endLine: 11,
-          endColumn: 40
-        }
-      ]
-    }
-  ]
+          endColumn: 40,
+        },
+      ],
+    },
+  ],
 };
 
 const staticTests: Tests = {
@@ -234,9 +234,9 @@ const staticTests: Tests = {
         static next<T>(t: T): void {}
         static tearDown(): void {}
       }
-    `
+    `,
   ],
-  invalid: []
+  invalid: [],
 };
 
 const unboundTests: Tests = {
@@ -254,7 +254,7 @@ const unboundTests: Tests = {
           ).subscribe(console.log);
         }
       }
-    `
+    `,
   ],
   invalid: [
     {
@@ -283,23 +283,23 @@ const unboundTests: Tests = {
           line: 10,
           column: 11,
           endLine: 10,
-          endColumn: 19
+          endColumn: 19,
         },
         {
           messageId: "forbidden",
           line: 11,
           column: 16,
           endLine: 11,
-          endColumn: 24
+          endColumn: 24,
         },
         {
           messageId: "forbidden",
           line: 12,
           column: 18,
           endLine: 12,
-          endColumn: 33
-        }
-      ]
+          endColumn: 33,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -325,23 +325,23 @@ const unboundTests: Tests = {
           line: 7,
           column: 7,
           endLine: 7,
-          endColumn: 16
+          endColumn: 16,
         },
         {
           messageId: "forbidden",
           line: 8,
           column: 7,
           endLine: 8,
-          endColumn: 17
+          endColumn: 17,
         },
         {
           messageId: "forbidden",
           line: 9,
           column: 7,
           endLine: 9,
-          endColumn: 20
-        }
-      ]
+          endColumn: 20,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -362,18 +362,18 @@ const unboundTests: Tests = {
           line: 6,
           column: 43,
           endLine: 6,
-          endColumn: 56
+          endColumn: 56,
         },
         {
           messageId: "forbidden",
           line: 7,
           column: 22,
           endLine: 7,
-          endColumn: 35
-        }
-      ]
-    }
-  ]
+          endColumn: 35,
+        },
+      ],
+    },
+  ],
 };
 
 ruleTester({ types: true }).run("no-unbound-methods", rule, {
@@ -382,13 +382,13 @@ ruleTester({ types: true }).run("no-unbound-methods", rule, {
     ...boundTests.valid,
     ...deepTests.valid,
     ...staticTests.valid,
-    ...unboundTests.valid
+    ...unboundTests.valid,
   ],
   invalid: [
     ...arrowTests.invalid,
     ...boundTests.invalid,
     ...deepTests.invalid,
     ...staticTests.invalid,
-    ...unboundTests.invalid
-  ]
+    ...unboundTests.invalid,
+  ],
 });

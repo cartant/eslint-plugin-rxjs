@@ -36,7 +36,7 @@ ruleTester({ types: true }).run("just", rule, {
       import { of as of } from "rxjs";
 
       const a = of("a");
-    `
+    `,
   ],
   invalid: [
     {
@@ -60,23 +60,23 @@ ruleTester({ types: true }).run("just", rule, {
           line: 2,
           column: 10,
           endLine: 2,
-          endColumn: 12
+          endColumn: 12,
         },
         {
           messageId: "forbidden",
           line: 4,
           column: 11,
           endLine: 4,
-          endColumn: 13
+          endColumn: 13,
         },
         {
           messageId: "forbidden",
           line: 5,
           column: 11,
           endLine: 5,
-          endColumn: 13
-        }
-      ]
+          endColumn: 13,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -121,9 +121,9 @@ ruleTester({ types: true }).run("just", rule, {
           line: 2,
           column: 10,
           endLine: 2,
-          endColumn: 12
-        }
-      ]
-    }
-  ]
+          endColumn: 12,
+        },
+      ],
+    },
+  ],
 });

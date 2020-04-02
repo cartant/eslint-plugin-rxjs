@@ -33,7 +33,7 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
         ${setup}
         const pipedGetEffect = actions.pipe(ofType("GET_SOMETHING"), tap(() => {}), switchMap(() => EMPTY));
         const pipedMoreGetEffect = actions.pipe(ofType("DO_SOMETHING", "GET_SOMETHING"), tap(() => {}), switchMap(() => EMPTY));
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -41,7 +41,7 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
         ${setup}
         const pipedGetEpic = (action$: Actions) => action$.pipe(ofType("GET_SOMETHING"), tap(() => {}), switchMap(() => EMPTY));
         const pipedMoreGetEpic = (action$: Actions) => action$.pipe(ofType("DO_SOMETHING", "GET_SOMETHING"), tap(() => {}), switchMap(() => EMPTY));
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -49,7 +49,7 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
         ${setup}
         const pipedSymbolGetEffect = actions.pipe(ofType(GET_SOMETHING), tap(() => {}), switchMap(() => EMPTY));
         const pipedOfTypeCamelCaseGetEffect = actions.pipe(ofType(GetSomething), tap(() => {}), switchMap(() => EMPTY));
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -59,9 +59,9 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
       `,
       options: [
         {
-          allow: ["FOO"]
-        }
-      ]
+          allow: ["FOO"],
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -72,10 +72,10 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
       `,
       options: [
         {
-          disallow: ["FOO"]
-        }
-      ]
-    }
+          disallow: ["FOO"],
+        },
+      ],
+    },
   ],
   invalid: [
     {
@@ -91,16 +91,16 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
           line: setupLines + 2,
           column: 85,
           endLine: setupLines + 2,
-          endColumn: 94
+          endColumn: 94,
         },
         {
           messageId: "forbidden",
           line: setupLines + 3,
           column: 105,
           endLine: setupLines + 3,
-          endColumn: 114
-        }
-      ]
+          endColumn: 114,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -115,16 +115,16 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
           line: setupLines + 2,
           column: 105,
           endLine: setupLines + 2,
-          endColumn: 114
+          endColumn: 114,
         },
         {
           messageId: "forbidden",
           line: setupLines + 3,
           column: 125,
           endLine: setupLines + 3,
-          endColumn: 134
-        }
-      ]
+          endColumn: 134,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -139,16 +139,16 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
           line: setupLines + 2,
           column: 89,
           endLine: setupLines + 2,
-          endColumn: 98
+          endColumn: 98,
         },
         {
           messageId: "forbidden",
           line: setupLines + 3,
           column: 97,
           endLine: setupLines + 3,
-          endColumn: 106
-        }
-      ]
+          endColumn: 106,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -159,8 +159,8 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
       `,
       options: [
         {
-          allow: ["FOO"]
-        }
+          allow: ["FOO"],
+        },
       ],
       errors: [
         {
@@ -168,16 +168,16 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
           line: setupLines + 2,
           column: 70,
           endLine: setupLines + 2,
-          endColumn: 79
+          endColumn: 79,
         },
         {
           messageId: "forbidden",
           line: setupLines + 3,
           column: 70,
           endLine: setupLines + 3,
-          endColumn: 79
-        }
-      ]
+          endColumn: 79,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -187,8 +187,8 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
       `,
       options: [
         {
-          disallow: ["FOO"]
-        }
+          disallow: ["FOO"],
+        },
       ],
       errors: [
         {
@@ -196,9 +196,9 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
           line: setupLines + 2,
           column: 70,
           endLine: setupLines + 2,
-          endColumn: 79
-        }
-      ]
-    }
-  ]
+          endColumn: 79,
+        },
+      ],
+    },
+  ],
 });

@@ -15,8 +15,8 @@ ruleTester({ types: false }).run("ban-observables", rule, {
         {
           of: true,
           Observable: "because I say so",
-          Subject: false
-        }
+          Subject: false,
+        },
       ],
       errors: [
         {
@@ -27,8 +27,8 @@ ruleTester({ types: false }).run("ban-observables", rule, {
           endColumn: 12,
           data: {
             name: "of",
-            explanation: ""
-          }
+            explanation: "",
+          },
         },
         {
           messageId: "forbidden",
@@ -38,10 +38,10 @@ ruleTester({ types: false }).run("ban-observables", rule, {
           endColumn: 24,
           data: {
             name: "Observable",
-            explanation: ": because I say so"
-          }
-        }
-      ]
-    }
-  ]
+            explanation: ": because I say so",
+          },
+        },
+      ],
+    },
+  ],
 });

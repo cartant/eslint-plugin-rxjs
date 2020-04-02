@@ -74,7 +74,7 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
           this.b.complete();
         }
       }
-    `
+    `,
   ],
   invalid: [
     {
@@ -92,9 +92,9 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
           line: 5,
           column: 12,
           endLine: 5,
-          endColumn: 16
-        }
-      ]
+          endColumn: 16,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -111,9 +111,9 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
           line: 5,
           column: 12,
           endLine: 5,
-          endColumn: 20
-        }
-      ]
+          endColumn: 20,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -130,9 +130,9 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
           line: 5,
           column: 12,
           endLine: 5,
-          endColumn: 17
-        }
-      ]
+          endColumn: 17,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -149,9 +149,9 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
           line: 5,
           column: 12,
           endLine: 5,
-          endColumn: 16
-        }
-      ]
+          endColumn: 16,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -168,9 +168,9 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
           line: 5,
           column: 12,
           endLine: 5,
-          endColumn: 20
-        }
-      ]
+          endColumn: 20,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -187,9 +187,9 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
           line: 5,
           column: 12,
           endLine: 5,
-          endColumn: 17
-        }
-      ]
+          endColumn: 17,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -205,9 +205,9 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
           line: 5,
           column: 9,
           endLine: 5,
-          endColumn: 13
-        }
-      ]
+          endColumn: 13,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -223,9 +223,9 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
           line: 5,
           column: 9,
           endLine: 5,
-          endColumn: 17
-        }
-      ]
+          endColumn: 17,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -241,9 +241,9 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
           line: 5,
           column: 9,
           endLine: 5,
-          endColumn: 14
-        }
-      ]
+          endColumn: 14,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -259,9 +259,9 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
           line: 5,
           column: 9,
           endLine: 5,
-          endColumn: 13
-        }
-      ]
+          endColumn: 13,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -277,9 +277,9 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
           line: 5,
           column: 9,
           endLine: 5,
-          endColumn: 17
-        }
-      ]
+          endColumn: 17,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -295,9 +295,9 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
           line: 5,
           column: 9,
           endLine: 5,
-          endColumn: 14
-        }
-      ]
-    }
-  ]
+          endColumn: 14,
+        },
+      ],
+    },
+  ],
 });

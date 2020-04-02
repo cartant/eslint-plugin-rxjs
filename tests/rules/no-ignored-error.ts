@@ -21,7 +21,7 @@ ruleTester({ types: true }).run("no-ignored-error", rule, {
       const subject = new Subject<any>();
       const observable = of([1, 2]);
       observable.subscribe(subject);
-    `
+    `,
   ],
   invalid: [
     {
@@ -37,9 +37,9 @@ ruleTester({ types: true }).run("no-ignored-error", rule, {
           line: 4,
           column: 12,
           endLine: 4,
-          endColumn: 21
-        }
-      ]
+          endColumn: 21,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -55,9 +55,9 @@ ruleTester({ types: true }).run("no-ignored-error", rule, {
           line: 5,
           column: 12,
           endLine: 5,
-          endColumn: 21
-        }
-      ]
+          endColumn: 21,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -72,9 +72,9 @@ ruleTester({ types: true }).run("no-ignored-error", rule, {
           line: 4,
           column: 9,
           endLine: 4,
-          endColumn: 18
-        }
-      ]
+          endColumn: 18,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -90,9 +90,9 @@ ruleTester({ types: true }).run("no-ignored-error", rule, {
           line: 5,
           column: 9,
           endLine: 5,
-          endColumn: 18
-        }
-      ]
-    }
-  ]
+          endColumn: 18,
+        },
+      ],
+    },
+  ],
 });

@@ -8,7 +8,7 @@ import { ruleTester } from "../utils";
 
 ruleTester({ types: false }).run("ban-operators", rule, {
   valid: [
-    `import { concat, merge as m, mergeMap as mm } from "rxjs/operators";`
+    `import { concat, merge as m, mergeMap as mm } from "rxjs/operators";`,
   ],
   invalid: [
     {
@@ -17,8 +17,8 @@ ruleTester({ types: false }).run("ban-operators", rule, {
         {
           concat: true,
           merge: "because I say so",
-          mergeMap: false
-        }
+          mergeMap: false,
+        },
       ],
       errors: [
         {
@@ -29,8 +29,8 @@ ruleTester({ types: false }).run("ban-operators", rule, {
           endColumn: 16,
           data: {
             name: "concat",
-            explanation: ""
-          }
+            explanation: "",
+          },
         },
         {
           messageId: "forbidden",
@@ -40,10 +40,10 @@ ruleTester({ types: false }).run("ban-operators", rule, {
           endColumn: 23,
           data: {
             name: "merge",
-            explanation: ": because I say so"
-          }
-        }
-      ]
-    }
-  ]
+            explanation: ": because I say so",
+          },
+        },
+      ],
+    },
+  ],
 });

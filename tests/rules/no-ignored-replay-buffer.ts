@@ -61,7 +61,7 @@ ruleTester({ types: false }).run("no-ignored-replay-buffer", rule, {
           this.valid = new Rx.ReplaySubject<number>(1);
         }
       }
-    `
+    `,
   ],
   invalid: [
     {
@@ -78,16 +78,16 @@ ruleTester({ types: false }).run("no-ignored-replay-buffer", rule, {
           line: 4,
           column: 15,
           endLine: 4,
-          endColumn: 28
+          endColumn: 28,
         },
         {
           messageId: "forbidden",
           line: 5,
           column: 25,
           endLine: 5,
-          endColumn: 38
-        }
-      ]
+          endColumn: 38,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -103,9 +103,9 @@ ruleTester({ types: false }).run("no-ignored-replay-buffer", rule, {
           line: 5,
           column: 23,
           endLine: 5,
-          endColumn: 36
-        }
-      ]
+          endColumn: 36,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -121,9 +121,9 @@ ruleTester({ types: false }).run("no-ignored-replay-buffer", rule, {
           line: 5,
           column: 23,
           endLine: 5,
-          endColumn: 34
-        }
-      ]
+          endColumn: 34,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -139,16 +139,16 @@ ruleTester({ types: false }).run("no-ignored-replay-buffer", rule, {
           line: 4,
           column: 18,
           endLine: 4,
-          endColumn: 31
+          endColumn: 31,
         },
         {
           messageId: "forbidden",
           line: 5,
           column: 28,
           endLine: 5,
-          endColumn: 41
-        }
-      ]
+          endColumn: 41,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -164,9 +164,9 @@ ruleTester({ types: false }).run("no-ignored-replay-buffer", rule, {
           line: 5,
           column: 26,
           endLine: 5,
-          endColumn: 39
-        }
-      ]
+          endColumn: 39,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -182,9 +182,9 @@ ruleTester({ types: false }).run("no-ignored-replay-buffer", rule, {
           line: 5,
           column: 26,
           endLine: 5,
-          endColumn: 37
-        }
-      ]
+          endColumn: 37,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -204,9 +204,9 @@ ruleTester({ types: false }).run("no-ignored-replay-buffer", rule, {
           line: 7,
           column: 27,
           endLine: 7,
-          endColumn: 40
-        }
-      ]
-    }
-  ]
+          endColumn: 40,
+        },
+      ],
+    },
+  ],
 });

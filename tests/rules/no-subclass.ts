@@ -13,7 +13,7 @@ ruleTester({ types: true }).run("no-subclass", rule, {
       // non-RxJS Observable
       class Observable<T> { t: T; }
       class StringObservable extends Observable<string> {}
-    `
+    `,
   ],
   invalid: [
     {
@@ -29,16 +29,16 @@ ruleTester({ types: true }).run("no-subclass", rule, {
           line: 3,
           column: 36,
           endLine: 3,
-          endColumn: 46
+          endColumn: 46,
         },
         {
           messageId: "forbidden",
           line: 4,
           column: 32,
           endLine: 4,
-          endColumn: 42
-        }
-      ]
+          endColumn: 42,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -53,16 +53,16 @@ ruleTester({ types: true }).run("no-subclass", rule, {
           line: 3,
           column: 33,
           endLine: 3,
-          endColumn: 40
+          endColumn: 40,
         },
         {
           messageId: "forbidden",
           line: 4,
           column: 29,
           endLine: 4,
-          endColumn: 36
-        }
-      ]
+          endColumn: 36,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -77,16 +77,16 @@ ruleTester({ types: true }).run("no-subclass", rule, {
           line: 3,
           column: 36,
           endLine: 3,
-          endColumn: 46
+          endColumn: 46,
         },
         {
           messageId: "forbidden",
           line: 4,
           column: 32,
           endLine: 4,
-          endColumn: 42
-        }
-      ]
+          endColumn: 42,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -101,16 +101,16 @@ ruleTester({ types: true }).run("no-subclass", rule, {
           line: 3,
           column: 38,
           endLine: 3,
-          endColumn: 50
+          endColumn: 50,
         },
         {
           messageId: "forbidden",
           line: 4,
           column: 34,
           endLine: 4,
-          endColumn: 46
-        }
-      ]
+          endColumn: 46,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -125,16 +125,16 @@ ruleTester({ types: true }).run("no-subclass", rule, {
           line: 3,
           column: 41,
           endLine: 3,
-          endColumn: 56
+          endColumn: 56,
         },
         {
           messageId: "forbidden",
           line: 4,
           column: 37,
           endLine: 4,
-          endColumn: 52
-        }
-      ]
+          endColumn: 52,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -149,16 +149,16 @@ ruleTester({ types: true }).run("no-subclass", rule, {
           line: 3,
           column: 39,
           endLine: 3,
-          endColumn: 52
+          endColumn: 52,
         },
         {
           messageId: "forbidden",
           line: 4,
           column: 35,
           endLine: 4,
-          endColumn: 48
-        }
-      ]
+          endColumn: 48,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -172,9 +172,9 @@ ruleTester({ types: true }).run("no-subclass", rule, {
           line: 3,
           column: 32,
           endLine: 3,
-          endColumn: 41
-        }
-      ]
-    }
-  ]
+          endColumn: 41,
+        },
+      ],
+    },
+  ],
 });

@@ -26,7 +26,7 @@ ruleTester({ types: false }).run("no-explicit-generics", rule, {
         const e = of(42, 54);
         const f = new Notification("N", 42);
         const g = new Notification<number>("E", undefined, "Kaboom!");
-        const h = new Notification<number>("C");`
+        const h = new Notification<number>("C");`,
     },
     {
       code: stripIndent`
@@ -40,8 +40,8 @@ ruleTester({ types: false }).run("no-explicit-generics", rule, {
         const f = new Notification<number[]>("N", []);
         const g = new Notification<{ answer: number }>("N", { answer: 42 });
         const h = new Notification<{ answer?: number }>("N", {});
-      `
-    }
+      `,
+    },
   ],
   invalid: [
     {
@@ -57,9 +57,9 @@ ruleTester({ types: false }).run("no-explicit-generics", rule, {
           line: 4,
           column: 5,
           endLine: 4,
-          endColumn: 9
-        }
-      ]
+          endColumn: 9,
+        },
+      ],
     },
     {
       code: `const b = new BehaviorSubject<number>(42);`,
@@ -69,9 +69,9 @@ ruleTester({ types: false }).run("no-explicit-generics", rule, {
           line: 1,
           column: 15,
           endLine: 1,
-          endColumn: 30
-        }
-      ]
+          endColumn: 30,
+        },
+      ],
     },
     {
       code: `const f = from<number>([42, 54]);`,
@@ -81,9 +81,9 @@ ruleTester({ types: false }).run("no-explicit-generics", rule, {
           line: 1,
           column: 11,
           endLine: 1,
-          endColumn: 15
-        }
-      ]
+          endColumn: 15,
+        },
+      ],
     },
     {
       code: `const o = of<number>(42, 54);`,
@@ -93,9 +93,9 @@ ruleTester({ types: false }).run("no-explicit-generics", rule, {
           line: 1,
           column: 11,
           endLine: 1,
-          endColumn: 13
-        }
-      ]
+          endColumn: 13,
+        },
+      ],
     },
     {
       code: `const n = new Notification<number>("N", 42);`,
@@ -105,9 +105,9 @@ ruleTester({ types: false }).run("no-explicit-generics", rule, {
           line: 1,
           column: 15,
           endLine: 1,
-          endColumn: 27
-        }
-      ]
-    }
-  ]
+          endColumn: 27,
+        },
+      ],
+    },
+  ],
 });

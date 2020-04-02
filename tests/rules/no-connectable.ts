@@ -16,7 +16,7 @@ ruleTester({ types: true }).run("no-connectable", rule, {
         import { multicast } from "rxjs/operators";
         const result = of(42).pipe(
           multicast(new Subject(), p => p)
-        );`
+        );`,
     },
     {
       code: stripIndent`
@@ -25,7 +25,7 @@ ruleTester({ types: true }).run("no-connectable", rule, {
         import { multicast } from "rxjs/operators";
         const result = of(42).pipe(
           multicast(() => new Subject(), p => p)
-        );`
+        );`,
     },
     {
       code: stripIndent`
@@ -35,7 +35,7 @@ ruleTester({ types: true }).run("no-connectable", rule, {
         const selector = p => p;
         const result = of(42).pipe(
           multicast(() => new Subject(), selector)
-        );`
+        );`,
     },
     {
       code: stripIndent`
@@ -44,7 +44,7 @@ ruleTester({ types: true }).run("no-connectable", rule, {
         import { multicast } from "rxjs/operators";
         const result = of(42).pipe(
           publish(p => p)
-        );`
+        );`,
     },
     {
       code: stripIndent`
@@ -53,8 +53,8 @@ ruleTester({ types: true }).run("no-connectable", rule, {
         import { publishReplay } from "rxjs/operators";
         const result = of(42).pipe(
           publishReplay(1, p => p)
-        )`
-    }
+        )`,
+    },
   ],
   invalid: [
     {
@@ -71,9 +71,9 @@ ruleTester({ types: true }).run("no-connectable", rule, {
           line: 5,
           column: 3,
           endLine: 5,
-          endColumn: 10
-        }
-      ]
+          endColumn: 10,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -89,9 +89,9 @@ ruleTester({ types: true }).run("no-connectable", rule, {
           line: 5,
           column: 3,
           endLine: 5,
-          endColumn: 18
-        }
-      ]
+          endColumn: 18,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -107,9 +107,9 @@ ruleTester({ types: true }).run("no-connectable", rule, {
           line: 5,
           column: 3,
           endLine: 5,
-          endColumn: 14
-        }
-      ]
+          endColumn: 14,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -125,9 +125,9 @@ ruleTester({ types: true }).run("no-connectable", rule, {
           line: 5,
           column: 3,
           endLine: 5,
-          endColumn: 16
-        }
-      ]
+          endColumn: 16,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -143,9 +143,9 @@ ruleTester({ types: true }).run("no-connectable", rule, {
           line: 5,
           column: 3,
           endLine: 5,
-          endColumn: 12
-        }
-      ]
+          endColumn: 12,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -161,9 +161,9 @@ ruleTester({ types: true }).run("no-connectable", rule, {
           line: 5,
           column: 3,
           endLine: 5,
-          endColumn: 12
-        }
-      ]
-    }
-  ]
+          endColumn: 12,
+        },
+      ],
+    },
+  ],
 });

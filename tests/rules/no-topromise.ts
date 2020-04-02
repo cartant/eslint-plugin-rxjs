@@ -23,7 +23,7 @@ ruleTester({ types: true }).run("no-topromise", rule, {
         }
       };
       a.toPromise().then(value => console.log(value));
-    `
+    `,
   ],
   invalid: [
     {
@@ -39,9 +39,9 @@ ruleTester({ types: true }).run("no-topromise", rule, {
           line: 4,
           column: 3,
           endLine: 4,
-          endColumn: 12
-        }
-      ]
+          endColumn: 12,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -56,9 +56,9 @@ ruleTester({ types: true }).run("no-topromise", rule, {
           line: 4,
           column: 3,
           endLine: 4,
-          endColumn: 12
-        }
-      ]
-    }
-  ]
+          endColumn: 12,
+        },
+      ],
+    },
+  ],
 });

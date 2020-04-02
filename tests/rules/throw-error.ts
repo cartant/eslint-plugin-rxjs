@@ -53,7 +53,7 @@ ruleTester({ types: true }).run("throw-error", rule, {
       // that should not effect an internal error.
       declare const callback: Function;
       callback();
-    `
+    `,
   ],
   invalid: [
     {
@@ -67,9 +67,9 @@ ruleTester({ types: true }).run("throw-error", rule, {
           line: 2,
           column: 25,
           endLine: 2,
-          endColumn: 32
-        }
-      ]
+          endColumn: 32,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -86,9 +86,9 @@ ruleTester({ types: true }).run("throw-error", rule, {
           line: 2,
           column: 25,
           endLine: 2,
-          endColumn: 39
-        }
-      ]
+          endColumn: 39,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -103,9 +103,9 @@ ruleTester({ types: true }).run("throw-error", rule, {
           line: 4,
           column: 25,
           endLine: 4,
-          endColumn: 37
-        }
-      ]
+          endColumn: 37,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -120,9 +120,9 @@ ruleTester({ types: true }).run("throw-error", rule, {
           line: 4,
           column: 24,
           endLine: 4,
-          endColumn: 31
-        }
-      ]
+          endColumn: 31,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -141,9 +141,9 @@ ruleTester({ types: true }).run("throw-error", rule, {
           line: 4,
           column: 24,
           endLine: 4,
-          endColumn: 38
-        }
-      ]
-    }
-  ]
+          endColumn: 38,
+        },
+      ],
+    },
+  ],
 });

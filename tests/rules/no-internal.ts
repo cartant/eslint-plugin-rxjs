@@ -18,7 +18,7 @@ ruleTester({ types: false }).run("no-internal", rule, {
       // no internal single quote
       import { concat } from 'rxjs';
       import { map } from 'rxjs/operators';
-    `
+    `,
   ],
   invalid: [
     {
@@ -33,16 +33,16 @@ ruleTester({ types: false }).run("no-internal", rule, {
           line: 2,
           column: 24,
           endLine: 2,
-          endColumn: 57
+          endColumn: 57,
         },
         {
           messageId: "forbidden",
           line: 3,
           column: 21,
           endLine: 3,
-          endColumn: 50
-        }
-      ]
+          endColumn: 50,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -56,16 +56,16 @@ ruleTester({ types: false }).run("no-internal", rule, {
           line: 2,
           column: 24,
           endLine: 2,
-          endColumn: 57
+          endColumn: 57,
         },
         {
           messageId: "forbidden",
           line: 3,
           column: 21,
           endLine: 3,
-          endColumn: 50
-        }
-      ]
-    }
-  ]
+          endColumn: 50,
+        },
+      ],
+    },
+  ],
 });

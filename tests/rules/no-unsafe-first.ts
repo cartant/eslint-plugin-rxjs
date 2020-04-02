@@ -32,7 +32,7 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           tap(() => {}),
           switchMap(() => EMPTY.pipe(first()))
         );
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -43,7 +43,7 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           tap(() => {}),
           switchMap(() => EMPTY.pipe(take(1)))
         );
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -54,7 +54,7 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           tap(() => {}),
           switchMap(() => EMPTY.pipe(first()))
         );
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -65,7 +65,7 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           tap(() => {}),
           switchMap(() => EMPTY.pipe(take(1)))
         );
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -76,7 +76,7 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           tap(() => {}),
           switchMap(() => EMPTY.pipe(first()))
         );
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -87,7 +87,7 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           tap(() => {}),
           switchMap(() => EMPTY.pipe(take(1)))
         );
-      `
+      `,
     },
     {
       code: stripIndent`
@@ -99,7 +99,7 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           first()
         );
       `,
-      options: [{ observable: "foo" }]
+      options: [{ observable: "foo" }],
     },
     {
       code: stripIndent`
@@ -111,7 +111,7 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           first()
         );
       `,
-      options: [{ observable: "foo" }]
+      options: [{ observable: "foo" }],
     },
     {
       code: stripIndent`
@@ -123,8 +123,8 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           tap(() => {}),
           first()
         );
-      `
-    }
+      `,
+    },
   ],
   invalid: [
     {
@@ -144,9 +144,9 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           line: 17,
           column: 11,
           endLine: 17,
-          endColumn: 16
-        }
-      ]
+          endColumn: 16,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -165,9 +165,9 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           line: 17,
           column: 11,
           endLine: 17,
-          endColumn: 15
-        }
-      ]
+          endColumn: 15,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -186,9 +186,9 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           line: 17,
           column: 11,
           endLine: 17,
-          endColumn: 16
-        }
-      ]
+          endColumn: 16,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -207,9 +207,9 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           line: 17,
           column: 11,
           endLine: 17,
-          endColumn: 15
-        }
-      ]
+          endColumn: 15,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -228,9 +228,9 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           line: 17,
           column: 11,
           endLine: 17,
-          endColumn: 16
-        }
-      ]
+          endColumn: 16,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -249,9 +249,9 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           line: 17,
           column: 11,
           endLine: 17,
-          endColumn: 15
-        }
-      ]
+          endColumn: 15,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -266,8 +266,8 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
       `,
       options: [
         {
-          observable: "foo"
-        }
+          observable: "foo",
+        },
       ],
       errors: [
         {
@@ -275,9 +275,9 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           line: 17,
           column: 11,
           endLine: 17,
-          endColumn: 15
-        }
-      ]
-    }
-  ]
+          endColumn: 15,
+        },
+      ],
+    },
+  ],
 });

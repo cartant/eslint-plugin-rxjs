@@ -34,7 +34,7 @@ ruleTester({ types: true }).run("no-ignored-observable", rule, {
 
       const a = arrowSource();
       sink(arrowSource());
-    `
+    `,
   ],
   invalid: [
     {
@@ -54,9 +54,9 @@ ruleTester({ types: true }).run("no-ignored-observable", rule, {
           line: 8,
           column: 1,
           endLine: 8,
-          endColumn: 17
-        }
-      ]
+          endColumn: 17,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -73,9 +73,9 @@ ruleTester({ types: true }).run("no-ignored-observable", rule, {
           line: 6,
           column: 1,
           endLine: 6,
-          endColumn: 14
-        }
-      ]
-    }
-  ]
+          endColumn: 14,
+        },
+      ],
+    },
+  ],
 });

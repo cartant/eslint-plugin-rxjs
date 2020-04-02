@@ -15,7 +15,7 @@ ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
         import { of } from "rxjs";
 
         const observable = of([1, 2]);
-        observable.subscribe(value => console.log(value));`
+        observable.subscribe(value => console.log(value));`,
     },
     {
       code: stripIndent`
@@ -23,7 +23,7 @@ ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
         import { Subject } from "rxjs";
 
         const subject = new Subject<any>();
-        subject.subscribe(value => console.log(value));`
+        subject.subscribe(value => console.log(value));`,
     },
     {
       code: stripIndent`
@@ -35,8 +35,8 @@ ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
         }
 
         const observable = of([1, 2]);
-        observable.subscribe(log);`
-    }
+        observable.subscribe(log);`,
+    },
   ],
   invalid: [
     {
@@ -53,9 +53,9 @@ ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
           line: 5,
           column: 12,
           endLine: 5,
-          endColumn: 21
-        }
-      ]
+          endColumn: 21,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -71,9 +71,9 @@ ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
           line: 5,
           column: 9,
           endLine: 5,
-          endColumn: 18
-        }
-      ]
-    }
-  ]
+          endColumn: 18,
+        },
+      ],
+    },
+  ],
 });

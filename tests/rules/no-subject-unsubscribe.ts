@@ -22,7 +22,7 @@ ruleTester({ types: true }).run("no-subject-unsubscribe", rule, {
       const a = new AsyncSubject<number>();
       const asub = a.subscribe();
       asub.unsubscribe();
-    `
+    `,
   ],
   invalid: [
     {
@@ -38,9 +38,9 @@ ruleTester({ types: true }).run("no-subject-unsubscribe", rule, {
           line: 4,
           column: 3,
           endLine: 4,
-          endColumn: 14
-        }
-      ]
+          endColumn: 14,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -55,9 +55,9 @@ ruleTester({ types: true }).run("no-subject-unsubscribe", rule, {
           line: 4,
           column: 3,
           endLine: 4,
-          endColumn: 14
-        }
-      ]
+          endColumn: 14,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -73,9 +73,9 @@ ruleTester({ types: true }).run("no-subject-unsubscribe", rule, {
           line: 5,
           column: 10,
           endLine: 5,
-          endColumn: 11
-        }
-      ]
+          endColumn: 11,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -91,9 +91,9 @@ ruleTester({ types: true }).run("no-subject-unsubscribe", rule, {
           line: 5,
           column: 10,
           endLine: 5,
-          endColumn: 11
-        }
-      ]
-    }
-  ]
+          endColumn: 11,
+        },
+      ],
+    },
+  ],
 });

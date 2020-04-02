@@ -14,7 +14,7 @@ ruleTester({ types: false }).run("no-compat", rule, {
     `import { concatMap } from "rxjs/operators";`,
     `import { TestScheduler } from "rxjs/testing";`,
     `import { webSocket } from "rxjs/webSocket";`,
-    `import * as prefixedPackage from "rxjs-prefixed-package";`
+    `import * as prefixedPackage from "rxjs-prefixed-package";`,
   ],
   invalid: [
     {
@@ -25,9 +25,9 @@ ruleTester({ types: false }).run("no-compat", rule, {
           line: 1,
           column: 21,
           endLine: 1,
-          endColumn: 30
-        }
-      ]
+          endColumn: 30,
+        },
+      ],
     },
     {
       code: `import { Observable } from 'rxjs/Observable';`,
@@ -37,9 +37,9 @@ ruleTester({ types: false }).run("no-compat", rule, {
           line: 1,
           column: 28,
           endLine: 1,
-          endColumn: 45
-        }
-      ]
+          endColumn: 45,
+        },
+      ],
     },
     {
       code: `import { Subject } from "rxjs/Subject";`,
@@ -49,9 +49,9 @@ ruleTester({ types: false }).run("no-compat", rule, {
           line: 1,
           column: 25,
           endLine: 1,
-          endColumn: 39
-        }
-      ]
+          endColumn: 39,
+        },
+      ],
     },
     {
       code: `import { merge } from "rxjs/observable/merge";`,
@@ -61,9 +61,9 @@ ruleTester({ types: false }).run("no-compat", rule, {
           line: 1,
           column: 23,
           endLine: 1,
-          endColumn: 46
-        }
-      ]
+          endColumn: 46,
+        },
+      ],
     },
     {
       code: `import { mergeMap } from 'rxjs/operator/mergeMap';`,
@@ -73,9 +73,9 @@ ruleTester({ types: false }).run("no-compat", rule, {
           line: 1,
           column: 26,
           endLine: 1,
-          endColumn: 50
-        }
-      ]
+          endColumn: 50,
+        },
+      ],
     },
     {
       code: `import { asap } from "rxjs/scheduler/asap";`,
@@ -85,9 +85,9 @@ ruleTester({ types: false }).run("no-compat", rule, {
           line: 1,
           column: 22,
           endLine: 1,
-          endColumn: 43
-        }
-      ]
+          endColumn: 43,
+        },
+      ],
     },
     {
       code: `import "rxjs/add/observable/merge";`,
@@ -97,9 +97,9 @@ ruleTester({ types: false }).run("no-compat", rule, {
           line: 1,
           column: 8,
           endLine: 1,
-          endColumn: 35
-        }
-      ]
+          endColumn: 35,
+        },
+      ],
     },
     {
       code: `import 'rxjs/add/operator/mergeMap';`,
@@ -109,9 +109,9 @@ ruleTester({ types: false }).run("no-compat", rule, {
           line: 1,
           column: 8,
           endLine: 1,
-          endColumn: 36
-        }
-      ]
-    }
-  ]
+          endColumn: 36,
+        },
+      ],
+    },
+  ],
 });

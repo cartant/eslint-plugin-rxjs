@@ -13,7 +13,7 @@ ruleTester({ types: true }).run("no-subject-value", rule, {
       // no value
       import { BehaviorSubject } from "rxjs";
       const subject = new BehaviorSubject<number>(1);
-    `
+    `,
   ],
   invalid: [
     {
@@ -29,9 +29,9 @@ ruleTester({ types: true }).run("no-subject-value", rule, {
           line: 4,
           column: 21,
           endLine: 4,
-          endColumn: 26
-        }
-      ]
+          endColumn: 26,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -46,9 +46,9 @@ ruleTester({ types: true }).run("no-subject-value", rule, {
           line: 4,
           column: 21,
           endLine: 4,
-          endColumn: 29
-        }
-      ]
-    }
-  ]
+          endColumn: 29,
+        },
+      ],
+    },
+  ],
 });

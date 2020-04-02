@@ -15,7 +15,7 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
         const shared = of(42).pipe(
           shareReplay({ refCount: true })
         );`,
-      options: [{ allowConfig: true }]
+      options: [{ allowConfig: true }],
     },
     {
       code: stripIndent`
@@ -23,8 +23,8 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
         const shared = of(42).pipe(
           shareReplay({ refCount: false })
         );`,
-      options: [{ allowConfig: true }]
-    }
+      options: [{ allowConfig: true }],
+    },
   ],
   invalid: [
     {
@@ -39,9 +39,9 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
           line: 3,
           column: 3,
           endLine: 3,
-          endColumn: 14
-        }
-      ]
+          endColumn: 14,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -56,9 +56,9 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
           line: 3,
           column: 3,
           endLine: 3,
-          endColumn: 14
-        }
-      ]
+          endColumn: 14,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -72,9 +72,9 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
           line: 3,
           column: 3,
           endLine: 3,
-          endColumn: 14
-        }
-      ]
+          endColumn: 14,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -88,9 +88,9 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
           line: 3,
           column: 3,
           endLine: 3,
-          endColumn: 14
-        }
-      ]
+          endColumn: 14,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -104,9 +104,9 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
           line: 3,
           column: 3,
           endLine: 3,
-          endColumn: 14
-        }
-      ]
+          endColumn: 14,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -121,9 +121,9 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
           line: 3,
           column: 3,
           endLine: 3,
-          endColumn: 14
-        }
-      ]
+          endColumn: 14,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -138,9 +138,9 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
           line: 3,
           column: 3,
           endLine: 3,
-          endColumn: 14
-        }
-      ]
-    }
-  ]
+          endColumn: 14,
+        },
+      ],
+    },
+  ],
 });

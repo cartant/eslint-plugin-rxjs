@@ -26,9 +26,9 @@ ruleTester({ types: true }).run("no-create", rule, {
           line: 4,
           column: 23,
           endLine: 4,
-          endColumn: 29
-        }
-      ]
-    }
-  ]
+          endColumn: 29,
+        },
+      ],
+    },
+  ],
 });

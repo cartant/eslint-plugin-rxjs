@@ -22,7 +22,7 @@ ruleTester({ types: false }).run("no-index", rule, {
       import { map } from 'rxjs/operators';
       import { TestScheduler } from 'rxjs/testing';
       import { WebSocketSubject } from 'rxjs/webSocket';
-    `
+    `,
   ],
   invalid: [
     {
@@ -39,30 +39,30 @@ ruleTester({ types: false }).run("no-index", rule, {
           line: 2,
           column: 28,
           endLine: 2,
-          endColumn: 40
+          endColumn: 40,
         },
         {
           messageId: "forbidden",
           line: 3,
           column: 21,
           endLine: 3,
-          endColumn: 43
+          endColumn: 43,
         },
         {
           messageId: "forbidden",
           line: 4,
           column: 31,
           endLine: 4,
-          endColumn: 51
+          endColumn: 51,
         },
         {
           messageId: "forbidden",
           line: 5,
           column: 34,
           endLine: 5,
-          endColumn: 56
-        }
-      ]
+          endColumn: 56,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -78,30 +78,30 @@ ruleTester({ types: false }).run("no-index", rule, {
           line: 2,
           column: 28,
           endLine: 2,
-          endColumn: 40
+          endColumn: 40,
         },
         {
           messageId: "forbidden",
           line: 3,
           column: 21,
           endLine: 3,
-          endColumn: 43
+          endColumn: 43,
         },
         {
           messageId: "forbidden",
           line: 4,
           column: 31,
           endLine: 4,
-          endColumn: 51
+          endColumn: 51,
         },
         {
           messageId: "forbidden",
           line: 5,
           column: 34,
           endLine: 5,
-          endColumn: 56
-        }
-      ]
-    }
-  ]
+          endColumn: 56,
+        },
+      ],
+    },
+  ],
 });

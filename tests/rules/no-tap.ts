@@ -16,7 +16,7 @@ ruleTester({ types: false }).run("no-tap", rule, {
       const ob = of(1).pipe(
         map(x => x * 2)
       );
-    `
+    `,
   ],
   invalid: [
     {
@@ -35,9 +35,9 @@ ruleTester({ types: false }).run("no-tap", rule, {
           line: 3,
           column: 15,
           endLine: 3,
-          endColumn: 18
-        }
-      ]
+          endColumn: 18,
+        },
+      ],
     },
     {
       code: stripIndent`
@@ -55,9 +55,9 @@ ruleTester({ types: false }).run("no-tap", rule, {
           line: 3,
           column: 15,
           endLine: 3,
-          endColumn: 18
-        }
-      ]
-    }
-  ]
+          endColumn: 18,
+        },
+      ],
+    },
+  ],
 });
