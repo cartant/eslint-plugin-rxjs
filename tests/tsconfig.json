@@ -6,5 +6,5 @@
     "skipLibCheck": true,
     "target": "esnext"
   },
-  "files": ["file.ts"]
+  "files": ["file.tsx"]
 }
