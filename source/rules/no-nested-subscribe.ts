@@ -4,7 +4,6 @@
  */
 
 import { Rule } from "eslint";
-import { query } from "eslint-etc";
 import * as es from "estree";
 import { getParent, typecheck } from "../utils";
 
@@ -14,44 +13,40 @@ const rule: Rule.RuleModule = {
       category: "RxJS",
       description:
         "Forbids the calling of `subscribe` within a `subscribe` callback.",
-      recommended: true
+      recommended: true,
     },
     fixable: null,
     messages: {
-      forbidden: "Nested subscribe calls are forbidden."
+      forbidden: "Nested subscribe calls are forbidden.",
     },
-    schema: []
+    schema: [],
   },
-  create: context => {
+  create: (context) => {
     const { couldBeObservable } = typecheck(context);
-
-    const subscribeQuery =
-      "CallExpression > MemberExpression[property.name='subscribe']";
-
+    const subscribeCallMap = new WeakMap<es.Node, void>();
     return {
-      [subscribeQuery]: (node: es.MemberExpression) => {
+      [`CallExpression > MemberExpression[property.name='subscribe']`]: (
+        node: es.MemberExpression
+      ) => {
         if (!couldBeObservable(node.object)) {
           return;
         }
-
         const callExpression = getParent(node) as es.CallExpression;
-        callExpression.arguments.forEach(childNode => {
-          const childNodes = query(
-            childNode,
-            subscribeQuery
-          ) as es.MemberExpression[];
-          childNodes.forEach(childNode => {
-            if (couldBeObservable(childNode.object)) {
-              context.report({
-                messageId: "forbidden",
-                node: childNode.property
-              });
-            }
-          });
-        });
-      }
+        let parent = getParent(callExpression);
+        while (parent) {
+          if (subscribeCallMap.has(parent)) {
+            context.report({
+              messageId: "forbidden",
+              node: node.property,
+            });
+            return;
+          }
+          parent = getParent(parent);
+        }
+        subscribeCallMap.set(callExpression);
+      },
     };
-  }
+  },
 };
 
 export = rule;
