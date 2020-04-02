@@ -20,7 +20,7 @@ const arrowTests: Tests = {
       import { NEVER, Observable, of, Subscription, throwError } from "rxjs";
       import { catchError, map, takeUntil } from "rxjs/operators";
 
-      const userland = <T>(selector: (t: T) => T) => map(selector);
+      function userland<T>(selector: (t: T) => T) { return map(selector); }
 
       class Something {
         someObservable = NEVER;
@@ -57,7 +57,7 @@ const boundTests: Tests = {
       import { NEVER, Observable, of, Subscription, throwError } from "rxjs";
       import { catchError, map, takeUntil } from "rxjs/operators";
 
-      const userland = <T>(selector: (t: T) => T) => map(selector);
+      function userland<T>(selector: (t: T) => T) { return map(selector); }
 
       class Something {
         someObservable = NEVER;
@@ -96,7 +96,7 @@ const deepTests: Tests = {
         import { Observable, of, throwError, NEVER } from "rxjs";
         import { catchError, map, takeUntil } from "rxjs/operators";
 
-        const userland = <T>(selector: (t: T) => T) => map(selector);
+        function userland<T>(selector: (t: T) => T) { return map(selector); }
 
         class Something {
           deep = {
@@ -209,7 +209,7 @@ const staticTests: Tests = {
       import { NEVER, Observable, of, Subscription, throwError } from "rxjs";
       import { catchError, map, takeUntil } from "rxjs/operators";
 
-      const userland = <T>(selector: (t: T) => T) => map(selector);
+      function userland<T>(selector: (t: T) => T) { return map(selector); }
 
       class Something {
         someObservable = NEVER;
@@ -263,7 +263,7 @@ const unboundTests: Tests = {
         import { Observable, of, throwError } from "rxjs";
         import { catchError, map, takeUntil } from "rxjs/operators";
 
-        const userland = <T>(selector: (t: T) => T) => map(selector);
+        function userland<T>(selector: (t: T) => T) { return map(selector); }
 
         class Something {
           constructor() {
