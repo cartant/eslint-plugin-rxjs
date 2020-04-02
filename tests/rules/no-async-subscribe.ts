@@ -21,6 +21,12 @@ ruleTester({ types: true }).run("no-async-subscribe", rule, {
 
       of("a").subscribe(function() {});
     `,
+    stripIndent`
+      // https://github.com/cartant/eslint-plugin-rxjs/issues/46
+      import React from "react";
+      import { SomeComponent } from "some";
+      const element = <SomeComponent />;
+    `,
   ],
   invalid: [
     {

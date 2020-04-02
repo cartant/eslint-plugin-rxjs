@@ -219,7 +219,7 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
     },
     {
       code: stripIndent`
-        // rxjs-tslint-rules/issues/49
+        // https://github.com/rxjs-tslint-rules/issues/49
         import { fromEventPattern, NEVER } from "rxjs";
         import { map, startWith, takeUntil } from "rxjs/operators";
 
