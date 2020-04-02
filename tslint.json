@@ -5,6 +5,7 @@
   ],
   "rules": {
     "object-literal-sort-keys": { "severity": "off" },
+    "trailing-comma": { "severity": "off" },
     "typedef": {
       "options": [
         "parameter",
