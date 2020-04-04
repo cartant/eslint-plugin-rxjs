@@ -5,35 +5,41 @@
 
 import { stripIndent } from "common-tags";
 import { Rule } from "eslint";
+import { configureTraverse } from "eslint-etc";
 import * as es from "estree";
 import { isCallExpression, isIdentifier, typecheck } from "../utils";
+
+// This rule does not call query, but the use of `has` in the selector effects
+// a traversal in the esquery implementation, so estraverse must be configured
+// with the TypeScript visitor keys.
+configureTraverse();
 
 const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
       description: "Forbids the application of operators after `takeUntil`.",
-      recommended: false
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "Applying operators after takeUntil are forbidden."
+      forbidden: "Applying operators after takeUntil are forbidden.",
     },
     schema: [
       {
         properties: {
           alias: { type: "array", items: { type: "string" } },
-          allow: { type: "array", items: { type: "string" } }
+          allow: { type: "array", items: { type: "string" } },
         },
         type: "object",
         description: stripIndent`
           An optional object with optional \`alias\` and \`allow\` properties.
           The \`alias\` property is an array containing the names of operators that aliases for \`takeUntil\`.
-          The \`allow\` property is an array containing the names of the operators that are allowed to follow \`takeUntil\`.`
-      }
-    ]
+          The \`allow\` property is an array containing the names of the operators that are allowed to follow \`takeUntil\`.`,
+      },
+    ],
   },
-  create: context => {
+  create: (context) => {
     let checkedOperatorsRegExp = /^takeUntil$/;
     const allowedOperators = [
       "count",
@@ -56,7 +62,7 @@ const rule: Rule.RuleModule = {
       "skipLast",
       "takeLast",
       "throwIfEmpty",
-      "toArray"
+      "toArray",
     ];
     const [config = {}] = context.options;
     const { alias, allow = allowedOperators } = config;
@@ -89,15 +95,15 @@ const rule: Rule.RuleModule = {
           if (isError && checkedOperatorsRegExp.test(arg.callee.name)) {
             context.report({
               messageId: "forbidden",
-              node: arg.callee
+              node: arg.callee,
             });
           }
 
           return isError || !allow.includes(arg.callee.name);
         }, false);
-      }
+      },
     };
-  }
+  },
 };
 
 export = rule;

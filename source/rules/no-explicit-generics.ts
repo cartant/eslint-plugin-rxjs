@@ -4,34 +4,40 @@
  */
 
 import { Rule } from "eslint";
+import { configureTraverse } from "eslint-etc";
 import * as es from "estree";
 import { getParent, isArrayExpression, isObjectExpression } from "../utils";
+
+// This rule does not call query, but the use of `has` in the selector effects
+// a traversal in the esquery implementation, so estraverse must be configured
+// with the TypeScript visitor keys.
+configureTraverse();
 
 const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
       description: "Forbids explicit generic type arguments.",
-      recommended: true
+      recommended: true,
     },
     fixable: null,
     messages: {
-      forbidden: "Explicit generic type arguments are forbidden."
+      forbidden: "Explicit generic type arguments are forbidden.",
     },
-    schema: []
+    schema: [],
   },
-  create: context => {
+  create: (context) => {
     function report(node: es.Node) {
       context.report({
         messageId: "forbidden",
-        node
+        node,
       });
     }
 
     function reportBehaviorSubjects(node: es.Node) {
       const parent = getParent(node) as es.NewExpression;
       const {
-        arguments: [value]
+        arguments: [value],
       } = parent;
       if (isArrayExpression(value) || isObjectExpression(value)) {
         return;
@@ -42,7 +48,7 @@ const rule: Rule.RuleModule = {
     function reportNotifications(node: es.Node) {
       const parent = getParent(node) as es.NewExpression;
       const {
-        arguments: [, value]
+        arguments: [, value],
       } = parent;
       if (isArrayExpression(value) || isObjectExpression(value)) {
         return;
@@ -54,9 +60,9 @@ const rule: Rule.RuleModule = {
       "CallExpression[callee.property.name='pipe'] > CallExpression[typeParameters.params.length > 0] > Identifier": report,
       "NewExpression[typeParameters.params.length > 0] > Identifier[name='BehaviorSubject']": reportBehaviorSubjects,
       "CallExpression[typeParameters.params.length > 0] > Identifier[name=/^(from|of)$/]": report,
-      "NewExpression[typeParameters.params.length > 0]:has(Literal:first-child[value='N']) > Identifier[name='Notification']": reportNotifications
+      "NewExpression[typeParameters.params.length > 0]:has(Literal:first-child[value='N']) > Identifier[name='Notification']": reportNotifications,
     };
-  }
+  },
 };
 
 export = rule;

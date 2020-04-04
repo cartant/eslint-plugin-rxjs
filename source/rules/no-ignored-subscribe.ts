@@ -4,8 +4,14 @@
  */
 
 import { Rule } from "eslint";
+import { configureTraverse } from "eslint-etc";
 import * as es from "estree";
 import { typecheck } from "../utils";
+
+// This rule does not call query, but the use of `has` in the selector effects
+// a traversal in the esquery implementation, so estraverse must be configured
+// with the TypeScript visitor keys.
+configureTraverse();
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -13,15 +19,15 @@ const rule: Rule.RuleModule = {
       category: "RxJS",
       description:
         "Forbids the calling of `subscribe` without specifying arguments.",
-      recommended: false
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "Calling subscribe without arguments is forbidden."
+      forbidden: "Calling subscribe without arguments is forbidden.",
     },
-    schema: []
+    schema: [],
   },
-  create: context => {
+  create: (context) => {
     const { couldBeObservable } = typecheck(context);
 
     return {
@@ -31,12 +37,12 @@ const rule: Rule.RuleModule = {
         if (couldBeObservable(node.object)) {
           context.report({
             messageId: "forbidden",
-            node: node.property
+            node: node.property,
           });
         }
-      }
+      },
     };
-  }
+  },
 };
 
 export = rule;
