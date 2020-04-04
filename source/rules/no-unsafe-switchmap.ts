@@ -6,7 +6,7 @@
 import { stripIndent } from "common-tags";
 import decamelize from "decamelize";
 import { Rule } from "eslint";
-import { query } from "eslint-etc";
+import { configureTraverse, query } from "eslint-etc";
 import * as es from "estree";
 import { defaultObservable } from "../constants";
 import {
@@ -14,19 +14,21 @@ import {
   isCallExpression,
   isIdentifier,
   isLiteral,
-  typecheck
+  typecheck,
 } from "../utils";
+
+configureTraverse();
 
 const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
       description: "Forbids unsafe `switchMap` usage in effects and epics.",
-      recommended: false
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "Unsafe switchMap usage in effects and epics is forbidden."
+      forbidden: "Unsafe switchMap usage in effects and epics is forbidden.",
     },
     schema: [
       {
@@ -34,21 +36,21 @@ const rule: Rule.RuleModule = {
           allow: {
             oneOf: [
               { type: "string" },
-              { type: "array", items: { type: "string" } }
-            ]
+              { type: "array", items: { type: "string" } },
+            ],
           },
           disallow: {
             oneOf: [
               { type: "string" },
-              { type: "array", items: { type: "string" } }
-            ]
+              { type: "array", items: { type: "string" } },
+            ],
           },
           observable: {
             oneOf: [
               { type: "string" },
-              { type: "array", items: { type: "string" } }
-            ]
-          }
+              { type: "array", items: { type: "string" } },
+            ],
+          },
         },
         type: "object",
         description: stripIndent`
@@ -57,11 +59,11 @@ const rule: Rule.RuleModule = {
           The \`allow\` or \`disallow\` properties are mutually exclusive. Whether or not
           \`switchMap\` is allowed will depend upon the matching of action types with \`allow\` or \`disallow\`.
           The \`observable\` property is used to identify the action observables from which effects and epics are composed.
-        `
-      }
-    ]
+        `,
+      },
+    ],
   },
-  create: context => {
+  create: (context) => {
     const defaultDisallow = [
       "add",
       "create",
@@ -70,7 +72,7 @@ const rule: Rule.RuleModule = {
       "put",
       "remove",
       "set",
-      "update"
+      "update",
     ];
 
     let allowRegExp: RegExp | null;
@@ -92,7 +94,7 @@ const rule: Rule.RuleModule = {
 
     function shouldDisallow(args: es.Node[]): boolean {
       const names = args
-        .map(arg => {
+        .map((arg) => {
           if (isLiteral(arg) && typeof arg.value === "string") {
             return arg.value;
           }
@@ -102,13 +104,13 @@ const rule: Rule.RuleModule = {
 
           return "";
         })
-        .map(name => decamelize(name));
+        .map((name) => decamelize(name));
 
       if (allowRegExp) {
-        return !names.every(name => allowRegExp.test(name));
+        return !names.every((name) => allowRegExp.test(name));
       }
       if (disallowRegExp) {
-        return names.some(name => disallowRegExp.test(name));
+        return names.some((name) => disallowRegExp.test(name));
       }
 
       return false;
@@ -123,7 +125,7 @@ const rule: Rule.RuleModule = {
         return;
       }
 
-      const hasInvalidOfType = node.arguments.some(arg => {
+      const hasInvalidOfType = node.arguments.some((arg) => {
         if (
           isCallExpression(arg) &&
           isIdentifier(arg.callee) &&
@@ -138,10 +140,10 @@ const rule: Rule.RuleModule = {
           node,
           "[arguments] > CallExpression > Identifier[name='switchMap']"
         ) as es.Identifier[];
-        switchMapNodes.forEach(switchMapNode => {
+        switchMapNodes.forEach((switchMapNode) => {
           context.report({
             messageId: "forbidden",
-            node: switchMapNode
+            node: switchMapNode,
           });
         });
       }
@@ -149,9 +151,9 @@ const rule: Rule.RuleModule = {
 
     return {
       [`CallExpression[callee.property.name='pipe'][callee.object.name=${observableRegExp}]`]: report,
-      [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]`]: report
+      [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]`]: report,
     };
-  }
+  },
 };
 
 export = rule;

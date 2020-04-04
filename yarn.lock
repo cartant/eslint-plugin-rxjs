@@ -638,12 +638,12 @@ escape-string-regexp@1.0.5, escape-string-regexp@^1.0.2, escape-string-regexp@^1
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-etc@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-0.0.9.tgz#56d1edc29c507bf3639ec8469f2cab45fb2ee0ef"
-  integrity sha512-n0Qlm3wscGDwHEdMn8MR/zKKi278CdvCptpgY0+B2XPUJE1oc2K4U8P8KQu6L9wFAUIsdDf30f8h5sp8qabuYw==
+eslint-etc@^0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-0.0.11.tgz#1f2acd169da1efa66ae8a673fd2da2de6e67fc76"
+  integrity sha512-wSv7iBYMs7st+JZ6aDNDoEPHcePnZWuJcFPNYxxxFJUFrYLT6+b6HI86Wuz37mCv3AXpFNaI5XG/rOP/TJgggA==
   dependencies:
-    esquery "^1.0.1"
+    esquery "~1.0.1"
 
 eslint-scope@^5.0.0:
   version "5.0.0"
@@ -736,6 +736,13 @@ esquery@^1.0.1:
   dependencies:
     estraverse "^5.0.0"
 
+esquery@~1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/esquery/-/esquery-1.0.1.tgz#406c51658b1f5991a5f9b62b1dc25b00e3e5c708"
+  integrity sha512-SmiyZ5zIWH9VM+SRUReLS5Q8a7GxtRdxEBVZpm98rJM7Sb+A9DVCndXfkeFUd3byderg+EbDkfnevfCwynWaNA==
+  dependencies:
+    estraverse "^4.0.0"
+
 esrecurse@^4.1.0:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/esrecurse/-/esrecurse-4.2.1.tgz#007a3b9fdbc2b3bb87e4879ea19c92fdbd3942cf"
@@ -743,7 +750,7 @@ esrecurse@^4.1.0:
   dependencies:
     estraverse "^4.1.0"
 
-estraverse@^4.1.0, estraverse@^4.1.1:
+estraverse@^4.0.0, estraverse@^4.1.0, estraverse@^4.1.1:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/estraverse/-/estraverse-4.3.0.tgz#398ad3f3c5a24948be7725e83d11a7de28cdbd1d"
   integrity sha512-39nnKffWz8xN1BU/2c79n9nB9HDzo0niYUqx6xyqUnyoAnQyyWpOTdZEeiCch8BBu515t4wp9ZmgVfVhn9EBpw==

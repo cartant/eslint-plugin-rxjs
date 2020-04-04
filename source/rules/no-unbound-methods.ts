@@ -4,30 +4,32 @@
  */
 
 import { Rule } from "eslint";
-import { query } from "eslint-etc";
+import { configureTraverse, query } from "eslint-etc";
 import * as es from "estree";
 import { isCallExpression, isMemberExpression, typecheck } from "../utils";
+
+configureTraverse();
 
 const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
       description: "Forbids the passing of unbound methods.",
-      recommended: false
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "Unbound methods are forbidden."
+      forbidden: "Unbound methods are forbidden.",
     },
-    schema: []
+    schema: [],
   },
-  create: context => {
+  create: (context) => {
     const { couldBeObservable, couldBeSubscription, getTSType } = typecheck(
       context
     );
 
     function report(node: es.CallExpression) {
-      node.arguments.filter(isMemberExpression).forEach(arg => {
+      node.arguments.filter(isMemberExpression).forEach((arg) => {
         const argType = getTSType(arg);
         if (argType.getCallSignatures().length > 0) {
           const thisExpressions = query(
@@ -37,7 +39,7 @@ const rule: Rule.RuleModule = {
           if (thisExpressions.length > 0) {
             context.report({
               messageId: "forbidden",
-              node: arg
+              node: arg,
             });
           }
         }
@@ -73,9 +75,9 @@ const rule: Rule.RuleModule = {
       ) => {
         isObservableOrSubscription(node, report);
       },
-      "NewExpression[callee.name='Subscription']": report
+      "NewExpression[callee.name='Subscription']": report,
     };
-  }
+  },
 };
 
 export = rule;

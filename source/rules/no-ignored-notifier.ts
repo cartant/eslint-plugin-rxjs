@@ -4,14 +4,16 @@
  */
 
 import { Rule } from "eslint";
-import { query } from "eslint-etc";
+import { configureTraverse, query } from "eslint-etc";
 import * as es from "estree";
 import {
   getParent,
   isArrowFunctionExpression,
   isFunctionExpression,
-  typecheck
+  typecheck,
 } from "../utils";
+
+configureTraverse();
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -19,15 +21,15 @@ const rule: Rule.RuleModule = {
       category: "RxJS",
       description:
         "Forbids observables not composed from the `repeatWhen` or `retryWhen` notifier.",
-      recommended: false
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "Ignoring the notifier is forbidden."
+      forbidden: "Ignoring the notifier is forbidden.",
     },
-    schema: []
+    schema: [],
   },
-  create: context => {
+  create: (context) => {
     const { couldBeMonoTypeOperatorFunction } = typecheck(context);
 
     return {
@@ -50,14 +52,14 @@ const rule: Rule.RuleModule = {
             if (fail) {
               context.report({
                 messageId: "forbidden",
-                node
+                node,
               });
             }
           }
         }
-      }
+      },
     };
-  }
+  },
 };
 
 export = rule;

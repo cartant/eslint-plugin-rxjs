@@ -6,7 +6,7 @@
   "dependencies": {
     "common-tags": "^1.8.0",
     "decamelize": "^3.0.0",
-    "eslint-etc": "^0.0.9",
+    "eslint-etc": "^0.0.11",
     "requireindex": "~1.2.0",
     "tslib": "^1.8.0",
     "tsutils": "^3.0.0",

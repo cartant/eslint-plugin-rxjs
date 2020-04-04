@@ -4,23 +4,29 @@
  */
 
 import { Rule } from "eslint";
+import { configureTraverse } from "eslint-etc";
 import * as es from "estree";
 import { getParent, typecheck } from "../utils";
+
+// This rule does not call query, but the use of `has` in the selector effects
+// a traversal in the esquery implementation, so estraverse must be configured
+// with the TypeScript visitor keys.
+configureTraverse();
 
 const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
       description: "Forbids passing `async` functions to `subscribe`.",
-      recommended: true
+      recommended: true,
     },
     fixable: null,
     messages: {
-      forbidden: "Passing async functions to subscribe is forbidden."
+      forbidden: "Passing async functions to subscribe is forbidden.",
     },
-    schema: []
+    schema: [],
   },
-  create: context => {
+  create: (context) => {
     const { couldBeObservable } = typecheck(context);
 
     function report(node: es.FunctionExpression | es.ArrowFunctionExpression) {
@@ -34,21 +40,21 @@ const rule: Rule.RuleModule = {
           ...loc,
           end: {
             ...loc.start,
-            column: loc.start.column + 4
-          }
+            column: loc.start.column + 4,
+          },
         };
 
         context.report({
           messageId: "forbidden",
-          loc: asyncLoc
+          loc: asyncLoc,
         });
       }
     }
     return {
       "CallExpression:has(MemberExpression[property.name='subscribe']) > FunctionExpression[async=true]": report,
-      "CallExpression:has(MemberExpression[property.name='subscribe']) > ArrowFunctionExpression[async=true]": report
+      "CallExpression:has(MemberExpression[property.name='subscribe']) > ArrowFunctionExpression[async=true]": report,
     };
-  }
+  },
 };
 
 export = rule;
