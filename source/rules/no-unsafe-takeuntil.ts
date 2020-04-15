@@ -6,7 +6,7 @@
 import { stripIndent } from "common-tags";
 import { Rule } from "eslint";
 import * as es from "estree";
-import { isCallExpression, isIdentifier, typecheck, getParent } from "../utils";
+import { getParent, isCallExpression, isIdentifier, typecheck } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
