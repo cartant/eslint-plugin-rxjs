@@ -5,14 +5,8 @@
 
 import { stripIndent } from "common-tags";
 import { Rule } from "eslint";
-import { configureTraverse } from "eslint-etc";
 import * as es from "estree";
-import { isCallExpression, isIdentifier, typecheck } from "../utils";
-
-// This rule does not call query, but the use of `has` in the selector effects
-// a traversal in the esquery implementation, so estraverse must be configured
-// with the TypeScript visitor keys.
-configureTraverse();
+import { isCallExpression, isIdentifier, typecheck, getParent } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -76,18 +70,19 @@ const rule: Rule.RuleModule = {
     const { couldBeObservable, isReferenceType } = typecheck(context);
 
     return {
-      [`CallExpression[callee.property.name='pipe'][arguments]:has(CallExpression[callee.name=${checkedOperatorsRegExp}])`]: (
+      [`CallExpression[callee.property.name='pipe'] > CallExpression[callee.name=${checkedOperatorsRegExp}]`]: (
         node: es.CallExpression
       ) => {
+        const pipeCallExpression = getParent(node) as es.CallExpression;
         if (
-          !node.arguments ||
-          !isReferenceType(node) ||
-          !couldBeObservable(node)
+          !pipeCallExpression.arguments ||
+          !isReferenceType(pipeCallExpression) ||
+          !couldBeObservable(pipeCallExpression)
         ) {
           return;
         }
 
-        node.arguments.reduceRight((isError, arg) => {
+        pipeCallExpression.arguments.reduceRight((isError, arg) => {
           if (!isCallExpression(arg) || !isIdentifier(arg.callee)) {
             return true;
           }
