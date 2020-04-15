@@ -4,14 +4,8 @@
  */
 
 import { Rule } from "eslint";
-import { configureTraverse } from "eslint-etc";
 import * as es from "estree";
 import { getParent, isArrayExpression, isObjectExpression } from "../utils";
-
-// This rule does not call query, but the use of `has` in the selector effects
-// a traversal in the esquery implementation, so estraverse must be configured
-// with the TypeScript visitor keys.
-configureTraverse();
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -60,7 +54,7 @@ const rule: Rule.RuleModule = {
       "CallExpression[callee.property.name='pipe'] > CallExpression[typeParameters.params.length > 0] > Identifier": report,
       "NewExpression[typeParameters.params.length > 0] > Identifier[name='BehaviorSubject']": reportBehaviorSubjects,
       "CallExpression[typeParameters.params.length > 0] > Identifier[name=/^(from|of)$/]": report,
-      "NewExpression[typeParameters.params.length > 0]:has(Literal:first-child[value='N']) > Identifier[name='Notification']": reportNotifications,
+      "NewExpression[typeParameters.params.length > 0][arguments.0.value='N'] > Identifier[name='Notification']": reportNotifications,
     };
   },
 };
