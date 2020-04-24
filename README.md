@@ -77,6 +77,7 @@ The package includes the following rules:
 [`no-unbound-methods`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-unbound-methods.ts) | Forbids the passing of unbound methods. | TBD |
 [`no-unsafe-catch`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-unsafe-catch.ts) | Forbids unsafe `catchError` usage in effects and epics. | TBD |
 [`no-unsafe-first`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-unsafe-first.ts) | Forbids unsafe `first`/`take` usage in effects and epics. | TBD |
+[`no-unsafe-subject-next`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-unsafe-subject-next.ts) | Forbids unsafe optional `next` calls. | TBD |
 [`no-unsafe-switchmap`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-unsafe-switchmap.ts) | Forbids unsafe `switchMap` usage in effects and epics. | TBD |
 [`no-unsafe-takeuntil`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-unsafe-takeuntil.ts) | Forbids the application of operators after `takeUntil`. | TBD |
 [`throw-error`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/throw-error.ts) | Enforces the passing of `Error` values to error notifications. | TBD |
