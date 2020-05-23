@@ -5,7 +5,12 @@
 
 import { Rule } from "eslint";
 import * as es from "estree";
-import { isCallExpression, isMemberExpression, typecheck } from "../utils";
+import {
+  getParent,
+  isCallExpression,
+  isMemberExpression,
+  typecheck,
+} from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -24,30 +29,20 @@ const rule: Rule.RuleModule = {
     const { couldBeObservable, couldBeSubscription, getTSType } = typecheck(
       context
     );
+    const nodeMap = new WeakMap<es.Node, void>();
 
-    function report(node: es.CallExpression) {
+    function mapArguments(node: es.CallExpression | es.NewExpression) {
       node.arguments.filter(isMemberExpression).forEach((arg) => {
         const argType = getTSType(arg);
         if (argType.getCallSignatures().length > 0) {
-          /* TODO: reimplement without query
-          const thisExpressions = query(
-            arg,
-            "ThisExpression"
-          ) as es.ThisExpression[];
-          if (thisExpressions.length > 0) {
-            context.report({
-              messageId: "forbidden",
-              node: arg,
-            });
-          }
-          */
+          nodeMap.set(arg);
         }
       });
     }
 
     function isObservableOrSubscription(
       node: es.CallExpression,
-      reportFn: typeof report
+      action: (node: es.CallExpression) => void
     ) {
       if (!isMemberExpression(node.callee)) {
         return;
@@ -57,7 +52,7 @@ const rule: Rule.RuleModule = {
         couldBeObservable(node.callee.object) ||
         couldBeSubscription(node.callee.object)
       ) {
-        reportFn(node);
+        action(node);
       }
     }
 
@@ -66,15 +61,28 @@ const rule: Rule.RuleModule = {
         node: es.CallExpression
       ) => {
         isObservableOrSubscription(node, ({ arguments: args }) => {
-          args.filter(isCallExpression).forEach(report);
+          args.filter(isCallExpression).forEach(mapArguments);
         });
       },
       "CallExpression[callee.property.name=/^(add|subscribe)$/]": (
         node: es.CallExpression
       ) => {
-        isObservableOrSubscription(node, report);
+        isObservableOrSubscription(node, mapArguments);
       },
-      "NewExpression[callee.name='Subscription']": report,
+      "NewExpression[callee.name='Subscription']": mapArguments,
+      ThisExpression: (node: es.ThisExpression) => {
+        let parent = getParent(node);
+        while (parent) {
+          if (nodeMap.has(parent)) {
+            context.report({
+              messageId: "forbidden",
+              node: parent,
+            });
+            return;
+          }
+          parent = getParent(parent);
+        }
+      },
     };
   },
 };
