@@ -122,7 +122,7 @@ const rule: Rule.RuleModule = {
         return;
       }
 
-      const hasInvalidOfType = node.arguments.some((arg) => {
+      const hasUnsafeOfType = node.arguments.some((arg) => {
         if (
           isCallExpression(arg) &&
           isIdentifier(arg.callee) &&
@@ -130,22 +130,24 @@ const rule: Rule.RuleModule = {
         ) {
           return shouldDisallow(arg.arguments);
         }
+        return false;
       });
+      if (!hasUnsafeOfType) {
+        return;
+      }
 
-      if (hasInvalidOfType) {
-        /* TODO: reimplement without query
-        const switchMapNodes = query(
-          node,
-          "[arguments] > CallExpression > Identifier[name='switchMap']"
-        ) as es.Identifier[];
-        switchMapNodes.forEach((switchMapNode) => {
+      node.arguments.forEach((arg) => {
+        if (
+          isCallExpression(arg) &&
+          isIdentifier(arg.callee) &&
+          arg.callee.name === "switchMap"
+        ) {
           context.report({
             messageId: "forbidden",
-            node: switchMapNode,
+            node: arg.callee,
           });
-        });
-        */
-      }
+        }
+      });
     }
 
     return {
