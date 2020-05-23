@@ -6,7 +6,6 @@
 import { Rule } from "eslint";
 import * as es from "estree";
 import {
-  getParent,
   isArrowFunctionExpression,
   isFunctionExpression,
   typecheck,
@@ -29,32 +28,60 @@ const rule: Rule.RuleModule = {
   create: (context) => {
     const { couldBeMonoTypeOperatorFunction } = typecheck(context);
 
+    type Entry = {
+      node: es.Node;
+      param: es.Identifier;
+      sightings: number;
+    };
+    const entries: Entry[] = [];
+
     return {
-      "CallExpression[arguments.length > 0] > Identifier[name=/^(repeatWhen|retryWhen)$/]": (
-        node: es.Identifier
+      "CallExpression[callee.name=/^(repeatWhen|retryWhen)$/]": (
+        node: es.CallExpression
       ) => {
-        const callExpression = getParent(node) as es.CallExpression;
-        if (couldBeMonoTypeOperatorFunction(callExpression)) {
-          const [arg] = callExpression.arguments;
+        if (couldBeMonoTypeOperatorFunction(node)) {
+          const [arg] = node.arguments;
           if (isArrowFunctionExpression(arg) || isFunctionExpression(arg)) {
             const [param] = arg.params as es.Identifier[];
-            let fail = false;
             if (param) {
-              /* TODO: reimplement without query
-              fail =
-                query(arg.body, `Identifier[name=${param.name}]`).length === 0;
-              */
+              entries.push({
+                node,
+                param,
+                sightings: 0,
+              });
             } else {
-              fail = true;
-            }
-
-            if (fail) {
               context.report({
                 messageId: "forbidden",
-                node,
+                node: node.callee,
               });
             }
           }
+        }
+      },
+      "CallExpression[callee.name=/^(repeatWhen|retryWhen)$/]:exit": (
+        node: es.CallExpression
+      ) => {
+        const { length, [length - 1]: entry } = entries;
+        if (!entry) {
+          return;
+        }
+        if (entry.node === node) {
+          if (entry.sightings < 2) {
+            context.report({
+              messageId: "forbidden",
+              node: node.callee,
+            });
+          }
+          entries.pop();
+        }
+      },
+      Identifier: (node: es.Identifier) => {
+        const { length, [length - 1]: entry } = entries;
+        if (!entry) {
+          return;
+        }
+        if (node.name === entry.param.name) {
+          ++entry.sightings;
         }
       },
     };

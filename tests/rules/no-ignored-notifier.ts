@@ -7,9 +7,6 @@ import { stripIndent } from "common-tags";
 import rule = require("../../source/rules/no-ignored-notifier");
 import { ruleTester } from "../utils";
 
-// prettier-ignore
-describe.skip("skip", () => {
-
 ruleTester({ types: true }).run("no-ignored-notifier", rule, {
   valid: [
     stripIndent`
@@ -237,6 +234,4 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       ],
     },
   ],
-});
-
 });
