@@ -6,7 +6,6 @@
 import { stripIndent } from "common-tags";
 import decamelize from "decamelize";
 import { Rule } from "eslint";
-import { configureTraverse, query } from "eslint-etc";
 import * as es from "estree";
 import { defaultObservable } from "../constants";
 import {
@@ -16,8 +15,6 @@ import {
   isLiteral,
   typecheck,
 } from "../utils";
-
-configureTraverse();
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -136,6 +133,7 @@ const rule: Rule.RuleModule = {
       });
 
       if (hasInvalidOfType) {
+        /* TODO: reimplement without query
         const switchMapNodes = query(
           node,
           "[arguments] > CallExpression > Identifier[name='switchMap']"
@@ -146,6 +144,7 @@ const rule: Rule.RuleModule = {
             node: switchMapNode,
           });
         });
+        */
       }
     }
 

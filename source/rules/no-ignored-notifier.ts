@@ -4,7 +4,6 @@
  */
 
 import { Rule } from "eslint";
-import { configureTraverse, query } from "eslint-etc";
 import * as es from "estree";
 import {
   getParent,
@@ -12,8 +11,6 @@ import {
   isFunctionExpression,
   typecheck,
 } from "../utils";
-
-configureTraverse();
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -43,8 +40,10 @@ const rule: Rule.RuleModule = {
             const [param] = arg.params as es.Identifier[];
             let fail = false;
             if (param) {
+              /* TODO: reimplement without query
               fail =
                 query(arg.body, `Identifier[name=${param.name}]`).length === 0;
+              */
             } else {
               fail = true;
             }

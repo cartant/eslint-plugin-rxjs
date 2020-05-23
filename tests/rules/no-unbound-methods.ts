@@ -376,6 +376,9 @@ const unboundTests: Tests = {
   ],
 };
 
+// prettier-ignore
+describe.skip("skip", () => {
+
 ruleTester({ types: true }).run("no-unbound-methods", rule, {
   valid: [
     ...arrowTests.valid,
@@ -391,4 +394,6 @@ ruleTester({ types: true }).run("no-unbound-methods", rule, {
     ...staticTests.invalid,
     ...unboundTests.invalid,
   ],
+});
+
 });

@@ -4,11 +4,8 @@
  */
 
 import { Rule } from "eslint";
-import { configureTraverse, query } from "eslint-etc";
 import * as es from "estree";
 import { isCallExpression, isMemberExpression, typecheck } from "../utils";
-
-configureTraverse();
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -32,6 +29,7 @@ const rule: Rule.RuleModule = {
       node.arguments.filter(isMemberExpression).forEach((arg) => {
         const argType = getTSType(arg);
         if (argType.getCallSignatures().length > 0) {
+          /* TODO: reimplement without query
           const thisExpressions = query(
             arg,
             "ThisExpression"
@@ -42,6 +40,7 @@ const rule: Rule.RuleModule = {
               node: arg,
             });
           }
+          */
         }
       });
     }

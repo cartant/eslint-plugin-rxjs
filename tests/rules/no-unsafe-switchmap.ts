@@ -25,6 +25,9 @@ const setup = stripIndent`
 `;
 const setupLines = 14;
 
+// prettier-ignore
+describe.skip("skip", () => {
+
 ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
   valid: [
     {
@@ -201,4 +204,6 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
       ],
     },
   ],
+});
+
 });
