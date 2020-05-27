@@ -81,4 +81,5 @@ The package includes the following rules:
 [`no-unsafe-subject-next`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-unsafe-subject-next.ts) | Forbids unsafe optional `next` calls. | TBD |
 [`no-unsafe-switchmap`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-unsafe-switchmap.ts) | Forbids unsafe `switchMap` usage in effects and epics. | TBD |
 [`no-unsafe-takeuntil`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-unsafe-takeuntil.ts) | Forbids the application of operators after `takeUntil`. | TBD |
+[`prefer-observer`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/prefer-observer.ts) | Forbids the passing separate callbacks to `subscribe` and `tap`. | TBD |
 [`throw-error`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/throw-error.ts) | Enforces the passing of `Error` values to error notifications. | TBD |
