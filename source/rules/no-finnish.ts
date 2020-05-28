@@ -4,6 +4,7 @@
  */
 
 import { Rule } from "eslint";
+import { getLoc } from "eslint-etc";
 import * as es from "estree";
 import { getParent, typecheck } from "../utils";
 
@@ -12,61 +13,65 @@ const rule: Rule.RuleModule = {
     docs: {
       category: "RxJS",
       description: "Forbids the use of Finnish notation.",
-      recommended: false
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "Finnish notation is forbidden."
+      forbidden: "Finnish notation is forbidden.",
     },
-    schema: []
+    schema: [],
   },
-  create: context => {
-    const { couldBeObservable, couldReturnObservable } = typecheck(context);
+  create: (context) => {
+    const { couldBeObservable, couldReturnObservable, nodeMap } = typecheck(
+      context
+    );
 
-    function reportIfObservable(typeNode: es.Node, reportNode: es.Node) {
+    function checkNode(typeNode: es.Node, nameNode: es.Node) {
       if (couldBeObservable(typeNode) || couldReturnObservable(typeNode)) {
-        context.report({ messageId: "forbidden", node: reportNode });
+        const tsNode = nodeMap.get(nameNode);
+        context.report({
+          loc: getLoc(tsNode),
+          messageId: "forbidden",
+        });
       }
     }
 
     return {
-      "VariableDeclarator[id.name=/[$]+$/]": (node: es.VariableDeclarator) =>
-        reportIfObservable(node.init || node, node.id),
-      "ObjectExpression > Property[computed=false][key.name=/[$]+$/]": (
-        node: es.Property
-      ) => reportIfObservable(node.key, node.key),
-      "ObjectPattern > Property[shorthand=true][key.name=/[$]+$/]": (
-        node: es.Property
-      ) => reportIfObservable(node.key, node.key),
-      "ObjectPattern > Property[shorthand=false][value.name=/[$]+$/]": (
-        node: es.Property
-      ) => reportIfObservable(node.value, node.value),
       "ArrayPattern > Identifier[name=/[$]+$/]": (node: es.Identifier) =>
-        reportIfObservable(node, node),
-      "FunctionExpression > Identifier[name=/[$]+$/]": (node: es.Identifier) =>
-        reportIfObservable(node, node),
+        checkNode(node, node),
       "ArrowFunctionExpression > Identifier[name=/[$]+$/]": (
         node: es.Identifier
       ) => {
         const parent = getParent(node) as es.ArrowFunctionExpression;
         if (node !== parent.body) {
-          reportIfObservable(node, node);
+          checkNode(node, node);
         }
       },
-      "FunctionDeclaration > Identifier[name=/[$]+$/]": (node: es.Identifier) =>
-        reportIfObservable(getParent(node), node),
       "ClassProperty[key.name=/[$]+$/] > Identifier": (node: es.Identifier) =>
-        reportIfObservable(getParent(node), node),
+        checkNode(getParent(node), node),
+      "FunctionDeclaration > Identifier[name=/[$]+$/]": (node: es.Identifier) =>
+        checkNode(getParent(node), node),
+      "FunctionExpression > Identifier[name=/[$]+$/]": (node: es.Identifier) =>
+        checkNode(node, node),
       "MethodDefinition[key.name=/[$]+$/]": (node: es.MethodDefinition) =>
-        reportIfObservable(node, node.key),
-      "TSInterfaceDeclaration > TSInterfaceBody > TSPropertySignature > Identifier[name=/[$]+$/]": (
-        node: es.Identifier
-      ) => reportIfObservable(getParent(node), node),
-      "TSInterfaceDeclaration > TSInterfaceBody > TSMethodSignature > Identifier[name=/[$]+$/]": (
-        node: es.Identifier
-      ) => reportIfObservable(getParent(node), node)
+        checkNode(node, node.key),
+      "ObjectExpression > Property[computed=false][key.name=/[$]+$/]": (
+        node: es.Property
+      ) => checkNode(node.key, node.key),
+      "ObjectPattern > Property[shorthand=true][key.name=/[$]+$/]": (
+        node: es.Property
+      ) => checkNode(node.key, node.key),
+      "ObjectPattern > Property[shorthand=false][value.name=/[$]+$/]": (
+        node: es.Property
+      ) => checkNode(node.value, node.value),
+      "TSPropertySignature > Identifier[name=/[$]+$/]": (node: es.Identifier) =>
+        checkNode(getParent(node), node),
+      "TSMethodSignature > Identifier[name=/[$]+$/]": (node: es.Identifier) =>
+        checkNode(getParent(node), node),
+      "VariableDeclarator[id.name=/[$]+$/]": (node: es.VariableDeclarator) =>
+        checkNode(node.init || node, node.id),
     };
-  }
+  },
 };
 
 export = rule;

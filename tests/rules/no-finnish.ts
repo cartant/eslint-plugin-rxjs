@@ -14,14 +14,14 @@ ruleTester({ types: true }).run("no-finnish", rule, {
       import { Observable, of } from "rxjs";
 
       const someObservable = of(0);
-      declare const hasSomeKey$: { someKey$: Observable<number> };
-      const { someKey$: anotherObservable } = hasSomeKey$;
-      const [{ someKey$: yetAnotherObservable }] = [hasSomeKey$];
+      const someObject = { someKey: someObservable };
+      const { someKey: anotherObservable } = someObject;
+      const [{ someKey: yetAnotherObservable }] = [someObject];
 
       const someEmptyObject = {};
-      const someObject = { ...someEmptyObject, someKey: someObservable };
-      const { someKey } = someObject;
-      const { someKey: someRenamedKey } = someObject;
+      const someOtherObject = { ...someEmptyObject, someKey: someObservable };
+      const { someKey } = someOtherObject;
+      const { someKey: someRenamedKey } = someOtherObject;
 
       const someArray = [someObservable];
       const [someElement] = someArray;
@@ -51,9 +51,10 @@ ruleTester({ types: true }).run("no-finnish", rule, {
         // variables with $
         import { Observable, of } from "rxjs";
         const someObservable$ = of(0);
-        declare const hasSomeKey$: { someKey$: Observable<number> };
-        const { someKey$: anotherObservable$ } = hasSomeKey$;
-        const [{ someKey$: yetAnotherObservable$ }] = [hasSomeKey$];
+        const someObject = { someKey$: someObservable$ };
+        const { someKey$ } = someObject;
+        const { someKey$: anotherObservable$ } = someObject;
+        const [{ someKey$: yetAnotherObservable$ }] = [someObject];
       `,
       errors: [
         {
@@ -65,16 +66,30 @@ ruleTester({ types: true }).run("no-finnish", rule, {
         },
         {
           messageId: "forbidden",
+          line: 4,
+          column: 22,
+          endLine: 4,
+          endColumn: 30,
+        },
+        {
+          messageId: "forbidden",
           line: 5,
-          column: 19,
+          column: 9,
           endLine: 5,
-          endColumn: 37,
+          endColumn: 17,
         },
         {
           messageId: "forbidden",
           line: 6,
-          column: 20,
+          column: 19,
           endLine: 6,
+          endColumn: 37,
+        },
+        {
+          messageId: "forbidden",
+          line: 7,
+          column: 20,
+          endLine: 7,
           endColumn: 41,
         },
       ],
@@ -150,14 +165,14 @@ ruleTester({ types: true }).run("no-finnish", rule, {
           line: 6,
           column: 29,
           endLine: 6,
-          endColumn: 54,
+          endColumn: 37,
         },
         {
           messageId: "forbidden",
           line: 7,
           column: 20,
           endLine: 7,
-          endColumn: 45,
+          endColumn: 28,
         },
       ],
     },
@@ -181,7 +196,7 @@ ruleTester({ types: true }).run("no-finnish", rule, {
           line: 3,
           column: 24,
           endLine: 3,
-          endColumn: 51,
+          endColumn: 34,
         },
         {
           messageId: "forbidden",
@@ -195,7 +210,7 @@ ruleTester({ types: true }).run("no-finnish", rule, {
           line: 4,
           column: 29,
           endLine: 4,
-          endColumn: 56,
+          endColumn: 39,
         },
       ],
     },
@@ -224,7 +239,7 @@ ruleTester({ types: true }).run("no-finnish", rule, {
           line: 5,
           column: 15,
           endLine: 5,
-          endColumn: 42,
+          endColumn: 25,
         },
         {
           messageId: "forbidden",
@@ -245,7 +260,7 @@ ruleTester({ types: true }).run("no-finnish", rule, {
           line: 7,
           column: 19,
           endLine: 7,
-          endColumn: 46,
+          endColumn: 29,
         },
         {
           messageId: "forbidden",
@@ -259,7 +274,7 @@ ruleTester({ types: true }).run("no-finnish", rule, {
           line: 8,
           column: 15,
           endLine: 8,
-          endColumn: 42,
+          endColumn: 25,
         },
       ],
     },
@@ -269,7 +284,7 @@ ruleTester({ types: true }).run("no-finnish", rule, {
         import { Observable } from "rxjs";
         interface SomeInterface {
           someProperty$: Observable<any>;
-          someMethod$(someParam$: Observable<any>, abc$: () => Observable<any>): Observable<any>;
+          someMethod$(someParam$: Observable<any>): Observable<any>;
         }
       `,
       errors: [
@@ -292,14 +307,7 @@ ruleTester({ types: true }).run("no-finnish", rule, {
           line: 5,
           column: 15,
           endLine: 5,
-          endColumn: 42,
-        },
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 44,
-          endLine: 5,
-          endColumn: 71,
+          endColumn: 25,
         },
       ],
     },
