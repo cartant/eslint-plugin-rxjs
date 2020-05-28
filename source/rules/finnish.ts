@@ -112,9 +112,9 @@ const rule: Rule.RuleModule = {
           node.params.forEach((param) => checkNode(param));
         }
       },
-      ClassProperty: (node: es.Node) => {
+      "ClassProperty[key.name=/[^$]$/][computed=false]": (node: es.Node) => {
         const anyNode = node as any;
-        if (validate.properties && !anyNode.computed) {
+        if (validate.properties) {
           checkNode(anyNode.key);
         }
       },
@@ -131,27 +131,33 @@ const rule: Rule.RuleModule = {
           node.params.forEach((param) => checkNode(param));
         }
       },
-      "MethodDefinition[kind='get']": (node: es.MethodDefinition) => {
-        if (validate.properties && !node.computed) {
+      "MethodDefinition[kind='get'][key.name=/[^$]$/][computed=false]": (
+        node: es.MethodDefinition
+      ) => {
+        if (validate.properties) {
           checkNode(node.key, node);
         }
       },
-      "MethodDefinition[kind='method']": (node: es.MethodDefinition) => {
-        if (validate.methods && !node.computed) {
+      "MethodDefinition[kind='method'][key.name=/[^$]$/][computed=false]": (
+        node: es.MethodDefinition
+      ) => {
+        if (validate.methods) {
           checkNode(node.key, node);
         }
       },
-      "MethodDefinition[kind='set']": (node: es.MethodDefinition) => {
-        if (validate.properties && !node.computed) {
+      "MethodDefinition[kind='set'][key.name=/[^$]$/][computed=false]": (
+        node: es.MethodDefinition
+      ) => {
+        if (validate.properties) {
           checkNode(node.key, node);
         }
       },
-      "ObjectExpression > Property > Identifier": (
+      "ObjectExpression > Property[computed=false] > Identifier[name=/[^$]$/]": (
         node: es.ObjectExpression
       ) => {
         if (validate.properties) {
           const parent = getParent(node) as es.Property;
-          if (node === parent.key && !parent.computed) {
+          if (node === parent.key) {
             checkNode(node);
           }
         }
@@ -162,29 +168,33 @@ const rule: Rule.RuleModule = {
       TSConstructSignatureDeclaration: (node: es.Node) => {
         // TODO: add tests and implement
       },
-      TSMethodSignature: (node: es.Node) => {
+      "TSMethodSignature[computed=false]": (node: es.Node) => {
         const anyNode = node as any;
-        if (validate.methods && !anyNode.computed) {
+        if (validate.methods) {
           checkNode(anyNode.key, node);
         }
         if (validate.parameters) {
           anyNode.params.forEach((param: es.Node) => checkNode(param));
         }
       },
-      TSPropertySignature: (node: es.Node) => {
+      "TSPropertySignature[key.name=/[^$]$/][computed=false]": (
+        node: es.Node
+      ) => {
         const anyNode = node as any;
-        if (validate.properties && !anyNode.computed) {
+        if (validate.properties) {
           checkNode(anyNode.key);
         }
       },
-      "VariableDeclarator > ArrayPattern > Identifier": (
+      "VariableDeclarator > ArrayPattern > Identifier[name=/[^$]$/]": (
         node: es.Identifier
       ) => {
         if (validate.variables) {
           checkNode(node);
         }
       },
-      "VariableDeclarator > Identifier": (node: es.Identifier) => {
+      "VariableDeclarator > Identifier[name=/[^$]$/]": (
+        node: es.Identifier
+      ) => {
         if (validate.variables) {
           const parent = getParent(node) as es.VariableDeclarator;
           if (node === parent.id) {
@@ -192,7 +202,7 @@ const rule: Rule.RuleModule = {
           }
         }
       },
-      "VariableDeclarator > ObjectPattern > Property > Identifier": (
+      "VariableDeclarator > ObjectPattern > Property > Identifier[name=/[^$]$/]": (
         node: es.Identifier
       ) => {
         if (validate.variables) {
