@@ -33,7 +33,7 @@ ruleTester({ types: true }).run("no-finnish", rule, {
 
       class SomeClass {
         someProperty: Observable<any>;
-        constructor (someParam: Observable<any>) {}
+        constructor(someParam: Observable<any>) {}
         get someGetter(): Observable<any> { throw new Error("Some error."); }
         set someSetter(someParam: Observable<any>) {}
         someMethod(someParam: Observable<any>): Observable<any> { return someParam; }
@@ -205,7 +205,7 @@ ruleTester({ types: true }).run("no-finnish", rule, {
         import { Observable } from "rxjs";
         class SomeClass {
           someProperty$: Observable<any>;
-          constructor (someParam$: Observable<any>) {}
+          constructor(someParam$: Observable<any>) {}
           get someGetter$(): Observable<any> { throw new Error("Some error."); }
           set someSetter$(someParam$: Observable<any>) {}
           someMethod$(someParam$: Observable<any>): Observable<any> { return someParam; }
@@ -222,9 +222,9 @@ ruleTester({ types: true }).run("no-finnish", rule, {
         {
           messageId: "forbidden",
           line: 5,
-          column: 16,
+          column: 15,
           endLine: 5,
-          endColumn: 43,
+          endColumn: 42,
         },
         {
           messageId: "forbidden",

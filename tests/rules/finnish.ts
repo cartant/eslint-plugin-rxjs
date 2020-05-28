@@ -8,30 +8,53 @@ import rule = require("../../source/rules/finnish");
 import { ruleTester } from "../utils";
 
 ruleTester({ types: true }).run("finnish", rule, {
-  invalid: [
+  valid: [
     {
       code: stripIndent`
-        // optional
+        // with $
         import { Observable, of } from "rxjs";
 
-        const someOptionalObservable$: Observable<any> | undefined = of();
+        const someObservable$ = of(0);
 
-        const someOptionalObservable: Observable<any> | undefined = of();
+        const someEmptyObject = {};
+        const someObject = { ...someEmptyObject, someKey$: someObservable$ };
+        const { someKey$ } = someObject;
+        const { someKey$: someRenamedKey$ } = someObject;
+
+        const someArray = [someObservable$];
+        const [someElement$] = someArray;
+        someArray.forEach(function (element$: Observable<any>): void {});
+        someArray.forEach((element$: Observable<any>) => {});
+
+        function someFunction$(someParam$: Observable<any>): Observable<any> { return someParam; }
+
+        class SomeClass {
+          someProperty$: Observable<any>;
+          constructor (someParam$: Observable<any>) {}
+          get someGetter$(): Observable<any> { throw new Error("Some error."); }
+          set someSetter$(someParam$: Observable<any>) {}
+          someMethod$(someParam$: Observable<any>): Observable<any> { return someParam; }
+        }
+
+        interface SomeInterface {
+          someProperty$: Observable<any>;
+          someMethod$(someParam$: Observable<any>): Observable<any>;
+        }
       `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 6,
-          column: 7,
-          endLine: 6,
-          endColumn: 29,
-        },
-      ],
       options: [{}],
     },
     {
       code: stripIndent`
-        // whitelist-angular
+        // optional variable with $
+        import { Observable, of } from "rxjs";
+
+        const someOptionalObservable$: Observable<any> | undefined = of();
+      `,
+      options: [{}],
+    },
+    {
+      code: stripIndent`
+        // default angular whitelist
         import { Observable, of, Subject } from "rxjs";
 
         class EventEmitter<T> extends Subject<T> {}
@@ -47,12 +70,31 @@ ruleTester({ types: true }).run("finnish", rule, {
           public validate(): Observable<any> { return of(); }
         }
       `,
-      errors: [],
+      options: [{}],
+    },
+  ],
+  invalid: [
+    {
+      code: stripIndent`
+        // optional variable without $
+        import { Observable, of } from "rxjs";
+
+        const someOptionalObservable: Observable<any> | undefined = of();
+      `,
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 4,
+          column: 7,
+          endLine: 4,
+          endColumn: 29,
+        },
+      ],
       options: [{}],
     },
     {
       code: stripIndent`
-        // whitelist-explicit
+        // explicit whitelist
         import { of, Subject } from "rxjs";
 
         class EventEmitter<T> extends Subject<T> {}
@@ -94,7 +136,7 @@ ruleTester({ types: true }).run("finnish", rule, {
     },
     {
       code: stripIndent`
-        // whitelist-optional
+        // explicit whitelist optional variable
         import { Subject } from "rxjs";
 
         class EventEmitter<T> extends Subject<T> {}
@@ -123,70 +165,275 @@ ruleTester({ types: true }).run("finnish", rule, {
     },
     {
       code: stripIndent`
-        // with-$
+        // functions without $
         import { Observable, of } from "rxjs";
 
         const someObservable$ = of(0);
-
-        const someEmptyObject = {};
-        const someObject = { ...someEmptyObject, someKey$: someObservable$ };
-        const { someKey$ } = someObject;
-        const { someKey$: someRenamedKey$ } = someObject;
-
         const someArray = [someObservable$];
-        const [someElement$] = someArray;
-        someArray.forEach(function (element$: Observable<any>): void {});
-        someArray.forEach((element$: Observable<any>) => {});
-
-        function someFunction$(someParam$: Observable<any>): Observable<any> { return someParam; }
-
-        class SomeClass {
-          someProperty$: Observable<any>;
-          constructor (someParam$: Observable<any>) {}
-          get someGetter$(): Observable<any> { throw new Error("Some error."); }
-          set someSetter$(someParam$: Observable<any>) {}
-          someMethod$(someParam$: Observable<any>): Observable<any> { return someParam; }
-        }
-
-        interface SomeInterface {
-          someProperty$: Observable<any>;
-          someMethod$(someParam$: Observable<any>): Observable<any>;
-        }
+        function someFunction(someParam$: Observable<any>): Observable<any> { return someParam$; }
       `,
-      errors: [],
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 6,
+          column: 10,
+          endLine: 6,
+          endColumn: 22,
+        },
+      ],
       options: [{}],
     },
     {
       code: stripIndent`
-        // without-$
+        // functions without $ no finnish option
+        import { Observable, of } from "rxjs";
+
+        const someObservable$ = of(0);
+        const someArray = [someObservable$];
+        function someFunction(someParam$: Observable<any>): Observable<any> { return someParam$; }
+      `,
+      errors: [],
+      options: [{ functions: false }],
+    },
+    {
+      code: stripIndent`
+        // methods without $
+        import { Observable } from "rxjs";
+
+        class SomeClass {
+          someMethod(someParam$: Observable<any>): Observable<any> { return someParam$; }
+        }
+
+        interface SomeInterface {
+          someMethod(someParam$: Observable<any>): Observable<any>;
+        }
+      `,
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 5,
+          column: 3,
+          endLine: 5,
+          endColumn: 13,
+        },
+        {
+          messageId: "forbidden",
+          line: 9,
+          column: 3,
+          endLine: 9,
+          endColumn: 13,
+        },
+      ],
+      options: [{}],
+    },
+    {
+      code: stripIndent`
+        // methods without $ no finnish option
+        import { Observable } from "rxjs";
+
+        class SomeClass {
+          someMethod(someParam$: Observable<any>): Observable<any> { return someParam$; }
+        }
+
+        interface SomeInterface {
+          someMethod(someParam$: Observable<any>): Observable<any>;
+        }
+      `,
+      errors: [],
+      options: [{ methods: false }],
+    },
+    {
+      code: stripIndent`
+        // parameters without $
+        import { Observable, of } from "rxjs";
+
+        const someObservable$ = of(0);
+        const someArray = [someObservable$];
+        someArray.forEach(function (element: Observable<any>): void {});
+        someArray.forEach((element: Observable<any>) => {});
+
+        function someFunction$(someParam: Observable<any>): Observable<any> { return someParam; }
+
+        class SomeClass {
+          constructor(someParam: Observable<any>) {}
+          set someSetter$(someParam: Observable<any>) {}
+          someMethod$(someParam: Observable<any>): Observable<any> { return someParam; }
+        }
+
+        interface SomeInterface {
+          someMethod$(someParam: Observable<any>): Observable<any>;
+        }
+      `,
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 6,
+          column: 29,
+          endLine: 6,
+          endColumn: 36,
+        },
+        {
+          messageId: "forbidden",
+          line: 7,
+          column: 20,
+          endLine: 7,
+          endColumn: 27,
+        },
+        {
+          messageId: "forbidden",
+          line: 9,
+          column: 24,
+          endLine: 9,
+          endColumn: 33,
+        },
+        {
+          messageId: "forbidden",
+          line: 12,
+          column: 15,
+          endLine: 12,
+          endColumn: 24,
+        },
+        {
+          messageId: "forbidden",
+          line: 13,
+          column: 19,
+          endLine: 13,
+          endColumn: 28,
+        },
+        {
+          messageId: "forbidden",
+          line: 14,
+          column: 15,
+          endLine: 14,
+          endColumn: 24,
+        },
+        {
+          messageId: "forbidden",
+          line: 18,
+          column: 15,
+          endLine: 18,
+          endColumn: 24,
+        },
+      ],
+      options: [{}],
+    },
+    {
+      code: stripIndent`
+        // parameters without $ no finnish option
+        import { Observable, of } from "rxjs";
+
+        const someObservable$ = of(0);
+        const someArray = [someObservable$];
+        someArray.forEach(function (element: Observable<any>): void {});
+        someArray.forEach((element: Observable<any>) => {});
+
+        function someFunction$(someParam: Observable<any>): Observable<any> { return someParam; }
+
+        class SomeClass {
+          constructor(someParam: Observable<any>) {}
+          set someSetter$(someParam: Observable<any>) {}
+          someMethod$(someParam: Observable<any>): Observable<any> { return someParam; }
+        }
+
+        interface SomeInterface {
+          someMethod$(someParam: Observable<any>): Observable<any>;
+        }
+      `,
+      errors: [],
+      options: [{ parameters: false }],
+    },
+    {
+      code: stripIndent`
+        // properties without $
+        import { Observable, of } from "rxjs";
+
+        const someObservable$ = of(0);
+        const someEmptyObject = {};
+        const someObject = { ...someEmptyObject, someKey: someObservable$ };
+
+        class SomeClass {
+          someProperty: Observable<any>;
+          get someGetter(): Observable<any> { throw new Error("Some error."); }
+          set someSetter(someParam$: Observable<any>) {}
+        }
+
+        interface SomeInterface {
+          someProperty: Observable<any>;
+        }
+      `,
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 6,
+          column: 42,
+          endLine: 6,
+          endColumn: 49,
+        },
+        {
+          messageId: "forbidden",
+          line: 9,
+          column: 3,
+          endLine: 9,
+          endColumn: 15,
+        },
+        {
+          messageId: "forbidden",
+          line: 10,
+          column: 7,
+          endLine: 10,
+          endColumn: 17,
+        },
+        {
+          messageId: "forbidden",
+          line: 11,
+          column: 7,
+          endLine: 11,
+          endColumn: 17,
+        },
+        {
+          messageId: "forbidden",
+          line: 15,
+          column: 3,
+          endLine: 15,
+          endColumn: 15,
+        },
+      ],
+      options: [{}],
+    },
+    {
+      code: stripIndent`
+        // properties without $ no finnish option
+        import { Observable, of } from "rxjs";
+
+        const someObservable$ = of(0);
+        const someEmptyObject = {};
+        const someObject = { ...someEmptyObject, someKey: someObservable$ };
+
+        class SomeClass {
+          someProperty: Observable<any>;
+          get someGetter(): Observable<any> { throw new Error("Some error."); }
+          set someSetter(someParam$: Observable<any>) {}
+        }
+
+        interface SomeInterface {
+          someProperty: Observable<any>;
+        }
+      `,
+      errors: [],
+      options: [{ properties: false }],
+    },
+    {
+      code: stripIndent`
+        // variables without $
         import { Observable, of } from "rxjs";
 
         const someObservable = of(0);
-
         const someEmptyObject = {};
         const someObject = { ...someEmptyObject, someKey: someObservable };
         const { someKey } = someObject;
         const { someKey: someRenamedKey } = someObject;
-
         const someArray = [someObservable];
         const [someElement] = someArray;
-        someArray.forEach(function (element: Observable<any>): void {});
-        someArray.forEach((element: Observable<any>) => {});
-
-        function someFunction(someParam: Observable<any>): Observable<any> { return someParam; }
-
-        class SomeClass {
-          someProperty: Observable<any>;
-          constructor (someParam: Observable<any>) {}
-          get someGetter(): Observable<any> { throw new Error("Some error."); }
-          set someSetter(someParam: Observable<any>) {}
-          someMethod(someParam: Observable<any>): Observable<any> { return someParam; }
-        }
-
-        interface SomeInterface {
-          someProperty: Observable<any>;
-          someMethod(someParam: Observable<any>): Observable<any>;
-        }
       `,
       errors: [
         {
@@ -198,864 +445,58 @@ ruleTester({ types: true }).run("finnish", rule, {
         },
         {
           messageId: "forbidden",
-          line: 7,
+          line: 6,
           column: 42,
-          endLine: 7,
+          endLine: 6,
           endColumn: 49,
         },
         {
           messageId: "forbidden",
-          line: 8,
+          line: 7,
           column: 9,
-          endLine: 8,
+          endLine: 7,
           endColumn: 16,
         },
         {
           messageId: "forbidden",
-          line: 9,
+          line: 8,
           column: 18,
-          endLine: 9,
+          endLine: 8,
           endColumn: 32,
         },
         {
           messageId: "forbidden",
-          line: 12,
+          line: 10,
           column: 8,
-          endLine: 12,
+          endLine: 10,
           endColumn: 19,
-        },
-        {
-          messageId: "forbidden",
-          line: 13,
-          column: 29,
-          endLine: 13,
-          endColumn: 36,
-        },
-        {
-          messageId: "forbidden",
-          line: 14,
-          column: 20,
-          endLine: 14,
-          endColumn: 27,
-        },
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 10,
-          endLine: 16,
-          endColumn: 22,
-        },
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 23,
-          endLine: 16,
-          endColumn: 32,
-        },
-        {
-          messageId: "forbidden",
-          line: 19,
-          column: 3,
-          endLine: 19,
-          endColumn: 15,
-        },
-        {
-          messageId: "forbidden",
-          line: 20,
-          column: 16,
-          endLine: 20,
-          endColumn: 25,
-        },
-        {
-          messageId: "forbidden",
-          line: 21,
-          column: 7,
-          endLine: 21,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 22,
-          column: 7,
-          endLine: 22,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 22,
-          column: 18,
-          endLine: 22,
-          endColumn: 27,
-        },
-        {
-          messageId: "forbidden",
-          line: 23,
-          column: 3,
-          endLine: 23,
-          endColumn: 13,
-        },
-        {
-          messageId: "forbidden",
-          line: 23,
-          column: 14,
-          endLine: 23,
-          endColumn: 23,
-        },
-        {
-          messageId: "forbidden",
-          line: 27,
-          column: 3,
-          endLine: 27,
-          endColumn: 15,
-        },
-        {
-          messageId: "forbidden",
-          line: 28,
-          column: 3,
-          endLine: 28,
-          endColumn: 13,
-        },
-        {
-          messageId: "forbidden",
-          line: 28,
-          column: 14,
-          endLine: 28,
-          endColumn: 23,
         },
       ],
       options: [{}],
     },
     {
       code: stripIndent`
-          // without-$-no-functions
-          import { Observable, of } from "rxjs";
+        // variables without $ no finnish option
+        import { Observable, of } from "rxjs";
 
-          const someObservable = of(0);
-
-          const someEmptyObject = {};
-          const someObject = { ...someEmptyObject, someKey: someObservable };
-          const { someKey } = someObject;
-          const { someKey: someRenamedKey } = someObject;
-
-          const someArray = [someObservable];
-          const [someElement] = someArray;
-          someArray.forEach(function (element: Observable<any>): void {});
-          someArray.forEach((element: Observable<any>) => {});
-
-          function someFunction(someParam: Observable<any>): Observable<any> { return someParam; }
-
-          class SomeClass {
-            someProperty: Observable<any>;
-            constructor (someParam: Observable<any>) {}
-            get someGetter(): Observable<any> { throw new Error("Some error."); }
-            set someSetter(someParam: Observable<any>) {}
-            someMethod(someParam: Observable<any>): Observable<any> { return someParam; }
-          }
-
-          interface SomeInterface {
-            someProperty: Observable<any>;
-            someMethod(someParam: Observable<any>): Observable<any>;
-          }
-        `,
+        const someObservable = of(0);
+        const someEmptyObject = {};
+        const someObject = { ...someEmptyObject, someKey: someObservable };
+        const { someKey } = someObject;
+        const { someKey: someRenamedKey } = someObject;
+        const someArray = [someObservable];
+        const [someElement] = someArray;
+      `,
       errors: [
         {
           messageId: "forbidden",
-          line: 4,
-          column: 7,
-          endLine: 4,
-          endColumn: 21,
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
+          line: 6,
           column: 42,
-          endLine: 7,
+          endLine: 6,
           endColumn: 49,
         },
-        {
-          messageId: "forbidden",
-          line: 8,
-          column: 9,
-          endLine: 8,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 9,
-          column: 18,
-          endLine: 9,
-          endColumn: 32,
-        },
-        {
-          messageId: "forbidden",
-          line: 12,
-          column: 8,
-          endLine: 12,
-          endColumn: 19,
-        },
-        {
-          messageId: "forbidden",
-          line: 13,
-          column: 29,
-          endLine: 13,
-          endColumn: 36,
-        },
-        {
-          messageId: "forbidden",
-          line: 14,
-          column: 20,
-          endLine: 14,
-          endColumn: 27,
-        },
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 23,
-          endLine: 16,
-          endColumn: 32,
-        },
-        {
-          messageId: "forbidden",
-          line: 19,
-          column: 3,
-          endLine: 19,
-          endColumn: 15,
-        },
-        {
-          messageId: "forbidden",
-          line: 20,
-          column: 16,
-          endLine: 20,
-          endColumn: 25,
-        },
-        {
-          messageId: "forbidden",
-          line: 21,
-          column: 7,
-          endLine: 21,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 22,
-          column: 7,
-          endLine: 22,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 22,
-          column: 18,
-          endLine: 22,
-          endColumn: 27,
-        },
-        {
-          messageId: "forbidden",
-          line: 23,
-          column: 3,
-          endLine: 23,
-          endColumn: 13,
-        },
-        {
-          messageId: "forbidden",
-          line: 23,
-          column: 14,
-          endLine: 23,
-          endColumn: 23,
-        },
-        {
-          messageId: "forbidden",
-          line: 27,
-          column: 3,
-          endLine: 27,
-          endColumn: 15,
-        },
-        {
-          messageId: "forbidden",
-          line: 28,
-          column: 3,
-          endLine: 28,
-          endColumn: 13,
-        },
-        {
-          messageId: "forbidden",
-          line: 28,
-          column: 14,
-          endLine: 28,
-          endColumn: 23,
-        },
       ],
-      options: [
-        {
-          functions: false,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
-          // without-$-no-methods
-          import { Observable, of } from "rxjs";
-
-          const someObservable = of(0);
-
-          const someEmptyObject = {};
-          const someObject = { ...someEmptyObject, someKey: someObservable };
-          const { someKey } = someObject;
-          const { someKey: someRenamedKey } = someObject;
-
-          const someArray = [someObservable];
-          const [someElement] = someArray;
-          someArray.forEach(function (element: Observable<any>): void {});
-          someArray.forEach((element: Observable<any>) => {});
-
-          function someFunction(someParam: Observable<any>): Observable<any> { return someParam; }
-
-          class SomeClass {
-            someProperty: Observable<any>;
-            constructor (someParam: Observable<any>) {}
-            get someGetter(): Observable<any> { throw new Error("Some error."); }
-            set someSetter(someParam: Observable<any>) {}
-            someMethod(someParam: Observable<any>): Observable<any> { return someParam; }
-          }
-
-          interface SomeInterface {
-            someProperty: Observable<any>;
-            someMethod(someParam: Observable<any>): Observable<any>;
-          }
-        `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 7,
-          endLine: 4,
-          endColumn: 21,
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 42,
-          endLine: 7,
-          endColumn: 49,
-        },
-        {
-          messageId: "forbidden",
-          line: 8,
-          column: 9,
-          endLine: 8,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 9,
-          column: 18,
-          endLine: 9,
-          endColumn: 32,
-        },
-        {
-          messageId: "forbidden",
-          line: 12,
-          column: 8,
-          endLine: 12,
-          endColumn: 19,
-        },
-        {
-          messageId: "forbidden",
-          line: 13,
-          column: 29,
-          endLine: 13,
-          endColumn: 36,
-        },
-        {
-          messageId: "forbidden",
-          line: 14,
-          column: 20,
-          endLine: 14,
-          endColumn: 27,
-        },
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 10,
-          endLine: 16,
-          endColumn: 22,
-        },
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 23,
-          endLine: 16,
-          endColumn: 32,
-        },
-        {
-          messageId: "forbidden",
-          line: 19,
-          column: 3,
-          endLine: 19,
-          endColumn: 15,
-        },
-        {
-          messageId: "forbidden",
-          line: 20,
-          column: 16,
-          endLine: 20,
-          endColumn: 25,
-        },
-        {
-          messageId: "forbidden",
-          line: 21,
-          column: 7,
-          endLine: 21,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 22,
-          column: 7,
-          endLine: 22,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 22,
-          column: 18,
-          endLine: 22,
-          endColumn: 27,
-        },
-        {
-          messageId: "forbidden",
-          line: 23,
-          column: 14,
-          endLine: 23,
-          endColumn: 23,
-        },
-        {
-          messageId: "forbidden",
-          line: 27,
-          column: 3,
-          endLine: 27,
-          endColumn: 15,
-        },
-        {
-          messageId: "forbidden",
-          line: 28,
-          column: 14,
-          endLine: 28,
-          endColumn: 23,
-        },
-      ],
-      options: [
-        {
-          methods: false,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
-          // without-$-no-parameters
-          import { Observable, of } from "rxjs";
-
-          const someObservable = of(0);
-
-          const someEmptyObject = {};
-          const someObject = { ...someEmptyObject, someKey: someObservable };
-          const { someKey } = someObject;
-          const { someKey: someRenamedKey } = someObject;
-
-          const someArray = [someObservable];
-          const [someElement] = someArray;
-          someArray.forEach(function (element: Observable<any>): void {});
-          someArray.forEach((element: Observable<any>) => {});
-
-          function someFunction(someParam: Observable<any>): Observable<any> { return someParam; }
-
-          class SomeClass {
-            someProperty: Observable<any>;
-            constructor (someParam: Observable<any>) {}
-            get someGetter(): Observable<any> { throw new Error("Some error."); }
-            set someSetter(someParam: Observable<any>) {}
-            someMethod(someParam: Observable<any>): Observable<any> { return someParam; }
-          }
-
-          interface SomeInterface {
-            someProperty: Observable<any>;
-            someMethod(someParam: Observable<any>): Observable<any>;
-          }
-        `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 7,
-          endLine: 4,
-          endColumn: 21,
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 42,
-          endLine: 7,
-          endColumn: 49,
-        },
-        {
-          messageId: "forbidden",
-          line: 8,
-          column: 9,
-          endLine: 8,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 9,
-          column: 18,
-          endLine: 9,
-          endColumn: 32,
-        },
-        {
-          messageId: "forbidden",
-          line: 12,
-          column: 8,
-          endLine: 12,
-          endColumn: 19,
-        },
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 10,
-          endLine: 16,
-          endColumn: 22,
-        },
-        {
-          messageId: "forbidden",
-          line: 19,
-          column: 3,
-          endLine: 19,
-          endColumn: 15,
-        },
-        {
-          messageId: "forbidden",
-          line: 21,
-          column: 7,
-          endLine: 21,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 22,
-          column: 7,
-          endLine: 22,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 23,
-          column: 3,
-          endLine: 23,
-          endColumn: 13,
-        },
-        {
-          messageId: "forbidden",
-          line: 27,
-          column: 3,
-          endLine: 27,
-          endColumn: 15,
-        },
-        {
-          messageId: "forbidden",
-          line: 28,
-          column: 3,
-          endLine: 28,
-          endColumn: 13,
-        },
-      ],
-      options: [
-        {
-          parameters: false,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
-          // without-$-no-properties
-          import { Observable, of } from "rxjs";
-
-          const someObservable = of(0);
-
-          const someEmptyObject = {};
-          const someObject = { ...someEmptyObject, someKey: someObservable };
-          const { someKey } = someObject;
-          const { someKey: someRenamedKey } = someObject;
-
-          const someArray = [someObservable];
-          const [someElement] = someArray;
-          someArray.forEach(function (element: Observable<any>): void {});
-          someArray.forEach((element: Observable<any>) => {});
-
-          function someFunction(someParam: Observable<any>): Observable<any> { return someParam; }
-
-          class SomeClass {
-            someProperty: Observable<any>;
-            constructor (someParam: Observable<any>) {}
-            get someGetter(): Observable<any> { throw new Error("Some error."); }
-            set someSetter(someParam: Observable<any>) {}
-            someMethod(someParam: Observable<any>): Observable<any> { return someParam; }
-          }
-
-          interface SomeInterface {
-            someProperty: Observable<any>;
-            someMethod(someParam: Observable<any>): Observable<any>;
-          }
-        `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 7,
-          endLine: 4,
-          endColumn: 21,
-        },
-        {
-          messageId: "forbidden",
-          line: 8,
-          column: 9,
-          endLine: 8,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 9,
-          column: 18,
-          endLine: 9,
-          endColumn: 32,
-        },
-        {
-          messageId: "forbidden",
-          line: 12,
-          column: 8,
-          endLine: 12,
-          endColumn: 19,
-        },
-        {
-          messageId: "forbidden",
-          line: 13,
-          column: 29,
-          endLine: 13,
-          endColumn: 36,
-        },
-        {
-          messageId: "forbidden",
-          line: 14,
-          column: 20,
-          endLine: 14,
-          endColumn: 27,
-        },
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 10,
-          endLine: 16,
-          endColumn: 22,
-        },
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 23,
-          endLine: 16,
-          endColumn: 32,
-        },
-        {
-          messageId: "forbidden",
-          line: 20,
-          column: 16,
-          endLine: 20,
-          endColumn: 25,
-        },
-        {
-          messageId: "forbidden",
-          line: 22,
-          column: 18,
-          endLine: 22,
-          endColumn: 27,
-        },
-        {
-          messageId: "forbidden",
-          line: 23,
-          column: 3,
-          endLine: 23,
-          endColumn: 13,
-        },
-        {
-          messageId: "forbidden",
-          line: 23,
-          column: 14,
-          endLine: 23,
-          endColumn: 23,
-        },
-        {
-          messageId: "forbidden",
-          line: 28,
-          column: 3,
-          endLine: 28,
-          endColumn: 13,
-        },
-        {
-          messageId: "forbidden",
-          line: 28,
-          column: 14,
-          endLine: 28,
-          endColumn: 23,
-        },
-      ],
-      options: [
-        {
-          properties: false,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
-          // without-$-no-variables
-          import { Observable, of } from "rxjs";
-
-          const someObservable = of(0);
-
-          const someEmptyObject = {};
-          const someObject = { ...someEmptyObject, someKey: someObservable };
-          const { someKey } = someObject;
-          const { someKey: someRenamedKey } = someObject;
-
-          const someArray = [someObservable];
-          const [someElement] = someArray;
-          someArray.forEach(function (element: Observable<any>): void {});
-          someArray.forEach((element: Observable<any>) => {});
-
-          function someFunction(someParam: Observable<any>): Observable<any> { return someParam; }
-
-          class SomeClass {
-            someProperty: Observable<any>;
-            constructor (someParam: Observable<any>) {}
-            get someGetter(): Observable<any> { throw new Error("Some error."); }
-            set someSetter(someParam: Observable<any>) {}
-            someMethod(someParam: Observable<any>): Observable<any> { return someParam; }
-          }
-
-          interface SomeInterface {
-            someProperty: Observable<any>;
-            someMethod(someParam: Observable<any>): Observable<any>;
-          }
-        `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 42,
-          endLine: 7,
-          endColumn: 49,
-        },
-        {
-          messageId: "forbidden",
-          line: 13,
-          column: 29,
-          endLine: 13,
-          endColumn: 36,
-        },
-        {
-          messageId: "forbidden",
-          line: 14,
-          column: 20,
-          endLine: 14,
-          endColumn: 27,
-        },
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 10,
-          endLine: 16,
-          endColumn: 22,
-        },
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 23,
-          endLine: 16,
-          endColumn: 32,
-        },
-        {
-          messageId: "forbidden",
-          line: 19,
-          column: 3,
-          endLine: 19,
-          endColumn: 15,
-        },
-        {
-          messageId: "forbidden",
-          line: 20,
-          column: 16,
-          endLine: 20,
-          endColumn: 25,
-        },
-        {
-          messageId: "forbidden",
-          line: 21,
-          column: 7,
-          endLine: 21,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 22,
-          column: 7,
-          endLine: 22,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 22,
-          column: 18,
-          endLine: 22,
-          endColumn: 27,
-        },
-        {
-          messageId: "forbidden",
-          line: 23,
-          column: 3,
-          endLine: 23,
-          endColumn: 13,
-        },
-        {
-          messageId: "forbidden",
-          line: 23,
-          column: 14,
-          endLine: 23,
-          endColumn: 23,
-        },
-        {
-          messageId: "forbidden",
-          line: 27,
-          column: 3,
-          endLine: 27,
-          endColumn: 15,
-        },
-        {
-          messageId: "forbidden",
-          line: 28,
-          column: 3,
-          endLine: 28,
-          endColumn: 13,
-        },
-        {
-          messageId: "forbidden",
-          line: 28,
-          column: 14,
-          endLine: 28,
-          endColumn: 23,
-        },
-      ],
-      options: [
-        {
-          variables: false,
-        },
-      ],
+      options: [{ variables: false }],
     },
   ],
 });
