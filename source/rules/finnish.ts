@@ -163,10 +163,18 @@ const rule: Rule.RuleModule = {
         }
       },
       TSCallSignatureDeclaration: (node: es.Node) => {
-        // TODO: add tests and implement
+        const anyNode = node as any;
+        if (validate.parameters) {
+          anyNode.params.forEach((param: es.Node) => checkNode(param));
+        }
+        // TODO: add tests
       },
       TSConstructSignatureDeclaration: (node: es.Node) => {
-        // TODO: add tests and implement
+        const anyNode = node as any;
+        if (validate.parameters) {
+          anyNode.params.forEach((param: es.Node) => checkNode(param));
+        }
+        // TODO: add tests
       },
       "TSMethodSignature[computed=false]": (node: es.Node) => {
         const anyNode = node as any;
@@ -195,21 +203,17 @@ const rule: Rule.RuleModule = {
       "VariableDeclarator > Identifier[name=/[^$]$/]": (
         node: es.Identifier
       ) => {
-        if (validate.variables) {
-          const parent = getParent(node) as es.VariableDeclarator;
-          if (node === parent.id) {
-            checkNode(node);
-          }
+        const parent = getParent(node) as es.VariableDeclarator;
+        if (validate.variables && node === parent.id) {
+          checkNode(node);
         }
       },
       "VariableDeclarator > ObjectPattern > Property > Identifier[name=/[^$]$/]": (
         node: es.Identifier
       ) => {
-        if (validate.variables) {
-          const parent = getParent(node) as es.Property;
-          if (node === parent.value) {
-            checkNode(node);
-          }
+        const parent = getParent(node) as es.Property;
+        if (validate.variables && node === parent.value) {
+          checkNode(node);
         }
       },
     };
