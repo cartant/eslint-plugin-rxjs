@@ -8,22 +8,71 @@ import * as es from "estree";
 import * as tsutils from "tsutils-etc";
 import * as ts from "typescript";
 
-function getParserServices(
-  context: Rule.RuleContext
-): {
-  esTreeNodeToTSNodeMap: Map<es.Node, ts.Node>;
-  program: ts.Program;
-} {
-  if (
-    !context.parserServices ||
-    !context.parserServices.program ||
-    !context.parserServices.esTreeNodeToTSNodeMap
-  ) {
-    throw new Error(
-      "This rule requires you to use `@typescript-eslint/parser` and to specify a `project` in `parserOptions`."
-    );
+export function createRegExpForWords(config: string | string[]): RegExp | null {
+  if (!config || !config.length) {
+    return null;
   }
-  return context.parserServices;
+  const flags = "i";
+  if (typeof config === "string") {
+    return new RegExp(config, flags);
+  }
+  const words = config;
+  const joined = words.map((word) => String.raw`(\b|_)${word}(\b|_)`).join("|");
+  return new RegExp(`(${joined})`, flags);
+}
+
+export function getParent(node: es.Node): es.Node {
+  return (node as any).parent;
+}
+
+export function isArrayExpression(node: es.Node): node is es.ArrayExpression {
+  return node.type === "ArrayExpression";
+}
+
+export function isArrowFunctionExpression(
+  node: es.Node
+): node is es.ArrowFunctionExpression {
+  return node.type === "ArrowFunctionExpression";
+}
+
+export function isBlockStatement(node: es.Node): node is es.BlockStatement {
+  return node.type === "BlockStatement";
+}
+
+export function isCallExpression(node: es.Node): node is es.CallExpression {
+  return node.type === "CallExpression";
+}
+
+export function isFunctionDeclaration(
+  node: es.Node
+): node is es.FunctionDeclaration {
+  return node.type === "FunctionDeclaration";
+}
+
+export function isFunctionExpression(
+  node: es.Node
+): node is es.FunctionExpression {
+  return node.type === "FunctionExpression";
+}
+
+export function isIdentifier(node: es.Node): node is es.Identifier {
+  return node.type === "Identifier";
+}
+
+export function isLiteral(node: es.Node): node is es.Literal {
+  return node.type === "Literal";
+}
+
+export function isMemberExpression(node: es.Node): node is es.MemberExpression {
+  return node.type === "MemberExpression";
+}
+
+export function isObjectExpression(node: es.Node): node is es.ObjectExpression {
+  return node.type === "ObjectExpression";
+}
+
+export function isProgram(node: es.Node): node is es.Program {
+  return node.type === "Program";
 }
 
 export function typecheck(context: Rule.RuleContext) {
@@ -101,73 +150,25 @@ export function typecheck(context: Rule.RuleContext) {
     couldBeMonoTypeOperatorFunction: (node: es.Node) =>
       couldBeType(node, "MonoTypeOperatorFunction"),
     isAny: (node: es.Node) => tsutils.isAny(getTSType(node)),
-    isReferenceType: (node: es.Node) => tsutils.isReferenceType(getTSType(node))
+    isReferenceType: (node: es.Node) =>
+      tsutils.isReferenceType(getTSType(node)),
   };
 }
 
-export function getParent(node: es.Node): es.Node {
-  return (node as any).parent;
-}
-
-export function isArrayExpression(node: es.Node): node is es.ArrayExpression {
-  return node.type === "ArrayExpression";
-}
-
-export function isObjectExpression(node: es.Node): node is es.ObjectExpression {
-  return node.type === "ObjectExpression";
-}
-
-export function isBlockStatement(node: es.Node): node is es.BlockStatement {
-  return node.type === "BlockStatement";
-}
-
-export function isProgram(node: es.Node): node is es.Program {
-  return node.type === "Program";
-}
-
-export function isCallExpression(node: es.Node): node is es.CallExpression {
-  return node.type === "CallExpression";
-}
-
-export function isIdentifier(node: es.Node): node is es.Identifier {
-  return node.type === "Identifier";
-}
-
-export function isLiteral(node: es.Node): node is es.Literal {
-  return node.type === "Literal";
-}
-
-export function isMemberExpression(node: es.Node): node is es.MemberExpression {
-  return node.type === "MemberExpression";
-}
-
-export function isFunctionDeclaration(
-  node: es.Node
-): node is es.FunctionDeclaration {
-  return node.type === "FunctionDeclaration";
-}
-
-export function isArrowFunctionExpression(
-  node: es.Node
-): node is es.ArrowFunctionExpression {
-  return node.type === "ArrowFunctionExpression";
-}
-
-export function isFunctionExpression(
-  node: es.Node
-): node is es.FunctionExpression {
-  return node.type === "FunctionExpression";
-}
-
-export function createRegExpForWords(config: string | string[]): RegExp | null {
-  if (!config || !config.length) {
-    return null;
+function getParserServices(
+  context: Rule.RuleContext
+): {
+  esTreeNodeToTSNodeMap: Map<es.Node, ts.Node>;
+  program: ts.Program;
+} {
+  if (
+    !context.parserServices ||
+    !context.parserServices.program ||
+    !context.parserServices.esTreeNodeToTSNodeMap
+  ) {
+    throw new Error(
+      "This rule requires you to use `@typescript-eslint/parser` and to specify a `project` in `parserOptions`."
+    );
   }
-  const flags = "i";
-  if (typeof config === "string") {
-    return new RegExp(config, flags);
-  }
-  const words = config;
-  const joined = words.map(word => String.raw`(\b|_)${word}(\b|_)`).join("|");
-  return new RegExp(`(${joined})`, flags);
+  return context.parserServices;
 }
