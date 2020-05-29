@@ -51,6 +51,8 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
         subject: Subject<any>;
         someSubject: Subject<any>;
         someMethod(someSubject: Subject<any>): Subject<any>;
+        new (someSubject: Subject<any>);
+        (someSubject: Subject<any>): void;
       }
     `,
       options: [{}],
@@ -97,6 +99,8 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
         subject$: Subject<any>;
         someSubject$: Subject<any>;
         someMethod(someSubject$: Subject<any>): Subject<any>;
+        new (someSubject$: Subject<any>);
+        (someSubject$: Subject<any>): void;
       }
     `,
       options: [{}],
@@ -143,6 +147,8 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
         sub: Subject<any>;
         someSub: Subject<any>;
         someMethod(someSub: Subject<any>): Subject<any>;
+        new (someSub: Subject<any>);
+        (someSub: Subject<any>): void;
       }
     `,
       options: [{ suffix: "Sub" }],
@@ -189,6 +195,9 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
         sub$: Subject<any>;
         someSub$: Subject<any>;
         someMethod(someSub$: Subject<any>): Subject<any>;
+        new (someSub$: Subject<any>);
+        (someSub$: Subject<any>): void;
+
       }
     `,
       options: [{ suffix: "Sub" }],
@@ -250,6 +259,8 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
 
         interface SomeInterface {
           someMethod(some: Subject<any>): Subject<any>;
+          new (some: Subject<any>);
+          (some: Subject<any>): void;
         }
       `,
       errors: [
@@ -317,6 +328,22 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
           endLine: 27,
           endColumn: 18,
         },
+        {
+          data: { suffix: "Subject" },
+          messageId: "forbidden",
+          line: 28,
+          column: 8,
+          endLine: 28,
+          endColumn: 12,
+        },
+        {
+          data: { suffix: "Subject" },
+          messageId: "forbidden",
+          line: 29,
+          column: 4,
+          endLine: 29,
+          endColumn: 8,
+        },
       ],
       options: [{}],
     },
@@ -349,6 +376,8 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
 
         interface SomeInterface {
           someMethod(some: Subject<any>): Subject<any>;
+          new (some: Subject<any>);
+          (some: Subject<any>): void;
         }
       `,
       errors: [
@@ -400,6 +429,8 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
 
         interface SomeInterface {
           someMethod(some: Subject<any>): Subject<any>;
+          new (some: Subject<any>);
+          (some: Subject<any>): void;
         }
       `,
       errors: [
@@ -466,6 +497,22 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
           column: 14,
           endLine: 27,
           endColumn: 18,
+        },
+        {
+          data: { suffix: "Sub" },
+          messageId: "forbidden",
+          line: 28,
+          column: 8,
+          endLine: 28,
+          endColumn: 12,
+        },
+        {
+          data: { suffix: "Sub" },
+          messageId: "forbidden",
+          line: 29,
+          column: 4,
+          endLine: 29,
+          endColumn: 8,
         },
       ],
       options: [{ suffix: "Sub" }],

@@ -42,6 +42,8 @@ ruleTester({ types: true }).run("no-finnish", rule, {
       interface SomeInterface {
         someProperty: Observable<any>;
         someMethod(someParam: Observable<any>): Observable<any>;
+        new (someParam: Observable<any>);
+        (someParam: Observable<any>): void;
       }
     `,
   ],
@@ -285,6 +287,8 @@ ruleTester({ types: true }).run("no-finnish", rule, {
         interface SomeInterface {
           someProperty$: Observable<any>;
           someMethod$(someParam$: Observable<any>): Observable<any>;
+          new (someParam$: Observable<any>);
+          (someParam$: Observable<any>): void;
         }
       `,
       errors: [
@@ -308,6 +312,20 @@ ruleTester({ types: true }).run("no-finnish", rule, {
           column: 15,
           endLine: 5,
           endColumn: 25,
+        },
+        {
+          messageId: "forbidden",
+          line: 6,
+          column: 8,
+          endLine: 6,
+          endColumn: 18,
+        },
+        {
+          messageId: "forbidden",
+          line: 7,
+          column: 4,
+          endLine: 7,
+          endColumn: 14,
         },
       ],
     },

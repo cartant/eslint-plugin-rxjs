@@ -173,14 +173,12 @@ const rule: Rule.RuleModule = {
         if (validate.parameters) {
           anyNode.params.forEach((param: es.Node) => checkNode(param));
         }
-        // TODO: add tests
       },
       TSConstructSignatureDeclaration: (node: es.Node) => {
         const anyNode = node as any;
         if (validate.parameters) {
           anyNode.params.forEach((param: es.Node) => checkNode(param));
         }
-        // TODO: add tests
       },
       "TSMethodSignature[computed=false]": (node: es.Node) => {
         const anyNode = node as any;
