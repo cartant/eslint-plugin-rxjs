@@ -21,6 +21,20 @@ export function createRegExpForWords(config: string | string[]): RegExp | null {
   return new RegExp(`(${joined})`, flags);
 }
 
+export function findParent(
+  node: es.Node,
+  ...parentTypes: string[]
+): es.Node | undefined {
+  let parent = getParent(node);
+  while (parent) {
+    if (parentTypes.indexOf(parent.type) !== -1) {
+      return parent;
+    }
+    parent = getParent(parent);
+  }
+  return undefined;
+}
+
 export function getParent(node: es.Node): es.Node {
   return (node as any).parent;
 }
