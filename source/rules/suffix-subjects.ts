@@ -12,21 +12,19 @@ const rule: Rule.RuleModule = {
   meta: {
     docs: {
       category: "RxJS",
-      description: "Enforces the use of Finnish notation.",
+      description: "Enforces the use of a suffix in subject identifiers.",
       recommended: false,
     },
-    fixable: "code",
+    fixable: null,
     messages: {
-      forbidden: "Use Finnish notation.",
+      forbidden: `Subject identifiers must end with "{{suffix}}".`,
     },
     schema: [
       {
         properties: {
-          functions: { type: "boolean" },
-          methods: { type: "boolean" },
-          names: { type: "object" },
           parameters: { type: "boolean" },
           properties: { type: "boolean" },
+          suffix: { type: "string" },
           types: { type: "object" },
           variables: { type: "boolean" },
         },
@@ -35,37 +33,15 @@ const rule: Rule.RuleModule = {
     ],
   },
   create: (context) => {
-    const {
-      couldBeObservable,
-      couldBeType,
-      couldReturnObservable,
-      couldReturnType,
-      nodeMap,
-    } = typecheck(context);
+    const { couldBeType, nodeMap } = typecheck(context);
     const [config = {}] = context.options;
 
     const validate = {
-      functions: true,
-      methods: true,
       parameters: true,
       properties: true,
       variables: true,
       ...(config as {}),
     };
-
-    const names: { regExp: RegExp; validate: boolean }[] = [];
-    if (config.names) {
-      Object.entries(config.names).forEach(
-        ([key, validate]: [string, boolean]) => {
-          names.push({ regExp: new RegExp(key), validate });
-        }
-      );
-    } else {
-      names.push({
-        regExp: /^(canActivate|canActivateChild|canDeactivate|canLoad|intercept|resolve|validate)$/,
-        validate: false,
-      });
-    }
 
     const types: { regExp: RegExp; validate: boolean }[] = [];
     if (config.types) {
@@ -81,31 +57,29 @@ const rule: Rule.RuleModule = {
       });
     }
 
+    const { suffix = "Subject" } = config;
+    const suffixRegex = new RegExp(String.raw`${suffix}\$?$`, "i");
+
+    function asParam(node: es.Node): es.Node {
+      const anyNode = node as any;
+      return anyNode.type === "TSParameterProperty" ? anyNode.parameter : node;
+    }
+
     function checkNode(nameNode: es.Node, typeNode?: es.Node) {
       let tsNode = nodeMap.get(nameNode);
       const text = tsNode.getText();
       if (
-        !/\$$/.test(text) &&
-        (couldBeObservable(typeNode || nameNode) ||
-          couldReturnObservable(typeNode || nameNode))
+        !suffixRegex.test(text) &&
+        couldBeType(typeNode || nameNode, "Subject")
       ) {
-        for (let i = 0; i < names.length; ++i) {
-          const { regExp, validate } = names[i];
-          if (regExp.test(text) && !validate) {
-            return;
-          }
-        }
         for (let i = 0; i < types.length; ++i) {
           const { regExp, validate } = types[i];
-          if (
-            (couldBeType(typeNode || nameNode, regExp) ||
-              couldReturnType(typeNode || nameNode, regExp)) &&
-            !validate
-          ) {
+          if (couldBeType(typeNode || nameNode, regExp) && !validate) {
             return;
           }
         }
         context.report({
+          data: { suffix },
           loc: getLoc(tsNode),
           messageId: "forbidden",
         });
@@ -115,7 +89,7 @@ const rule: Rule.RuleModule = {
     return {
       ArrowFunctionExpression: (node: es.ArrowFunctionExpression) => {
         if (validate.parameters) {
-          node.params.forEach((param) => checkNode(param));
+          node.params.forEach((param) => checkNode(asParam(param)));
         }
       },
       "ClassProperty[key.name=/[^$]$/][computed=false]": (node: es.Node) => {
@@ -125,33 +99,23 @@ const rule: Rule.RuleModule = {
         }
       },
       FunctionDeclaration: (node: es.FunctionDeclaration) => {
-        if (validate.functions) {
-          checkNode(node.id, node);
-        }
         if (validate.parameters) {
-          node.params.forEach((param) => checkNode(param));
+          node.params.forEach((param) => checkNode(asParam(param)));
         }
       },
       FunctionExpression: (node: es.FunctionExpression) => {
         if (validate.parameters) {
-          node.params.forEach((param) => checkNode(param));
+          node.params.forEach((param) => checkNode(asParam(param)));
         }
       },
-      "MethodDefinition[kind='get'][key.name=/[^$]$/][computed=false]": (
+      "MethodDefinition[kind='get'][computed=false]": (
         node: es.MethodDefinition
       ) => {
         if (validate.properties) {
           checkNode(node.key, node);
         }
       },
-      "MethodDefinition[kind='method'][key.name=/[^$]$/][computed=false]": (
-        node: es.MethodDefinition
-      ) => {
-        if (validate.methods) {
-          checkNode(node.key, node);
-        }
-      },
-      "MethodDefinition[kind='set'][key.name=/[^$]$/][computed=false]": (
+      "MethodDefinition[kind='set'][computed=false]": (
         node: es.MethodDefinition
       ) => {
         if (validate.properties) {
@@ -171,24 +135,21 @@ const rule: Rule.RuleModule = {
       TSCallSignatureDeclaration: (node: es.Node) => {
         const anyNode = node as any;
         if (validate.parameters) {
-          anyNode.params.forEach((param: es.Node) => checkNode(param));
+          anyNode.params.forEach((param: es.Node) => checkNode(asParam(param)));
         }
         // TODO: add tests
       },
       TSConstructSignatureDeclaration: (node: es.Node) => {
         const anyNode = node as any;
         if (validate.parameters) {
-          anyNode.params.forEach((param: es.Node) => checkNode(param));
+          anyNode.params.forEach((param: es.Node) => checkNode(asParam(param)));
         }
         // TODO: add tests
       },
       "TSMethodSignature[computed=false]": (node: es.Node) => {
         const anyNode = node as any;
-        if (validate.methods) {
-          checkNode(anyNode.key, node);
-        }
         if (validate.parameters) {
-          anyNode.params.forEach((param: es.Node) => checkNode(param));
+          anyNode.params.forEach((param: es.Node) => checkNode(asParam(param)));
         }
       },
       "TSPropertySignature[key.name=/[^$]$/][computed=false]": (

@@ -185,7 +185,7 @@ ruleTester({ types: true }).run("finnish", rule, {
     },
     {
       code: stripIndent`
-        // functions without $ no finnish option
+        // functions without $, but not enforced
         import { Observable, of } from "rxjs";
 
         const someObservable$ = of(0);
@@ -228,7 +228,7 @@ ruleTester({ types: true }).run("finnish", rule, {
     },
     {
       code: stripIndent`
-        // methods without $ no finnish option
+        // methods without $, but not enforced
         import { Observable } from "rxjs";
 
         class SomeClass {
@@ -319,7 +319,7 @@ ruleTester({ types: true }).run("finnish", rule, {
     },
     {
       code: stripIndent`
-        // parameters without $ no finnish option
+        // parameters without $, but not enforced
         import { Observable, of } from "rxjs";
 
         const someObservable$ = of(0);
@@ -402,7 +402,7 @@ ruleTester({ types: true }).run("finnish", rule, {
     },
     {
       code: stripIndent`
-        // properties without $ no finnish option
+        // properties without $, but not enforced
         import { Observable, of } from "rxjs";
 
         const someObservable$ = of(0);
@@ -476,7 +476,7 @@ ruleTester({ types: true }).run("finnish", rule, {
     },
     {
       code: stripIndent`
-        // variables without $ no finnish option
+        // variables without $, but not enforced
         import { Observable, of } from "rxjs";
 
         const someObservable = of(0);
