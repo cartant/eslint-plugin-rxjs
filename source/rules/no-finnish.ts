@@ -63,12 +63,8 @@ const rule: Rule.RuleModule = {
       "ObjectExpression > Property[computed=false][key.name=/[$]+$/]": (
         node: es.Property
       ) => checkNode(node.key),
-      "ObjectPattern > Property[shorthand=true][key.name=/[$]+$/]": (
-        node: es.Property
-      ) => checkNode(node.key),
-      "ObjectPattern > Property[shorthand=false][value.name=/[$]+$/]": (
-        node: es.Property
-      ) => checkNode(node.value),
+      "ObjectPattern > Property[value.name=/[$]+$/]": (node: es.Property) =>
+        checkNode(node.value),
       TSCallSignatureDeclaration: (node: es.Node) => {
         const anyNode = node as any;
         anyNode.params.forEach((param: es.Node) => checkNode(param));
