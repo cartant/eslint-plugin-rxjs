@@ -50,6 +50,7 @@ The package includes the following rules:
 | --- | --- | --- |
 [`ban-observables`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/ban-observables.ts) | Forbids the use of banned observables. | TBD |
 [`ban-operators`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/ban-operators.ts) | Forbids the use of banned operators. | TBD |
+[`finnish`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/finnish.ts) | Enforces the use of Finnish notation. | TBD |
 [`just`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/just.ts) | Enforces the use of a `just` alias for `of`. | TBD |
 [`no-async-subscribe`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-async-subscribe.ts) | Forbids passing `async` functions to `subscribe`. | TBD |
 [`no-compat`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-compat.ts) | Forbids importation from locations that depend upon `rxjs-compat`. | TBD |
@@ -82,4 +83,5 @@ The package includes the following rules:
 [`no-unsafe-switchmap`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-unsafe-switchmap.ts) | Forbids unsafe `switchMap` usage in effects and epics. | TBD |
 [`no-unsafe-takeuntil`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-unsafe-takeuntil.ts) | Forbids the application of operators after `takeUntil`. | TBD |
 [`prefer-observer`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/prefer-observer.ts) | Forbids the passing separate callbacks to `subscribe` and `tap`. | TBD |
+[`suffix-subjects`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/suffix-subjects.ts) | Enforces the use of a suffix in subject identifiers. | TBD |
 [`throw-error`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/throw-error.ts) | Enforces the passing of `Error` values to error notifications. | TBD |
