@@ -6,7 +6,7 @@
 import { Rule } from "eslint";
 import { getLoc } from "eslint-etc";
 import * as es from "estree";
-import { getParent, typecheck } from "../utils";
+import { getParent, isIdentifier, typecheck, findParent } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -113,9 +113,32 @@ const rule: Rule.RuleModule = {
     }
 
     return {
+      "ArrayPattern > Identifier[name=/[^$]$/]": (node: es.Identifier) => {
+        const found = findParent(
+          node,
+          "ArrowFunctionExpression",
+          "FunctionDeclaration",
+          "FunctionExpression",
+          "VariableDeclarator"
+        );
+        if (!found) {
+          return;
+        }
+        if (!validate.variables && found.type === "VariableDeclarator") {
+          return;
+        }
+        if (!validate.parameters) {
+          return;
+        }
+        checkNode(node);
+      },
       ArrowFunctionExpression: (node: es.ArrowFunctionExpression) => {
         if (validate.parameters) {
-          node.params.forEach((param) => checkNode(param));
+          node.params.forEach((param) => {
+            if (isIdentifier) {
+              checkNode(param);
+            }
+          });
         }
       },
       "ClassProperty[key.name=/[^$]$/][computed=false]": (node: es.Node) => {
@@ -129,12 +152,20 @@ const rule: Rule.RuleModule = {
           checkNode(node.id, node);
         }
         if (validate.parameters) {
-          node.params.forEach((param) => checkNode(param));
+          node.params.forEach((param) => {
+            if (isIdentifier) {
+              checkNode(param);
+            }
+          });
         }
       },
       FunctionExpression: (node: es.FunctionExpression) => {
         if (validate.parameters) {
-          node.params.forEach((param) => checkNode(param));
+          node.params.forEach((param) => {
+            if (isIdentifier) {
+              checkNode(param);
+            }
+          });
         }
       },
       "MethodDefinition[kind='get'][key.name=/[^$]$/][computed=false]": (
@@ -168,6 +199,30 @@ const rule: Rule.RuleModule = {
           }
         }
       },
+      "ObjectPattern > Property > Identifier[name=/[^$]$/]": (
+        node: es.Identifier
+      ) => {
+        const found = findParent(
+          node,
+          "ArrowFunctionExpression",
+          "FunctionDeclaration",
+          "FunctionExpression",
+          "VariableDeclarator"
+        );
+        if (!found) {
+          return;
+        }
+        if (!validate.variables && found.type === "VariableDeclarator") {
+          return;
+        }
+        if (!validate.parameters) {
+          return;
+        }
+        const parent = getParent(node) as es.Property;
+        if (node === parent.value) {
+          checkNode(node);
+        }
+      },
       TSCallSignatureDeclaration: (node: es.Node) => {
         const anyNode = node as any;
         if (validate.parameters) {
@@ -197,26 +252,11 @@ const rule: Rule.RuleModule = {
           checkNode(anyNode.key);
         }
       },
-      "VariableDeclarator > ArrayPattern > Identifier[name=/[^$]$/]": (
-        node: es.Identifier
-      ) => {
-        if (validate.variables) {
-          checkNode(node);
-        }
-      },
       "VariableDeclarator > Identifier[name=/[^$]$/]": (
         node: es.Identifier
       ) => {
         const parent = getParent(node) as es.VariableDeclarator;
         if (validate.variables && node === parent.id) {
-          checkNode(node);
-        }
-      },
-      "VariableDeclarator > ObjectPattern > Property > Identifier[name=/[^$]$/]": (
-        node: es.Identifier
-      ) => {
-        const parent = getParent(node) as es.Property;
-        if (validate.variables && node === parent.value) {
           checkNode(node);
         }
       },
