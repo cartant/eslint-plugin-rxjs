@@ -6,7 +6,7 @@
 import { Rule } from "eslint";
 import { getLoc } from "eslint-etc";
 import * as es from "estree";
-import { getParent, typecheck } from "../utils";
+import { findParent, getParent, typecheck } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -87,6 +87,25 @@ const rule: Rule.RuleModule = {
     }
 
     return {
+      "ArrayPattern > Identifier[name=/[^$]$/]": (node: es.Identifier) => {
+        const found = findParent(
+          node,
+          "ArrowFunctionExpression",
+          "FunctionDeclaration",
+          "FunctionExpression",
+          "VariableDeclarator"
+        );
+        if (!found) {
+          return;
+        }
+        if (!validate.variables && found.type === "VariableDeclarator") {
+          return;
+        }
+        if (!validate.parameters) {
+          return;
+        }
+        checkNode(node);
+      },
       ArrowFunctionExpression: (node: es.ArrowFunctionExpression) => {
         if (validate.parameters) {
           node.params.forEach((param) => checkNode(asParam(param)));
@@ -132,22 +151,47 @@ const rule: Rule.RuleModule = {
           }
         }
       },
-      TSCallSignatureDeclaration: (node: es.Node) => {
-        const anyNode = node as any;
-        if (validate.parameters) {
-          anyNode.params.forEach((param: es.Node) => checkNode(asParam(param)));
+      "ObjectPattern > Property > Identifier[name=/[^$]$/]": (
+        node: es.Identifier
+      ) => {
+        const found = findParent(
+          node,
+          "ArrowFunctionExpression",
+          "FunctionDeclaration",
+          "FunctionExpression",
+          "VariableDeclarator"
+        );
+        if (!found) {
+          return;
+        }
+        if (!validate.variables && found.type === "VariableDeclarator") {
+          return;
+        }
+        if (!validate.parameters) {
+          return;
+        }
+        const parent = getParent(node) as es.Property;
+        if (node === parent.value) {
+          checkNode(node);
         }
       },
-      TSConstructSignatureDeclaration: (node: es.Node) => {
-        const anyNode = node as any;
+      "TSCallSignatureDeclaration > Identifier[name=/[^$]$/]": (
+        node: es.Node
+      ) => {
         if (validate.parameters) {
-          anyNode.params.forEach((param: es.Node) => checkNode(asParam(param)));
+          checkNode(node);
         }
       },
-      "TSMethodSignature[computed=false]": (node: es.Node) => {
-        const anyNode = node as any;
+      "TSConstructSignatureDeclaration > Identifier[name=/[^$]$/]": (
+        node: es.Node
+      ) => {
         if (validate.parameters) {
-          anyNode.params.forEach((param: es.Node) => checkNode(asParam(param)));
+          checkNode(node);
+        }
+      },
+      "TSMethodSignature > Identifier[name=/[^$]$/]": (node: es.Node) => {
+        if (validate.parameters) {
+          checkNode(node);
         }
       },
       "TSPropertySignature[key.name=/[^$]$/][computed=false]": (
@@ -158,26 +202,11 @@ const rule: Rule.RuleModule = {
           checkNode(anyNode.key);
         }
       },
-      "VariableDeclarator > ArrayPattern > Identifier[name=/[^$]$/]": (
-        node: es.Identifier
-      ) => {
-        if (validate.variables) {
-          checkNode(node);
-        }
-      },
       "VariableDeclarator > Identifier[name=/[^$]$/]": (
         node: es.Identifier
       ) => {
         const parent = getParent(node) as es.VariableDeclarator;
         if (validate.variables && node === parent.id) {
-          checkNode(node);
-        }
-      },
-      "VariableDeclarator > ObjectPattern > Property > Identifier[name=/[^$]$/]": (
-        node: es.Identifier
-      ) => {
-        const parent = getParent(node) as es.Property;
-        if (validate.variables && node === parent.value) {
           checkNode(node);
         }
       },

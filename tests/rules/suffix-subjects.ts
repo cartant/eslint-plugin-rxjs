@@ -829,5 +829,64 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
       ],
       options: [{ suffix: "Sub" }],
     },
+    {
+      code: stripIndent`
+        // functions and methods with array destructuring
+        import { Subject } from "rxjs";
+
+        function someFunction([someParam]: Subject<any>[]): void {}
+
+        class SomeClass {
+          someMethod([someParam]: Subject<any>[]): void {}
+        }
+      `,
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 4,
+          column: 24,
+          endLine: 4,
+          endColumn: 33,
+        },
+        {
+          data: { suffix: "Subject" },
+          messageId: "forbidden",
+          line: 7,
+          column: 15,
+          endLine: 7,
+          endColumn: 24,
+        },
+      ],
+      options: [{}],
+    },
+    {
+      code: stripIndent`
+        // functions and methods with object destructuring
+        import { Subject } from "rxjs";
+
+        function someFunction({ source }: Record<string, Subject<any>>): void {}
+
+        class SomeClass {
+          someMethod({ source }: Record<string, Subject<any>>): void {}
+        }
+      `,
+      errors: [
+        {
+          data: { suffix: "Subject" },
+          messageId: "forbidden",
+          line: 4,
+          column: 25,
+          endLine: 4,
+          endColumn: 31,
+        },
+        {
+          messageId: "forbidden",
+          line: 7,
+          column: 16,
+          endLine: 7,
+          endColumn: 22,
+        },
+      ],
+    },
   ],
 });
