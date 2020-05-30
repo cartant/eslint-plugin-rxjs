@@ -518,5 +518,94 @@ ruleTester({ types: true }).run("finnish", rule, {
       ],
       options: [{ variables: false }],
     },
+    {
+      code: stripIndent`
+        // functions and methods not returning observables
+        import { Observable } from "rxjs";
+
+        function someFunction(someParam: Observable<any>): void {}
+
+        class SomeClass {
+          someMethod(someParam: Observable<any>): void {}
+        }
+
+        interface SomeInterface {
+          someMethod(someParam: Observable<any>): void;
+          (someParam: Observable<any>): void;
+        }
+      `,
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 4,
+          column: 23,
+          endLine: 4,
+          endColumn: 32,
+        },
+        {
+          messageId: "forbidden",
+          line: 7,
+          column: 14,
+          endLine: 7,
+          endColumn: 23,
+        },
+        {
+          messageId: "forbidden",
+          line: 11,
+          column: 14,
+          endLine: 11,
+          endColumn: 23,
+        },
+        {
+          messageId: "forbidden",
+          line: 12,
+          column: 4,
+          endLine: 12,
+          endColumn: 13,
+        },
+      ],
+      options: [{}],
+    },
+    {
+      code: stripIndent`
+        // functions and methods with non-observable parameters
+        import { Observable, of } from "rxjs";
+
+        function someFunction(someValue: any): Observable<any> { return of(someValue); }
+
+        class SomeClass {
+          someMethod(someValue: any): Observable<any> { return of(someValue); }
+        }
+
+        interface SomeInterface {
+          someMethod(someValue: any): Observable<any>;
+          (someValue: any): Observable<any>;
+        }
+      `,
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 4,
+          column: 10,
+          endLine: 4,
+          endColumn: 22,
+        },
+        {
+          messageId: "forbidden",
+          line: 7,
+          column: 3,
+          endLine: 7,
+          endColumn: 13,
+        },
+        {
+          messageId: "forbidden",
+          line: 11,
+          column: 3,
+          endLine: 11,
+          endColumn: 13,
+        },
+      ],
+      options: [{}],
+    },
   ],
 });
