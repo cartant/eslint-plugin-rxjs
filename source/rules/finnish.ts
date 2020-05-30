@@ -223,16 +223,18 @@ const rule: Rule.RuleModule = {
           checkNode(node);
         }
       },
-      TSCallSignatureDeclaration: (node: es.Node) => {
-        const anyNode = node as any;
+      "TSCallSignatureDeclaration > Identifier[name=/[^$]$/]": (
+        node: es.Node
+      ) => {
         if (validate.parameters) {
-          anyNode.params.forEach((param: es.Node) => checkNode(param));
+          checkNode(node);
         }
       },
-      TSConstructSignatureDeclaration: (node: es.Node) => {
-        const anyNode = node as any;
+      "TSConstructSignatureDeclaration > Identifier[name=/[^$]$/]": (
+        node: es.Node
+      ) => {
         if (validate.parameters) {
-          anyNode.params.forEach((param: es.Node) => checkNode(param));
+          checkNode(node);
         }
       },
       "TSMethodSignature[computed=false]": (node: es.Node) => {
