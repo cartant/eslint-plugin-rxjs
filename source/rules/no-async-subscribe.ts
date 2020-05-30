@@ -23,7 +23,9 @@ const rule: Rule.RuleModule = {
   create: (context) => {
     const { couldBeObservable } = typecheck(context);
 
-    function report(node: es.FunctionExpression | es.ArrowFunctionExpression) {
+    function checkNode(
+      node: es.FunctionExpression | es.ArrowFunctionExpression
+    ) {
       const parentNode = getParent(node) as es.CallExpression;
       const callee = parentNode.callee as es.MemberExpression;
 
@@ -45,8 +47,8 @@ const rule: Rule.RuleModule = {
       }
     }
     return {
-      "CallExpression[callee.property.name='subscribe'] > FunctionExpression[async=true]": report,
-      "CallExpression[callee.property.name='subscribe'] > ArrowFunctionExpression[async=true]": report,
+      "CallExpression[callee.property.name='subscribe'] > FunctionExpression[async=true]": checkNode,
+      "CallExpression[callee.property.name='subscribe'] > ArrowFunctionExpression[async=true]": checkNode,
     };
   },
 };

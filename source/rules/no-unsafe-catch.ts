@@ -12,7 +12,7 @@ import {
   isCallExpression,
   isFunctionDeclaration,
   isIdentifier,
-  typecheck
+  typecheck,
 } from "../utils";
 
 const rule: Rule.RuleModule = {
@@ -20,25 +20,25 @@ const rule: Rule.RuleModule = {
     docs: {
       category: "RxJS",
       description: "Forbids unsafe `catchError` usage in effects and epics.",
-      recommended: false
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "Unsafe catchError usage in effects and epics are forbidden."
+      forbidden: "Unsafe catchError usage in effects and epics are forbidden.",
     },
     schema: [
       {
         properties: {
-          observable: { type: "string" }
+          observable: { type: "string" },
         },
         type: "object",
         description: stripIndent`
           An optional object with an optional \`observable\` property.
-          The property can be specified as a regular expression string and is used to identify the action observables from which effects and epics are composed.`
-      }
-    ]
+          The property can be specified as a regular expression string and is used to identify the action observables from which effects and epics are composed.`,
+      },
+    ],
   },
-  create: context => {
+  create: (context) => {
     const invalidOperatorsRegExp = /^(catchError)$/;
 
     const [config = {}] = context.options;
@@ -61,7 +61,7 @@ const rule: Rule.RuleModule = {
       return false;
     }
 
-    function report(node: es.CallExpression) {
+    function checkNode(node: es.CallExpression) {
       if (
         !node.arguments ||
         !isReferenceType(node) ||
@@ -70,7 +70,7 @@ const rule: Rule.RuleModule = {
         return;
       }
 
-      node.arguments.forEach(arg => {
+      node.arguments.forEach((arg) => {
         if (isCallExpression(arg) && isIdentifier(arg.callee)) {
           if (
             invalidOperatorsRegExp.test(arg.callee.name) &&
@@ -78,7 +78,7 @@ const rule: Rule.RuleModule = {
           ) {
             context.report({
               messageId: "forbidden",
-              node: arg.callee
+              node: arg.callee,
             });
           }
         }
@@ -86,10 +86,10 @@ const rule: Rule.RuleModule = {
     }
 
     return {
-      [`CallExpression[callee.property.name='pipe'][callee.object.name=${observableRegExp}]`]: report,
-      [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]`]: report
+      [`CallExpression[callee.property.name='pipe'][callee.object.name=${observableRegExp}]`]: checkNode,
+      [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]`]: checkNode,
     };
-  }
+  },
 };
 
 export = rule;

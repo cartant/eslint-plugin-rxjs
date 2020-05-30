@@ -21,7 +21,7 @@ const rule: Rule.RuleModule = {
     schema: [],
   },
   create: (context) => {
-    function report(
+    function checkNode(
       expression: es.ArrowFunctionExpression | es.FunctionExpression
     ) {
       let ignored = true;
@@ -46,10 +46,10 @@ const rule: Rule.RuleModule = {
     return {
       "CallExpression[callee.name='takeWhile'] > ArrowFunctionExpression": (
         node: es.ArrowFunctionExpression
-      ) => report(node),
+      ) => checkNode(node),
       "CallExpression[callee.name='takeWhile'] > FunctionExpression": (
         node: es.FunctionExpression
-      ) => report(node),
+      ) => checkNode(node),
     };
   },
 };

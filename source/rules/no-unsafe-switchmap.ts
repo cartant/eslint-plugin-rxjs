@@ -113,7 +113,7 @@ const rule: Rule.RuleModule = {
       return false;
     }
 
-    function report(node: es.CallExpression) {
+    function checkNode(node: es.CallExpression) {
       if (
         !node.arguments ||
         !isReferenceType(node) ||
@@ -151,8 +151,8 @@ const rule: Rule.RuleModule = {
     }
 
     return {
-      [`CallExpression[callee.property.name='pipe'][callee.object.name=${observableRegExp}]`]: report,
-      [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]`]: report,
+      [`CallExpression[callee.property.name='pipe'][callee.object.name=${observableRegExp}]`]: checkNode,
+      [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]`]: checkNode,
     };
   },
 };

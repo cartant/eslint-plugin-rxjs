@@ -13,35 +13,35 @@ const rule: Rule.RuleModule = {
       category: "RxJS",
       description:
         "Enforces the passing of `Error` values to error notifications.",
-      recommended: false
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "Passing non-Error values are forbidden."
+      forbidden: "Passing non-Error values are forbidden.",
     },
-    schema: []
+    schema: [],
   },
-  create: context => {
+  create: (context) => {
     const { isAny, couldBeError, couldBeObservable } = typecheck(context);
 
-    function report(node: es.Node) {
+    function checkNode(node: es.Node) {
       if (!isAny(node) && !couldBeError(node)) {
         context.report({
           messageId: "forbidden",
-          node
+          node,
         });
       }
     }
 
     return {
-      "ThrowStatement > *": report,
+      "ThrowStatement > *": checkNode,
       "CallExpression[callee.name='throwError']": (node: es.CallExpression) => {
         if (couldBeObservable(node)) {
-          node.arguments.forEach(report);
+          node.arguments.forEach(checkNode);
         }
-      }
+      },
     };
-  }
+  },
 };
 
 export = rule;

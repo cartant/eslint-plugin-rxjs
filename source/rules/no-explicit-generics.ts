@@ -28,7 +28,7 @@ const rule: Rule.RuleModule = {
       });
     }
 
-    function reportBehaviorSubjects(node: es.Node) {
+    function checkBehaviorSubjects(node: es.Node) {
       const parent = getParent(node) as es.NewExpression;
       const {
         arguments: [value],
@@ -39,7 +39,7 @@ const rule: Rule.RuleModule = {
       report(node);
     }
 
-    function reportNotifications(node: es.Node) {
+    function checkNotifications(node: es.Node) {
       const parent = getParent(node) as es.NewExpression;
       const {
         arguments: [, value],
@@ -52,9 +52,9 @@ const rule: Rule.RuleModule = {
 
     return {
       "CallExpression[callee.property.name='pipe'] > CallExpression[typeParameters.params.length > 0] > Identifier": report,
-      "NewExpression[typeParameters.params.length > 0] > Identifier[name='BehaviorSubject']": reportBehaviorSubjects,
+      "NewExpression[typeParameters.params.length > 0] > Identifier[name='BehaviorSubject']": checkBehaviorSubjects,
       "CallExpression[typeParameters.params.length > 0] > Identifier[name=/^(from|of)$/]": report,
-      "NewExpression[typeParameters.params.length > 0][arguments.0.value='N'] > Identifier[name='Notification']": reportNotifications,
+      "NewExpression[typeParameters.params.length > 0][arguments.0.value='N'] > Identifier[name='Notification']": checkNotifications,
     };
   },
 };

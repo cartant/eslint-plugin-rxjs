@@ -13,23 +13,23 @@ const rule: Rule.RuleModule = {
       category: "RxJS",
       description:
         "Forbids using `ReplaySubject`, `publishReplay` or `shareReplay` without specifying the buffer size.",
-      recommended: false
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "Ignoring the buffer size is forbidden."
+      forbidden: "Ignoring the buffer size is forbidden.",
     },
-    schema: []
+    schema: [],
   },
-  create: context => {
-    function report(
+  create: (context) => {
+    function checkNode(
       node: es.Node,
       { arguments: args }: { arguments: es.Node[] }
     ) {
       if (!args || args.length === 0) {
         context.report({
           messageId: "forbidden",
-          node
+          node,
         });
       }
     }
@@ -39,23 +39,23 @@ const rule: Rule.RuleModule = {
         node: es.Identifier
       ) => {
         const newExpression = getParent(node) as es.NewExpression;
-        report(node, newExpression);
+        checkNode(node, newExpression);
       },
       "NewExpression > MemberExpression > Identifier[name='ReplaySubject']": (
         node: es.Identifier
       ) => {
         const memberExpression = getParent(node) as es.MemberExpression;
         const newExpression = getParent(memberExpression) as es.NewExpression;
-        report(node, newExpression);
+        checkNode(node, newExpression);
       },
       "CallExpression > Identifier[name=/^(publishReplay|shareReplay)$/]": (
         node: es.Identifier
       ) => {
         const callExpression = getParent(node) as es.CallExpression;
-        report(node, callExpression);
-      }
+        checkNode(node, callExpression);
+      },
     };
-  }
+  },
 };
 
 export = rule;
