@@ -636,5 +636,33 @@ ruleTester({ types: true }).run("finnish", rule, {
       ],
       options: [{}],
     },
+    {
+      code: stripIndent`
+        // functions and methods with object destructuring
+        import { Observable } from "rxjs";
+
+        function someFunction({ source }: Record<string, Observable<any>>): void {}
+
+        class SomeClass {
+          someMethod({ source }: Record<string, Observable<any>>): void {}
+        }
+      `,
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 4,
+          column: 25,
+          endLine: 4,
+          endColumn: 31,
+        },
+        {
+          messageId: "forbidden",
+          line: 7,
+          column: 16,
+          endLine: 7,
+          endColumn: 22,
+        },
+      ],
+    },
   ],
 });
