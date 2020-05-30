@@ -207,7 +207,7 @@ const rule: Rule.RuleModule = {
       "TSParameterProperty > Identifier[name=/[^$]$/]": (
         node: es.Identifier
       ) => {
-        if (validate.parameters) {
+        if (validate.parameters || validate.properties) {
           checkNode(node);
         }
       },
