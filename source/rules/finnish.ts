@@ -6,7 +6,7 @@
 import { Rule } from "eslint";
 import { getLoc } from "eslint-etc";
 import * as es from "estree";
-import { getParent, isIdentifier, typecheck, findParent } from "../utils";
+import { findParent, getParent, typecheck } from "../utils";
 
 const rule: Rule.RuleModule = {
   meta: {
