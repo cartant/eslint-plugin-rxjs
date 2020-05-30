@@ -82,7 +82,7 @@ const rule: Rule.RuleModule = {
     }
 
     return {
-      "ArrayPattern > Identifier[name=/[^$]$/]": (node: es.Identifier) => {
+      "ArrayPattern > Identifier": (node: es.Identifier) => {
         const found = findParent(
           node,
           "ArrowFunctionExpression",
@@ -101,9 +101,7 @@ const rule: Rule.RuleModule = {
         }
         checkNode(node);
       },
-      "ArrowFunctionExpression > Identifier[name=/[^$]$/]": (
-        node: es.Identifier
-      ) => {
+      "ArrowFunctionExpression > Identifier": (node: es.Identifier) => {
         if (validate.parameters) {
           const parent = getParent(node) as es.ArrowFunctionExpression;
           if (node !== parent.body) {
@@ -117,9 +115,7 @@ const rule: Rule.RuleModule = {
           checkNode(anyNode.key);
         }
       },
-      "FunctionDeclaration > Identifier[name=/[^$]$/]": (
-        node: es.Identifier
-      ) => {
+      "FunctionDeclaration > Identifier": (node: es.Identifier) => {
         if (validate.parameters) {
           const parent = getParent(node) as es.FunctionDeclaration;
           if (node !== parent.id) {
@@ -127,9 +123,7 @@ const rule: Rule.RuleModule = {
           }
         }
       },
-      "FunctionExpression > Identifier[name=/[^$]$/]": (
-        node: es.Identifier
-      ) => {
+      "FunctionExpression > Identifier": (node: es.Identifier) => {
         if (validate.parameters) {
           const parent = getParent(node) as es.FunctionExpression;
           if (node !== parent.id) {
@@ -151,7 +145,7 @@ const rule: Rule.RuleModule = {
           checkNode(node.key, node);
         }
       },
-      "ObjectExpression > Property[computed=false] > Identifier[name=/[^$]$/]": (
+      "ObjectExpression > Property[computed=false] > Identifier": (
         node: es.ObjectExpression
       ) => {
         if (validate.properties) {
@@ -161,9 +155,7 @@ const rule: Rule.RuleModule = {
           }
         }
       },
-      "ObjectPattern > Property > Identifier[name=/[^$]$/]": (
-        node: es.Identifier
-      ) => {
+      "ObjectPattern > Property > Identifier": (node: es.Identifier) => {
         const found = findParent(
           node,
           "ArrowFunctionExpression",
@@ -185,28 +177,22 @@ const rule: Rule.RuleModule = {
           checkNode(node);
         }
       },
-      "TSCallSignatureDeclaration > Identifier[name=/[^$]$/]": (
-        node: es.Node
-      ) => {
+      "TSCallSignatureDeclaration > Identifier": (node: es.Node) => {
         if (validate.parameters) {
           checkNode(node);
         }
       },
-      "TSConstructSignatureDeclaration > Identifier[name=/[^$]$/]": (
-        node: es.Node
-      ) => {
+      "TSConstructSignatureDeclaration > Identifier": (node: es.Node) => {
         if (validate.parameters) {
           checkNode(node);
         }
       },
-      "TSMethodSignature > Identifier[name=/[^$]$/]": (node: es.Node) => {
+      "TSMethodSignature > Identifier": (node: es.Node) => {
         if (validate.parameters) {
           checkNode(node);
         }
       },
-      "TSParameterProperty > Identifier[name=/[^$]$/]": (
-        node: es.Identifier
-      ) => {
+      "TSParameterProperty > Identifier": (node: es.Identifier) => {
         if (validate.parameters || validate.properties) {
           checkNode(node);
         }
@@ -219,9 +205,7 @@ const rule: Rule.RuleModule = {
           checkNode(anyNode.key);
         }
       },
-      "VariableDeclarator > Identifier[name=/[^$]$/]": (
-        node: es.Identifier
-      ) => {
+      "VariableDeclarator > Identifier": (node: es.Identifier) => {
         const parent = getParent(node) as es.VariableDeclarator;
         if (validate.variables && node === parent.id) {
           checkNode(node);
