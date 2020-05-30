@@ -132,13 +132,14 @@ const rule: Rule.RuleModule = {
         }
         checkNode(node);
       },
-      ArrowFunctionExpression: (node: es.ArrowFunctionExpression) => {
+      "ArrowFunctionExpression > Identifier[name=/[^$]$/]": (
+        node: es.Identifier
+      ) => {
         if (validate.parameters) {
-          node.params.forEach((param) => {
-            if (isIdentifier) {
-              checkNode(param);
-            }
-          });
+          const parent = getParent(node) as es.ArrowFunctionExpression;
+          if (node !== parent.body) {
+            checkNode(node);
+          }
         }
       },
       "ClassProperty[key.name=/[^$]$/][computed=false]": (node: es.Node) => {
@@ -147,25 +148,32 @@ const rule: Rule.RuleModule = {
           checkNode(anyNode.key);
         }
       },
-      FunctionDeclaration: (node: es.FunctionDeclaration) => {
-        if (validate.functions) {
-          checkNode(node.id, node);
-        }
-        if (validate.parameters) {
-          node.params.forEach((param) => {
-            if (isIdentifier) {
-              checkNode(param);
-            }
-          });
+      "FunctionDeclaration > Identifier[name=/[^$]$/]": (
+        node: es.Identifier
+      ) => {
+        const parent = getParent(node) as es.FunctionDeclaration;
+        if (node === parent.id) {
+          if (validate.functions) {
+            checkNode(node, parent);
+          }
+        } else {
+          if (validate.parameters) {
+            checkNode(node);
+          }
         }
       },
-      FunctionExpression: (node: es.FunctionExpression) => {
-        if (validate.parameters) {
-          node.params.forEach((param) => {
-            if (isIdentifier) {
-              checkNode(param);
-            }
-          });
+      "FunctionExpression > Identifier[name=/[^$]$/]": (
+        node: es.Identifier
+      ) => {
+        const parent = getParent(node) as es.FunctionExpression;
+        if (node === parent.id) {
+          if (validate.functions) {
+            checkNode(node, parent);
+          }
+        } else {
+          if (validate.parameters) {
+            checkNode(node);
+          }
         }
       },
       "MethodDefinition[kind='get'][key.name=/[^$]$/][computed=false]": (
@@ -244,6 +252,13 @@ const rule: Rule.RuleModule = {
         }
         if (validate.parameters) {
           anyNode.params.forEach((param: es.Node) => checkNode(param));
+        }
+      },
+      "TSParameterProperty > Identifier[name=/[^$]$/]": (
+        node: es.Identifier
+      ) => {
+        if (validate.parameters || validate.properties) {
+          checkNode(node);
         }
       },
       "TSPropertySignature[key.name=/[^$]$/][computed=false]": (

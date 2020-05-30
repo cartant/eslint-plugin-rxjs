@@ -87,6 +87,8 @@ const rule: Rule.RuleModule = {
       "TSConstructSignatureDeclaration > Identifier[name=/[$]+$/]": (
         node: es.Node
       ) => checkNode(node),
+      "TSParameterProperty > Identifier[name=/[$]+$/]": (node: es.Identifier) =>
+        checkNode(node),
       "TSPropertySignature > Identifier[name=/[$]+$/]": (node: es.Identifier) =>
         checkNode(node, getParent(node)),
       "TSMethodSignature > Identifier[name=/[$]+$/]": (node: es.Identifier) => {
