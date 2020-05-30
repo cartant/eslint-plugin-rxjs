@@ -472,5 +472,24 @@ ruleTester({ types: true }).run("no-finnish", rule, {
         },
       ],
     },
+    {
+      code: stripIndent`
+        // parameter property
+        import { Observable } from "rxjs";
+
+        class SomeClass {
+          constructor(public someProp$: Observable<any>) {}
+        }
+      `,
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 5,
+          column: 22,
+          endLine: 5,
+          endColumn: 31,
+        },
+      ],
+    },
   ],
 });
