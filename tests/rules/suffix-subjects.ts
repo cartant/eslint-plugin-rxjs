@@ -888,5 +888,25 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
         },
       ],
     },
+    {
+      code: stripIndent`
+        // parameter property
+        import { Subject } from "rxjs";
+
+        class SomeClass {
+          constructor(public some: Subject<any>) {}
+        }
+      `,
+      errors: [
+        {
+          data: { suffix: "Subject" },
+          messageId: "forbidden",
+          line: 5,
+          column: 22,
+          endLine: 5,
+          endColumn: 26,
+        },
+      ],
+    },
   ],
 });

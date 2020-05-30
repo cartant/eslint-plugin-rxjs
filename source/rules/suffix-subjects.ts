@@ -60,11 +60,6 @@ const rule: Rule.RuleModule = {
     const { suffix = "Subject" } = config;
     const suffixRegex = new RegExp(String.raw`${suffix}\$?$`, "i");
 
-    function asParam(node: es.Node): es.Node {
-      const anyNode = node as any;
-      return anyNode.type === "TSParameterProperty" ? anyNode.parameter : node;
-    }
-
     function checkNode(nameNode: es.Node, typeNode?: es.Node) {
       let tsNode = nodeMap.get(nameNode);
       const text = tsNode.getText();
@@ -106,9 +101,14 @@ const rule: Rule.RuleModule = {
         }
         checkNode(node);
       },
-      ArrowFunctionExpression: (node: es.ArrowFunctionExpression) => {
+      "ArrowFunctionExpression > Identifier[name=/[^$]$/]": (
+        node: es.Identifier
+      ) => {
         if (validate.parameters) {
-          node.params.forEach((param) => checkNode(asParam(param)));
+          const parent = getParent(node) as es.ArrowFunctionExpression;
+          if (node !== parent.body) {
+            checkNode(node);
+          }
         }
       },
       "ClassProperty[key.name=/[^$]$/][computed=false]": (node: es.Node) => {
@@ -117,14 +117,24 @@ const rule: Rule.RuleModule = {
           checkNode(anyNode.key);
         }
       },
-      FunctionDeclaration: (node: es.FunctionDeclaration) => {
+      "FunctionDeclaration > Identifier[name=/[^$]$/]": (
+        node: es.Identifier
+      ) => {
         if (validate.parameters) {
-          node.params.forEach((param) => checkNode(asParam(param)));
+          const parent = getParent(node) as es.FunctionDeclaration;
+          if (node !== parent.id) {
+            checkNode(node);
+          }
         }
       },
-      FunctionExpression: (node: es.FunctionExpression) => {
+      "FunctionExpression > Identifier[name=/[^$]$/]": (
+        node: es.Identifier
+      ) => {
         if (validate.parameters) {
-          node.params.forEach((param) => checkNode(asParam(param)));
+          const parent = getParent(node) as es.FunctionExpression;
+          if (node !== parent.id) {
+            checkNode(node);
+          }
         }
       },
       "MethodDefinition[kind='get'][computed=false]": (
@@ -190,6 +200,13 @@ const rule: Rule.RuleModule = {
         }
       },
       "TSMethodSignature > Identifier[name=/[^$]$/]": (node: es.Node) => {
+        if (validate.parameters) {
+          checkNode(node);
+        }
+      },
+      "TSParameterProperty > Identifier[name=/[^$]$/]": (
+        node: es.Identifier
+      ) => {
         if (validate.parameters) {
           checkNode(node);
         }
