@@ -54,10 +54,26 @@ const rule: Rule.RuleModule = {
       },
       "ClassProperty[key.name=/[$]+$/] > Identifier": (node: es.Identifier) =>
         checkNode(node, getParent(node)),
-      "FunctionDeclaration > Identifier[name=/[$]+$/]": (node: es.Identifier) =>
-        checkNode(node, getParent(node)),
-      "FunctionExpression > Identifier[name=/[$]+$/]": (node: es.Identifier) =>
-        checkNode(node),
+      "FunctionDeclaration > Identifier[name=/[$]+$/]": (
+        node: es.Identifier
+      ) => {
+        const parent = getParent(node) as es.FunctionDeclaration;
+        if (node === parent.id) {
+          checkNode(node, parent);
+        } else {
+          checkNode(node);
+        }
+      },
+      "FunctionExpression > Identifier[name=/[$]+$/]": (
+        node: es.Identifier
+      ) => {
+        const parent = getParent(node) as es.FunctionExpression;
+        if (node === parent.id) {
+          checkNode(node, parent);
+        } else {
+          checkNode(node);
+        }
+      },
       "MethodDefinition[key.name=/[$]+$/]": (node: es.MethodDefinition) =>
         checkNode(node.key, node),
       "ObjectExpression > Property[computed=false][key.name=/[$]+$/]": (
@@ -65,18 +81,22 @@ const rule: Rule.RuleModule = {
       ) => checkNode(node.key),
       "ObjectPattern > Property[value.name=/[$]+$/]": (node: es.Property) =>
         checkNode(node.value),
-      TSCallSignatureDeclaration: (node: es.Node) => {
-        const anyNode = node as any;
-        anyNode.params.forEach((param: es.Node) => checkNode(param));
-      },
-      TSConstructSignatureDeclaration: (node: es.Node) => {
-        const anyNode = node as any;
-        anyNode.params.forEach((param: es.Node) => checkNode(param));
-      },
+      "TSCallSignatureDeclaration > Identifier[name=/[$]+$/]": (
+        node: es.Node
+      ) => checkNode(node),
+      "TSConstructSignatureDeclaration > Identifier[name=/[$]+$/]": (
+        node: es.Node
+      ) => checkNode(node),
       "TSPropertySignature > Identifier[name=/[$]+$/]": (node: es.Identifier) =>
         checkNode(node, getParent(node)),
-      "TSMethodSignature > Identifier[name=/[$]+$/]": (node: es.Identifier) =>
-        checkNode(node, getParent(node)),
+      "TSMethodSignature > Identifier[name=/[$]+$/]": (node: es.Identifier) => {
+        const parent = getParent(node) as any;
+        if (node === parent.key) {
+          checkNode(node, parent);
+        } else {
+          checkNode(node);
+        }
+      },
       "VariableDeclarator[id.name=/[$]+$/]": (node: es.VariableDeclarator) =>
         checkNode(node.id, node.init || node),
     };
