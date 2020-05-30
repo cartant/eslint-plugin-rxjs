@@ -329,5 +329,120 @@ ruleTester({ types: true }).run("no-finnish", rule, {
         },
       ],
     },
+    {
+      code: stripIndent`
+        // functions and methods not returning observables
+        import { Observable } from "rxjs";
+
+        function someFunction(someParam$: Observable<any>): void {}
+
+        class SomeClass {
+          someMethod(someParam$: Observable<any>): void {}
+        }
+
+        interface SomeInterface {
+          someMethod(someParam$: Observable<any>): void;
+          (someParam$: Observable<any>): void;
+        }
+      `,
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 4,
+          column: 23,
+          endLine: 4,
+          endColumn: 33,
+        },
+        {
+          messageId: "forbidden",
+          line: 7,
+          column: 14,
+          endLine: 7,
+          endColumn: 24,
+        },
+        {
+          messageId: "forbidden",
+          line: 11,
+          column: 14,
+          endLine: 11,
+          endColumn: 24,
+        },
+        {
+          messageId: "forbidden",
+          line: 12,
+          column: 4,
+          endLine: 12,
+          endColumn: 14,
+        },
+      ],
+    },
+    {
+      code: stripIndent`
+        // functions and methods with non-observable parameters
+        import { Observable, of } from "rxjs";
+
+        function someFunction$(someValue: any): Observable<any> { return of(someValue); }
+
+        class SomeClass {
+          someMethod$(someValue: any): Observable<any> { return of(someValue); }
+        }
+
+        interface SomeInterface {
+          someMethod$(someValue: any): Observable<any>;
+          (someValue: any): Observable<any>;
+        }
+      `,
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 4,
+          column: 10,
+          endLine: 4,
+          endColumn: 23,
+        },
+        {
+          messageId: "forbidden",
+          line: 7,
+          column: 3,
+          endLine: 7,
+          endColumn: 14,
+        },
+        {
+          messageId: "forbidden",
+          line: 11,
+          column: 3,
+          endLine: 11,
+          endColumn: 14,
+        },
+      ],
+    },
+    {
+      code: stripIndent`
+        // functions and methods with array destructuring
+        import { Observable } from "rxjs";
+
+        function someFunction([someParam$]: Observable<any>[]): void {}
+
+        class SomeClass {
+          someMethod([someParam$]: Observable<any>[]): void {}
+        }
+      `,
+      errors: [
+        {
+          messageId: "forbidden",
+          line: 4,
+          column: 24,
+          endLine: 4,
+          endColumn: 34,
+        },
+        {
+          messageId: "forbidden",
+          line: 7,
+          column: 15,
+          endLine: 7,
+          endColumn: 25,
+        },
+      ],
+    },
   ],
 });
