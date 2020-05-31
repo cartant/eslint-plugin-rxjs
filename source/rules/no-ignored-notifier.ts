@@ -28,12 +28,17 @@ const rule: Rule.RuleModule = {
   create: (context) => {
     const { couldBeMonoTypeOperatorFunction } = typecheck(context);
 
-    type Entry = {
+    type Record = {
       node: es.Node;
       param: es.Identifier;
       sightings: number;
     };
-    const entries: Entry[] = [];
+    const records: Record[] = [];
+
+    function getRecord() {
+      const { length, [length - 1]: record } = records;
+      return record;
+    }
 
     return {
       "CallExpression[callee.name=/^(repeatWhen|retryWhen)$/]": (
@@ -44,7 +49,7 @@ const rule: Rule.RuleModule = {
           if (isArrowFunctionExpression(arg) || isFunctionExpression(arg)) {
             const [param] = arg.params as es.Identifier[];
             if (param) {
-              entries.push({
+              records.push({
                 node,
                 param,
                 sightings: 0,
@@ -61,27 +66,27 @@ const rule: Rule.RuleModule = {
       "CallExpression[callee.name=/^(repeatWhen|retryWhen)$/]:exit": (
         node: es.CallExpression
       ) => {
-        const { length, [length - 1]: entry } = entries;
-        if (!entry) {
+        const record = getRecord();
+        if (!record) {
           return;
         }
-        if (entry.node === node) {
-          if (entry.sightings < 2) {
+        if (record.node === node) {
+          if (record.sightings < 2) {
             context.report({
               messageId: "forbidden",
               node: node.callee,
             });
           }
-          entries.pop();
+          records.pop();
         }
       },
       Identifier: (node: es.Identifier) => {
-        const { length, [length - 1]: entry } = entries;
-        if (!entry) {
+        const record = getRecord();
+        if (!record) {
           return;
         }
-        if (node.name === entry.param.name) {
-          ++entry.sightings;
+        if (node.name === record.param.name) {
+          ++record.sightings;
         }
       },
     };
