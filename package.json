@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "common-tags": "^1.8.0",
-    "decamelize": "^3.0.0",
+    "decamelize": "^4.0.0",
     "eslint-etc": "^0.0.14",
     "requireindex": "~1.2.0",
     "tslib": "^2.0.0",
