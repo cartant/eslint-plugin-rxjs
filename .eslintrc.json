@@ -1,0 +1,14 @@
+{
+  "extends": ["@cartant/eslint-config"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2019,
+    "project": "tsconfig.json",
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint", "import"],
+  "root": true,
+  "rules": {
+    "sort-keys": ["off"]
+  }
+}
