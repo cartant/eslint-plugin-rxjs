@@ -17,7 +17,7 @@
     "@cartant/eslint-config": "^1.0.0",
     "@types/chai": "^4.2.0",
     "@types/common-tags": "^1.8.0",
-    "@types/eslint": "^6.1.0",
+    "@types/eslint": "^7.0.0",
     "@types/mocha": "^7.0.0",
     "@types/node": "^14.0.0",
     "@typescript-eslint/eslint-plugin": "^3.1.0",
