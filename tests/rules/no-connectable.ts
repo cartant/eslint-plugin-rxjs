@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-connectable");
 import { ruleTester } from "../utils";
 
@@ -57,113 +58,71 @@ ruleTester({ types: true }).run("no-connectable", rule, {
     },
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // publish
         import { of, Subject } from "rxjs";
         import { publish } from "rxjs/operators";
         const result = of(42).pipe(
           publish()
-        );`,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 3,
-          endLine: 5,
-          endColumn: 10,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+          ~~~~~~~ [forbidden]
+        );
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // publishBehavior
         import { of, Subject } from "rxjs";
         import { publishBehavior } from "rxjs/operators";
         const result = of(42).pipe(
           publishBehavior(1)
-        );`,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 3,
-          endLine: 5,
-          endColumn: 18,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+          ~~~~~~~~~~~~~~~ [forbidden]
+        );
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // publishLast
         import { of, Subject } from "rxjs";
         import { publishLast } from "rxjs/operators";
         const result = of(42).pipe(
           publishLast()
-        );`,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 3,
-          endLine: 5,
-          endColumn: 14,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+          ~~~~~~~~~~~ [forbidden]
+        );
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // publishReplay
         import { of, Subject } from "rxjs";
         import { publishReplay } from "rxjs/operators";
         const result = of(42).pipe(
           publishReplay(1)
-        );`,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 3,
-          endLine: 5,
-          endColumn: 16,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+          ~~~~~~~~~~~~~ [forbidden]
+        );
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // multicast
         import { of, Subject } from "rxjs";
         import { multicast } from "rxjs/operators";
         const result = of(42).pipe(
           multicast(new Subject<number>())
-        );`,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 3,
-          endLine: 5,
-          endColumn: 12,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+          ~~~~~~~~~ [forbidden]
+        );
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // multicast with factory
         import { of, Subject } from "rxjs";
         import { multicast } from "rxjs/operators";
         const result = of(42).pipe(
           multicast(() => new Subject<number>())
-        );`,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 3,
-          endLine: 5,
-          endColumn: 12,
-        },
-      ],
-    },
+          ~~~~~~~~~ [forbidden]
+        );
+      `
+    ),
   ],
 });

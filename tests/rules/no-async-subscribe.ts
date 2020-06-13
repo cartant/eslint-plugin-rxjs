@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-async-subscribe");
 import { ruleTester } from "../utils";
 
@@ -29,43 +30,27 @@ ruleTester({ types: true }).run("no-async-subscribe", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // async arrow function
         import { of } from "rxjs";
 
         of("a").subscribe(async () => {
+                          ~~~~~ [forbidden]
           return await "a";
         });
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 19,
-          endLine: 4,
-          endColumn: 23,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // async function
         import { of } from "rxjs";
 
         of("a").subscribe(async function() {
+                          ~~~~~ [forbidden]
           return await "a";
         });
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 19,
-          endLine: 4,
-          endColumn: 23,
-        },
-      ],
-    },
+      `
+    ),
   ],
 });

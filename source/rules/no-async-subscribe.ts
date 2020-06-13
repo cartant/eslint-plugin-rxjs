@@ -39,7 +39,7 @@ const rule = ruleCreator({
           ...loc,
           end: {
             ...loc.start,
-            column: loc.start.column + 4,
+            column: loc.start.column + 5,
           },
         };
 

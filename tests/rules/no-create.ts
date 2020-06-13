@@ -4,32 +4,25 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-create");
 import { ruleTester } from "../utils";
 
 ruleTester({ types: true }).run("no-create", rule, {
   valid: [],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // create
         import { Observable, Observer } from "rxjs";
 
         const ob = Observable.create((observer: Observer<string>) => {
+                              ~~~~~~ [forbidden]
             observer.next("Hello, world.");
             observer.complete();
             return () => {};
         });
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 23,
-          endLine: 4,
-          endColumn: 29,
-        },
-      ],
-    },
+      `
+    ),
   ],
 });

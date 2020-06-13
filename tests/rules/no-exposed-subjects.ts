@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-exposed-subjects");
 import { ruleTester } from "../utils";
 
@@ -80,264 +81,111 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
     },
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // public and protected
         import { Subject } from 'rxjs';
 
         class Mock {
           public a = new Subject<void>();
+                 ~ [forbidden]
           protected b = new Subject<void>();
+                    ~ [forbidden]
           c = new Subject<any>();
+          ~ [forbidden]
           public readonly d = new Subject<void>();
+                          ~ [forbidden]
           readonly e = new Subject<void>();
+                   ~ [forbidden]
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 10,
-          endLine: 5,
-          endColumn: 11,
-          data: {
-            subject: "a",
-          },
-        },
-        {
-          messageId: "forbidden",
-          line: 6,
-          column: 13,
-          endLine: 6,
-          endColumn: 14,
-          data: {
-            subject: "b",
-          },
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 3,
-          endLine: 7,
-          endColumn: 4,
-          data: {
-            subject: "c",
-          },
-        },
-        {
-          messageId: "forbidden",
-          line: 8,
-          column: 19,
-          endLine: 8,
-          endColumn: 20,
-          data: {
-            subject: "d",
-          },
-        },
-        {
-          messageId: "forbidden",
-          line: 9,
-          column: 12,
-          endLine: 9,
-          endColumn: 13,
-          data: {
-            subject: "e",
-          },
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // public and protected via constructor
         import { Subject } from 'rxjs';
 
         class Mock {
           constructor(
             public a: Subject<any>,
+                   ~ [forbidden]
             protected b: Subject<any>,
+                      ~ [forbidden]
           ) {}
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 6,
-          column: 12,
-          endLine: 6,
-          endColumn: 13,
-          data: {
-            subject: "a",
-          },
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 15,
-          endLine: 7,
-          endColumn: 16,
-          data: {
-            subject: "b",
-          },
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // public via getter/setter
         import { Subject } from 'rxjs';
 
         class Mock {
           get a(): Subject<any> {
+              ~ [forbidden]
             return this._submitSubject$;
           }
 
           set a(a: Subject<any>) {
+              ~ [forbidden]
             this._submitSubject$ = set$;
           }
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 7,
-          endLine: 5,
-          endColumn: 8,
-          data: {
-            subject: "a",
-          },
-        },
-        {
-          messageId: "forbidden",
-          line: 9,
-          column: 7,
-          endLine: 9,
-          endColumn: 8,
-          data: {
-            subject: "a",
-          },
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // public return type
         import { Subject } from 'rxjs';
 
         class Mock {
           public a(): Subject<any> {
+                 ~ [forbidden]
             return new Subject<any>();
           }
 
           b(): Subject<any> {
+          ~ [forbidden]
             return new Subject<any>();
           }
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 10,
-          endLine: 5,
-          endColumn: 11,
-          data: {
-            subject: "a",
-          },
-        },
-        {
-          messageId: "forbidden",
-          line: 9,
-          column: 3,
-          endLine: 9,
-          endColumn: 4,
-          data: {
-            subject: "b",
-          },
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // public but allow protected
         import { Subject } from 'rxjs';
 
         class Mock {
           public a = new Subject<void>();
+                 ~ [forbiddenAllowProtected]
 
           constructor(
             public b: Subject<any>,
-          ){}
+                   ~ [forbiddenAllowProtected]
+          ) {}
 
           get c(): Subject<any> {
+              ~ [forbiddenAllowProtected]
             return this._submitSubject$;
           }
 
           set c(a: Subject<any>) {
+              ~ [forbiddenAllowProtected]
             this._submitSubject$ = set$;
           }
 
           d(): Subject<any> {
+          ~ [forbiddenAllowProtected]
             return new Subject<any>();
           }
         }
       `,
-      options: [{ allowProtected: true }],
-      errors: [
-        {
-          messageId: "forbiddenAllowProtected",
-          line: 5,
-          column: 10,
-          endLine: 5,
-          endColumn: 11,
-          data: {
-            subject: "a",
-          },
-        },
-        {
-          messageId: "forbiddenAllowProtected",
-          line: 8,
-          column: 12,
-          endLine: 8,
-          endColumn: 13,
-          data: {
-            subject: "b",
-          },
-        },
-        {
-          messageId: "forbiddenAllowProtected",
-          line: 11,
-          column: 7,
-          endLine: 11,
-          endColumn: 8,
-          data: {
-            subject: "c",
-          },
-        },
-        {
-          messageId: "forbiddenAllowProtected",
-          line: 15,
-          column: 7,
-          endLine: 15,
-          endColumn: 8,
-          data: {
-            subject: "c",
-          },
-        },
-        {
-          messageId: "forbiddenAllowProtected",
-          line: 19,
-          column: 3,
-          endLine: 19,
-          endColumn: 4,
-          data: {
-            subject: "d",
-          },
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      {},
+      { options: [{ allowProtected: true }] }
+    ),
+    fromFixture(
+      stripIndent`
         // EventEmitter
         import { Subject } from "rxjs";
 
@@ -347,31 +195,11 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           public a: EventEmitter<any>;
           protected b: EventEmitter<any>;
           public c: Subject<any>;
+                 ~ [forbidden]
           protected d: Subject<any>;
+                    ~ [forbidden]
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 9,
-          column: 10,
-          endLine: 9,
-          endColumn: 11,
-          data: {
-            subject: "c",
-          },
-        },
-        {
-          messageId: "forbidden",
-          line: 10,
-          column: 13,
-          endLine: 10,
-          endColumn: 14,
-          data: {
-            subject: "d",
-          },
-        },
-      ],
-    },
+      `
+    ),
   ],
 });
