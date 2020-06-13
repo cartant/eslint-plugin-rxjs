@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-ignored-error");
 import { ruleTester } from "../utils";
 
@@ -24,75 +25,43 @@ ruleTester({ types: true }).run("no-ignored-error", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // arrow next ignored error
         import { of } from "rxjs";
         const observable = of([1, 2]);
         observable.subscribe(() => {});
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 12,
-          endLine: 4,
-          endColumn: 21,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                   ~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // variable next ignored error
         import { of } from "rxjs";
         const observable = of([1, 2]);
         const next = () => {};
         observable.subscribe(next);
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 12,
-          endLine: 5,
-          endColumn: 21,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                   ~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // subject arrow next ignored error
         import { Subject } from "rxjs";
         const subject = new Subject<any>();
         subject.subscribe(() => {});
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 9,
-          endLine: 4,
-          endColumn: 18,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                ~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // subject variable next ignored error
         import { Subject } from "rxjs";
         const next = () => {};
         const subject = new Subject<any>();
         subject.subscribe(next);
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 9,
-          endLine: 5,
-          endColumn: 18,
-        },
-      ],
-    },
+                ~~~~~~~~~ [forbidden]
+      `
+    ),
   ],
 });

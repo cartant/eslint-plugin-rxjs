@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-ignored-takewhile-value");
 import { ruleTester } from "../utils";
 
@@ -50,8 +51,8 @@ ruleTester({ types: true }).run("no-ignored-takewhile-value", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // function without value
         import { Observable } from "rxjs";
         import { takeWhile } from "rxjs/operators";
@@ -60,22 +61,14 @@ ruleTester({ types: true }).run("no-ignored-takewhile-value", rule, {
           constructor(private _source: Observable<string>) {
             _source.pipe(
               takeWhile(function (value) { return false; })
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
             ).subscribe();
           }
         };
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 8,
-          column: 17,
-          endLine: 8,
-          endColumn: 51,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // function without parameter
         import { Observable } from "rxjs";
         import { takeWhile } from "rxjs/operators";
@@ -84,22 +77,14 @@ ruleTester({ types: true }).run("no-ignored-takewhile-value", rule, {
           constructor(private _source: Observable<string>) {
             _source.pipe(
               takeWhile(function () { return false; })
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
             ).subscribe();
           }
         };
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 8,
-          column: 17,
-          endLine: 8,
-          endColumn: 46,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // arrow function without value
         import { Observable } from "rxjs";
         import { takeWhile } from "rxjs/operators";
@@ -108,22 +93,14 @@ ruleTester({ types: true }).run("no-ignored-takewhile-value", rule, {
           constructor(private _source: Observable<string>) {
             _source.pipe(
               takeWhile(value => false)
+                        ~~~~~~~~~~~~~~ [forbidden]
             ).subscribe();
           }
         };
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 8,
-          column: 17,
-          endLine: 8,
-          endColumn: 31,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // arrow function without parameter
         import { Observable } from "rxjs";
         import { takeWhile } from "rxjs/operators";
@@ -132,22 +109,14 @@ ruleTester({ types: true }).run("no-ignored-takewhile-value", rule, {
           constructor(private _source: Observable<string>) {
             _source.pipe(
               takeWhile(() => false)
+                        ~~~~~~~~~~~ [forbidden]
             ).subscribe();
           }
         };
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 8,
-          column: 17,
-          endLine: 8,
-          endColumn: 28,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // arrow function with block without value
         import { Observable } from "rxjs";
         import { takeWhile } from "rxjs/operators";
@@ -156,22 +125,14 @@ ruleTester({ types: true }).run("no-ignored-takewhile-value", rule, {
           constructor(private _source: Observable<string>) {
             _source.pipe(
               takeWhile(value => { return false; })
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
             ).subscribe();
           }
         };
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 8,
-          column: 17,
-          endLine: 8,
-          endColumn: 43,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // arrow function with block without parameter
         import { Observable } from "rxjs";
         import { takeWhile } from "rxjs/operators";
@@ -180,19 +141,11 @@ ruleTester({ types: true }).run("no-ignored-takewhile-value", rule, {
           constructor(private _source: Observable<string>) {
             _source.pipe(
               takeWhile(() => { return false; })
+                        ~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
             ).subscribe();
           }
         };
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 8,
-          column: 17,
-          endLine: 8,
-          endColumn: 40,
-        },
-      ],
-    },
+      `
+    ),
   ],
 });

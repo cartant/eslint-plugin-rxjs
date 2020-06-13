@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-ignored-observable");
 import { ruleTester } from "../utils";
 
@@ -14,7 +15,7 @@ ruleTester({ types: true }).run("no-ignored-observable", rule, {
       import { Observable, of } from "rxjs";
 
       function functionSource() {
-          return of(42);
+        return of(42);
       }
 
       function sink(source: Observable<number>) {
@@ -37,8 +38,8 @@ ruleTester({ types: true }).run("no-ignored-observable", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // ignored
         import { Observable, of } from "rxjs";
 
@@ -47,35 +48,19 @@ ruleTester({ types: true }).run("no-ignored-observable", rule, {
         }
 
         functionSource();
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 8,
-          column: 1,
-          endLine: 8,
-          endColumn: 17,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+        ~~~~~~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // ignored arrow
         import { Observable, of } from "rxjs";
 
         const arrowSource = () => of(42);
 
         arrowSource();
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 6,
-          column: 1,
-          endLine: 6,
-          endColumn: 14,
-        },
-      ],
-    },
+        ~~~~~~~~~~~~~ [forbidden]
+      `
+    ),
   ],
 });

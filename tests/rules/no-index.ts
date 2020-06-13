@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-index");
 import { ruleTester } from "../utils";
 
@@ -25,83 +26,31 @@ ruleTester({ types: false }).run("no-index", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // index double quote
         import { Observable } from "rxjs/index";
+                                   ~~~~~~~~~~~~ [forbidden]
         import { map } from "rxjs/operators/index";
+                            ~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
         import { TestScheduler } from "rxjs/testing/index";
+                                      ~~~~~~~~~~~~~~~~~~~~ [forbidden]
         import { WebSocketSubject } from "rxjs/webSocket/index";
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 2,
-          column: 28,
-          endLine: 2,
-          endColumn: 40,
-        },
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 21,
-          endLine: 3,
-          endColumn: 43,
-        },
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 31,
-          endLine: 4,
-          endColumn: 51,
-        },
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 34,
-          endLine: 5,
-          endColumn: 56,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                                         ~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // index single quote
         import { Observable } from 'rxjs/index';
+                                   ~~~~~~~~~~~~ [forbidden]
         import { map } from 'rxjs/operators/index';
+                            ~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
         import { TestScheduler } from 'rxjs/testing/index';
+                                      ~~~~~~~~~~~~~~~~~~~~ [forbidden]
         import { WebSocketSubject } from 'rxjs/webSocket/index';
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 2,
-          column: 28,
-          endLine: 2,
-          endColumn: 40,
-        },
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 21,
-          endLine: 3,
-          endColumn: 43,
-        },
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 31,
-          endLine: 4,
-          endColumn: 51,
-        },
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 34,
-          endLine: 5,
-          endColumn: 56,
-        },
-      ],
-    },
+                                         ~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+      `
+    ),
   ],
 });

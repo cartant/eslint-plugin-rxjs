@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-ignored-subscription");
 import { ruleTester } from "../utils";
 
@@ -33,38 +34,22 @@ ruleTester({ types: true }).run("no-ignored-subscription", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // ignored
         import { of } from "rxjs";
         of(42).subscribe();
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 8,
-          endLine: 3,
-          endColumn: 17,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+               ~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // ignored subject
         import { Subject } from "rxjs";
         const s = new Subject<any>()
         s.subscribe();
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 3,
-          endLine: 4,
-          endColumn: 12,
-        },
-      ],
-    },
+          ~~~~~~~~~ [forbidden]
+      `
+    ),
   ],
 });

@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-ignored-replay-buffer");
 import { ruleTester } from "../utils";
 
@@ -64,130 +65,70 @@ ruleTester({ types: false }).run("no-ignored-replay-buffer", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // ReplaySubject ignored
         import { ReplaySubject } from "rxjs";
 
         const a = new ReplaySubject<string>();
+                      ~~~~~~~~~~~~~ [forbidden]
         const b = new Thing(new ReplaySubject<number>());
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 15,
-          endLine: 4,
-          endColumn: 28,
-        },
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 25,
-          endLine: 5,
-          endColumn: 38,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                                ~~~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // publishReplay ignored
         import { of } from "rxjs";
         import { publishReplay } from "rxjs/operators";
 
         const a = of(42).pipe(publishReplay());
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 23,
-          endLine: 5,
-          endColumn: 36,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                              ~~~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // shareReplay ignored
         import { of } from "rxjs";
         import { shareReplay } from "rxjs/operators";
 
         const a = of(42).pipe(shareReplay());
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 23,
-          endLine: 5,
-          endColumn: 34,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                              ~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // namespace ReplaySubject ignored
         import * as Rx from "rxjs";
 
         const a = new Rx.ReplaySubject<string>();
+                         ~~~~~~~~~~~~~ [forbidden]
         const b = new Thing(new Rx.ReplaySubject<number>());
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 18,
-          endLine: 4,
-          endColumn: 31,
-        },
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 28,
-          endLine: 5,
-          endColumn: 41,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                                   ~~~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // namespace publishReplay ignored
         import * as Rx from "rxjs";
         import { publishReplay } from "rxjs/operators";
 
         const a = Rx.of(42).pipe(publishReplay());
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 26,
-          endLine: 5,
-          endColumn: 39,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                                 ~~~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // namespace shareReplay ignored
         import * as Rx from "rxjs";
         import { shareReplay } from "rxjs/operators";
 
         const a = Rx.of(42).pipe(shareReplay());
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 26,
-          endLine: 5,
-          endColumn: 37,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                                 ~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // namespace class ignored
         import * as Rx from "rxjs";
 
@@ -195,18 +136,10 @@ ruleTester({ types: false }).run("no-ignored-replay-buffer", rule, {
           private invalid: Rx.ReplaySubject<number>;
           constructor(){
             this.invalid = new Rx.ReplaySubject<number>();
+                                  ~~~~~~~~~~~~~ [forbidden]
           }
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 27,
-          endLine: 7,
-          endColumn: 40,
-        },
-      ],
-    },
+      `
+    ),
   ],
 });

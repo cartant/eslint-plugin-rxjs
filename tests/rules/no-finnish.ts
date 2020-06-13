@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-finnish");
 import { ruleTester } from "../utils";
 
@@ -48,448 +49,179 @@ ruleTester({ types: true }).run("no-finnish", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // variables with $
         import { Observable, of } from "rxjs";
         const someObservable$ = of(0);
+              ~~~~~~~~~~~~~~~ [forbidden]
         const someObject = { someKey$: someObservable$ };
+                             ~~~~~~~~ [forbidden]
         const { someKey$ } = someObject;
+                ~~~~~~~~ [forbidden]
         const { someKey$: anotherObservable$ } = someObject;
+                          ~~~~~~~~~~~~~~~~~~ [forbidden]
         const [{ someKey$: yetAnotherObservable$ }] = [someObject];
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 7,
-          endLine: 3,
-          endColumn: 22,
-        },
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 22,
-          endLine: 4,
-          endColumn: 30,
-        },
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 9,
-          endLine: 5,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 6,
-          column: 19,
-          endLine: 6,
-          endColumn: 37,
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 20,
-          endLine: 7,
-          endColumn: 41,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                           ~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // objects with $
         import { Observable, of } from "rxjs";
         const someObservable$ = of(0);
+              ~~~~~~~~~~~~~~~ [forbidden]
         const someEmptyObject = {};
         const someObject = { ...someEmptyObject, someKey$: someObservable$ };
+                                                 ~~~~~~~~ [forbidden]
         const { someKey$ } = someObject;
+                ~~~~~~~~ [forbidden]
         const { someKey$: someRenamedKey$ } = someObject;
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 7,
-          endLine: 3,
-          endColumn: 22,
-        },
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 42,
-          endLine: 5,
-          endColumn: 50,
-        },
-        {
-          messageId: "forbidden",
-          line: 6,
-          column: 9,
-          endLine: 6,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 19,
-          endLine: 7,
-          endColumn: 34,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                          ~~~~~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // arrays with $
         import { Observable, of } from "rxjs";
         const someObservable$ = of(0);
+              ~~~~~~~~~~~~~~~ [forbidden]
         const someArray = [someObservable$];
         const [someElement$] = someArray;
+               ~~~~~~~~~~~~ [forbidden]
         someArray.forEach(function (element$: Observable<any>): void {});
+                                    ~~~~~~~~ [forbidden]
         someArray.forEach((element$: Observable<any>) => {});
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 7,
-          endLine: 3,
-          endColumn: 22,
-        },
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 8,
-          endLine: 5,
-          endColumn: 20,
-        },
-        {
-          messageId: "forbidden",
-          line: 6,
-          column: 29,
-          endLine: 6,
-          endColumn: 37,
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 20,
-          endLine: 7,
-          endColumn: 28,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                           ~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // functions with $
         import { Observable } from "rxjs";
         function someFunction$(someParam$: Observable<any>): Observable<any> { return someParam$; }
+                 ~~~~~~~~~~~~~ [forbidden]
+                               ~~~~~~~~~~ [forbidden]
         const someArrowFunction$ = (someParam$: Observable<any>): Observable<any> => someParam$;
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 10,
-          endLine: 3,
-          endColumn: 23,
-        },
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 24,
-          endLine: 3,
-          endColumn: 34,
-        },
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 7,
-          endLine: 4,
-          endColumn: 25,
-        },
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 29,
-          endLine: 4,
-          endColumn: 39,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+              ~~~~~~~~~~~~~~~~~~ [forbidden]
+                                    ~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // class with $
         import { Observable } from "rxjs";
         class SomeClass {
           someProperty$: Observable<any>;
+          ~~~~~~~~~~~~~ [forbidden]
           constructor(someParam$: Observable<any>) {}
+                      ~~~~~~~~~~ [forbidden]
           get someGetter$(): Observable<any> { throw new Error("Some error."); }
+              ~~~~~~~~~~~ [forbidden]
           set someSetter$(someParam$: Observable<any>) {}
+              ~~~~~~~~~~~ [forbidden]
+                          ~~~~~~~~~~ [forbidden]
           someMethod$(someParam$: Observable<any>): Observable<any> { return someParam; }
+          ~~~~~~~~~~~ [forbidden]
+                      ~~~~~~~~~~ [forbidden]
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 3,
-          endLine: 4,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 15,
-          endLine: 5,
-          endColumn: 25,
-        },
-        {
-          messageId: "forbidden",
-          line: 6,
-          column: 7,
-          endLine: 6,
-          endColumn: 18,
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 7,
-          endLine: 7,
-          endColumn: 18,
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 19,
-          endLine: 7,
-          endColumn: 29,
-        },
-        {
-          messageId: "forbidden",
-          line: 8,
-          column: 3,
-          endLine: 8,
-          endColumn: 14,
-        },
-        {
-          messageId: "forbidden",
-          line: 8,
-          column: 15,
-          endLine: 8,
-          endColumn: 25,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // interface with $
         import { Observable } from "rxjs";
         interface SomeInterface {
           someProperty$: Observable<any>;
+          ~~~~~~~~~~~~~ [forbidden]
           someMethod$(someParam$: Observable<any>): Observable<any>;
+          ~~~~~~~~~~~ [forbidden]
+                      ~~~~~~~~~~ [forbidden]
           new (someParam$: Observable<any>);
+               ~~~~~~~~~~ [forbidden]
           (someParam$: Observable<any>): void;
+           ~~~~~~~~~~ [forbidden]
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 3,
-          endLine: 4,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 3,
-          endLine: 5,
-          endColumn: 14,
-        },
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 15,
-          endLine: 5,
-          endColumn: 25,
-        },
-        {
-          messageId: "forbidden",
-          line: 6,
-          column: 8,
-          endLine: 6,
-          endColumn: 18,
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 4,
-          endLine: 7,
-          endColumn: 14,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // functions and methods not returning observables
         import { Observable } from "rxjs";
 
         function someFunction(someParam$: Observable<any>): void {}
+                              ~~~~~~~~~~ [forbidden]
 
         class SomeClass {
           someMethod(someParam$: Observable<any>): void {}
+                     ~~~~~~~~~~ [forbidden]
         }
 
         interface SomeInterface {
           someMethod(someParam$: Observable<any>): void;
+                     ~~~~~~~~~~ [forbidden]
           (someParam$: Observable<any>): void;
+           ~~~~~~~~~~ [forbidden]
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 23,
-          endLine: 4,
-          endColumn: 33,
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 14,
-          endLine: 7,
-          endColumn: 24,
-        },
-        {
-          messageId: "forbidden",
-          line: 11,
-          column: 14,
-          endLine: 11,
-          endColumn: 24,
-        },
-        {
-          messageId: "forbidden",
-          line: 12,
-          column: 4,
-          endLine: 12,
-          endColumn: 14,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // functions and methods with non-observable parameters
         import { Observable, of } from "rxjs";
 
         function someFunction$(someValue: any): Observable<any> { return of(someValue); }
+                 ~~~~~~~~~~~~~ [forbidden]
 
         class SomeClass {
           someMethod$(someValue: any): Observable<any> { return of(someValue); }
+          ~~~~~~~~~~~ [forbidden]
         }
 
         interface SomeInterface {
           someMethod$(someValue: any): Observable<any>;
+          ~~~~~~~~~~~ [forbidden]
           (someValue: any): Observable<any>;
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 10,
-          endLine: 4,
-          endColumn: 23,
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 3,
-          endLine: 7,
-          endColumn: 14,
-        },
-        {
-          messageId: "forbidden",
-          line: 11,
-          column: 3,
-          endLine: 11,
-          endColumn: 14,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // functions and methods with array destructuring
         import { Observable } from "rxjs";
 
         function someFunction([someParam$]: Observable<any>[]): void {}
+                               ~~~~~~~~~~ [forbidden]
 
         class SomeClass {
           someMethod([someParam$]: Observable<any>[]): void {}
+                      ~~~~~~~~~~ [forbidden]
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 24,
-          endLine: 4,
-          endColumn: 34,
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 15,
-          endLine: 7,
-          endColumn: 25,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // functions and methods with object destructuring
         import { Observable } from "rxjs";
 
         function someFunction({ source$ }: Record<string, Observable<any>>): void {}
-
+                                ~~~~~~~ [forbidden]
         class SomeClass {
           someMethod({ source$ }: Record<string, Observable<any>>): void {}
+                       ~~~~~~~ [forbidden]
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 25,
-          endLine: 4,
-          endColumn: 32,
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 16,
-          endLine: 7,
-          endColumn: 23,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // parameter property
         import { Observable } from "rxjs";
 
         class SomeClass {
           constructor(public someProp$: Observable<any>) {}
+                             ~~~~~~~~~ [forbidden]
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 22,
-          endLine: 5,
-          endColumn: 31,
-        },
-      ],
-    },
+      `
+    ),
   ],
 });
