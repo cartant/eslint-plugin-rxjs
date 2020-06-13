@@ -6,7 +6,12 @@
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
 import { stripIndent } from "common-tags";
 import decamelize from "decamelize";
-import { isCallExpression, isIdentifier, isLiteral } from "eslint-etc";
+import {
+  isCallExpression,
+  isIdentifier,
+  isLiteral,
+  isMemberExpression,
+} from "eslint-etc";
 import { defaultObservable } from "../constants";
 import { createRegExpForWords, ruleCreator, typecheck } from "../utils";
 
@@ -100,6 +105,9 @@ const rule = ruleCreator({
           }
           if (isIdentifier(arg)) {
             return arg.name;
+          }
+          if (isMemberExpression(arg) && isIdentifier(arg.property)) {
+            return arg.property.name;
           }
 
           return "";
