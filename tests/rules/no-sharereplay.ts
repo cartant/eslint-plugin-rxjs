@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-sharereplay");
 import { ruleTester } from "../utils";
 
@@ -27,120 +28,74 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
     },
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // no arguments
         const shared = of(42).pipe(
           shareReplay()
-        );`,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 3,
-          endLine: 3,
-          endColumn: 14,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+          ~~~~~~~~~~~ [forbidden]
+        );
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // config allowed no arguments
         const shared = of(42).pipe(
           shareReplay()
-        );`,
-      options: [{ allowConfig: true }],
-      errors: [
-        {
-          messageId: "forbiddenWithoutConfig",
-          line: 3,
-          column: 3,
-          endLine: 3,
-          endColumn: 14,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+          ~~~~~~~~~~~ [forbiddenWithoutConfig]
+        );
+      `,
+      {},
+      { options: [{ allowConfig: true }] }
+    ),
+    fromFixture(
+      stripIndent`
         // one argument
         const shared = of(42).pipe(
           shareReplay(1)
-        );`,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 3,
-          endLine: 3,
-          endColumn: 14,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+          ~~~~~~~~~~~ [forbidden]
+        );
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // two arguments
         const shared = of(42).pipe(
           shareReplay(1, 100)
-        );`,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 3,
-          endLine: 3,
-          endColumn: 14,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+          ~~~~~~~~~~~ [forbidden]
+        );
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // three arguments
         const shared = of(42).pipe(
           shareReplay(1, 100, asapScheduler)
-        );`,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 3,
-          endLine: 3,
-          endColumn: 14,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+          ~~~~~~~~~~~ [forbidden]
+        );
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // config argument refCount
         const shared = of(42).pipe(
           shareReplay({ refCount: true })
-        );`,
-      options: [{ allowConfig: false }],
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 3,
-          endLine: 3,
-          endColumn: 14,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+          ~~~~~~~~~~~ [forbidden]
+        );
+      `,
+      {},
+      { options: [{ allowConfig: false }] }
+    ),
+    fromFixture(
+      stripIndent`
         // config argument no refCount
         const shared = of(42).pipe(
           shareReplay({ refCount: false })
-        );`,
-      options: [{ allowConfig: false }],
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 3,
-          endLine: 3,
-          endColumn: 14,
-        },
-      ],
-    },
+          ~~~~~~~~~~~ [forbidden]
+        );
+      `,
+      {},
+      { options: [{ allowConfig: false }] }
+    ),
   ],
 });

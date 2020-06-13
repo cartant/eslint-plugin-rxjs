@@ -5,6 +5,7 @@
 
 import { TSESLint as eslint } from "@typescript-eslint/experimental-utils";
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-unbound-methods");
 import { ruleTester } from "../utils";
 
@@ -90,8 +91,8 @@ const boundTests: Tests = {
 const deepTests: Tests = {
   valid: [],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // deep
         import { Observable, of, throwError, NEVER } from "rxjs";
         import { catchError, map, takeUntil } from "rxjs/operators";
@@ -110,64 +111,26 @@ const deepTests: Tests = {
           constructor() {
             const ob = of(1).pipe(
               map(this.deep.map),
+                  ~~~~~~~~~~~~~ [forbidden]
               userland(this.deep.map),
-              takeUntil(this.someObservable), // no error
+                       ~~~~~~~~~~~~~ [forbidden]
+              takeUntil(this.someObservable),
               catchError(this.deep.catchError)
+                         ~~~~~~~~~~~~~~~~~~~~ [forbidden]
             ).subscribe(
               this.deep.next,
+              ~~~~~~~~~~~~~~ [forbidden]
               this.deep.error,
+              ~~~~~~~~~~~~~~~ [forbidden]
               this.deep.complete
+              ~~~~~~~~~~~~~~~~~~ [forbidden]
             );
           }
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 18,
-          column: 11,
-          endLine: 18,
-          endColumn: 24,
-        },
-        {
-          messageId: "forbidden",
-          line: 19,
-          column: 16,
-          endLine: 19,
-          endColumn: 29,
-        },
-        {
-          messageId: "forbidden",
-          line: 21,
-          column: 18,
-          endLine: 21,
-          endColumn: 38,
-        },
-        {
-          messageId: "forbidden",
-          line: 23,
-          column: 7,
-          endLine: 23,
-          endColumn: 21,
-        },
-        {
-          messageId: "forbidden",
-          line: 24,
-          column: 7,
-          endLine: 24,
-          endColumn: 22,
-        },
-        {
-          messageId: "forbidden",
-          line: 25,
-          column: 7,
-          endLine: 25,
-          endColumn: 25,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // deep teardowns
         import { Subscription } from "rxjs";
         import { takeUntil } from "rxjs/operators";
@@ -178,27 +141,13 @@ const deepTests: Tests = {
           }
           constructor() {
             const subscription = new Subscription(this.deep.tearDown);
+                                                  ~~~~~~~~~~~~~~~~~~ [forbidden]
             subscription.add(this.deep.tearDown);
+                             ~~~~~~~~~~~~~~~~~~ [forbidden]
           }
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 10,
-          column: 43,
-          endLine: 10,
-          endColumn: 61,
-        },
-        {
-          messageId: "forbidden",
-          line: 11,
-          column: 22,
-          endLine: 11,
-          endColumn: 40,
-        },
-      ],
-    },
+      `
+    ),
   ],
 };
 
@@ -257,8 +206,8 @@ const unboundTests: Tests = {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // unbound operator arguments
         import { Observable, of, throwError } from "rxjs";
         import { catchError, map, takeUntil } from "rxjs/operators";
@@ -269,40 +218,20 @@ const unboundTests: Tests = {
           constructor() {
             const ob = of(1).pipe(
               map(this.map),
+                  ~~~~~~~~ [forbidden]
               userland(this.map),
+                       ~~~~~~~~ [forbidden]
               catchError(this.catchError)
+                         ~~~~~~~~~~~~~~~ [forbidden]
             )
           }
           map<T>(t: T): T { return t; }
           catchError(error: any): Observable<never> { return throwError(error); }
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 10,
-          column: 11,
-          endLine: 10,
-          endColumn: 19,
-        },
-        {
-          messageId: "forbidden",
-          line: 11,
-          column: 16,
-          endLine: 11,
-          endColumn: 24,
-        },
-        {
-          messageId: "forbidden",
-          line: 12,
-          column: 18,
-          endLine: 12,
-          endColumn: 33,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // unbound subscribe arguments
         import { of } from "rxjs";
 
@@ -310,69 +239,35 @@ const unboundTests: Tests = {
           constructor() {
             const ob = of(1).subscribe(
               this.next,
+              ~~~~~~~~~ [forbidden]
               this.error,
+              ~~~~~~~~~~ [forbidden]
               this.complete,
+              ~~~~~~~~~~~~~ [forbidden]
             );
           }
           next<T>(t: T): void {}
           error(error: any): void {}
           complete(): void {}
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 7,
-          endLine: 7,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 8,
-          column: 7,
-          endLine: 8,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 9,
-          column: 7,
-          endLine: 9,
-          endColumn: 20,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // unbound teardowns
         import { Subscription } from "rxjs";
 
         class Something {
           constructor() {
             const subscription = new Subscription(this.tearDown);
+                                                  ~~~~~~~~~~~~~ [forbidden]
             subscription.add(this.tearDown);
+                             ~~~~~~~~~~~~~ [forbidden]
           }
           tearDown(): void {}
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 6,
-          column: 43,
-          endLine: 6,
-          endColumn: 56,
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 22,
-          endLine: 7,
-          endColumn: 35,
-        },
-      ],
-    },
+      `
+    ),
   ],
 };
 

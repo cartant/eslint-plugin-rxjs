@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-unsafe-switchmap");
 import { ruleTester } from "../utils";
 
@@ -22,8 +23,7 @@ const setup = stripIndent`
   const PUT_SOMETHING = "PUT_SOMETHING";
   const GetSomething = GET_SOMETHING;
   const PutSomething = PUT_SOMETHING;
-`;
-const setupLines = 14;
+`.replace(/\n/g, "");
 
 ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
   valid: [
@@ -78,127 +78,69 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
     },
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // effect PUT string
         ${setup}
         const pipedPutEffect = actions.pipe(ofType("PUT_SOMETHING"), tap(() => {}), switchMap(() => EMPTY));
+                                                                                    ~~~~~~~~~ [forbidden]
         const pipedMorePutEffect = actions.pipe(ofType("DO_SOMETHING", "PUT_SOMETHING"), tap(() => {}), switchMap(() => EMPTY));
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: setupLines + 2,
-          column: 85,
-          endLine: setupLines + 2,
-          endColumn: 94,
-        },
-        {
-          messageId: "forbidden",
-          line: setupLines + 3,
-          column: 105,
-          endLine: setupLines + 3,
-          endColumn: 114,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                                                                                                        ~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // epic PUT string
         ${setup}
         const pipedPutEpic = (action$: Actions) => action$.pipe(ofType("PUT_SOMETHING"), tap(() => {}), switchMap(() => EMPTY));
+                                                                                                        ~~~~~~~~~ [forbidden]
         const pipedMorePutEpic = (action$: Actions) => action$.pipe(ofType("DO_SOMETHING", "PUT_SOMETHING"), tap(() => {}), switchMap(() => EMPTY));
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: setupLines + 2,
-          column: 105,
-          endLine: setupLines + 2,
-          endColumn: 114,
-        },
-        {
-          messageId: "forbidden",
-          line: setupLines + 3,
-          column: 125,
-          endLine: setupLines + 3,
-          endColumn: 134,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                                                                                                                            ~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // effect PUT symbol
         ${setup}
         const pipedSymbolPutEffect = actions.pipe(ofType(PUT_SOMETHING), tap(() => {}), switchMap(() => EMPTY));
+                                                                                        ~~~~~~~~~ [forbidden]
         const pipedOfTypeCamelCasePutEffect = actions.pipe(ofType(PutSomething), tap(() => {}), switchMap(() => EMPTY));
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: setupLines + 2,
-          column: 89,
-          endLine: setupLines + 2,
-          endColumn: 98,
-        },
-        {
-          messageId: "forbidden",
-          line: setupLines + 3,
-          column: 97,
-          endLine: setupLines + 3,
-          endColumn: 106,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                                                                                                ~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // non-matching allow in options
         ${setup}
         const barEffect = actions.pipe(ofType("BAR"), tap(() => {}), switchMap(() => EMPTY));
+                                                                     ~~~~~~~~~ [forbidden]
         const bazEffect = actions.pipe(ofType("BAZ"), tap(() => {}), switchMap(() => EMPTY));
+                                                                     ~~~~~~~~~ [forbidden]
       `,
-      options: [
-        {
-          allow: ["FOO"],
-        },
-      ],
-      errors: [
-        {
-          messageId: "forbidden",
-          line: setupLines + 2,
-          column: 70,
-          endLine: setupLines + 2,
-          endColumn: 79,
-        },
-        {
-          messageId: "forbidden",
-          line: setupLines + 3,
-          column: 70,
-          endLine: setupLines + 3,
-          endColumn: 79,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      {},
+      {
+        options: [
+          {
+            allow: ["FOO"],
+          },
+        ],
+      }
+    ),
+    fromFixture(
+      stripIndent`
         // matching disallow in options
         ${setup}
         const fooEffect = actions.pipe(ofType("FOO"), tap(() => {}), switchMap(() => EMPTY));
+                                                                     ~~~~~~~~~ [forbidden]
       `,
-      options: [
-        {
-          disallow: ["FOO"],
-        },
-      ],
-      errors: [
-        {
-          messageId: "forbidden",
-          line: setupLines + 2,
-          column: 70,
-          endLine: setupLines + 2,
-          endColumn: 79,
-        },
-      ],
-    },
+      {},
+      {
+        options: [
+          {
+            disallow: ["FOO"],
+          },
+        ],
+      }
+    ),
   ],
 });

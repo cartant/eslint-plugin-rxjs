@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-subject-value");
 import { ruleTester } from "../utils";
 
@@ -16,39 +17,23 @@ ruleTester({ types: true }).run("no-subject-value", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // value property
         import { BehaviorSubject } from "rxjs";
         const subject = new BehaviorSubject<number>(1);
         console.log(subject.value);
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 21,
-          endLine: 4,
-          endColumn: 26,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                            ~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // getValue method
         import { BehaviorSubject } from "rxjs";
         const subject = new BehaviorSubject<number>(1);
         console.log(subject.getValue());
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 21,
-          endLine: 4,
-          endColumn: 29,
-        },
-      ],
-    },
+                            ~~~~~~~~ [forbidden]
+      `
+    ),
   ],
 });

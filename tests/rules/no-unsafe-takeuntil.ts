@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-unsafe-takeuntil");
 import { ruleTester } from "../utils";
 
@@ -54,27 +55,27 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
         // before allowed
         import { of } from "rxjs";
         import {
-            count,
-            defaultIfEmpty,
-            endWith,
-            every,
-            finalize,
-            isEmpty,
-            last,
-            max,
-            min,
-            publish,
-            publishBehavior,
-            publishLast,
-            publishReplay,
-            reduce,
-            share,
-            shareReplay,
-            skipLast,
-            takeLast,
-            takeUntil,
-            throwIfEmpty,
-            toArray
+          count,
+          defaultIfEmpty,
+          endWith,
+          every,
+          finalize,
+          isEmpty,
+          last,
+          max,
+          min,
+          publish,
+          publishBehavior,
+          publishLast,
+          publishReplay,
+          reduce,
+          share,
+          shareReplay,
+          skipLast,
+          takeLast,
+          takeUntil,
+          throwIfEmpty,
+          toArray
         } from "rxjs/operators";
 
         const a = of("a");
@@ -145,8 +146,8 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
     },
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // before switchMap
         import { of } from "rxjs";
         import { switchMap, takeUntil } from "rxjs/operators";
@@ -156,19 +157,11 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
         const c = of("d");
 
         const d = a.pipe(takeUntil(c), switchMap(_ => b)).subscribe();
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 9,
-          column: 18,
-          endLine: 9,
-          endColumn: 27,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                         ~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // before combineLatest
         import { combineLatest, of } from "rxjs";
         import { takeUntil } from "rxjs/operators";
@@ -179,19 +172,11 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
         const d = of("d");
 
         const e = a.pipe(takeUntil(d), s => combineLatest(s, b, c)).subscribe();
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 10,
-          column: 18,
-          endLine: 10,
-          endColumn: 27,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                         ~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // after allowed before switchMap
         import { combineLatest, of } from "rxjs";
         import { takeUntil, tap, switchMap } from "rxjs/operators";
@@ -201,24 +186,19 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
         const c = of("c");
 
         const d = a.pipe(takeUntil(c), tap(value => console.log(value)), switchMap(_ => b)).subscribe();
+                         ~~~~~~~~~ [forbidden]
       `,
-      options: [
-        {
-          allow: ["tap"],
-        },
-      ],
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 9,
-          column: 18,
-          endLine: 9,
-          endColumn: 27,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      {},
+      {
+        options: [
+          {
+            allow: ["tap"],
+          },
+        ],
+      }
+    ),
+    fromFixture(
+      stripIndent`
         // https://github.com/rxjs-tslint-rules/issues/49
         import { fromEventPattern, NEVER } from "rxjs";
         import { map, startWith, takeUntil } from "rxjs/operators";
@@ -235,6 +215,7 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
               (listener: Function) => {}
             ).pipe(
               takeUntil(this._destroy),
+              ~~~~~~~~~ [forbidden]
               startWith(mql),
               map((nextMql: MediaQueryList) => ({}))
             );
@@ -242,19 +223,10 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
             return output;
           }
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 7,
-          endLine: 16,
-          endColumn: 16,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // before switchMap as an alias
         import { of } from "rxjs";
         import { switchMap, takeUntil } from "rxjs/operators";
@@ -266,21 +238,16 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
         const c = of("d");
 
         const d = a.pipe(untilDestroyed(), switchMap(_ => b)).subscribe();
+                         ~~~~~~~~~~~~~~ [forbidden]
       `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 11,
-          column: 18,
-          endLine: 11,
-          endColumn: 32,
-        },
-      ],
-      options: [
-        {
-          alias: ["untilDestroyed"],
-        },
-      ],
-    },
+      {},
+      {
+        options: [
+          {
+            alias: ["untilDestroyed"],
+          },
+        ],
+      }
+    ),
   ],
 });

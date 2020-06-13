@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/prefer-observer");
 import { ruleTester } from "../utils";
 
@@ -180,8 +181,8 @@ ruleTester({ types: true }).run("prefer-observer", rule, {
     },
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // default
         import { of } from "rxjs";
         import { tap } from "rxjs/operators";
@@ -189,153 +190,78 @@ ruleTester({ types: true }).run("prefer-observer", rule, {
         const source = of(42);
 
         source.subscribe(
+               ~~~~~~~~~ [forbidden]
           value => console.log(value),
           error => console.log(error)
         );
         source.subscribe(
+               ~~~~~~~~~ [forbidden]
           value => console.log(value),
           error => console.log(error),
           () => console.log("complete")
         );
         source.subscribe(
+               ~~~~~~~~~ [forbidden]
           value => console.log(value),
           undefined,
           () => console.log("complete")
         );
         source.subscribe(
+               ~~~~~~~~~ [forbidden]
           undefined,
           error => console.log(error)
         );
         source.subscribe(
+               ~~~~~~~~~ [forbidden]
           undefined,
           error => console.log(error),
           () => console.log("complete")
         );
         source.subscribe(
+               ~~~~~~~~~ [forbidden]
           undefined,
           undefined,
           () => console.log("complete")
         );
 
         source.pipe(tap(
+                    ~~~ [forbidden]
           value => console.log(value),
           error => console.log(error)
         )).subscribe();
         source.pipe(tap(
+                    ~~~ [forbidden]
           value => console.log(value),
           error => console.log(error),
           () => console.log("complete")
         )).subscribe();
         source.pipe(tap(
+                    ~~~ [forbidden]
           value => console.log(value),
           undefined,
           () => console.log("complete")
         )).subscribe();
         source.pipe(tap(
+                    ~~~ [forbidden]
           undefined,
           error => console.log(error)
         )).subscribe();
         source.pipe(tap(
+                    ~~~ [forbidden]
           undefined,
           error => console.log(error),
           () => console.log("complete")
         )).subscribe();
         source.pipe(tap(
+                    ~~~ [forbidden]
           undefined,
           undefined,
           () => console.log("complete")
         )).subscribe();
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 8,
-          endLine: 7,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 11,
-          column: 8,
-          endLine: 11,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 8,
-          endLine: 16,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 21,
-          column: 8,
-          endLine: 21,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 25,
-          column: 8,
-          endLine: 25,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 30,
-          column: 8,
-          endLine: 30,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 36,
-          column: 13,
-          endLine: 36,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 40,
-          column: 13,
-          endLine: 40,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 45,
-          column: 13,
-          endLine: 45,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 50,
-          column: 13,
-          endLine: 50,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 54,
-          column: 13,
-          endLine: 54,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 59,
-          column: 13,
-          endLine: 59,
-          endColumn: 16,
-        },
-      ],
-      options: [{}],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // disallow-next
         import { of } from "rxjs";
         import { tap } from "rxjs/operators";
@@ -343,33 +269,20 @@ ruleTester({ types: true }).run("prefer-observer", rule, {
         const source = of(42);
 
         source.subscribe(
+               ~~~~~~~~~ [forbidden]
           value => console.log(value)
         );
 
         source.pipe(tap(
+                    ~~~ [forbidden]
           value => console.log(value)
         )).subscribe();
       `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 8,
-          endLine: 7,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 11,
-          column: 13,
-          endLine: 11,
-          endColumn: 16,
-        },
-      ],
-      options: [{ allowNext: false }],
-    },
-    {
-      code: stripIndent`
+      {},
+      { options: [{ allowNext: false }] }
+    ),
+    fromFixture(
+      stripIndent`
         // named
         import { of } from "rxjs";
         import { tap } from "rxjs/operators";
@@ -381,61 +294,24 @@ ruleTester({ types: true }).run("prefer-observer", rule, {
         const source = of(42);
 
         source.subscribe(nextArrow);
+               ~~~~~~~~~ [forbidden]
         source.subscribe(nextNamed);
+               ~~~~~~~~~ [forbidden]
         source.subscribe(nextNonArrow);
+               ~~~~~~~~~ [forbidden]
 
         source.pipe(tap(nextArrow));
+                    ~~~ [forbidden]
         source.pipe(tap(nextNamed));
+                    ~~~ [forbidden]
         source.pipe(tap(nextNonArrow));
+                    ~~~ [forbidden]
       `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 11,
-          column: 8,
-          endLine: 11,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 12,
-          column: 8,
-          endLine: 12,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 13,
-          column: 8,
-          endLine: 13,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 15,
-          column: 13,
-          endLine: 15,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 13,
-          endLine: 16,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 17,
-          column: 13,
-          endLine: 17,
-          endColumn: 16,
-        },
-      ],
-      options: [{ allowNext: false }],
-    },
-    {
-      code: stripIndent`
+      {},
+      { options: [{ allowNext: false }] }
+    ),
+    fromFixture(
+      stripIndent`
         // non-arrow functions
         import { of } from "rxjs";
         import { tap } from "rxjs/operators";
@@ -443,150 +319,75 @@ ruleTester({ types: true }).run("prefer-observer", rule, {
         const source = of(42);
 
         source.subscribe(
+               ~~~~~~~~~ [forbidden]
           function (value) { console.log(value); },
           function (error) { console.log(error); }
         );
         source.subscribe(
+               ~~~~~~~~~ [forbidden]
           function (value) { console.log(value); },
           function (error) { console.log(error); },
           function () { console.log("complete"); }
         );
         source.subscribe(
+               ~~~~~~~~~ [forbidden]
           function (value) { console.log(value); },
           undefined,
           function () { console.log("complete"); }
         );
         source.subscribe(
+               ~~~~~~~~~ [forbidden]
           undefined,
           function (error) { console.log(error); }
         );
         source.subscribe(
+               ~~~~~~~~~ [forbidden]
           undefined,
           function (error) { console.log(error); },
           function () { console.log("complete"); }
         );
         source.subscribe(
+               ~~~~~~~~~ [forbidden]
           undefined,
           undefined,
           function () { console.log("complete"); }
         );
 
         source.pipe(tap(
+                    ~~~ [forbidden]
           function (value) { console.log(value); },
           function (error) { console.log(error); }
         )).subscribe();
         source.pipe(tap(
+                    ~~~ [forbidden]
           function (value) { console.log(value); },
           function (error) { console.log(error); },
           function () { console.log("complete"); }
         )).subscribe();
         source.pipe(tap(
+                    ~~~ [forbidden]
           function (value) { console.log(value); },
           undefined,
           function () { console.log("complete"); }
         )).subscribe();
         source.pipe(tap(
+                    ~~~ [forbidden]
           undefined,
           function (error) { console.log(error); }
         )).subscribe();
         source.pipe(tap(
+                    ~~~ [forbidden]
           undefined,
           function (error) { console.log(error); },
           function () { console.log("complete"); }
         )).subscribe();
         source.pipe(tap(
+                    ~~~ [forbidden]
           undefined,
           undefined,
           function () { console.log("complete"); }
         )).subscribe();
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 8,
-          endLine: 7,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 11,
-          column: 8,
-          endLine: 11,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 8,
-          endLine: 16,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 21,
-          column: 8,
-          endLine: 21,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 25,
-          column: 8,
-          endLine: 25,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 30,
-          column: 8,
-          endLine: 30,
-          endColumn: 17,
-        },
-        {
-          messageId: "forbidden",
-          line: 36,
-          column: 13,
-          endLine: 36,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 40,
-          column: 13,
-          endLine: 40,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 45,
-          column: 13,
-          endLine: 45,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 50,
-          column: 13,
-          endLine: 50,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 54,
-          column: 13,
-          endLine: 54,
-          endColumn: 16,
-        },
-        {
-          messageId: "forbidden",
-          line: 59,
-          column: 13,
-          endLine: 59,
-          endColumn: 16,
-        },
-      ],
-      options: [{}],
-    },
+      `
+    ),
   ],
 });

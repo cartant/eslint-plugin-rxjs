@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-unsafe-first");
 import { ruleTester } from "../utils";
 
@@ -19,7 +20,7 @@ const setup = stripIndent`
   const actions = of({});
   const actions$ = of({});
   const that = { actions };
-`;
+`.replace(/\n/g, "");
 
 ruleTester({ types: true }).run("no-unsafe-first", rule, {
   valid: [
@@ -127,8 +128,8 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
     },
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // actions first
         ${setup}
         const unsafePipedOfTypeFirstEffect = actions$.pipe(
@@ -136,20 +137,12 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           tap(() => {}),
           switchMap(() => EMPTY),
           first()
+          ~~~~~ [forbidden]
         );
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 17,
-          column: 11,
-          endLine: 17,
-          endColumn: 16,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // actions take
         ${setup}
         const unsafePipedOfTypeTakeEffect = actions.pipe(
@@ -157,20 +150,12 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           tap(() => {}),
           switchMap(() => EMPTY),
           take(1)
+          ~~~~ [forbidden]
         );
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 17,
-          column: 11,
-          endLine: 17,
-          endColumn: 15,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // actions property first
         ${setup}
         const unsafePipedOfTypeFirstEffect = that.actions.pipe(
@@ -178,20 +163,12 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           tap(() => {}),
           switchMap(() => EMPTY),
           first()
+          ~~~~~ [forbidden]
         );
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 17,
-          column: 11,
-          endLine: 17,
-          endColumn: 16,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // actions property take
         ${setup}
         const unsafePipedOfTypeTakeEffect = that.actions.pipe(
@@ -199,20 +176,12 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           tap(() => {}),
           switchMap(() => EMPTY),
           take(1)
+          ~~~~ [forbidden]
         );
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 17,
-          column: 11,
-          endLine: 17,
-          endColumn: 15,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // epic first
         ${setup}
         const unsafePipedOfTypeFirstEpic = (action$: Actions) => action$.pipe(
@@ -220,20 +189,12 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           tap(() => {}),
           switchMap(() => EMPTY),
           first()
+          ~~~~~ [forbidden]
         );
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 17,
-          column: 11,
-          endLine: 17,
-          endColumn: 16,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         //epic take
         ${setup}
         const unsafePipedOfTypeTakeEpic = (action$: Actions) => action$.pipe(
@@ -241,20 +202,12 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           tap(() => {}),
           switchMap(() => EMPTY),
           take(1)
+          ~~~~ [forbidden]
         );
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 17,
-          column: 11,
-          endLine: 17,
-          endColumn: 15,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // matching options
         ${setup}
         const unsafePipedOfTypeTakeEpic = (foo: Actions) => foo.pipe(
@@ -262,22 +215,17 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           tap(() => {}),
           switchMap(() => EMPTY),
           take(1)
+          ~~~~ [forbidden]
         );
       `,
-      options: [
-        {
-          observable: "foo",
-        },
-      ],
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 17,
-          column: 11,
-          endLine: 17,
-          endColumn: 15,
-        },
-      ],
-    },
+      {},
+      {
+        options: [
+          {
+            observable: "foo",
+          },
+        ],
+      }
+    ),
   ],
 });

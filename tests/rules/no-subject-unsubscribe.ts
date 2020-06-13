@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-subject-unsubscribe");
 import { ruleTester } from "../utils";
 
@@ -25,75 +26,43 @@ ruleTester({ types: true }).run("no-subject-unsubscribe", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // unsubscribe Subject
         import { Subject } from "rxjs";
         const b = new Subject<number>();
         b.unsubscribe();
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 3,
-          endLine: 4,
-          endColumn: 14,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+          ~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // unsubscribe AsyncSubject
         import { AsyncSubject } from "rxjs";
         const b = new AsyncSubject<number>();
         b.unsubscribe();
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 3,
-          endLine: 4,
-          endColumn: 14,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+          ~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // compose Subject
         import { Subject, Subscription } from "rxjs";
         const csub = new Subscription();
         const c = new Subject<number>();
         csub.add(c);
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 10,
-          endLine: 5,
-          endColumn: 11,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                 ~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // compose AsyncSubject
         import { AsyncSubject, Subscription } from "rxjs";
         const csub = new Subscription();
         const c = new AsyncSubject<number>();
         csub.add(c);
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 10,
-          endLine: 5,
-          endColumn: 11,
-        },
-      ],
-    },
+                 ~ [forbidden]
+      `
+    ),
   ],
 });

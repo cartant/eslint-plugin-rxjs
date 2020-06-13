@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-internal");
 import { ruleTester } from "../utils";
 
@@ -21,51 +22,23 @@ ruleTester({ types: false }).run("no-internal", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // internal double quote
         import { concat } from "rxjs/internal/observable/concat";
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
         import { map } from "rxjs/internal/operators/map";
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 2,
-          column: 24,
-          endLine: 2,
-          endColumn: 57,
-        },
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 21,
-          endLine: 3,
-          endColumn: 50,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // internal single quote
         import { concat } from 'rxjs/internal/observable/concat';
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
         import { map } from 'rxjs/internal/operators/map';
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 2,
-          column: 24,
-          endLine: 2,
-          endColumn: 57,
-        },
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 21,
-          endLine: 3,
-          endColumn: 50,
-        },
-      ],
-    },
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+      `
+    ),
   ],
 });

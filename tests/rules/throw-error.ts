@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/throw-error");
 import { ruleTester } from "../utils";
 
@@ -56,94 +57,54 @@ ruleTester({ types: true }).run("throw-error", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // throw string
         const a = () => { throw "error"; };
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 2,
-          column: 25,
-          endLine: 2,
-          endColumn: 32,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                                ~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // throw returned string
         const a = () => { throw errorMessage(); };
+                                ~~~~~~~~~~~~~~ [forbidden]
 
         function errorMessage() {
           return "error";
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 2,
-          column: 25,
-          endLine: 2,
-          endColumn: 39,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // throw string variable
         const errorMessage = "Boom!";
 
         const a = () => { throw errorMessage; };
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 25,
-          endLine: 4,
-          endColumn: 37,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                                ~~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // throwError string
         import { throwError } from "rxjs";
 
         const ob1 = throwError("Boom!");
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 24,
-          endLine: 4,
-          endColumn: 31,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                               ~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // throwError returned string
         import { throwError } from "rxjs";
 
         const ob1 = throwError(errorMessage());
+                               ~~~~~~~~~~~~~~ [forbidden]
 
         function errorMessage() {
           return "Boom!";
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 24,
-          endLine: 4,
-          endColumn: 38,
-        },
-      ],
-    },
+      `
+    ),
   ],
 });

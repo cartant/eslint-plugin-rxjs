@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-topromise");
 import { ruleTester } from "../utils";
 
@@ -26,39 +27,23 @@ ruleTester({ types: true }).run("no-topromise", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // observable toPromise
         import { of } from "rxjs";
         const a = of("a");
         a.toPromise().then(value => console.log(value));
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 3,
-          endLine: 4,
-          endColumn: 12,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+          ~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // subject toPromise
         import { Subject } from "rxjs";
         const a = new Subject<string>();
         a.toPromise().then(value => console.log(value));
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 3,
-          endLine: 4,
-          endColumn: 12,
-        },
-      ],
-    },
+          ~~~~~~~~~ [forbidden]
+      `
+    ),
   ],
 });

@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/suffix-subjects");
 import { ruleTester } from "../utils";
 
@@ -230,125 +231,52 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
     },
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // parameters without suffix
         import { Subject } from "rxjs";
 
         function someFunction(
           one: Subject<any>,
+          ~~~ [forbidden]
           some: Subject<any>
+          ~~~~ [forbidden]
         ) {
           console.log(one, some);
         }
 
         class SomeClass {
           constructor(ctor: Subject<any>) {}
+                      ~~~~ [forbidden]
 
           someMethod(some: Subject<any>): Subject<any> {
+                     ~~~~ [forbidden]
             return some;
           }
 
           get another(): Subject<any> {
+              ~~~~~~~ [forbidden]
             return this.ctor;
           }
           set another(some: Subject<any>) {
+              ~~~~~~~ [forbidden]
+                      ~~~~ [forbidden]
             this.ctor = some;
           }
         }
 
         interface SomeInterface {
           someMethod(some: Subject<any>): Subject<any>;
+                     ~~~~ [forbidden]
           new (some: Subject<any>);
+               ~~~~ [forbidden]
           (some: Subject<any>): void;
+           ~~~~ [forbidden]
         }
-      `,
-      errors: [
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 5,
-          column: 3,
-          endLine: 5,
-          endColumn: 6,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 6,
-          column: 3,
-          endLine: 6,
-          endColumn: 7,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 12,
-          column: 15,
-          endLine: 12,
-          endColumn: 19,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 14,
-          column: 14,
-          endLine: 14,
-          endColumn: 18,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 18,
-          column: 7,
-          endLine: 18,
-          endColumn: 14,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 21,
-          column: 7,
-          endLine: 21,
-          endColumn: 14,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 21,
-          column: 15,
-          endLine: 21,
-          endColumn: 19,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 27,
-          column: 14,
-          endLine: 27,
-          endColumn: 18,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 28,
-          column: 8,
-          endLine: 28,
-          endColumn: 12,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 29,
-          column: 4,
-          endLine: 29,
-          endColumn: 8,
-        },
-      ],
-      options: [{}],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // parameters without suffix, but not enforced
         import { Subject } from "rxjs";
 
@@ -367,9 +295,11 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
           }
 
           get another(): Subject<any> {
+              ~~~~~~~ [forbidden]
             return this.ctor;
           }
           set another(some: Subject<any>) {
+              ~~~~~~~ [forbidden]
             this.ctor = some;
           }
         }
@@ -380,248 +310,94 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
           (some: Subject<any>): void;
         }
       `,
-      errors: [
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 18,
-          column: 7,
-          endLine: 18,
-          endColumn: 14,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 21,
-          column: 7,
-          endLine: 21,
-          endColumn: 14,
-        },
-      ],
-      options: [{ parameters: false }],
-    },
-    {
-      code: stripIndent`
+      {},
+      { options: [{ parameters: false }] }
+    ),
+    fromFixture(
+      stripIndent`
         // parameters without explicit suffix
         import { Subject } from "rxjs";
 
         function someFunction(
           one: Subject<any>,
+          ~~~ [forbidden]
           some: Subject<any>
+          ~~~~ [forbidden]
         ) {
           console.log(one, some);
         }
 
         class SomeClass {
           constructor(ctor: Subject<any>) {}
+                      ~~~~ [forbidden]
 
           someMethod(some: Subject<any>): Subject<any> {
+                     ~~~~ [forbidden]
             return some;
           }
 
           get another(): Subject<any> {
+              ~~~~~~~ [forbidden]
             return this.ctor;
           }
           set another(some: Subject<any>) {
+              ~~~~~~~ [forbidden]
+                      ~~~~ [forbidden]
             this.ctor = some;
           }
         }
 
         interface SomeInterface {
           someMethod(some: Subject<any>): Subject<any>;
+                     ~~~~ [forbidden]
           new (some: Subject<any>);
+               ~~~~ [forbidden]
           (some: Subject<any>): void;
+           ~~~~ [forbidden]
         }
       `,
-      errors: [
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 5,
-          column: 3,
-          endLine: 5,
-          endColumn: 6,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 6,
-          column: 3,
-          endLine: 6,
-          endColumn: 7,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 12,
-          column: 15,
-          endLine: 12,
-          endColumn: 19,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 14,
-          column: 14,
-          endLine: 14,
-          endColumn: 18,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 18,
-          column: 7,
-          endLine: 18,
-          endColumn: 14,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 21,
-          column: 7,
-          endLine: 21,
-          endColumn: 14,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 21,
-          column: 15,
-          endLine: 21,
-          endColumn: 19,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 27,
-          column: 14,
-          endLine: 27,
-          endColumn: 18,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 28,
-          column: 8,
-          endLine: 28,
-          endColumn: 12,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 29,
-          column: 4,
-          endLine: 29,
-          endColumn: 8,
-        },
-      ],
-      options: [{ suffix: "Sub" }],
-    },
-    {
-      code: stripIndent`
+      {},
+      { options: [{ suffix: "Sub" }] }
+    ),
+    fromFixture(
+      stripIndent`
         // properties without suffix
         import { Subject } from "rxjs";
 
         const someObject = {
           one: new Subject<any>(),
+          ~~~ [forbidden]
           some: new Subject<any>()
+          ~~~~ [forbidden]
         };
 
         class SomeClass {
           one = new Subject<any>();
+          ~~~ [forbidden]
           some = new Subject<void>();
+          ~~~~ [forbidden]
 
           get another(): Subject<any> {
+              ~~~~~~~ [forbidden]
             return this.subject;
           }
           set another(some: Subject<any>) {
+              ~~~~~~~ [forbidden]
+                      ~~~~ [forbidden]
             this.some = some;
           }
         }
 
         interface SomeInterface {
           one: Subject<any>;
+          ~~~ [forbidden]
           some: Subject<any>;
+          ~~~~ [forbidden]
         }
-      `,
-      errors: [
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 5,
-          column: 3,
-          endLine: 5,
-          endColumn: 6,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 6,
-          column: 3,
-          endLine: 6,
-          endColumn: 7,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 10,
-          column: 3,
-          endLine: 10,
-          endColumn: 6,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 11,
-          column: 3,
-          endLine: 11,
-          endColumn: 7,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 13,
-          column: 7,
-          endLine: 13,
-          endColumn: 14,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 16,
-          column: 7,
-          endLine: 16,
-          endColumn: 14,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 16,
-          column: 15,
-          endLine: 16,
-          endColumn: 19,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 22,
-          column: 3,
-          endLine: 22,
-          endColumn: 6,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 23,
-          column: 3,
-          endLine: 23,
-          endColumn: 7,
-        },
-      ],
-      options: [{}],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // properties without suffix, but not enforced
         import { Subject } from "rxjs";
 
@@ -638,6 +414,7 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
             return this.subject;
           }
           set another(some: Subject<any>) {
+                      ~~~~ [forbidden]
             this.some = some;
           }
         }
@@ -647,266 +424,121 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
           some: Subject<any>;
         }
       `,
-      errors: [
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 16,
-          column: 15,
-          endLine: 16,
-          endColumn: 19,
-        },
-      ],
-      options: [{ properties: false }],
-    },
-    {
-      code: stripIndent`
+      {},
+      { options: [{ properties: false }] }
+    ),
+    fromFixture(
+      stripIndent`
         // properties without explicit suffix
         import { Subject } from "rxjs";
 
         const someObject = {
           one: new Subject<any>(),
+          ~~~ [forbidden]
           some: new Subject<any>()
+          ~~~~ [forbidden]
         };
 
         class SomeClass {
           one = new Subject<any>();
+          ~~~ [forbidden]
           some = new Subject<void>();
+          ~~~~ [forbidden]
 
           get another(): Subject<any> {
+              ~~~~~~~ [forbidden]
             return this.subject;
           }
           set another(some: Subject<any>) {
+              ~~~~~~~ [forbidden]
+                      ~~~~ [forbidden]
             this.some = some;
           }
         }
 
         interface SomeInterface {
           one: Subject<any>;
+          ~~~ [forbidden]
           some: Subject<any>;
+          ~~~~ [forbidden]
         }
       `,
-      errors: [
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 5,
-          column: 3,
-          endLine: 5,
-          endColumn: 6,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 6,
-          column: 3,
-          endLine: 6,
-          endColumn: 7,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 10,
-          column: 3,
-          endLine: 10,
-          endColumn: 6,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 11,
-          column: 3,
-          endLine: 11,
-          endColumn: 7,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 13,
-          column: 7,
-          endLine: 13,
-          endColumn: 14,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 16,
-          column: 7,
-          endLine: 16,
-          endColumn: 14,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 16,
-          column: 15,
-          endLine: 16,
-          endColumn: 19,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 22,
-          column: 3,
-          endLine: 22,
-          endColumn: 6,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 23,
-          column: 3,
-          endLine: 23,
-          endColumn: 7,
-        },
-      ],
-      options: [{ suffix: "Sub" }],
-    },
-    {
-      code: stripIndent`
+      {},
+      { options: [{ suffix: "Sub" }] }
+    ),
+    fromFixture(
+      stripIndent`
         // variables without suffix
         import { Subject } from "rxjs";
 
         const one = new Subject<any>();
+              ~~~ [forbidden]
         const some = new Subject<any>();
-      `,
-      errors: [
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 4,
-          column: 7,
-          endLine: 4,
-          endColumn: 10,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 5,
-          column: 7,
-          endLine: 5,
-          endColumn: 11,
-        },
-      ],
-      options: [{}],
-    },
-    {
-      code: stripIndent`
+              ~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // variables without suffix, but not enforced
         import { Subject } from "rxjs";
 
         const one = new Subject<any>();
         const some = new Subject<any>();
       `,
-      errors: [],
-      options: [{ variables: false }],
-    },
-    {
-      code: stripIndent`
+      {},
+      { options: [{ variables: false }] }
+    ),
+    fromFixture(
+      stripIndent`
         // variables without explicit suffix
         import { Subject } from "rxjs";
 
         const one = new Subject<any>();
+              ~~~ [forbidden]
         const some = new Subject<any>();
+              ~~~~ [forbidden]
       `,
-      errors: [
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 4,
-          column: 7,
-          endLine: 4,
-          endColumn: 10,
-        },
-        {
-          data: { suffix: "Sub" },
-          messageId: "forbidden",
-          line: 5,
-          column: 7,
-          endLine: 5,
-          endColumn: 11,
-        },
-      ],
-      options: [{ suffix: "Sub" }],
-    },
-    {
-      code: stripIndent`
+      {},
+      { options: [{ suffix: "Sub" }] }
+    ),
+    fromFixture(
+      stripIndent`
         // functions and methods with array destructuring
         import { Subject } from "rxjs";
 
         function someFunction([someParam]: Subject<any>[]): void {}
+                               ~~~~~~~~~ [forbidden]
 
         class SomeClass {
           someMethod([someParam]: Subject<any>[]): void {}
+                      ~~~~~~~~~ [forbidden]
         }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 24,
-          endLine: 4,
-          endColumn: 33,
-        },
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 7,
-          column: 15,
-          endLine: 7,
-          endColumn: 24,
-        },
-      ],
-      options: [{}],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // functions and methods with object destructuring
         import { Subject } from "rxjs";
 
         function someFunction({ source }: Record<string, Subject<any>>): void {}
+                                ~~~~~~ [forbidden]
 
         class SomeClass {
           someMethod({ source }: Record<string, Subject<any>>): void {}
+                       ~~~~~~ [forbidden]
         }
-      `,
-      errors: [
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 4,
-          column: 25,
-          endLine: 4,
-          endColumn: 31,
-        },
-        {
-          messageId: "forbidden",
-          line: 7,
-          column: 16,
-          endLine: 7,
-          endColumn: 22,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // parameter property
         import { Subject } from "rxjs";
 
         class SomeClass {
           constructor(public some: Subject<any>) {}
+                             ~~~~ [forbidden]
         }
-      `,
-      errors: [
-        {
-          data: { suffix: "Subject" },
-          messageId: "forbidden",
-          line: 5,
-          column: 22,
-          endLine: 5,
-          endColumn: 26,
-        },
-      ],
-    },
+      `
+    ),
   ],
 });

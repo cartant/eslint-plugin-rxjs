@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-tap");
 import { ruleTester } from "../utils";
 
@@ -19,45 +20,29 @@ ruleTester({ types: false }).run("no-tap", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // tap
         import { of } from "rxjs";
         import { map, tap } from "rxjs/operators";
+                      ~~~ [forbidden]
         const ob = of(1).pipe(
           map(x => x * 2),
           tap(value => console.log(value))
         );
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 15,
-          endLine: 3,
-          endColumn: 18,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // tap alias
         import { of } from "rxjs";
         import { map, tap as tapAlias } from "rxjs/operators";
+                      ~~~ [forbidden]
         const ob = of(1).pipe(
           map(x => x * 2),
           tapAlias(value => console.log(value))
         );
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 3,
-          column: 15,
-          endLine: 3,
-          endColumn: 18,
-        },
-      ],
-    },
+      `
+    ),
   ],
 });

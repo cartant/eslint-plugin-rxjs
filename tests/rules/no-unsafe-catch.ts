@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-unsafe-catch");
 import { ruleTester } from "../utils";
 
@@ -18,7 +19,7 @@ const setup = stripIndent`
   type Actions = Observable<any>;
   const actions = of({});
   const that = { actions };
-`;
+`.replace(/\n/g, "");
 
 ruleTester({ types: true }).run("no-unsafe-catch", rule, {
   valid: [
@@ -105,8 +106,8 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
     },
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // unsafe actions
         ${setup}
         const unsafePipedOfTypeEffect = actions.pipe(
@@ -114,20 +115,12 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
           tap(() => {}),
           switchMap(() => EMPTY),
           catchError(() => EMPTY)
+          ~~~~~~~~~~ [forbidden]
         );
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 11,
-          endLine: 16,
-          endColumn: 21,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // unsafe actions property
         ${setup}
         const unsafePipedOfTypeEffect = that.actions.pipe(
@@ -135,20 +128,12 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
           tap(() => {}),
           switchMap(() => EMPTY),
           catchError(() => EMPTY)
+          ~~~~~~~~~~ [forbidden]
         );
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 11,
-          endLine: 16,
-          endColumn: 21,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // unsafe epic
         ${setup}
         const unsafePipedOfTypeEpic = (action$: Actions) => action$.pipe(
@@ -156,20 +141,12 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
           tap(() => {}),
           switchMap(() => EMPTY),
           catchError(() => EMPTY)
+          ~~~~~~~~~~ [forbidden]
         );
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 11,
-          endLine: 16,
-          endColumn: 21,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // matching options
         ${setup}
         const unsafePipedOfTypeTakeEpic = (foo: Actions) => foo.pipe(
@@ -177,22 +154,17 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
           tap(() => {}),
           switchMap(() => EMPTY),
           catchError(() => EMPTY)
+          ~~~~~~~~~~ [forbidden]
         );
       `,
-      options: [
-        {
-          observable: "foo",
-        },
-      ],
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 16,
-          column: 11,
-          endLine: 16,
-          endColumn: 21,
-        },
-      ],
-    },
+      {},
+      {
+        options: [
+          {
+            observable: "foo",
+          },
+        ],
+      }
+    ),
   ],
 });

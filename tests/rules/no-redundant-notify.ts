@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-redundant-notify");
 import { ruleTester } from "../utils";
 
@@ -77,227 +78,131 @@ ruleTester({ types: true }).run("no-redundant-notify", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // observable complete + next
         import { Observable } from "rxjs";
         const observable = new Observable<number>(observer => {
           observer.complete();
           observer.next(42);
+                   ~~~~ [forbidden]
         })
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 12,
-          endLine: 5,
-          endColumn: 16,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // observable complete + complete
         import { Observable } from "rxjs";
         const observable = new Observable<number>(observer => {
           observer.complete();
           observer.complete();
+                   ~~~~~~~~ [forbidden]
         })
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 12,
-          endLine: 5,
-          endColumn: 20,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // observable complete + error
         import { Observable } from "rxjs";
         const observable = new Observable<number>(observer => {
           observer.complete();
           observer.error(new Error("Kaboom!"));
+                   ~~~~~ [forbidden]
         })
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 12,
-          endLine: 5,
-          endColumn: 17,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // observable error + next
         import { Observable } from "rxjs";
         const observable = new Observable<number>(observer => {
           observer.error(new Error("Kaboom!"));
           observer.next(42);
+                   ~~~~ [forbidden]
         })
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 12,
-          endLine: 5,
-          endColumn: 16,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // observable error + complete
         import { Observable } from "rxjs";
         const observable = new Observable<number>(observer => {
           observer.error(new Error("Kaboom!"));
           observer.complete();
+                   ~~~~~~~~ [forbidden]
         })
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 12,
-          endLine: 5,
-          endColumn: 20,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // observable error + error
         import { Observable } from "rxjs";
         const observable = new Observable<number>(observer => {
           observer.error(new Error("Kaboom!"));
           observer.error(new Error("Kaboom!"));
+                   ~~~~~ [forbidden]
         });
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 12,
-          endLine: 5,
-          endColumn: 17,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // subject complete + next
         import { Subject } from "rxjs";
         const subject = new Subject<number>();
         subject.complete();
         subject.next(42);
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 9,
-          endLine: 5,
-          endColumn: 13,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                ~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // subject complete + complete
         import { Subject } from "rxjs";
         const subject = new Subject<number>();
         subject.complete();
         subject.complete();
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 9,
-          endLine: 5,
-          endColumn: 17,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                ~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // subject complete + error
         import { Subject } from "rxjs";
         const subject = new Subject<number>();
         subject.complete();
         subject.error(new Error("Kaboom!"));
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 9,
-          endLine: 5,
-          endColumn: 14,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                ~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // subject error + next
         import { Subject } from "rxjs";
         const subject = new Subject<number>();
         subject.error(new Error("Kaboom!"));
         subject.next(42);
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 9,
-          endLine: 5,
-          endColumn: 13,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                ~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // subject error + complete
         import { Subject } from "rxjs";
         const subject = new Subject<number>();
         subject.error(new Error("Kaboom!"));
         subject.complete();
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 9,
-          endLine: 5,
-          endColumn: 17,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+                ~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // subject error + error
         import { Subject } from "rxjs";
         const subject = new Subject<number>();
         subject.error(new Error("Kaboom!"));
         subject.error(new Error("Kaboom!"));
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 9,
-          endLine: 5,
-          endColumn: 14,
-        },
-      ],
-    },
+                ~~~~~ [forbidden]
+      `
+    ),
   ],
 });

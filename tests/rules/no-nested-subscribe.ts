@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-nested-subscribe");
 import { ruleTester } from "../utils";
 
@@ -52,170 +53,98 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // nested in next argument
         import { of } from "rxjs";
         of("foo").subscribe(
-            value => of("bar").subscribe()
+          value => of("bar").subscribe()
+                             ~~~~~~~~~ [forbidden]
         );
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 24,
-          endLine: 4,
-          endColumn: 33,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // nested in next property
         import { of } from "rxjs";
         of("foo").subscribe({
-            next: value => of("bar").subscribe()
+          next: value => of("bar").subscribe()
+                                   ~~~~~~~~~ [forbidden]
         });
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 30,
-          endLine: 4,
-          endColumn: 39,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // nested in next method
         import { of } from "rxjs";
         of("foo").subscribe({
-            next(value) { of("bar").subscribe(); }
+          next(value) { of("bar").subscribe(); }
+                                  ~~~~~~~~~ [forbidden]
         });
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 29,
-          endLine: 4,
-          endColumn: 38,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // nested in error argument
         import { of } from "rxjs";
         of("foo").subscribe(
-            undefined,
-            error => of("bar").subscribe()
+          undefined,
+          error => of("bar").subscribe()
+                             ~~~~~~~~~ [forbidden]
         );
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 24,
-          endLine: 5,
-          endColumn: 33,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // nested in error property
         import { of } from "rxjs";
         of("foo").subscribe({
           error: error => of("bar").subscribe()
+                                    ~~~~~~~~~ [forbidden]
         });
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 29,
-          endLine: 4,
-          endColumn: 38,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // nested in error method
         import { of } from "rxjs";
         of("foo").subscribe({
           error(error) { of("bar").subscribe(); }
+                                   ~~~~~~~~~ [forbidden]
         });
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 28,
-          endLine: 4,
-          endColumn: 37,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // nested in complete argument
         import { of } from "rxjs";
         of("foo").subscribe(
           undefined,
           undefined,
           () => of("bar").subscribe()
+                          ~~~~~~~~~ [forbidden]
         );
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 6,
-          column: 19,
-          endLine: 6,
-          endColumn: 28,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // nested in complete property
         import { of } from "rxjs";
         of("foo").subscribe({
           complete: () => of("bar").subscribe()
+                                    ~~~~~~~~~ [forbidden]
         });
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 29,
-          endLine: 4,
-          endColumn: 38,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // nested in complete method
         import { of } from "rxjs";
         of("foo").subscribe({
           complete() { of("bar").subscribe(); }
+                                 ~~~~~~~~~ [forbidden]
         });
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 26,
-          endLine: 4,
-          endColumn: 35,
-        },
-      ],
-    },
+      `
+    ),
   ],
 });

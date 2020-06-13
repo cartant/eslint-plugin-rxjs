@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-unsafe-subject-next");
 import { ruleTester } from "../utils";
 
@@ -62,39 +63,23 @@ ruleTester({ types: true }).run("no-unsafe-subject-next", rule, {
     },
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // optional number next
         import { Subject } from "rxjs";
         const s = new Subject<number>();
         s.next();
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 3,
-          endLine: 4,
-          endColumn: 7,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+          ~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // optional replay number next
         import { ReplaySubject } from "rxjs";
         const s = new ReplaySubject<number>();
         s.next();
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 3,
-          endLine: 4,
-          endColumn: 7,
-        },
-      ],
-    },
+          ~~~~ [forbidden]
+      `
+    ),
   ],
 });
