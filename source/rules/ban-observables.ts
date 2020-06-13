@@ -3,31 +3,36 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
 import { stripIndent } from "common-tags";
-import { Rule } from "eslint";
-import * as es from "estree";
+import { ruleCreator } from "../utils";
 
-const rule: Rule.RuleModule = {
+const defaultOptions: Record<string, boolean | string>[] = [];
+
+const rule = ruleCreator({
+  defaultOptions,
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Forbids the use of banned observables.",
-      recommended: false
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "RxJS observable is banned: {{name}}{{explanation}}."
+      forbidden: "RxJS observable is banned: {{name}}{{explanation}}.",
     },
     schema: [
       {
         type: "object",
         description: stripIndent`
           An object containing keys that are names of observable factory functions
-          and values that are either booleans or strings containing the explanation for the ban.`
-      }
-    ]
+          and values that are either booleans or strings containing the explanation for the ban.`,
+      },
+    ],
+    type: "problem",
   },
-  create: context => {
+  name: "ban-observables",
+  create: (context, unused: typeof defaultOptions) => {
     let bans: { explanation: string; regExp: RegExp }[] = [];
 
     const [config] = context.options;
@@ -39,7 +44,7 @@ const rule: Rule.RuleModule = {
       if (value !== false) {
         bans.push({
           explanation: typeof value === "string" ? value : "",
-          regExp: new RegExp(`^${key}$`)
+          regExp: new RegExp(`^${key}$`),
         });
       }
     });
@@ -51,8 +56,8 @@ const rule: Rule.RuleModule = {
           const explanation = ban.explanation ? `: ${ban.explanation}` : "";
           return {
             messageId: "forbidden",
-            data: { name, explanation }
-          };
+            data: { name, explanation },
+          } as const;
         }
       }
       return undefined;
@@ -67,12 +72,12 @@ const rule: Rule.RuleModule = {
         if (failure) {
           context.report({
             ...failure,
-            node: identifier
+            node: identifier,
           });
         }
-      }
+      },
     };
-  }
-};
+  },
+});
 
 export = rule;

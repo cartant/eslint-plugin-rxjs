@@ -4,9 +4,10 @@
     "url": "https://github.com/cartant/eslint-plugin-rxjs/issues"
   },
   "dependencies": {
+    "@typescript-eslint/experimental-utils": "^3.2.0",
     "common-tags": "^1.8.0",
     "decamelize": "^4.0.0",
-    "eslint-etc": "^0.0.17",
+    "eslint-etc": "^0.0.21",
     "requireindex": "~1.2.0",
     "tslib": "^2.0.0",
     "tsutils": "^3.0.0",

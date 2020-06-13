@@ -3,19 +3,15 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
-import {
-  getParent,
-  isCallExpression,
-  isMemberExpression,
-  typecheck,
-} from "../utils";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { getParent, isCallExpression, isMemberExpression } from "eslint-etc";
+import { ruleCreator, typecheck } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Forbids the passing of unbound methods.",
       recommended: false,
     },
@@ -23,8 +19,10 @@ const rule: Rule.RuleModule = {
     messages: {
       forbidden: "Unbound methods are forbidden.",
     },
-    schema: [],
+    schema: null,
+    type: "problem",
   },
+  name: "no-unbound-methods",
   create: (context) => {
     const { couldBeObservable, couldBeSubscription, getTSType } = typecheck(
       context
@@ -85,6 +83,6 @@ const rule: Rule.RuleModule = {
       },
     };
   },
-};
+});
 
 export = rule;

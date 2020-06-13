@@ -63,6 +63,7 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       `,
       errors: [
         {
+          messageId: "forbidden",
           line: 8,
           column: 3,
           endLine: 8,
@@ -84,6 +85,7 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       `,
       errors: [
         {
+          messageId: "forbidden",
           line: 8,
           column: 3,
           endLine: 8,
@@ -109,6 +111,7 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       `,
       errors: [
         {
+          messageId: "forbidden",
           line: 8,
           column: 3,
           endLine: 8,
@@ -134,6 +137,7 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       `,
       errors: [
         {
+          messageId: "forbidden",
           line: 8,
           column: 3,
           endLine: 8,
@@ -155,6 +159,7 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       `,
       errors: [
         {
+          messageId: "forbidden",
           line: 8,
           column: 3,
           endLine: 8,
@@ -176,6 +181,7 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       `,
       errors: [
         {
+          messageId: "forbidden",
           line: 8,
           column: 3,
           endLine: 8,
@@ -201,6 +207,7 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       `,
       errors: [
         {
+          messageId: "forbidden",
           line: 8,
           column: 3,
           endLine: 8,
@@ -226,6 +233,7 @@ ruleTester({ types: true }).run("no-ignored-notifier", rule, {
       `,
       errors: [
         {
+          messageId: "forbidden",
           line: 8,
           column: 3,
           endLine: 8,

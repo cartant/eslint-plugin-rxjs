@@ -3,35 +3,41 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
-import { typecheck } from "../utils";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { isIdentifier } from "eslint-etc";
+import { ruleCreator, typecheck } from "../utils";
 
 const defaultAllowedTypesRegExp = /^EventEmitter$/;
+const defaultOptions: {
+  allowProtected?: boolean;
+}[] = [];
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions,
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Forbids exposed (i.e. non-private) subjects.",
-      recommended: false
+      recommended: false,
     },
     fixable: null,
     messages: {
       forbidden: "Subject '{{subject}}' must be private.",
       forbiddenAllowProtected:
-        "Subject '{{subject}}' must be private or protected."
+        "Subject '{{subject}}' must be private or protected.",
     },
     schema: [
       {
         properties: {
-          allowProtected: { type: "boolean" }
+          allowProtected: { type: "boolean" },
         },
-        type: "object"
-      }
-    ]
+        type: "object",
+      },
+    ],
+    type: "problem",
   },
-  create: context => {
+  name: "no-exposed-subjects",
+  create: (context, unused: typeof defaultOptions) => {
     const [config = {}] = context.options;
     const { allowProtected = false } = config;
     const { couldBeSubject, couldBeType } = typecheck(context);
@@ -49,17 +55,19 @@ const rule: Rule.RuleModule = {
 
     return {
       [`ClassProperty[accessibility!=${accessibilityRexExp}]`]: (
-        node: es.Node // there is no `es.ClassProperty` type
+        node: es.ClassProperty
       ) => {
         if (isSubject(node)) {
-          const key = (node as any).key as es.Identifier;
-          context.report({
-            messageId,
-            node: key,
-            data: {
-              subject: key.name
-            }
-          });
+          const { key } = node;
+          if (isIdentifier(key)) {
+            context.report({
+              messageId,
+              node: key,
+              data: {
+                subject: key.name,
+              },
+            });
+          }
         }
       },
       [`MethodDefinition[kind='constructor'] > FunctionExpression > TSParameterProperty[accessibility!=${accessibilityRexExp}] > Identifier`]: (
@@ -73,12 +81,12 @@ const rule: Rule.RuleModule = {
               ...loc,
               end: {
                 ...loc.start,
-                column: loc.start.column + node.name.length
-              }
+                column: loc.start.column + node.name.length,
+              },
             },
             data: {
-              subject: node.name
-            }
+              subject: node.name,
+            },
           });
         }
       },
@@ -91,8 +99,8 @@ const rule: Rule.RuleModule = {
             messageId,
             node: key,
             data: {
-              subject: key.name
-            }
+              subject: key.name,
+            },
           });
         }
       },
@@ -116,13 +124,13 @@ const rule: Rule.RuleModule = {
             messageId,
             node: key,
             data: {
-              subject: key.name
-            }
+              subject: key.name,
+            },
           });
         }
-      }
+      },
     };
-  }
-};
+  },
+});
 
 export = rule;

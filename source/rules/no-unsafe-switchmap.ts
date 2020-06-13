@@ -3,23 +3,24 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
 import { stripIndent } from "common-tags";
 import decamelize from "decamelize";
-import { Rule } from "eslint";
-import * as es from "estree";
+import { isCallExpression, isIdentifier, isLiteral } from "eslint-etc";
 import { defaultObservable } from "../constants";
-import {
-  createRegExpForWords,
-  isCallExpression,
-  isIdentifier,
-  isLiteral,
-  typecheck,
-} from "../utils";
+import { createRegExpForWords, ruleCreator, typecheck } from "../utils";
 
-const rule: Rule.RuleModule = {
+const defaultOptions: {
+  allow?: string | string[];
+  disallow?: string | string[];
+  observable?: string;
+}[] = [];
+
+const rule = ruleCreator({
+  defaultOptions,
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Forbids unsafe `switchMap` usage in effects and epics.",
       recommended: false,
     },
@@ -59,8 +60,10 @@ const rule: Rule.RuleModule = {
         `,
       },
     ],
+    type: "problem",
   },
-  create: (context) => {
+  name: "no-unsafe-switchmap",
+  create: (context, unused: typeof defaultOptions) => {
     const defaultDisallow = [
       "add",
       "create",
@@ -155,6 +158,6 @@ const rule: Rule.RuleModule = {
       [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]`]: checkNode,
     };
   },
-};
+});
 
 export = rule;

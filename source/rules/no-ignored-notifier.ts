@@ -3,18 +3,15 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
-import {
-  isArrowFunctionExpression,
-  isFunctionExpression,
-  typecheck,
-} from "../utils";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { isArrowFunctionExpression, isFunctionExpression } from "eslint-etc";
+import { ruleCreator, typecheck } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description:
         "Forbids observables not composed from the `repeatWhen` or `retryWhen` notifier.",
       recommended: false,
@@ -23,8 +20,10 @@ const rule: Rule.RuleModule = {
     messages: {
       forbidden: "Ignoring the notifier is forbidden.",
     },
-    schema: [],
+    schema: null,
+    type: "problem",
   },
+  name: "no-ignored-notifier",
   create: (context) => {
     const { couldBeMonoTypeOperatorFunction } = typecheck(context);
 
@@ -91,6 +90,6 @@ const rule: Rule.RuleModule = {
       },
     };
   },
-};
+});
 
 export = rule;

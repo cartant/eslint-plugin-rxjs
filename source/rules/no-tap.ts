@@ -3,23 +3,26 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { ruleCreator } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Forbids the use of the `tap` operator.",
-      recommended: false
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "The tap operator is forbidden."
+      forbidden: "The tap operator is forbidden.",
     },
-    schema: []
+    schema: null,
+    type: "problem",
   },
-  create: context => {
+  name: "no-tap",
+  create: (context) => {
     return {
       "ImportDeclaration[source.value='rxjs/operators'] > ImportSpecifier[imported.name='tap']": (
         node: es.ImportSpecifier
@@ -31,13 +34,13 @@ const rule: Rule.RuleModule = {
             ...loc,
             end: {
               ...loc.start,
-              column: loc.start.column + 3
-            }
-          }
+              column: loc.start.column + 3,
+            },
+          },
         });
-      }
+      },
     };
-  }
-};
+  },
+});
 
 export = rule;

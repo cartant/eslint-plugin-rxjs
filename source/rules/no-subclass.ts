@@ -3,24 +3,26 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
-import { typecheck } from "../utils";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { ruleCreator, typecheck } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Forbids subclassing RxJS classes.",
-      recommended: false
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "Subclassing RxJS classes is forbidden."
+      forbidden: "Subclassing RxJS classes is forbidden.",
     },
-    schema: []
+    schema: null,
+    type: "problem",
   },
-  create: context => {
+  name: "no-subclass",
+  create: (context) => {
     const { couldBeType } = typecheck(context);
 
     const queryNames = [
@@ -30,7 +32,7 @@ const rule: Rule.RuleModule = {
       "ReplaySubject",
       "Scheduler",
       "Subject",
-      "Subscriber"
+      "Subscriber",
     ];
 
     return {
@@ -38,18 +40,18 @@ const rule: Rule.RuleModule = {
         "|"
       )})$/] > Identifier.superClass`]: (node: es.Identifier) => {
         if (
-          queryNames.some(name =>
+          queryNames.some((name) =>
             couldBeType(node, name, { name: /[\/\\]rxjs[\/\\]/ })
           )
         ) {
           context.report({
             messageId: "forbidden",
-            node
+            node,
           });
         }
-      }
+      },
     };
-  }
-};
+  },
+});
 
 export = rule;

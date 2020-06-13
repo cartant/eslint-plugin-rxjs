@@ -3,14 +3,15 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
-import { getParent } from "../utils";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { getParent } from "eslint-etc";
+import { ruleCreator } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description:
         "Forbids using `ReplaySubject`, `publishReplay` or `shareReplay` without specifying the buffer size.",
       recommended: false,
@@ -19,8 +20,10 @@ const rule: Rule.RuleModule = {
     messages: {
       forbidden: "Ignoring the buffer size is forbidden.",
     },
-    schema: [],
+    schema: null,
+    type: "problem",
   },
+  name: "no-ignored-replay-buffer",
   create: (context) => {
     function checkNode(
       node: es.Node,
@@ -56,6 +59,6 @@ const rule: Rule.RuleModule = {
       },
     };
   },
-};
+});
 
 export = rule;

@@ -3,15 +3,15 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import { getLoc } from "eslint-etc";
-import * as es from "estree";
-import { getParent, typecheck } from "../utils";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { getLoc, getParent } from "eslint-etc";
+import { ruleCreator, typecheck } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Forbids the use of Finnish notation.",
       recommended: false,
     },
@@ -19,8 +19,10 @@ const rule: Rule.RuleModule = {
     messages: {
       forbidden: "Finnish notation is forbidden.",
     },
-    schema: [],
+    schema: null,
+    type: "problem",
   },
+  name: "no-finnish",
   create: (context) => {
     const { couldBeObservable, couldReturnObservable, nodeMap } = typecheck(
       context
@@ -103,6 +105,6 @@ const rule: Rule.RuleModule = {
         checkNode(node.id, node.init || node),
     };
   },
-};
+});
 
 export = rule;

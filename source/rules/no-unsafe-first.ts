@@ -3,16 +3,21 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
 import { stripIndent } from "common-tags";
-import { Rule } from "eslint";
-import * as es from "estree";
+import { isCallExpression, isIdentifier } from "eslint-etc";
 import { defaultObservable } from "../constants";
-import { isCallExpression, isIdentifier, typecheck } from "../utils";
+import { ruleCreator, typecheck } from "../utils";
 
-const rule: Rule.RuleModule = {
+const defaultOptions: {
+  observable?: string;
+}[] = [];
+
+const rule = ruleCreator({
+  defaultOptions,
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Forbids unsafe `first`/`take` usage in effects and epics.",
       recommended: false,
     },
@@ -32,8 +37,10 @@ const rule: Rule.RuleModule = {
           The property can be specified as a regular expression string and is used to identify the action observables from which effects and epics are composed.`,
       },
     ],
+    type: "problem",
   },
-  create: (context) => {
+  name: "no-unsafe-first",
+  create: (context, unused: typeof defaultOptions) => {
     const invalidOperatorsRegExp = /^(take|first)$/;
 
     const [config = {}] = context.options;
@@ -68,6 +75,6 @@ const rule: Rule.RuleModule = {
       [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]`]: checkNode,
     };
   },
-};
+});
 
 export = rule;

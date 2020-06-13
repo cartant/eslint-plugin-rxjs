@@ -97,7 +97,7 @@
     semver "^7.3.2"
     tsutils "^3.17.1"
 
-"@typescript-eslint/experimental-utils@3.2.0":
+"@typescript-eslint/experimental-utils@3.2.0", "@typescript-eslint/experimental-utils@^3.2.0":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-3.2.0.tgz#4dab8fc9f44f059ec073470a81bb4d7d7d51e6c5"
   integrity sha512-UbJBsk+xO9dIFKtj16+m42EvUvsjZbbgQ2O5xSTSfVT1Z3yGkL90DVu0Hd3029FZ5/uBgl+F3Vo8FAcEcqc6aQ==
@@ -637,10 +637,12 @@ escape-string-regexp@1.0.5, escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-etc@^0.0.17:
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-0.0.17.tgz#9f9bd7aba5e7dcde9982d529b30dbc0df19cdec7"
-  integrity sha512-XgsUWpxhYmdy9OJt82Wky8wmOtTYU1ed37z1KKVCRGZHzrbg2dCcFf/DOJAsk5kx3KqawPJ7hdKBS55qpHTeBQ==
+eslint-etc@^0.0.21:
+  version "0.0.21"
+  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-0.0.21.tgz#c25c530f043a11bb3cbb0b26ab70012b9042e7fb"
+  integrity sha512-VAc+LPFoLjKfByXDp9m/a3h2W7pxKpYZHrTOyv+EnNXour8EDYj/vbZWWsO7nutHkt2lIIbSy9DZz6VkcUtBqg==
+  dependencies:
+    "@typescript-eslint/experimental-utils" "^3.2.0"
 
 eslint-import-resolver-node@^0.3.3:
   version "0.3.3"

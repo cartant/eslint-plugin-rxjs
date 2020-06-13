@@ -3,18 +3,19 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
-import {
-  isArrowFunctionExpression,
-  isFunctionExpression,
-  typecheck,
-} from "../utils";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { isArrowFunctionExpression, isFunctionExpression } from "eslint-etc";
+import { ruleCreator, typecheck } from "../utils";
 
-const rule: Rule.RuleModule = {
+const defaultOptions: {
+  allowNext?: boolean;
+}[] = [];
+
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description:
         "Forbids the passing separate callbacks to `subscribe` and `tap`.",
       recommended: false,
@@ -32,8 +33,10 @@ const rule: Rule.RuleModule = {
         type: "object",
       },
     ],
+    type: "problem",
   },
-  create: (context) => {
+  name: "prefer-observer",
+  create: (context, unused: typeof defaultOptions) => {
     const { couldBeFunction } = typecheck(context);
     const [config = {}] = context.options;
     const { allowNext = true } = config;
@@ -69,6 +72,6 @@ const rule: Rule.RuleModule = {
       ) => checkArgs(node, (node.callee as es.MemberExpression).property),
     };
   },
-};
+});
 
 export = rule;

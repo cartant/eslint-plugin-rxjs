@@ -3,23 +3,26 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
-import { getParent, isArrayExpression, isObjectExpression } from "../utils";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { getParent, isArrayExpression, isObjectExpression } from "eslint-etc";
+import { ruleCreator } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Forbids explicit generic type arguments.",
-      recommended: true,
+      recommended: false,
     },
     fixable: null,
     messages: {
       forbidden: "Explicit generic type arguments are forbidden.",
     },
-    schema: [],
+    schema: null,
+    type: "problem",
   },
+  name: "no-explicit-generics",
   create: (context) => {
     function report(node: es.Node) {
       context.report({
@@ -57,6 +60,6 @@ const rule: Rule.RuleModule = {
       "NewExpression[typeParameters.params.length > 0][arguments.0.value='N'] > Identifier[name='Notification']": checkNotifications,
     };
   },
-};
+});
 
 export = rule;

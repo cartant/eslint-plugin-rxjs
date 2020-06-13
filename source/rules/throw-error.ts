@@ -3,14 +3,14 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
-import { typecheck } from "../utils";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { ruleCreator, typecheck } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description:
         "Enforces the passing of `Error` values to error notifications.",
       recommended: false,
@@ -19,8 +19,10 @@ const rule: Rule.RuleModule = {
     messages: {
       forbidden: "Passing non-Error values are forbidden.",
     },
-    schema: [],
+    schema: null,
+    type: "problem",
   },
+  name: "throw-error",
   create: (context) => {
     const { isAny, couldBeError, couldBeObservable } = typecheck(context);
 
@@ -42,6 +44,6 @@ const rule: Rule.RuleModule = {
       },
     };
   },
-};
+});
 
 export = rule;

@@ -8,6 +8,7 @@ import rule = require("../../source/rules/no-create");
 import { ruleTester } from "../utils";
 
 ruleTester({ types: true }).run("no-create", rule, {
+  valid: [],
   invalid: [
     {
       code: stripIndent`

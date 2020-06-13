@@ -3,32 +3,39 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { ruleCreator } from "../utils";
 
-const rule: Rule.RuleModule = {
+const defaultOptions: {
+  allowConfig?: boolean;
+}[] = [];
+
+const rule = ruleCreator({
+  defaultOptions,
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Forbids using the `shareReplay` operator.",
-      recommended: true
+      recommended: false,
     },
     fixable: null,
     messages: {
       forbidden: "shareReplay is forbidden.",
       forbiddenWithoutConfig:
-        "shareReplay is forbidden unless a config argument is passed."
+        "shareReplay is forbidden unless a config argument is passed.",
     },
     schema: [
       {
         properties: {
-          allowConfig: { type: "boolean" }
+          allowConfig: { type: "boolean" },
         },
-        type: "object"
-      }
-    ]
+        type: "object",
+      },
+    ],
+    type: "problem",
   },
-  create: context => {
+  name: "no-sharereplay",
+  create: (context, unused: typeof defaultOptions) => {
     const [config = {}] = context.options;
     const { allowConfig = false } = config;
     return {
@@ -44,12 +51,12 @@ const rule: Rule.RuleModule = {
         if (report) {
           context.report({
             messageId: allowConfig ? "forbiddenWithoutConfig" : "forbidden",
-            node: node.callee
+            node: node.callee,
           });
         }
-      }
+      },
     };
-  }
-};
+  },
+});
 
 export = rule;

@@ -3,23 +3,26 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
-import { getParent, typecheck } from "../utils";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { getParent } from "eslint-etc";
+import { ruleCreator, typecheck } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Forbids passing `async` functions to `subscribe`.",
-      recommended: true,
+      recommended: false,
     },
     fixable: null,
     messages: {
       forbidden: "Passing async functions to subscribe is forbidden.",
     },
-    schema: [],
+    schema: null,
+    type: "problem",
   },
+  name: "no-async-subscribe",
   create: (context) => {
     const { couldBeObservable } = typecheck(context);
 
@@ -51,6 +54,6 @@ const rule: Rule.RuleModule = {
       "CallExpression[callee.property.name='subscribe'] > ArrowFunctionExpression[async=true]": checkNode,
     };
   },
-};
+});
 
 export = rule;

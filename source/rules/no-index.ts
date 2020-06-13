@@ -3,34 +3,37 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { ruleCreator } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Forbids the importation from index modules.",
-      recommended: true
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "RxJS imports from index modules are forbidden."
+      forbidden: "RxJS imports from index modules are forbidden.",
     },
-    schema: []
+    schema: null,
+    type: "problem",
   },
-  create: context => {
+  name: "no-index",
+  create: (context) => {
     return {
       [String.raw`ImportDeclaration Literal[value=/^rxjs(?:\u002f\w+)?\u002findex/]`]: (
         node: es.Literal
       ) => {
         context.report({
           messageId: "forbidden",
-          node
+          node,
         });
-      }
+      },
     };
-  }
-};
+  },
+});
 
 export = rule;

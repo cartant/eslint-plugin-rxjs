@@ -3,25 +3,27 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
-import { typecheck } from "../utils";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { ruleCreator, typecheck } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description:
         "Forbids calling the `unsubscribe` method of a subject instance.",
-      recommended: true
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "Calling unsubscribe on a subject is forbidden."
+      forbidden: "Calling unsubscribe on a subject is forbidden.",
     },
-    schema: []
+    schema: null,
+    type: "problem",
   },
-  create: context => {
+  name: "no-subject-unsubscribe",
+  create: (context) => {
     const { couldBeSubject, couldBeSubscription } = typecheck(context);
 
     return {
@@ -31,7 +33,7 @@ const rule: Rule.RuleModule = {
         if (couldBeSubject(node.object)) {
           context.report({
             messageId: "forbidden",
-            node: node.property
+            node: node.property,
           });
         }
       },
@@ -44,13 +46,13 @@ const rule: Rule.RuleModule = {
           if (couldBeSubject(arg)) {
             context.report({
               messageId: "forbidden",
-              node: arg
+              node: arg,
             });
           }
         }
-      }
+      },
     };
-  }
-};
+  },
+});
 
 export = rule;

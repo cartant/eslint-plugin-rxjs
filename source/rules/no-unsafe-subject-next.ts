@@ -3,26 +3,29 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { isMemberExpression } from "eslint-etc";
 import * as tsutils from "tsutils";
 import { couldBeType, isReferenceType, isUnionType } from "tsutils-etc";
 import * as ts from "typescript";
-import { isMemberExpression, typecheck } from "../utils";
+import { ruleCreator, typecheck } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Forbids unsafe optional `next` calls.",
-      recommended: true,
+      recommended: false,
     },
     fixable: null,
     messages: {
       forbidden: "Unsafe optional next calls are forbidden.",
     },
-    schema: [],
+    schema: null,
+    type: "problem",
   },
+  name: "no-unsafe-subject-next",
   create: (context) => {
     const { nodeMap, typeChecker } = typecheck(context);
     return {
@@ -61,6 +64,6 @@ const rule: Rule.RuleModule = {
       },
     };
   },
-};
+});
 
 export = rule;

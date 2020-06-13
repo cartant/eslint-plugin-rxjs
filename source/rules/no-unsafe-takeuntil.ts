@@ -3,15 +3,21 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
 import { stripIndent } from "common-tags";
-import { Rule } from "eslint";
-import * as es from "estree";
-import { getParent, isCallExpression, isIdentifier, typecheck } from "../utils";
+import { getParent, isCallExpression, isIdentifier } from "eslint-etc";
+import { ruleCreator, typecheck } from "../utils";
 
-const rule: Rule.RuleModule = {
+const defaultOptions: {
+  alias?: string[];
+  allow?: string[];
+}[] = [];
+
+const rule = ruleCreator({
+  defaultOptions,
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Forbids the application of operators after `takeUntil`.",
       recommended: false,
     },
@@ -32,8 +38,10 @@ const rule: Rule.RuleModule = {
           The \`allow\` property is an array containing the names of the operators that are allowed to follow \`takeUntil\`.`,
       },
     ],
+    type: "problem",
   },
-  create: (context) => {
+  name: "no-unsafe-takeuntil",
+  create: (context, unused: typeof defaultOptions) => {
     let checkedOperatorsRegExp = /^takeUntil$/;
     const allowedOperators = [
       "count",
@@ -99,6 +107,6 @@ const rule: Rule.RuleModule = {
       },
     };
   },
-};
+});
 
 export = rule;

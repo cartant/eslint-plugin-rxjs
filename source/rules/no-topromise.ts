@@ -3,24 +3,26 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
-import { typecheck } from "../utils";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { ruleCreator, typecheck } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Forbids the use of the `toPromise` method.",
-      recommended: false
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "The toPromise method is forbidden."
+      forbidden: "The toPromise method is forbidden.",
     },
-    schema: []
+    schema: null,
+    type: "problem",
   },
-  create: context => {
+  name: "no-topromise",
+  create: (context) => {
     const { couldBeObservable } = typecheck(context);
     return {
       [`MemberExpression[property.name="toPromise"]`]: (
@@ -29,12 +31,12 @@ const rule: Rule.RuleModule = {
         if (couldBeObservable(node.object)) {
           context.report({
             messageId: "forbidden",
-            node: node.property
+            node: node.property,
           });
         }
-      }
+      },
     };
-  }
-};
+  },
+});
 
 export = rule;

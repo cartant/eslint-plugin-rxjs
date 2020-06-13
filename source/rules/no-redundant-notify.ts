@@ -3,8 +3,10 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule, SourceCode } from "eslint";
-import * as es from "estree";
+import {
+  TSESLint as eslint,
+  TSESTree as es,
+} from "@typescript-eslint/experimental-utils";
 import {
   getParent,
   isBlockStatement,
@@ -12,24 +14,27 @@ import {
   isIdentifier,
   isMemberExpression,
   isProgram,
-  typecheck
-} from "../utils";
+} from "eslint-etc";
+import { ruleCreator, typecheck } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description:
         "Forbids redundant notifications from completed or errored observables.",
-      recommended: true
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "Redundant notifications are forbidden."
+      forbidden: "Redundant notifications are forbidden.",
     },
-    schema: []
+    schema: null,
+    type: "problem",
   },
-  create: context => {
+  name: "no-redundant-notify",
+  create: (context) => {
     const sourceCode = context.getSourceCode();
     const { couldBeType } = typecheck(context);
     return {
@@ -63,19 +68,19 @@ const rule: Rule.RuleModule = {
             if (isIdentifier(property)) {
               context.report({
                 messageId: "forbidden",
-                node: property
+                node: property,
               });
             }
           }
         }
-      }
+      },
     };
-  }
-};
+  },
+});
 
 function getExpressionText(
   expressionStatement: es.ExpressionStatement,
-  sourceCode: SourceCode
+  sourceCode: eslint.SourceCode
 ): string | undefined {
   if (!isCallExpression(expressionStatement.expression)) {
     return undefined;

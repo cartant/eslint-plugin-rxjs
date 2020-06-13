@@ -3,14 +3,14 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
+import { TSESLint as eslint } from "@typescript-eslint/experimental-utils";
 import { stripIndent } from "common-tags";
-import * as eslint from "eslint";
 import rule = require("../../source/rules/no-unbound-methods");
 import { ruleTester } from "../utils";
 
 interface Tests {
-  valid?: (string | eslint.RuleTester.ValidTestCase)[];
-  invalid?: eslint.RuleTester.InvalidTestCase[];
+  valid?: (string | eslint.ValidTestCase<unknown[]>)[];
+  invalid?: eslint.InvalidTestCase<string, unknown[]>[];
 }
 
 const arrowTests: Tests = {

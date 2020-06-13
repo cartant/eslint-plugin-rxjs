@@ -3,23 +3,26 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { ruleCreator } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Enforces the use of a `just` alias for `of`.",
-      recommended: false
+      recommended: false,
     },
     fixable: "code",
     messages: {
-      forbidden: "Use just alias."
+      forbidden: "Use just alias.",
     },
-    schema: []
+    schema: null,
+    type: "problem",
   },
-  create: context => {
+  name: "just",
+  create: (context) => {
     return {
       "ImportDeclaration[source.value='rxjs'] > ImportSpecifier[imported.name='of']": (
         node: es.ImportSpecifier
@@ -35,20 +38,21 @@ const rule: Rule.RuleModule = {
         context.report({
           messageId: "forbidden",
           node,
-          fix: fixer => fixer.replaceTextRange(node.range, "of as just")
+          fix: (fixer) => fixer.replaceTextRange(node.range, "of as just"),
         });
 
         const [ofImport] = context.getDeclaredVariables(node);
-        ofImport.references.forEach(ref => {
+        ofImport.references.forEach((ref) => {
           context.report({
             messageId: "forbidden",
             node: ref.identifier,
-            fix: fixer => fixer.replaceTextRange(ref.identifier.range, "just")
+            fix: (fixer) =>
+              fixer.replaceTextRange(ref.identifier.range, "just"),
           });
         });
-      }
+      },
     };
-  }
-};
+  },
+});
 
 export = rule;

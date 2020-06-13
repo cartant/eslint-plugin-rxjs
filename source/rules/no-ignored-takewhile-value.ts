@@ -3,14 +3,15 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
-import { isIdentifier } from "../utils";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { isIdentifier } from "eslint-etc";
+import { ruleCreator } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description: "Forbids ignoring the value within `takeWhile`.",
       recommended: false,
     },
@@ -18,8 +19,10 @@ const rule: Rule.RuleModule = {
     messages: {
       forbidden: "Ignoring the value within takeWhile is forbidden.",
     },
-    schema: [],
+    schema: null,
+    type: "problem",
   },
+  name: "no-ignored-takewhile-value",
   create: (context) => {
     function checkNode(
       expression: es.ArrowFunctionExpression | es.FunctionExpression
@@ -52,6 +55,6 @@ const rule: Rule.RuleModule = {
       ) => checkNode(node),
     };
   },
-};
+});
 
 export = rule;

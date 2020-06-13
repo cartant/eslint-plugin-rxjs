@@ -3,25 +3,28 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { Rule } from "eslint";
-import * as es from "estree";
-import { getParent, typecheck } from "../utils";
+import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { getParent } from "eslint-etc";
+import { ruleCreator, typecheck } from "../utils";
 
-const rule: Rule.RuleModule = {
+const rule = ruleCreator({
+  defaultOptions: [],
   meta: {
     docs: {
-      category: "RxJS",
+      category: "Best Practices",
       description:
         "Forbids the calling of `subscribe` without specifying an error handler.",
-      recommended: false
+      recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "Calling subscribe without an error handler is forbidden."
+      forbidden: "Calling subscribe without an error handler is forbidden.",
     },
-    schema: []
+    schema: null,
+    type: "problem",
   },
-  create: context => {
+  name: "no-ignored-error",
+  create: (context) => {
     const { couldBeObservable, isReferenceType, couldBeFunction } = typecheck(
       context
     );
@@ -41,12 +44,12 @@ const rule: Rule.RuleModule = {
         ) {
           context.report({
             messageId: "forbidden",
-            node
+            node,
           });
         }
-      }
+      },
     };
-  }
-};
+  },
+});
 
 export = rule;
