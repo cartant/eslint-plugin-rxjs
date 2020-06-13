@@ -55,6 +55,14 @@ ruleTester({ types: true }).run("throw-error", rule, {
       declare const callback: Function;
       callback();
     `,
+    stripIndent`
+      https://github.com/cartant/rxjs-tslint-rules/issues/85
+      try {
+        throw new Error("error");
+      } catch (error: any) {
+        throw error;
+      }
+    `,
   ],
   invalid: [
     fromFixture(
@@ -104,6 +112,20 @@ ruleTester({ types: true }).run("throw-error", rule, {
         function errorMessage() {
           return "Boom!";
         }
+      `
+    ),
+    fromFixture(
+      stripIndent`
+        https://github.com/cartant/rxjs-tslint-rules/issues/86
+        const a = () => { throw "error"; };
+                                ~~~~~~~ [forbidden]
+        const b = () => { throw new Error("error"); };
+        const c = () => {
+          throw Object.assign(
+            new Error("Not Found"),
+            { code: "NOT_FOUND" }
+          );
+        };
       `
     ),
   ],
