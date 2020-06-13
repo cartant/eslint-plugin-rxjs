@@ -4,6 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
+import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/just");
 import { ruleTester } from "../utils";
 
@@ -17,12 +18,12 @@ ruleTester({ types: true }).run("just", rule, {
       }
 
       function bar(of: Function): void {
-          of();
+        of();
       }
 
       function baz(): void {
-          const of = () => {};
-          of();
+        const of = () => {};
+        of();
       }
     `,
     stripIndent`
@@ -39,91 +40,69 @@ ruleTester({ types: true }).run("just", rule, {
     `,
   ],
   invalid: [
-    {
-      code: stripIndent`
+    fromFixture(
+      stripIndent`
         // imported of
         import { of } from "rxjs";
+                 ~~ [forbidden]
 
         const a = of("a");
+                  ~~ [forbidden]
         const b = of("b");
+                  ~~ [forbidden]
       `,
-      output: stripIndent`
-        // imported of
-        import { of as just } from "rxjs";
+      {},
+      {
+        output: stripIndent`
+          // imported of
+          import { of as just } from "rxjs";
 
-        const a = just("a");
-        const b = just("b");
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 2,
-          column: 10,
-          endLine: 2,
-          endColumn: 12,
-        },
-        {
-          messageId: "forbidden",
-          line: 4,
-          column: 11,
-          endLine: 4,
-          endColumn: 13,
-        },
-        {
-          messageId: "forbidden",
-          line: 5,
-          column: 11,
-          endLine: 5,
-          endColumn: 13,
-        },
-      ],
-    },
-    {
-      code: stripIndent`
+          const a = just("a");
+          const b = just("b");
+        `,
+      }
+    ),
+    fromFixture(
+      stripIndent`
         // imported of with non-RxJS of
         import { of } from "rxjs";
+                 ~~ [forbidden]
 
         function foo(): void {
-            function of(): void {}
-            of();
+          function of(): void {}
+          of();
         }
 
         function bar(of: Function): void {
-            of();
+          of();
         }
 
         function baz(): void {
-            const of = () => {};
-            of();
+          const of = () => {};
+          of();
         }
       `,
-      output: stripIndent`
-        // imported of with non-RxJS of
-        import { of as just } from "rxjs";
+      {},
+      {
+        output: stripIndent`
+          // imported of with non-RxJS of
+          import { of as just } from "rxjs";
 
-        function foo(): void {
+          function foo(): void {
             function of(): void {}
             of();
-        }
+          }
 
-        function bar(of: Function): void {
+          function bar(of: Function): void {
             of();
-        }
+          }
 
-        function baz(): void {
+          function baz(): void {
             const of = () => {};
             of();
-        }
-      `,
-      errors: [
-        {
-          messageId: "forbidden",
-          line: 2,
-          column: 10,
-          endLine: 2,
-          endColumn: 12,
-        },
-      ],
-    },
+          }
+        `,
+      }
+    ),
   ],
 });
