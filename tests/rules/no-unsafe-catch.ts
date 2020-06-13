@@ -166,5 +166,30 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
         ],
       }
     ),
+    fromFixture(
+      stripIndent`
+        // https://github.com/cartant/rxjs-tslint-rules/issues/96
+        import { Observable } from "rxjs";
+        import { catchError, map } from "rxjs/operators";
+
+        class SomeComponent {
+
+          actions$: Observable<Action>;
+
+          @Effect()
+          initialiseAppointments$ = this.actions$.pipe(
+            ofType(AppointmentsActions.Type.Initialise),
+            this.getAppointmentSessionParametersFromURL(),
+            this.updateAppointmentSessionIfDeprecated(),
+            map(
+              (appointmentSession: AppointmentSession) =>
+                new AppointmentsActions.InitialiseSuccess(appointmentSession)
+            ),
+            catchError(() => of(new AppointmentsActions.InitialiseError())),
+            ~~~~~~~~~~ [forbidden]
+          );
+        }
+      `
+    ),
   ],
 });
