@@ -637,10 +637,10 @@ escape-string-regexp@1.0.5, escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-etc@^0.0.23:
-  version "0.0.23"
-  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-0.0.23.tgz#e565cab3471b11bd973dbbf1b0ba29dce8ffe977"
-  integrity sha512-EvI3UGuMU/Rmu99kSDaiA0SNz7mGnkK6W7g8XRrGKkhQthWgsED5gut6ldA/u2yKAP4fJ/cn0pBoqLLL5QCs/A==
+eslint-etc@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-1.0.0.tgz#035c43eb8d5f0df2f2d5357cdd15674e613eb3b6"
+  integrity sha512-dS3iPqm4bicxJ6O+vkI5Cl8HCtXikXiLZkdYRVzRyYwWlWcj4K5+cV6aNFjsf+clI59goDVw1qUxjVa4gpprJA==
   dependencies:
     "@typescript-eslint/experimental-utils" "^3.2.0"
     tsutils "^3.17.1"
