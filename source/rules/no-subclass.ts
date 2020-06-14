@@ -4,7 +4,8 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { ruleCreator, typecheck } from "../utils";
+import { getTypeServices } from "eslint-etc";
+import { ruleCreator } from "../utils";
 
 const rule = ruleCreator({
   defaultOptions: [],
@@ -23,7 +24,7 @@ const rule = ruleCreator({
   },
   name: "no-subclass",
   create: (context) => {
-    const { couldBeType } = typecheck(context);
+    const { couldBeType } = getTypeServices(context);
 
     const queryNames = [
       "AsyncSubject",

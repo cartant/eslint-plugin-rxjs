@@ -4,9 +4,8 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { couldBeFunction } from "tsutils-etc";
-import * as ts from "typescript";
-import { ruleCreator, typecheck } from "../utils";
+import { getTypeServices } from "eslint-etc";
+import { ruleCreator } from "../utils";
 
 const rule = ruleCreator({
   defaultOptions: [],
@@ -25,7 +24,7 @@ const rule = ruleCreator({
   },
   name: "no-connectable",
   create: (context) => {
-    const { nodeMap, typeChecker } = typecheck(context);
+    const { couldBeFunction } = getTypeServices(context);
     return {
       "CallExpression[callee.name='multicast']": (node: es.CallExpression) => {
         if (node.arguments.length === 1) {
@@ -38,12 +37,7 @@ const rule = ruleCreator({
       "CallExpression[callee.name=/^(publish|publishBehavior|publishLast|publishReplay)$/]": (
         node: es.CallExpression
       ) => {
-        const callExpression = nodeMap.get(node) as ts.CallExpression;
-        if (
-          !callExpression.arguments.some((arg) =>
-            couldBeFunction(typeChecker.getTypeAtLocation(arg))
-          )
-        ) {
+        if (!node.arguments.some((arg) => couldBeFunction(arg))) {
           context.report({
             messageId: "forbidden",
             node: node.callee,

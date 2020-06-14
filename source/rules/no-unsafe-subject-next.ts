@@ -4,11 +4,11 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { isMemberExpression } from "eslint-etc";
+import { getTypeServices, isMemberExpression } from "eslint-etc";
 import * as tsutils from "tsutils";
 import { couldBeType, isReferenceType, isUnionType } from "tsutils-etc";
 import * as ts from "typescript";
-import { ruleCreator, typecheck } from "../utils";
+import { ruleCreator } from "../utils";
 
 const rule = ruleCreator({
   defaultOptions: [],
@@ -27,7 +27,7 @@ const rule = ruleCreator({
   },
   name: "no-unsafe-subject-next",
   create: (context) => {
-    const { nodeMap, typeChecker } = typecheck(context);
+    const { nodeMap, typeChecker } = getTypeServices(context);
     return {
       [`CallExpression[callee.property.name='next']`]: (
         node: es.CallExpression

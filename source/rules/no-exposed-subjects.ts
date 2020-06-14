@@ -4,8 +4,8 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { isIdentifier } from "eslint-etc";
-import { ruleCreator, typecheck } from "../utils";
+import { getTypeServices, isIdentifier } from "eslint-etc";
+import { ruleCreator } from "../utils";
 
 const defaultAllowedTypesRegExp = /^EventEmitter$/;
 const defaultOptions: {
@@ -40,7 +40,7 @@ const rule = ruleCreator({
   create: (context, unused: typeof defaultOptions) => {
     const [config = {}] = context.options;
     const { allowProtected = false } = config;
-    const { couldBeSubject, couldBeType } = typecheck(context);
+    const { couldBeSubject, couldBeType } = getTypeServices(context);
 
     const messageId = allowProtected ? "forbiddenAllowProtected" : "forbidden";
     const accessibilityRexExp = allowProtected

@@ -4,7 +4,8 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { ruleCreator, typecheck } from "../utils";
+import { getTypeServices } from "eslint-etc";
+import { ruleCreator } from "../utils";
 
 const rule = ruleCreator({
   defaultOptions: [],
@@ -24,7 +25,7 @@ const rule = ruleCreator({
   },
   name: "no-subject-unsubscribe",
   create: (context) => {
-    const { couldBeSubject, couldBeSubscription } = typecheck(context);
+    const { couldBeSubject, couldBeSubscription } = getTypeServices(context);
 
     return {
       "MemberExpression[property.name='unsubscribe']": (

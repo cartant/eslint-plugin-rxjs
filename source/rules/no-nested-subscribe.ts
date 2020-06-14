@@ -4,8 +4,8 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { getParent } from "eslint-etc";
-import { ruleCreator, typecheck } from "../utils";
+import { getParent, getTypeServices } from "eslint-etc";
+import { ruleCreator } from "../utils";
 
 const rule = ruleCreator({
   defaultOptions: [],
@@ -25,7 +25,7 @@ const rule = ruleCreator({
   },
   name: "no-nested-subscribe",
   create: (context) => {
-    const { couldBeObservable } = typecheck(context);
+    const { couldBeObservable } = getTypeServices(context);
     const subscribeCallMap = new WeakMap<es.Node, void>();
     return {
       [`CallExpression > MemberExpression[property.name='subscribe']`]: (

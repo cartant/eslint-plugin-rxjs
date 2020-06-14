@@ -4,8 +4,13 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { getParent, isCallExpression, isMemberExpression } from "eslint-etc";
-import { ruleCreator, typecheck } from "../utils";
+import {
+  getParent,
+  getTypeServices,
+  isCallExpression,
+  isMemberExpression,
+} from "eslint-etc";
+import { ruleCreator } from "../utils";
 
 const rule = ruleCreator({
   defaultOptions: [],
@@ -24,14 +29,14 @@ const rule = ruleCreator({
   },
   name: "no-unbound-methods",
   create: (context) => {
-    const { couldBeObservable, couldBeSubscription, getTSType } = typecheck(
+    const { couldBeObservable, couldBeSubscription, getType } = getTypeServices(
       context
     );
     const nodeMap = new WeakMap<es.Node, void>();
 
     function mapArguments(node: es.CallExpression | es.NewExpression) {
       node.arguments.filter(isMemberExpression).forEach((arg) => {
-        const argType = getTSType(arg);
+        const argType = getType(arg);
         if (argType.getCallSignatures().length > 0) {
           nodeMap.set(arg);
         }

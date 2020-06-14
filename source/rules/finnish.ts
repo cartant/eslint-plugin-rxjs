@@ -4,8 +4,8 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { findParent, getLoc, getParent } from "eslint-etc";
-import { ruleCreator, typecheck } from "../utils";
+import { findParent, getLoc, getParent, getTypeServices } from "eslint-etc";
+import { ruleCreator } from "../utils";
 
 const defaultOptions: {
   functions?: boolean;
@@ -53,7 +53,7 @@ const rule = ruleCreator({
       couldReturnObservable,
       couldReturnType,
       nodeMap,
-    } = typecheck(context);
+    } = getTypeServices(context);
     const [config = {}] = context.options;
 
     const validate = {

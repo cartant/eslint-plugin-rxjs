@@ -5,8 +5,13 @@
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
 import { stripIndent } from "common-tags";
-import { getParent, isCallExpression, isIdentifier } from "eslint-etc";
-import { ruleCreator, typecheck } from "../utils";
+import {
+  getParent,
+  getTypeServices,
+  isCallExpression,
+  isIdentifier,
+} from "eslint-etc";
+import { ruleCreator } from "../utils";
 
 const defaultOptions: {
   alias?: string[];
@@ -75,7 +80,7 @@ const rule = ruleCreator({
       );
     }
 
-    const { couldBeObservable, isReferenceType } = typecheck(context);
+    const { couldBeObservable, isReferenceType } = getTypeServices(context);
 
     return {
       [`CallExpression[callee.property.name='pipe'] > CallExpression[callee.name=${checkedOperatorsRegExp}]`]: (

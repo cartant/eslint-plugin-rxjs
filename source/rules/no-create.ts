@@ -4,8 +4,8 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { getParent } from "eslint-etc";
-import { ruleCreator, typecheck } from "../utils";
+import { getParent, getTypeServices } from "eslint-etc";
+import { ruleCreator } from "../utils";
 
 const rule = ruleCreator({
   defaultOptions: [],
@@ -24,7 +24,7 @@ const rule = ruleCreator({
   },
   name: "no-create",
   create: (context) => {
-    const { couldBeObservable } = typecheck(context);
+    const { couldBeObservable } = getTypeServices(context);
 
     return {
       "CallExpression > MemberExpression[object.name='Observable'] > Identifier[name='create']": (

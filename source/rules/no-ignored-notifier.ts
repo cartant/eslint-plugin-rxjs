@@ -4,8 +4,12 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { isArrowFunctionExpression, isFunctionExpression } from "eslint-etc";
-import { ruleCreator, typecheck } from "../utils";
+import {
+  getTypeServices,
+  isArrowFunctionExpression,
+  isFunctionExpression,
+} from "eslint-etc";
+import { ruleCreator } from "../utils";
 
 const rule = ruleCreator({
   defaultOptions: [],
@@ -25,7 +29,7 @@ const rule = ruleCreator({
   },
   name: "no-ignored-notifier",
   create: (context) => {
-    const { couldBeMonoTypeOperatorFunction } = typecheck(context);
+    const { couldBeMonoTypeOperatorFunction } = getTypeServices(context);
 
     type Entry = {
       node: es.Node;

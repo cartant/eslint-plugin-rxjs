@@ -7,13 +7,14 @@ import { TSESTree as es } from "@typescript-eslint/experimental-utils";
 import { stripIndent } from "common-tags";
 import decamelize from "decamelize";
 import {
+  getTypeServices,
   isCallExpression,
   isIdentifier,
   isLiteral,
   isMemberExpression,
 } from "eslint-etc";
 import { defaultObservable } from "../constants";
-import { createRegExpForWords, ruleCreator, typecheck } from "../utils";
+import { createRegExpForWords, ruleCreator } from "../utils";
 
 const defaultOptions: {
   allow?: string | string[];
@@ -95,7 +96,7 @@ const rule = ruleCreator({
       observableRegExp = new RegExp(defaultObservable);
     }
 
-    const { couldBeObservable, isReferenceType } = typecheck(context);
+    const { couldBeObservable, isReferenceType } = getTypeServices(context);
 
     function shouldDisallow(args: es.Node[]): boolean {
       const names = args

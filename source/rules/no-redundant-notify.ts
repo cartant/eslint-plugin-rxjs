@@ -9,13 +9,14 @@ import {
 } from "@typescript-eslint/experimental-utils";
 import {
   getParent,
+  getTypeServices,
   isBlockStatement,
   isCallExpression,
   isIdentifier,
   isMemberExpression,
   isProgram,
 } from "eslint-etc";
-import { ruleCreator, typecheck } from "../utils";
+import { ruleCreator } from "../utils";
 
 const rule = ruleCreator({
   defaultOptions: [],
@@ -36,7 +37,7 @@ const rule = ruleCreator({
   name: "no-redundant-notify",
   create: (context) => {
     const sourceCode = context.getSourceCode();
-    const { couldBeType } = typecheck(context);
+    const { couldBeType } = getTypeServices(context);
     return {
       "ExpressionStatement[expression.callee.property.name=/^(complete|error)$/] + ExpressionStatement[expression.callee.property.name=/^(next|complete|error)$/]": (
         node: es.ExpressionStatement

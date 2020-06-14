@@ -4,8 +4,8 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { getParent } from "eslint-etc";
-import { ruleCreator, typecheck } from "../utils";
+import { getParent, getTypeServices } from "eslint-etc";
+import { ruleCreator } from "../utils";
 
 const rule = ruleCreator({
   defaultOptions: [],
@@ -26,7 +26,7 @@ const rule = ruleCreator({
   },
   name: "no-subject-value",
   create: (context) => {
-    const { couldBeBehaviorSubject } = typecheck(context);
+    const { couldBeBehaviorSubject } = getTypeServices(context);
 
     return {
       "Identifier[name=/^(value|getValue)$/]": (node: es.Identifier) => {

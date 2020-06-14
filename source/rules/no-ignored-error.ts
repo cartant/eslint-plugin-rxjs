@@ -4,8 +4,8 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { getParent } from "eslint-etc";
-import { ruleCreator, typecheck } from "../utils";
+import { getParent, getTypeServices } from "eslint-etc";
+import { ruleCreator } from "../utils";
 
 const rule = ruleCreator({
   defaultOptions: [],
@@ -25,9 +25,11 @@ const rule = ruleCreator({
   },
   name: "no-ignored-error",
   create: (context) => {
-    const { couldBeObservable, isReferenceType, couldBeFunction } = typecheck(
-      context
-    );
+    const {
+      couldBeObservable,
+      isReferenceType,
+      couldBeFunction,
+    } = getTypeServices(context);
 
     return {
       "CallExpression[arguments.length > 0] > MemberExpression > Identifier[name='subscribe']": (

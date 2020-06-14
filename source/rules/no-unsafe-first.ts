@@ -5,9 +5,9 @@
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
 import { stripIndent } from "common-tags";
-import { isCallExpression, isIdentifier } from "eslint-etc";
+import { getTypeServices, isCallExpression, isIdentifier } from "eslint-etc";
 import { defaultObservable } from "../constants";
-import { ruleCreator, typecheck } from "../utils";
+import { ruleCreator } from "../utils";
 
 const defaultOptions: {
   observable?: string;
@@ -47,7 +47,7 @@ const rule = ruleCreator({
     const { observable = defaultObservable } = config;
     const observableRegExp = new RegExp(observable);
 
-    const { couldBeObservable, isReferenceType } = typecheck(context);
+    const { couldBeObservable, isReferenceType } = getTypeServices(context);
 
     function checkNode(node: es.CallExpression) {
       if (

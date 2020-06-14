@@ -4,8 +4,12 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { isArrowFunctionExpression, isFunctionExpression } from "eslint-etc";
-import { ruleCreator, typecheck } from "../utils";
+import {
+  getTypeServices,
+  isArrowFunctionExpression,
+  isFunctionExpression,
+} from "eslint-etc";
+import { ruleCreator } from "../utils";
 
 const defaultOptions: {
   allowNext?: boolean;
@@ -37,7 +41,7 @@ const rule = ruleCreator({
   },
   name: "prefer-observer",
   create: (context, unused: typeof defaultOptions) => {
-    const { couldBeFunction } = typecheck(context);
+    const { couldBeFunction } = getTypeServices(context);
     const [config = {}] = context.options;
     const { allowNext = true } = config;
 
