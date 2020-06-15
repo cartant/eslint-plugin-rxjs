@@ -16,7 +16,7 @@ const defaultOptions: {
 }[] = [];
 
 const rule = ruleCreator({
-  defaultOptions: [],
+  defaultOptions,
   meta: {
     docs: {
       category: "Best Practices",
