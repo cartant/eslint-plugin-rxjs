@@ -258,6 +258,16 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
         }
       `,
     },
+    {
+      code: stripIndent`
+        // variables without suffix, but not enforced
+        import { Subject } from "rxjs";
+
+        const one = new Subject<any>();
+        const some = new Subject<any>();
+      `,
+      options: [{ variables: false }],
+    },
   ],
   invalid: [
     fromFixture(
@@ -505,17 +515,6 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
         const some = new Subject<any>();
               ~~~~ [forbidden]
       `
-    ),
-    fromFixture(
-      stripIndent`
-        // variables without suffix, but not enforced
-        import { Subject } from "rxjs";
-
-        const one = new Subject<any>();
-        const some = new Subject<any>();
-      `,
-      {},
-      { options: [{ variables: false }] }
     ),
     fromFixture(
       stripIndent`

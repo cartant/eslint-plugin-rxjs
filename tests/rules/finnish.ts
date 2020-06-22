@@ -75,6 +75,79 @@ ruleTester({ types: true }).run("finnish", rule, {
       `,
       options: [{}],
     },
+    {
+      code: stripIndent`
+        // functions without $, but not enforced
+        import { Observable, of } from "rxjs";
+
+        const someObservable$ = of(0);
+        const someArray = [someObservable$];
+        function someFunction(someParam$: Observable<any>): Observable<any> { return someParam$; }
+      `,
+      options: [{ functions: false }],
+    },
+    {
+      code: stripIndent`
+        // methods without $, but not enforced
+        import { Observable } from "rxjs";
+
+        class SomeClass {
+          someMethod(someParam$: Observable<any>): Observable<any> { return someParam$; }
+        }
+
+        interface SomeInterface {
+          someMethod(someParam$: Observable<any>): Observable<any>;
+        }
+      `,
+      options: [{ methods: false }],
+    },
+    {
+      code: stripIndent`
+        // parameters without $, but not enforced
+        import { Observable, of } from "rxjs";
+
+        const someObservable$ = of(0);
+        const someArray = [someObservable$];
+        someArray.forEach(function (element: Observable<any>): void {});
+        someArray.forEach((element: Observable<any>) => {});
+
+        function someFunction$(someParam: Observable<any>): Observable<any> { return someParam; }
+
+        class SomeClass {
+          constructor(someParam: Observable<any>) {}
+          set someSetter$(someParam: Observable<any>) {}
+          someMethod$(someParam: Observable<any>): Observable<any> { return someParam; }
+        }
+
+        interface SomeInterface {
+          someMethod$(someParam: Observable<any>): Observable<any>;
+          new (someParam$: Observable<any>);
+          (someParam$: Observable<any>): void;
+        }
+      `,
+      options: [{ parameters: false }],
+    },
+    {
+      code: stripIndent`
+        // properties without $, but not enforced
+        import { Observable, of } from "rxjs";
+
+        const someObservable$ = of(0);
+        const someEmptyObject = {};
+        const someObject = { ...someEmptyObject, someKey: someObservable$ };
+
+        class SomeClass {
+          someProperty: Observable<any>;
+          get someGetter(): Observable<any> { throw new Error("Some error."); }
+          set someSetter(someParam$: Observable<any>) {}
+        }
+
+        interface SomeInterface {
+          someProperty: Observable<any>;
+        }
+      `,
+      options: [{ properties: false }],
+    },
   ],
   invalid: [
     fromFixture(
@@ -154,20 +227,6 @@ ruleTester({ types: true }).run("finnish", rule, {
     ),
     fromFixture(
       stripIndent`
-        // functions without $, but not enforced
-        import { Observable, of } from "rxjs";
-
-        const someObservable$ = of(0);
-        const someArray = [someObservable$];
-        function someFunction(someParam$: Observable<any>): Observable<any> { return someParam$; }
-      `,
-      {},
-      {
-        options: [{ functions: false }],
-      }
-    ),
-    fromFixture(
-      stripIndent`
         // methods without $
         import { Observable } from "rxjs";
 
@@ -181,22 +240,6 @@ ruleTester({ types: true }).run("finnish", rule, {
           ~~~~~~~~~~ [forbidden]
         }
       `
-    ),
-    fromFixture(
-      stripIndent`
-        // methods without $, but not enforced
-        import { Observable } from "rxjs";
-
-        class SomeClass {
-          someMethod(someParam$: Observable<any>): Observable<any> { return someParam$; }
-        }
-
-        interface SomeInterface {
-          someMethod(someParam$: Observable<any>): Observable<any>;
-        }
-      `,
-      {},
-      { options: [{ methods: false }] }
     ),
     fromFixture(
       stripIndent`
@@ -234,33 +277,6 @@ ruleTester({ types: true }).run("finnish", rule, {
     ),
     fromFixture(
       stripIndent`
-        // parameters without $, but not enforced
-        import { Observable, of } from "rxjs";
-
-        const someObservable$ = of(0);
-        const someArray = [someObservable$];
-        someArray.forEach(function (element: Observable<any>): void {});
-        someArray.forEach((element: Observable<any>) => {});
-
-        function someFunction$(someParam: Observable<any>): Observable<any> { return someParam; }
-
-        class SomeClass {
-          constructor(someParam: Observable<any>) {}
-          set someSetter$(someParam: Observable<any>) {}
-          someMethod$(someParam: Observable<any>): Observable<any> { return someParam; }
-        }
-
-        interface SomeInterface {
-          someMethod$(someParam: Observable<any>): Observable<any>;
-          new (someParam$: Observable<any>);
-          (someParam$: Observable<any>): void;
-        }
-      `,
-      {},
-      { options: [{ parameters: false }] }
-    ),
-    fromFixture(
-      stripIndent`
         // properties without $
         import { Observable, of } from "rxjs";
 
@@ -283,28 +299,6 @@ ruleTester({ types: true }).run("finnish", rule, {
           ~~~~~~~~~~~~ [forbidden]
         }
       `
-    ),
-    fromFixture(
-      stripIndent`
-        // properties without $, but not enforced
-        import { Observable, of } from "rxjs";
-
-        const someObservable$ = of(0);
-        const someEmptyObject = {};
-        const someObject = { ...someEmptyObject, someKey: someObservable$ };
-
-        class SomeClass {
-          someProperty: Observable<any>;
-          get someGetter(): Observable<any> { throw new Error("Some error."); }
-          set someSetter(someParam$: Observable<any>) {}
-        }
-
-        interface SomeInterface {
-          someProperty: Observable<any>;
-        }
-      `,
-      {},
-      { options: [{ properties: false }] }
     ),
     fromFixture(
       stripIndent`
