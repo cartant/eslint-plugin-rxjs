@@ -62,6 +62,9 @@ const rule = ruleCreator({
         }
         if (isArrowFunctionExpression(arg) || isFunctionExpression(arg)) {
           const [param] = arg.params;
+          if (!param) {
+            return;
+          }
           if (hasTypeAnnotation(param)) {
             const { typeAnnotation } = param;
             const {

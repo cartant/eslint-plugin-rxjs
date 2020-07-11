@@ -12,6 +12,28 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
   valid: [
     {
       code: stripIndent`
+        // arrow; no parameter
+        import { throwError } from "rxjs";
+        import { catchError } from "rxjs/operators";
+
+        throwError("Kaboom!").pipe(
+          catchError(() => console.error("Whoops!"))
+        );
+      `,
+    },
+    {
+      code: stripIndent`
+        // non-arrow; no parameter
+        import { throwError } from "rxjs";
+        import { catchError } from "rxjs/operators";
+
+        throwError("Kaboom!").pipe(
+          catchError(function () { console.error("Whoops!"); })
+        );
+      `,
+    },
+    {
+      code: stripIndent`
         // arrow; explicit unknown; default option
         import { throwError } from "rxjs";
         import { catchError } from "rxjs/operators";
