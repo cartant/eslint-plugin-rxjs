@@ -12,7 +12,7 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
   valid: [
     {
       code: stripIndent`
-        // explicit unknown; default option
+        // arrow; explicit unknown; default option
         import { throwError } from "rxjs";
         import { catchError } from "rxjs/operators";
 
@@ -23,7 +23,18 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
     },
     {
       code: stripIndent`
-        // explicit unknown; explicit option
+        // non-arrow; explicit unknown; default option
+        import { throwError } from "rxjs";
+        import { catchError } from "rxjs/operators";
+
+        throwError("Kaboom!").pipe(
+          catchError(function (error: unknown) { console.error(error); })
+        );
+      `,
+    },
+    {
+      code: stripIndent`
+        // arrow; explicit unknown; explicit option
         import { throwError } from "rxjs";
         import { catchError } from "rxjs/operators";
 
@@ -35,7 +46,19 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
     },
     {
       code: stripIndent`
-        // explicit any
+        // non-arrow; explicit unknown; explicit option
+        import { throwError } from "rxjs";
+        import { catchError } from "rxjs/operators";
+
+        throwError("Kaboom!").pipe(
+          catchError(function (error: unknown) { console.error(error); })
+        );
+      `,
+      options: [{ allowExplicitAny: false }],
+    },
+    {
+      code: stripIndent`
+        // arrow; explicit any
         import { throwError } from "rxjs";
         import { catchError } from "rxjs/operators";
 
@@ -45,11 +68,23 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
       `,
       options: [{ allowExplicitAny: true }],
     },
+    {
+      code: stripIndent`
+        // non-arrow; explicit any
+        import { throwError } from "rxjs";
+        import { catchError } from "rxjs/operators";
+
+        throwError("Kaboom!").pipe(
+          catchError(function (error: any) { console.error(error); })
+        );
+      `,
+      options: [{ allowExplicitAny: true }],
+    },
   ],
   invalid: [
     fromFixture(
       stripIndent`
-        // implicit any
+        // arrow; implicit any
         import { throwError } from "rxjs";
         import { catchError } from "rxjs/operators";
 
@@ -61,7 +96,7 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
       {},
       {
         output: stripIndent`
-          // implicit any
+          // arrow; implicit any
           import { throwError } from "rxjs";
           import { catchError } from "rxjs/operators";
 
@@ -73,7 +108,31 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
     ),
     fromFixture(
       stripIndent`
-        // explicit any; default option
+        // non-arrow; implicit any
+        import { throwError } from "rxjs";
+        import { catchError } from "rxjs/operators";
+
+        throwError("Kaboom!").pipe(
+          catchError(function (error) { console.error(error); })
+                               ~~~~~ [implicitAny]
+        );
+      `,
+      {},
+      {
+        output: stripIndent`
+          // non-arrow; implicit any
+          import { throwError } from "rxjs";
+          import { catchError } from "rxjs/operators";
+
+          throwError("Kaboom!").pipe(
+            catchError(function (error: unknown) { console.error(error); })
+          );
+        `,
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // arrow; explicit any; default option
         import { throwError } from "rxjs";
         import { catchError } from "rxjs/operators";
 
@@ -85,7 +144,7 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
       {},
       {
         output: stripIndent`
-          // explicit any; default option
+          // arrow; explicit any; default option
           import { throwError } from "rxjs";
           import { catchError } from "rxjs/operators";
 
@@ -97,7 +156,31 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
     ),
     fromFixture(
       stripIndent`
-        // explicit any; explicit option
+        // non-arrow; explicit any; default option
+        import { throwError } from "rxjs";
+        import { catchError } from "rxjs/operators";
+
+        throwError("Kaboom!").pipe(
+          catchError(function (error: any) { console.error(error); })
+                               ~~~~~~~~~~ [explicitAny]
+        );
+      `,
+      {},
+      {
+        output: stripIndent`
+          // non-arrow; explicit any; default option
+          import { throwError } from "rxjs";
+          import { catchError } from "rxjs/operators";
+
+          throwError("Kaboom!").pipe(
+            catchError(function (error: unknown) { console.error(error); })
+          );
+        `,
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // arrow; explicit any; explicit option
         import { throwError } from "rxjs";
         import { catchError } from "rxjs/operators";
 
@@ -110,12 +193,37 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
       {
         options: [{ allowExplicitAny: false }],
         output: stripIndent`
-          // explicit any; explicit option
+          // arrow; explicit any; explicit option
           import { throwError } from "rxjs";
           import { catchError } from "rxjs/operators";
 
           throwError("Kaboom!").pipe(
             catchError((error: unknown) => console.error(error))
+          );
+        `,
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // non-arrow; explicit any; explicit option
+        import { throwError } from "rxjs";
+        import { catchError } from "rxjs/operators";
+
+        throwError("Kaboom!").pipe(
+          catchError(function (error: any) { console.error(error); })
+                               ~~~~~~~~~~ [explicitAny]
+        );
+      `,
+      {},
+      {
+        options: [{ allowExplicitAny: false }],
+        output: stripIndent`
+          // non-arrow; explicit any; explicit option
+          import { throwError } from "rxjs";
+          import { catchError } from "rxjs/operators";
+
+          throwError("Kaboom!").pipe(
+            catchError(function (error: unknown) { console.error(error); })
           );
         `,
       }
