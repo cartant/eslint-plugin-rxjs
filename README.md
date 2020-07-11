@@ -66,6 +66,7 @@ The package includes the following rules:
 [`no-ignored-subscribe`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-ignored-subscribe.ts) | Forbids the calling of `subscribe` without specifying arguments. | TBD |
 [`no-ignored-subscription`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-ignored-subscription.ts) | Forbids ignoring the subscription returned by `subscribe`. | TBD |
 [`no-ignored-takewhile-value`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-ignored-takewhile-value.ts) | Forbids ignoring the value within `takeWhile`. | TBD |
+[`no-implicit-any-catch`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-implicit-any-catch.ts) | Like the `no-implicit-any-catch` rule in `@typescript-eslint/eslint-plugin`, but for the `catchError` operator instead of `catch` clauses. | TBD |
 [`no-index`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-index.ts) | Forbids the importation from index modules - for the reason, see [this issue](https://github.com/ReactiveX/rxjs/issues/4230). | TBD |
 [`no-internal`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-internal.ts) | Forbids the importation of internals. | TBD |
 [`no-nested-subscribe`](https://github.com/cartant/eslint-plugin-rxjs/blob/master/source/rules/no-nested-subscribe.ts) | Forbids the calling of `subscribe` within a `subscribe` callback. | TBD |
