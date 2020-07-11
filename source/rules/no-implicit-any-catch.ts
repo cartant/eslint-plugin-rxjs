@@ -31,8 +31,9 @@ const rule = ruleCreator({
     },
     fixable: "code",
     messages: {
-      explicitAny: "Explicit any in catchError.",
-      implicitAny: "Implicit any in catchError.",
+      explicitAny: "Explicit `any` in `catchError`.",
+      implicitAny: "Implicit `any` in `catchError`.",
+      narrowed: "Error type must be `unknown` or `any`.",
       suggestExplicitUnknown:
         "Use `unknown` instead, this will force you to explicitly and safely assert the type is correct.",
     },
@@ -66,13 +67,30 @@ const rule = ruleCreator({
             const {
               typeAnnotation: { type },
             } = typeAnnotation;
-            if (type === AST_NODE_TYPES.TSAnyKeyword && !allowExplicitAny) {
+            if (type === AST_NODE_TYPES.TSAnyKeyword) {
+              if (allowExplicitAny) {
+                return;
+              }
               function fix(fixer: eslint.RuleFixer) {
                 return fixer.replaceText(typeAnnotation, ": unknown");
               }
               context.report({
                 fix,
                 messageId: "explicitAny",
+                node: param,
+                suggest: [
+                  {
+                    messageId: "suggestExplicitUnknown",
+                    fix,
+                  },
+                ],
+              });
+            } else if (type !== AST_NODE_TYPES.TSUnknownKeyword) {
+              function fix(fixer: eslint.RuleFixer) {
+                return fixer.replaceText(typeAnnotation, ": unknown");
+              }
+              context.report({
+                messageId: "narrowed",
                 node: param,
                 suggest: [
                   {

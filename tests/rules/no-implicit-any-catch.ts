@@ -228,5 +228,29 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
         `,
       }
     ),
+    fromFixture(
+      stripIndent`
+        // arrow; narrowed
+        import { throwError } from "rxjs";
+        import { catchError } from "rxjs/operators";
+
+        throwError("Kaboom!").pipe(
+          catchError((error: string) => console.error(error))
+                      ~~~~~~~~~~~~~ [narrowed]
+        );
+      `
+    ),
+    fromFixture(
+      stripIndent`
+        // non-arrow; narrowed
+        import { throwError } from "rxjs";
+        import { catchError } from "rxjs/operators";
+
+        throwError("Kaboom!").pipe(
+          catchError(function (error: string) { console.error(error); })
+                               ~~~~~~~~~~~~~ [narrowed]
+        );
+      `
+    ),
   ],
 });
