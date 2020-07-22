@@ -117,7 +117,6 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
         const bazEffect = actions.pipe(ofType("BAZ"), tap(() => {}), switchMap(() => EMPTY));
                                                                      ~~~~~~~~~ [forbidden]
       `,
-      {},
       {
         options: [
           {
@@ -133,7 +132,6 @@ ruleTester({ types: true }).run("no-unsafe-switchmap", rule, {
         const fooEffect = actions.pipe(ofType("FOO"), tap(() => {}), switchMap(() => EMPTY));
                                                                      ~~~~~~~~~ [forbidden]
       `,
-      {},
       {
         options: [
           {

@@ -174,7 +174,6 @@ ruleTester({ types: true }).run("finnish", rule, {
         const finnish = of(1);
               ~~~~~~~ [forbidden]
       `,
-      {},
       {
         options: [
           {
@@ -202,7 +201,6 @@ ruleTester({ types: true }).run("finnish", rule, {
         let someSubject: SomeSubject<any> | undefined;
             ~~~~~~~~~~~ [forbidden]
       `,
-      {},
       {
         options: [
           {
@@ -333,7 +331,6 @@ ruleTester({ types: true }).run("finnish", rule, {
         const someArray = [someObservable];
         const [someElement] = someArray;
       `,
-      {},
       { options: [{ variables: false }] }
     ),
     fromFixture(

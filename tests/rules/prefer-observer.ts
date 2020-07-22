@@ -278,7 +278,6 @@ ruleTester({ types: true }).run("prefer-observer", rule, {
           value => console.log(value)
         )).subscribe();
       `,
-      {},
       { options: [{ allowNext: false }] }
     ),
     fromFixture(
@@ -307,7 +306,6 @@ ruleTester({ types: true }).run("prefer-observer", rule, {
         source.pipe(tap(nextNonArrow));
                     ~~~ [forbidden]
       `,
-      {},
       { options: [{ allowNext: false }] }
     ),
     fromFixture(

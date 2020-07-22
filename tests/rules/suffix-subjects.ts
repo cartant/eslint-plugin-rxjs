@@ -349,7 +349,6 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
           (some: Subject<any>): void;
         }
       `,
-      {},
       { options: [{ parameters: false }] }
     ),
     fromFixture(
@@ -395,7 +394,6 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
            ~~~~ [forbidden]
         }
       `,
-      {},
       { options: [{ suffix: "Sub" }] }
     ),
     fromFixture(
@@ -463,7 +461,6 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
           some: Subject<any>;
         }
       `,
-      {},
       { options: [{ properties: false }] }
     ),
     fromFixture(
@@ -502,7 +499,6 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
           ~~~~ [forbidden]
         }
       `,
-      {},
       { options: [{ suffix: "Sub" }] }
     ),
     fromFixture(
@@ -526,7 +522,6 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
         const some = new Subject<any>();
               ~~~~ [forbidden]
       `,
-      {},
       { options: [{ suffix: "Sub" }] }
     ),
     fromFixture(

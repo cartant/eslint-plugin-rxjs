@@ -115,7 +115,6 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
                       ~~~~~ [implicitAny]
         );
       `,
-      {},
       {
         output: stripIndent`
           // arrow; implicit any
@@ -139,7 +138,6 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
                                ~~~~~ [implicitAny]
         );
       `,
-      {},
       {
         output: stripIndent`
           // non-arrow; implicit any
@@ -163,7 +161,6 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
                       ~~~~~~~~~~ [explicitAny]
         );
       `,
-      {},
       {
         output: stripIndent`
           // arrow; explicit any; default option
@@ -187,7 +184,6 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
                                ~~~~~~~~~~ [explicitAny]
         );
       `,
-      {},
       {
         output: stripIndent`
           // non-arrow; explicit any; default option
@@ -211,7 +207,6 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
                       ~~~~~~~~~~ [explicitAny]
         );
       `,
-      {},
       {
         options: [{ allowExplicitAny: false }],
         output: stripIndent`
@@ -236,7 +231,6 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
                                ~~~~~~~~~~ [explicitAny]
         );
       `,
-      {},
       {
         options: [{ allowExplicitAny: false }],
         output: stripIndent`

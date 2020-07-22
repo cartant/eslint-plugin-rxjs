@@ -188,7 +188,6 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
         const d = a.pipe(takeUntil(c), tap(value => console.log(value)), switchMap(_ => b)).subscribe();
                          ~~~~~~~~~ [forbidden]
       `,
-      {},
       {
         options: [
           {
@@ -240,7 +239,6 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
         const d = a.pipe(untilDestroyed(), switchMap(_ => b)).subscribe();
                          ~~~~~~~~~~~~~~ [forbidden]
       `,
-      {},
       {
         options: [
           {

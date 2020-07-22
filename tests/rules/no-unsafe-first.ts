@@ -218,7 +218,6 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
           ~~~~ [forbidden]
         );
       `,
-      {},
       {
         options: [
           {

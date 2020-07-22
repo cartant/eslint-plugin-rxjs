@@ -181,7 +181,6 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           }
         }
       `,
-      {},
       { options: [{ allowProtected: true }] }
     ),
     fromFixture(

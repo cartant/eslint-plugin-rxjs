@@ -21,7 +21,6 @@ ruleTester({ types: false }).run("ban-observables", rule, {
                  ~~ [forbidden]
                      ~~~~~~~~~~ [forbidden]
       `,
-      {},
       {
         options: [
           {

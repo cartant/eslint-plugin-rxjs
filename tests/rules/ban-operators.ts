@@ -21,7 +21,6 @@ ruleTester({ types: false }).run("ban-operators", rule, {
                  ~~~~~~ [forbidden]
                          ~~~~~ [forbidden]
       `,
-      {},
       {
         options: [
           {

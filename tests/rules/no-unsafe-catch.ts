@@ -157,7 +157,6 @@ ruleTester({ types: true }).run("no-unsafe-catch", rule, {
           ~~~~~~~~~~ [forbidden]
         );
       `,
-      {},
       {
         options: [
           {

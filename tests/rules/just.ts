@@ -51,7 +51,6 @@ ruleTester({ types: true }).run("just", rule, {
         const b = of("b");
                   ~~ [forbidden]
       `,
-      {},
       {
         output: stripIndent`
           // imported of
@@ -82,7 +81,6 @@ ruleTester({ types: true }).run("just", rule, {
           of();
         }
       `,
-      {},
       {
         output: stripIndent`
           // imported of with non-RxJS of

@@ -45,7 +45,6 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
           ~~~~~~~~~~~ [forbiddenWithoutConfig]
         );
       `,
-      {},
       { options: [{ allowConfig: true }] }
     ),
     fromFixture(
@@ -83,7 +82,6 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
           ~~~~~~~~~~~ [forbidden]
         );
       `,
-      {},
       { options: [{ allowConfig: false }] }
     ),
     fromFixture(
@@ -94,7 +92,6 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
           ~~~~~~~~~~~ [forbidden]
         );
       `,
-      {},
       { options: [{ allowConfig: false }] }
     ),
   ],
