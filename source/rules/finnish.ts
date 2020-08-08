@@ -101,14 +101,14 @@ const rule = ruleCreator({
         (couldBeObservable(typeNode || nameNode) ||
           couldReturnObservable(typeNode || nameNode))
       ) {
-        for (let i = 0; i < names.length; ++i) {
-          const { regExp, validate } = names[i];
+        for (const name of names) {
+          const { regExp, validate } = name;
           if (regExp.test(text) && !validate) {
             return;
           }
         }
-        for (let i = 0; i < types.length; ++i) {
-          const { regExp, validate } = types[i];
+        for (const type of types) {
+          const { regExp, validate } = type;
           if (
             (couldBeType(typeNode || nameNode, regExp) ||
               couldReturnType(typeNode || nameNode, regExp)) &&
