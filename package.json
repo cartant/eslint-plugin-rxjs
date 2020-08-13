@@ -14,7 +14,7 @@
     "tsutils": "^3.0.0",
     "tsutils-etc": "^1.0.0"
   },
-  "description": "RxJS rules for ESLint",
+  "description": "ESLint rules for RxJS",
   "devDependencies": {
     "@cartant/eslint-config": "^1.0.0",
     "@types/chai": "^4.2.0",
