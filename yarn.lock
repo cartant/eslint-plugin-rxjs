@@ -734,9 +734,9 @@ escape-string-regexp@1.0.5, escape-string-regexp@^1.0.5:
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
 eslint-etc@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-2.1.0.tgz#38ad8246ce3e105ff9bf3f73d0fd4a65e8793d60"
-  integrity sha512-Lyo7lPgjdKi5eZoZpOBCZ1b2k1+bIxWqXmA7tGcalN/g+VxBZDbTpy10sX8mJDsm7LJXjoHcf63sKW6u+bC9Aw==
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-2.2.0.tgz#2fbca26dbbcf3d5a401524ecc5aaa73af87860c2"
+  integrity sha512-B5gpJbcUe9dj/2GRI5OWm2q/h63gNr3k5Ic8VHR3PEAdmOcIqxUsTRsBKRbd8Cn8o4J3oN3HNFxY9XuQEvAGLg==
   dependencies:
     "@typescript-eslint/experimental-utils" "^3.2.0"
     tsutils "^3.17.1"
