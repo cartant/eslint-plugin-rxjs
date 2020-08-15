@@ -18,8 +18,8 @@ ruleTester({ types: false }).run("ban-observables", rule, {
     fromFixture(
       stripIndent`
         import { of, Observable as o, Subject } from "rxjs";
-                 ~~ [forbidden]
-                     ~~~~~~~~~~ [forbidden]
+                 ~~ [forbidden { "name": "of", "explanation": "" }]
+                     ~~~~~~~~~~ [forbidden { "name": "Observable", "explanation": ": because I say so" }]
       `,
       {
         options: [

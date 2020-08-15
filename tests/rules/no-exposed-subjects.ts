@@ -88,15 +88,15 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
 
         class Mock {
           public a = new Subject<void>();
-                 ~ [forbidden]
+                 ~ [forbidden { "subject": "a" }]
           protected b = new Subject<void>();
-                    ~ [forbidden]
+                    ~ [forbidden { "subject": "b" }]
           c = new Subject<any>();
-          ~ [forbidden]
+          ~ [forbidden { "subject": "c" }]
           public readonly d = new Subject<void>();
-                          ~ [forbidden]
+                          ~ [forbidden { "subject": "d" }]
           readonly e = new Subject<void>();
-                   ~ [forbidden]
+                   ~ [forbidden { "subject": "e" }]
         }
       `
     ),
@@ -108,9 +108,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
         class Mock {
           constructor(
             public a: Subject<any>,
-                   ~ [forbidden]
+                   ~ [forbidden { "subject": "a" }]
             protected b: Subject<any>,
-                      ~ [forbidden]
+                      ~ [forbidden { "subject": "b" }]
           ) {}
         }
       `
@@ -122,12 +122,12 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
 
         class Mock {
           get a(): Subject<any> {
-              ~ [forbidden]
+              ~ [forbidden { "subject": "a" }]
             return this._submitSubject$;
           }
 
           set a(a: Subject<any>) {
-              ~ [forbidden]
+              ~ [forbidden { "subject": "a" }]
             this._submitSubject$ = set$;
           }
         }
@@ -140,12 +140,12 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
 
         class Mock {
           public a(): Subject<any> {
-                 ~ [forbidden]
+                 ~ [forbidden { "subject": "a" }]
             return new Subject<any>();
           }
 
           b(): Subject<any> {
-          ~ [forbidden]
+          ~ [forbidden { "subject": "b" }]
             return new Subject<any>();
           }
         }
@@ -158,25 +158,25 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
 
         class Mock {
           public a = new Subject<void>();
-                 ~ [forbiddenAllowProtected]
+                 ~ [forbiddenAllowProtected { "subject": "a" }]
 
           constructor(
             public b: Subject<any>,
-                   ~ [forbiddenAllowProtected]
+                   ~ [forbiddenAllowProtected { "subject": "b" }]
           ) {}
 
           get c(): Subject<any> {
-              ~ [forbiddenAllowProtected]
+              ~ [forbiddenAllowProtected { "subject": "c" }]
             return this._submitSubject$;
           }
 
           set c(a: Subject<any>) {
-              ~ [forbiddenAllowProtected]
+              ~ [forbiddenAllowProtected { "subject": "c" }]
             this._submitSubject$ = set$;
           }
 
           d(): Subject<any> {
-          ~ [forbiddenAllowProtected]
+          ~ [forbiddenAllowProtected { "subject": "d" }]
             return new Subject<any>();
           }
         }
@@ -194,9 +194,9 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
           public a: EventEmitter<any>;
           protected b: EventEmitter<any>;
           public c: Subject<any>;
-                 ~ [forbidden]
+                 ~ [forbidden { "subject": "c" }]
           protected d: Subject<any>;
-                    ~ [forbidden]
+                    ~ [forbidden { "subject": "d" }]
         }
       `
     ),

@@ -277,40 +277,40 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
 
         function someFunction(
           one: Subject<any>,
-          ~~~ [forbidden]
+          ~~~ [forbidden { "suffix": "Subject" }]
           some: Subject<any>
-          ~~~~ [forbidden]
+          ~~~~ [forbidden { "suffix": "Subject" }]
         ) {
           console.log(one, some);
         }
 
         class SomeClass {
           constructor(ctor: Subject<any>) {}
-                      ~~~~ [forbidden]
+                      ~~~~ [forbidden { "suffix": "Subject" }]
 
           someMethod(some: Subject<any>): Subject<any> {
-                     ~~~~ [forbidden]
+                     ~~~~ [forbidden { "suffix": "Subject" }]
             return some;
           }
 
           get another(): Subject<any> {
-              ~~~~~~~ [forbidden]
+              ~~~~~~~ [forbidden { "suffix": "Subject" }]
             return this.ctor;
           }
           set another(some: Subject<any>) {
-              ~~~~~~~ [forbidden]
-                      ~~~~ [forbidden]
+              ~~~~~~~ [forbidden { "suffix": "Subject" }]
+                      ~~~~ [forbidden { "suffix": "Subject" }]
             this.ctor = some;
           }
         }
 
         interface SomeInterface {
           someMethod(some: Subject<any>): Subject<any>;
-                     ~~~~ [forbidden]
+                     ~~~~ [forbidden { "suffix": "Subject" }]
           new (some: Subject<any>);
-               ~~~~ [forbidden]
+               ~~~~ [forbidden { "suffix": "Subject" }]
           (some: Subject<any>): void;
-           ~~~~ [forbidden]
+           ~~~~ [forbidden { "suffix": "Subject" }]
         }
       `
     ),
@@ -334,11 +334,11 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
           }
 
           get another(): Subject<any> {
-              ~~~~~~~ [forbidden]
+              ~~~~~~~ [forbidden { "suffix": "Subject" }]
             return this.ctor;
           }
           set another(some: Subject<any>) {
-              ~~~~~~~ [forbidden]
+              ~~~~~~~ [forbidden { "suffix": "Subject" }]
             this.ctor = some;
           }
         }
@@ -358,40 +358,40 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
 
         function someFunction(
           one: Subject<any>,
-          ~~~ [forbidden]
+          ~~~ [forbidden { "suffix": "Sub" }]
           some: Subject<any>
-          ~~~~ [forbidden]
+          ~~~~ [forbidden { "suffix": "Sub" }]
         ) {
           console.log(one, some);
         }
 
         class SomeClass {
           constructor(ctor: Subject<any>) {}
-                      ~~~~ [forbidden]
+                      ~~~~ [forbidden { "suffix": "Sub" }]
 
           someMethod(some: Subject<any>): Subject<any> {
-                     ~~~~ [forbidden]
+                     ~~~~ [forbidden { "suffix": "Sub" }]
             return some;
           }
 
           get another(): Subject<any> {
-              ~~~~~~~ [forbidden]
+              ~~~~~~~ [forbidden { "suffix": "Sub" }]
             return this.ctor;
           }
           set another(some: Subject<any>) {
-              ~~~~~~~ [forbidden]
-                      ~~~~ [forbidden]
+              ~~~~~~~ [forbidden { "suffix": "Sub" }]
+                      ~~~~ [forbidden { "suffix": "Sub" }]
             this.ctor = some;
           }
         }
 
         interface SomeInterface {
           someMethod(some: Subject<any>): Subject<any>;
-                     ~~~~ [forbidden]
+                     ~~~~ [forbidden { "suffix": "Sub" }]
           new (some: Subject<any>);
-               ~~~~ [forbidden]
+               ~~~~ [forbidden { "suffix": "Sub" }]
           (some: Subject<any>): void;
-           ~~~~ [forbidden]
+           ~~~~ [forbidden { "suffix": "Sub" }]
         }
       `,
       { options: [{ suffix: "Sub" }] }
@@ -403,33 +403,33 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
 
         const someObject = {
           one: new Subject<any>(),
-          ~~~ [forbidden]
+          ~~~ [forbidden { "suffix": "Subject" }]
           some: new Subject<any>()
-          ~~~~ [forbidden]
+          ~~~~ [forbidden { "suffix": "Subject" }]
         };
 
         class SomeClass {
           one = new Subject<any>();
-          ~~~ [forbidden]
+          ~~~ [forbidden { "suffix": "Subject" }]
           some = new Subject<void>();
-          ~~~~ [forbidden]
+          ~~~~ [forbidden { "suffix": "Subject" }]
 
           get another(): Subject<any> {
-              ~~~~~~~ [forbidden]
+              ~~~~~~~ [forbidden { "suffix": "Subject" }]
             return this.subject;
           }
           set another(some: Subject<any>) {
-              ~~~~~~~ [forbidden]
-                      ~~~~ [forbidden]
+              ~~~~~~~ [forbidden { "suffix": "Subject" }]
+                      ~~~~ [forbidden { "suffix": "Subject" }]
             this.some = some;
           }
         }
 
         interface SomeInterface {
           one: Subject<any>;
-          ~~~ [forbidden]
+          ~~~ [forbidden { "suffix": "Subject" }]
           some: Subject<any>;
-          ~~~~ [forbidden]
+          ~~~~ [forbidden { "suffix": "Subject" }]
         }
       `
     ),
@@ -451,7 +451,7 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
             return this.subject;
           }
           set another(some: Subject<any>) {
-                      ~~~~ [forbidden]
+                      ~~~~ [forbidden { "suffix": "Subject" }]
             this.some = some;
           }
         }
@@ -470,33 +470,33 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
 
         const someObject = {
           one: new Subject<any>(),
-          ~~~ [forbidden]
+          ~~~ [forbidden { "suffix": "Sub" }]
           some: new Subject<any>()
-          ~~~~ [forbidden]
+          ~~~~ [forbidden { "suffix": "Sub" }]
         };
 
         class SomeClass {
           one = new Subject<any>();
-          ~~~ [forbidden]
+          ~~~ [forbidden { "suffix": "Sub" }]
           some = new Subject<void>();
-          ~~~~ [forbidden]
+          ~~~~ [forbidden { "suffix": "Sub" }]
 
           get another(): Subject<any> {
-              ~~~~~~~ [forbidden]
+              ~~~~~~~ [forbidden { "suffix": "Sub" }]
             return this.subject;
           }
           set another(some: Subject<any>) {
-              ~~~~~~~ [forbidden]
-                      ~~~~ [forbidden]
+              ~~~~~~~ [forbidden { "suffix": "Sub" }]
+                      ~~~~ [forbidden { "suffix": "Sub" }]
             this.some = some;
           }
         }
 
         interface SomeInterface {
           one: Subject<any>;
-          ~~~ [forbidden]
+          ~~~ [forbidden { "suffix": "Sub" }]
           some: Subject<any>;
-          ~~~~ [forbidden]
+          ~~~~ [forbidden { "suffix": "Sub" }]
         }
       `,
       { options: [{ suffix: "Sub" }] }
@@ -507,9 +507,9 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
         import { Subject } from "rxjs";
 
         const one = new Subject<any>();
-              ~~~ [forbidden]
+              ~~~ [forbidden { "suffix": "Subject" }]
         const some = new Subject<any>();
-              ~~~~ [forbidden]
+              ~~~~ [forbidden { "suffix": "Subject" }]
       `
     ),
     fromFixture(
@@ -518,9 +518,9 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
         import { Subject } from "rxjs";
 
         const one = new Subject<any>();
-              ~~~ [forbidden]
+              ~~~ [forbidden { "suffix": "Sub" }]
         const some = new Subject<any>();
-              ~~~~ [forbidden]
+              ~~~~ [forbidden { "suffix": "Sub" }]
       `,
       { options: [{ suffix: "Sub" }] }
     ),
@@ -530,11 +530,11 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
         import { Subject } from "rxjs";
 
         function someFunction([someParam]: Subject<any>[]): void {}
-                               ~~~~~~~~~ [forbidden]
+                               ~~~~~~~~~ [forbidden { "suffix": "Subject" }]
 
         class SomeClass {
           someMethod([someParam]: Subject<any>[]): void {}
-                      ~~~~~~~~~ [forbidden]
+                      ~~~~~~~~~ [forbidden { "suffix": "Subject" }]
         }
       `
     ),
@@ -544,11 +544,11 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
         import { Subject } from "rxjs";
 
         function someFunction({ source }: Record<string, Subject<any>>): void {}
-                                ~~~~~~ [forbidden]
+                                ~~~~~~ [forbidden { "suffix": "Subject" }]
 
         class SomeClass {
           someMethod({ source }: Record<string, Subject<any>>): void {}
-                       ~~~~~~ [forbidden]
+                       ~~~~~~ [forbidden { "suffix": "Subject" }]
         }
       `
     ),
@@ -559,7 +559,7 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
 
         class SomeClass {
           constructor(public some: Subject<any>) {}
-                             ~~~~ [forbidden]
+                             ~~~~ [forbidden { "suffix": "Subject" }]
         }
       `
     ),

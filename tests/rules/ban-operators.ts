@@ -18,8 +18,8 @@ ruleTester({ types: false }).run("ban-operators", rule, {
     fromFixture(
       stripIndent`
         import { concat, merge as m, mergeMap as mm } from "rxjs/operators";
-                 ~~~~~~ [forbidden]
-                         ~~~~~ [forbidden]
+                 ~~~~~~ [forbidden { "name": "concat", "explanation": "" }]
+                         ~~~~~ [forbidden { "name": "merge", "explanation": ": because I say so" }]
       `,
       {
         options: [
