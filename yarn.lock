@@ -249,9 +249,9 @@ aggregate-error@^3.0.0:
     indent-string "^4.0.0"
 
 ajv@^6.10.0, ajv@^6.10.2:
-  version "6.12.3"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.12.3.tgz#18c5af38a111ddeb4f2697bd78d68abc1cabd706"
-  integrity sha512-4K0cK3L1hsqk9xIb2z9vs/XU+PGJZ9PNpJRDS9YLzmNdX6jmVPfamLvTJr0aDAusnHyCHO6MjzlkAsgtqp9teA==
+  version "6.12.4"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.12.4.tgz#0614facc4522127fa713445c6bfd3ebd376e2234"
+  integrity sha512-eienB2c9qVQs2KWexhkrdMLVDoIQCz5KSeLxwg9Lzk4DOfBtIK9PQwwufcsn1jjGuf9WZmqPMbGxOzfcuphJCQ==
   dependencies:
     fast-deep-equal "^3.1.1"
     fast-json-stable-stringify "^2.0.0"
@@ -734,9 +734,9 @@ escape-string-regexp@1.0.5, escape-string-regexp@^1.0.5:
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
 eslint-etc@^2.0.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-2.2.0.tgz#2fbca26dbbcf3d5a401524ecc5aaa73af87860c2"
-  integrity sha512-B5gpJbcUe9dj/2GRI5OWm2q/h63gNr3k5Ic8VHR3PEAdmOcIqxUsTRsBKRbd8Cn8o4J3oN3HNFxY9XuQEvAGLg==
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-2.2.1.tgz#21b86adc6db950532700a62eebc8a9ed9ff7f514"
+  integrity sha512-I3G+KA9HGZ0lrdaBJG7CaLFJ5rtivXtKY8Ac5ATZ/Rp1hncLeShqnANLXITC0z6BugC4Gd7JlFyxeyiuBsNQFQ==
   dependencies:
     "@typescript-eslint/experimental-utils" "^3.2.0"
     tsutils "^3.17.1"
@@ -1379,9 +1379,9 @@ lint-staged@^10.1.1:
     stringify-object "^3.3.0"
 
 listr2@^2.1.0:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/listr2/-/listr2-2.5.1.tgz#f265dddf916c8a9b475437b34ae85a7d8f495c7a"
-  integrity sha512-qkNRW70SwfwWLD/eiaTf2tfgWT/ZvjmMsnEFJOCzac0cjcc8rYHDBr1eQhRxopj6lZO7Oa5sS/pZzS6q+BsX+w==
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/listr2/-/listr2-2.6.0.tgz#788a3d202978a1b8582062952cbc49272c8e206a"
+  integrity sha512-nwmqTJYQQ+AsKb4fCXH/6/UmLCEDL1jkRAdSn9M6cEUzoRGrs33YD/3N86gAZQnGZ6hxV18XSdlBcJ1GTmetJA==
   dependencies:
     chalk "^4.1.0"
     cli-truncate "^2.1.0"
