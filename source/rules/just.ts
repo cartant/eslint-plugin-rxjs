@@ -18,7 +18,7 @@ const rule = ruleCreator({
     messages: {
       forbidden: "Use just alias.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "just",

@@ -14,11 +14,11 @@ const rule = ruleCreator({
       description: "Forbids the importation of internals.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "RxJS imports from internal are forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-internal",

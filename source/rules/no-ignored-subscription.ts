@@ -15,11 +15,11 @@ const rule = ruleCreator({
       description: "Forbids ignoring the subscription returned by `subscribe`.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Ignoring returned subscriptions is forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-ignored-subscription",

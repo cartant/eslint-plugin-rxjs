@@ -30,7 +30,7 @@ const rule = ruleCreator({
       description: "Forbids unsafe `switchMap` usage in effects and epics.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Unsafe switchMap usage in effects and epics is forbidden.",
     },

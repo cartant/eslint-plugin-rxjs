@@ -16,11 +16,11 @@ const rule = ruleCreator({
         "Forbids the calling of `subscribe` within a `subscribe` callback.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Nested subscribe calls are forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-nested-subscribe",

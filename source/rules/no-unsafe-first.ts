@@ -21,7 +21,7 @@ const rule = ruleCreator({
       description: "Forbids unsafe `first`/`take` usage in effects and epics.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden:
         "Unsafe first and take usage in effects and epics are forbidden.",

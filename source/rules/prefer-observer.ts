@@ -24,7 +24,7 @@ const rule = ruleCreator({
         "Forbids the passing separate callbacks to `subscribe` and `tap`.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden:
         "Passing separate callbacks is forbidden; pass an observer instead.",

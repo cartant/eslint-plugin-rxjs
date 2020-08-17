@@ -15,11 +15,11 @@ const rule = ruleCreator({
       description: "Forbids ignoring the value within `takeWhile`.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Ignoring the value within takeWhile is forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-ignored-takewhile-value",

@@ -14,11 +14,11 @@ const rule = ruleCreator({
       description: "Forbids the use of the `tap` operator.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "The tap operator is forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-tap",

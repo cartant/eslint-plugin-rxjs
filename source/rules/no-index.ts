@@ -14,11 +14,11 @@ const rule = ruleCreator({
       description: "Forbids the importation from index modules.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "RxJS imports from index modules are forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-index",

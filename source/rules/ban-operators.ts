@@ -17,7 +17,7 @@ const rule = ruleCreator({
       description: "Forbids the use of banned operators.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "RxJS operator is banned: {{name}}{{explanation}}.",
     },

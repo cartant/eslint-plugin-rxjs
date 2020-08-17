@@ -20,11 +20,11 @@ const rule = ruleCreator({
         "Forbids observables not composed from the `repeatWhen` or `retryWhen` notifier.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Ignoring the notifier is forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-ignored-notifier",

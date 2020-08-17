@@ -18,11 +18,11 @@ const rule = ruleCreator({
       description: "Forbids unsafe optional `next` calls.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Unsafe optional next calls are forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-unsafe-subject-next",

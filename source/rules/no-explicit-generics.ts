@@ -15,11 +15,11 @@ const rule = ruleCreator({
       description: "Forbids explicit generic type arguments.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Explicit generic type arguments are forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-explicit-generics",

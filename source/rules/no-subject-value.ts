@@ -16,12 +16,12 @@ const rule = ruleCreator({
         "Forbids accessing the `value` property of a `BehaviorSubject` instance.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden:
         "Accessing the value property of a BehaviorSubject is forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-subject-value",

@@ -20,7 +20,7 @@ const rule = ruleCreator({
       description: "Forbids exposed (i.e. non-private) subjects.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Subject '{{subject}}' must be private.",
       forbiddenAllowProtected:

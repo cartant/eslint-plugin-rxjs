@@ -15,11 +15,11 @@ const rule = ruleCreator({
       description: "Forbids the use of the `toPromise` method.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "The toPromise method is forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-topromise",

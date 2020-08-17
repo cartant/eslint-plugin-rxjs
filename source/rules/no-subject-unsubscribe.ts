@@ -16,11 +16,11 @@ const rule = ruleCreator({
         "Forbids calling the `unsubscribe` method of a subject instance.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Calling unsubscribe on a subject is forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-subject-unsubscribe",

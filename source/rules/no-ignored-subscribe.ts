@@ -16,11 +16,11 @@ const rule = ruleCreator({
         "Forbids the calling of `subscribe` without specifying arguments.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Calling subscribe without arguments is forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-ignored-subscribe",

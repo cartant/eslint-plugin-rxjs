@@ -15,11 +15,11 @@ const rule = ruleCreator({
       description: "Forbids subclassing RxJS classes.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Subclassing RxJS classes is forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-subclass",

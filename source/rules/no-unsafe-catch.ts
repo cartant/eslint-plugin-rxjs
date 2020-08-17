@@ -27,7 +27,7 @@ const rule = ruleCreator({
       description: "Forbids unsafe `catchError` usage in effects and epics.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Unsafe catchError usage in effects and epics are forbidden.",
     },

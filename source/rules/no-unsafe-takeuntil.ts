@@ -26,7 +26,7 @@ const rule = ruleCreator({
       description: "Forbids the application of operators after `takeUntil`.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Applying operators after takeUntil are forbidden.",
     },

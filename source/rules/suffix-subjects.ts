@@ -23,7 +23,7 @@ const rule = ruleCreator({
       description: "Enforces the use of a suffix in subject identifiers.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: `Subject identifiers must end with "{{suffix}}".`,
     },

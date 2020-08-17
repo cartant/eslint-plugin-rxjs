@@ -20,11 +20,11 @@ const rule = ruleCreator({
       description: "Forbids the passing of unbound methods.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Unbound methods are forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-unbound-methods",

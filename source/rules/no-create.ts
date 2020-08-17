@@ -15,11 +15,11 @@ const rule = ruleCreator({
       description: "Forbids the calling of `Observable.create`.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Observable.create is forbidden; use new Observable.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-create",

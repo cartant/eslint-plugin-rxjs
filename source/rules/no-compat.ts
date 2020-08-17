@@ -15,11 +15,11 @@ const rule = ruleCreator({
         "Forbids importation from locations that depend upon `rxjs-compat`.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "'rxjs-compat'-dependent import locations are forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-compat",

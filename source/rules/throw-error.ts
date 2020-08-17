@@ -16,11 +16,11 @@ const rule = ruleCreator({
         "Enforces the passing of `Error` values to error notifications.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Passing non-Error values are forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "throw-error",

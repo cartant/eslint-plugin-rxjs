@@ -15,11 +15,11 @@ const rule = ruleCreator({
       description: "Forbids passing `async` functions to `subscribe`.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Passing async functions to subscribe is forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-async-subscribe",

@@ -27,11 +27,11 @@ const rule = ruleCreator({
         "Forbids redundant notifications from completed or errored observables.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Redundant notifications are forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-redundant-notify",

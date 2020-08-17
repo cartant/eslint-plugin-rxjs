@@ -15,11 +15,11 @@ const rule = ruleCreator({
       description: "Forbids the use of Finnish notation.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Finnish notation is forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-finnish",

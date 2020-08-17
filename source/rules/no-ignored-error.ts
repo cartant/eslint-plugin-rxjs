@@ -16,11 +16,11 @@ const rule = ruleCreator({
         "Forbids the calling of `subscribe` without specifying an error handler.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Calling subscribe without an error handler is forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-ignored-error",

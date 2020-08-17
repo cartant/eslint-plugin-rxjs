@@ -15,11 +15,11 @@ const rule = ruleCreator({
       description: "Forbids the ignoring of observables returned by functions.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Ignoring a returned Observable is forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-ignored-observable",

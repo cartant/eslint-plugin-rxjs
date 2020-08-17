@@ -15,11 +15,11 @@ const rule = ruleCreator({
       description: "Forbids operators that return connectable observables.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Connectable observables are forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-connectable",

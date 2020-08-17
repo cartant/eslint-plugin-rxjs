@@ -17,7 +17,7 @@ const rule = ruleCreator({
       description: "Forbids the use of banned observables.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "RxJS observable is banned: {{name}}{{explanation}}.",
     },

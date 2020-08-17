@@ -16,11 +16,11 @@ const rule = ruleCreator({
         "Forbids using `ReplaySubject`, `publishReplay` or `shareReplay` without specifying the buffer size.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "Ignoring the buffer size is forbidden.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "no-ignored-replay-buffer",

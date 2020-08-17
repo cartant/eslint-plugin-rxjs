@@ -21,7 +21,7 @@ const rule = ruleCreator({
     messages: {
       macro: "Use the RxJS Tools Babel macro.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "macro",
