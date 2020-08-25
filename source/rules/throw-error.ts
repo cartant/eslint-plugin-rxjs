@@ -25,10 +25,10 @@ const rule = ruleCreator({
   },
   name: "throw-error",
   create: (context) => {
-    const { isAny, couldBeError, couldBeObservable } = getTypeServices(context);
+    const { isAny, couldBeObservable, couldBeType } = getTypeServices(context);
 
     function checkNode(node: es.Node) {
-      if (!isAny(node) && !couldBeError(node)) {
+      if (!isAny(node) && !couldBeType(node, /^(Error|DOMException)$/)) {
         context.report({
           messageId: "forbidden",
           node,

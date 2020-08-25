@@ -15,6 +15,10 @@ ruleTester({ types: true }).run("throw-error", rule, {
       const a = () => { throw new Error("error"); };
     `,
     stripIndent`
+      // throw DOMException
+      const a = () => { throw new DOMException("error"); };
+    `,
+    stripIndent`
       // throw any
       const a = () => { throw "error" as any };
     `,
@@ -31,6 +35,12 @@ ruleTester({ types: true }).run("throw-error", rule, {
       import { throwError } from "rxjs";
 
       const ob1 = throwError(new Error("Boom!"));
+    `,
+    stripIndent`
+      // throwError DOMException
+      import { throwError } from "rxjs";
+
+      const ob1 = throwError(new DOMException("Boom!"));
     `,
     stripIndent`
       // throwError any
