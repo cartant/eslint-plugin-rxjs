@@ -4,7 +4,11 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { getTypeServices, isMemberExpression } from "eslint-etc";
+import {
+  getParserServices,
+  getTypeServices,
+  isMemberExpression,
+} from "eslint-etc";
 import * as tsutils from "tsutils";
 import { couldBeType, isReferenceType, isUnionType } from "tsutils-etc";
 import * as ts from "typescript";
@@ -27,14 +31,15 @@ const rule = ruleCreator({
   },
   name: "no-unsafe-subject-next",
   create: (context) => {
-    const { nodeMap, typeChecker } = getTypeServices(context);
+    const { esTreeNodeToTSNodeMap } = getParserServices(context);
+    const { typeChecker } = getTypeServices(context);
     return {
       [`CallExpression[callee.property.name='next']`]: (
         node: es.CallExpression
       ) => {
         if (node.arguments.length === 0 && isMemberExpression(node.callee)) {
           const type = typeChecker.getTypeAtLocation(
-            nodeMap.get(node.callee.object)
+            esTreeNodeToTSNodeMap.get(node.callee.object)
           );
           if (isReferenceType(type) && couldBeType(type, "Subject")) {
             const [typeArg] = typeChecker.getTypeArguments(type);

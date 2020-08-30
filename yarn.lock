@@ -742,10 +742,10 @@ escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-etc@^2.0.0:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-2.2.1.tgz#21b86adc6db950532700a62eebc8a9ed9ff7f514"
-  integrity sha512-I3G+KA9HGZ0lrdaBJG7CaLFJ5rtivXtKY8Ac5ATZ/Rp1hncLeShqnANLXITC0z6BugC4Gd7JlFyxeyiuBsNQFQ==
+eslint-etc@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-3.0.0.tgz#86a55c3c8f40228afe24d66cf8f5a01ad52dd9a9"
+  integrity sha512-vLG5utpZf6gt6YqHUmW/OmZvZW4fQaikkk6qvZW/+8f2c+zEwzttToP7skMLykV9/J1VNpq7WuIlwAZVP5EvDQ==
   dependencies:
     "@typescript-eslint/experimental-utils" "^3.2.0"
     tsutils "^3.17.1"

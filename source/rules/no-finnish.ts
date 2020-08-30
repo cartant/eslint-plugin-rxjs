@@ -4,7 +4,12 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { getLoc, getParent, getTypeServices } from "eslint-etc";
+import {
+  getLoc,
+  getParent,
+  getParserServices,
+  getTypeServices,
+} from "eslint-etc";
 import { ruleCreator } from "../utils";
 
 const rule = ruleCreator({
@@ -24,18 +29,17 @@ const rule = ruleCreator({
   },
   name: "no-finnish",
   create: (context) => {
-    const {
-      couldBeObservable,
-      couldReturnObservable,
-      nodeMap,
-    } = getTypeServices(context);
+    const { esTreeNodeToTSNodeMap } = getParserServices(context);
+    const { couldBeObservable, couldReturnObservable } = getTypeServices(
+      context
+    );
 
     function checkNode(nameNode: es.Node, typeNode?: es.Node) {
       if (
         couldBeObservable(typeNode || nameNode) ||
         couldReturnObservable(typeNode || nameNode)
       ) {
-        const tsNode = nodeMap.get(nameNode);
+        const tsNode = esTreeNodeToTSNodeMap.get(nameNode);
         if (/[$]+$/.test(tsNode.getText())) {
           context.report({
             loc: getLoc(tsNode),

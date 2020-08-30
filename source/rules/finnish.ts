@@ -4,7 +4,13 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { findParent, getLoc, getParent, getTypeServices } from "eslint-etc";
+import {
+  findParent,
+  getLoc,
+  getParent,
+  getParserServices,
+  getTypeServices,
+} from "eslint-etc";
 import { ruleCreator } from "../utils";
 
 const defaultOptions: {
@@ -47,12 +53,12 @@ const rule = ruleCreator({
   },
   name: "finnish",
   create: (context, unused: typeof defaultOptions) => {
+    const { esTreeNodeToTSNodeMap } = getParserServices(context);
     const {
       couldBeObservable,
       couldBeType,
       couldReturnObservable,
       couldReturnType,
-      nodeMap,
     } = getTypeServices(context);
     const [config = {}] = context.options;
 
@@ -94,7 +100,7 @@ const rule = ruleCreator({
     }
 
     function checkNode(nameNode: es.Node, typeNode?: es.Node) {
-      let tsNode = nodeMap.get(nameNode);
+      let tsNode = esTreeNodeToTSNodeMap.get(nameNode);
       const text = tsNode.getText();
       if (
         !/\$$/.test(text) &&

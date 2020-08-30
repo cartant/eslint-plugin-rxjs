@@ -4,7 +4,13 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { findParent, getLoc, getParent, getTypeServices } from "eslint-etc";
+import {
+  findParent,
+  getLoc,
+  getParent,
+  getParserServices,
+  getTypeServices,
+} from "eslint-etc";
 import { ruleCreator } from "../utils";
 
 const defaultOptions: {
@@ -43,7 +49,8 @@ const rule = ruleCreator({
   },
   name: "suffix-subjects",
   create: (context, unused: typeof defaultOptions) => {
-    const { couldBeType, nodeMap } = getTypeServices(context);
+    const { esTreeNodeToTSNodeMap } = getParserServices(context);
+    const { couldBeType } = getTypeServices(context);
     const [config = {}] = context.options;
 
     const validate = {
@@ -71,7 +78,7 @@ const rule = ruleCreator({
     const suffixRegex = new RegExp(String.raw`${suffix}\$?$`, "i");
 
     function checkNode(nameNode: es.Node, typeNode?: es.Node) {
-      let tsNode = nodeMap.get(nameNode);
+      let tsNode = esTreeNodeToTSNodeMap.get(nameNode);
       const text = tsNode.getText();
       if (
         !suffixRegex.test(text) &&
