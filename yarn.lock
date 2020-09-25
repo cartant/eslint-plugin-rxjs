@@ -107,10 +107,13 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@cartant/eslint-config@^1.0.0":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@cartant/eslint-config/-/eslint-config-1.0.5.tgz#e5be99cc0a86611b4a72cd96b320fb51d607721a"
-  integrity sha512-4q6oVQsnA/d2Vsjmz/iRSkrkXyZ1SPEY8V3p8yI9Ai0+vEkU0Tv9P9LlFMt8OZ0Wvcy+4Vvd20XXJuUibeOzTQ==
+"@cartant/eslint-config@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@cartant/eslint-config/-/eslint-config-2.0.0.tgz#3ba6038476a330a07cb576e37e1322019a22ff32"
+  integrity sha512-ISwt/uKF3qRj6+1EARrZ6LK9HmX9SagpEkL2e6IT3e0A7Qe2sIfzt3mKiKKJiw/TnuyW6DoO4nay2C4BCLgD4Q==
+  dependencies:
+    "@typescript-eslint/eslint-plugin" "^4.0.0"
+    eslint-plugin-import "^2.20.2"
 
 "@eslint/eslintrc@^0.1.3":
   version "0.1.3"
@@ -165,9 +168,9 @@
   integrity sha512-htRqZr5qn8EzMelhX/Xmx142z218lLyGaeZ3YR8jlze4TATRU9huKKvuBmAJEW4LCC4pnY1N6JAm6p85fMHjhg==
 
 "@types/eslint@^7.0.0":
-  version "7.2.2"
-  resolved "https://registry.yarnpkg.com/@types/eslint/-/eslint-7.2.2.tgz#c88426b896efeb0b2732a92431ce8aa7ec0dee61"
-  integrity sha512-psWuwNXuKR2e6vMU5d2qH0Kqzrb2Zxwk+uBCF2LsyEph+Nex3lFIPMJXwxfGesdtJM2qtjKoCYsyh76K3x9wLg==
+  version "7.2.3"
+  resolved "https://registry.yarnpkg.com/@types/eslint/-/eslint-7.2.3.tgz#a3731b7584fe1a847a34e67ac57a556afd9b0c0e"
+  integrity sha512-SPBkpC+awgFfyAn4sjt0JBZ3vzACoSp2zhGBJkkrs09EzPqLbxkzaE8kJs3EsRRgkZwWk9zyXT/swvhnJYX8pQ==
   dependencies:
     "@types/estree" "*"
     "@types/json-schema" "*"
@@ -208,9 +211,9 @@
   integrity sha512-FA/BWv8t8ZWJ+gEOnLLd8ygxH/2UFbAvgEonyfN6yWGLKc7zVjbpl2Y4CTjid9h2RfgPP6SEt6uHwEOply00yw==
 
 "@types/yargs@^15.0.5":
-  version "15.0.6"
-  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-15.0.6.tgz#822919963e1acc0ed03dbb11570d548258004c62"
-  integrity sha512-sw6JBfeZeE7ep9Pmhcysxo4lgaMLlHuQ8ie0srx5VOEnN4RNJgLryCuvxCUotw6Jmd50zBwCJHs3iwjLyIJgbQ==
+  version "15.0.7"
+  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-15.0.7.tgz#dad50a7a234a35ef9460737a56024287a3de1d2b"
+  integrity sha512-Gf4u3EjaPNcC9cTu4/j2oN14nSVhr8PQ+BvBcBQHAhDZfl0bVIiLgvnRXv/dn58XhTm9UXvBpvJpDlwV65QxOA==
   dependencies:
     "@types/yargs-parser" "*"
 

@@ -6,7 +6,6 @@
     "project": "tsconfig.json",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "import"],
   "root": true,
   "rules": {
     "sort-keys": ["off"]
