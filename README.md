@@ -1,5 +1,13 @@
 # eslint-plugin-rxjs
 
+[![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/cartant/eslint-plugin-rxjs/blob/master/LICENSE)
+[![NPM version](https://img.shields.io/npm/v/eslint-plugin-rxjs.svg)](https://www.npmjs.com/package/eslint-plugin-rxjs)
+[![Downloads](http://img.shields.io/npm/dm/eslint-plugin-rxjs.svg)](https://npmjs.org/package/eslint-plugin-rxjs)
+[![Build status](https://img.shields.io/circleci/build/github/cartant/eslint-plugin-rxjs?token=34077d419805b6295c5a946a155dc7ff142926c5)](https://app.circleci.com/pipelines/github/cartant)
+[![dependency status](https://img.shields.io/david/cartant/eslint-plugin-rxjs.svg)](https://david-dm.org/cartant/eslint-plugin-rxjs)
+[![devDependency Status](https://img.shields.io/david/dev/cartant/eslint-plugin-rxjs.svg)](https://david-dm.org/cartant/eslint-plugin-rxjs#info=devDependencies)
+[![peerDependency Status](https://img.shields.io/david/peer/cartant/eslint-plugin-rxjs.svg)](https://david-dm.org/cartant/eslint-plugin-rxjs#info=peerDependencies)
+
 This repo is a WIP.
 
 Eventually, it will contain ESLint versions of the rules in the [`rxjs-tslint-rules`](https://github.com/cartant/rxjs-tslint-rules) package.
