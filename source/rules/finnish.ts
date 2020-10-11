@@ -31,7 +31,7 @@ const rule = ruleCreator({
       description: "Enforces the use of Finnish notation.",
       recommended: false,
     },
-    fixable: "code",
+    fixable: undefined,
     messages: {
       forbidden: "Use Finnish notation.",
     },
