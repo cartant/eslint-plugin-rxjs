@@ -27,7 +27,7 @@ class Answers {
 
 ## Options
 
-This rule accepts a single option which is an object with a `allowProtected` property that determines whether or not protected subjects are allowed. By default, they are not.
+This rule accepts a single option which is an object with an `allowProtected` property that determines whether or not protected subjects are allowed. By default, they are not.
 
 ```json
 {
