@@ -37,7 +37,7 @@ const rule = ruleCreator({
   name: "no-sharereplay",
   create: (context, unused: typeof defaultOptions) => {
     const [config = {}] = context.options;
-    const { allowConfig = false } = config;
+    const { allowConfig = true } = config;
     return {
       "CallExpression[callee.name='shareReplay']": (
         node: es.CallExpression

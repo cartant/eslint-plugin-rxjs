@@ -16,7 +16,6 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
         const shared = of(42).pipe(
           shareReplay({ refCount: true })
         );`,
-      options: [{ allowConfig: true }],
     },
     {
       code: stripIndent`
@@ -24,7 +23,6 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
         const shared = of(42).pipe(
           shareReplay({ refCount: false })
         );`,
-      options: [{ allowConfig: true }],
     },
   ],
   invalid: [
@@ -35,7 +33,8 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
           shareReplay()
           ~~~~~~~~~~~ [forbidden]
         );
-      `
+      `,
+      { options: [{ allowConfig: false }] }
     ),
     fromFixture(
       stripIndent`
@@ -52,7 +51,7 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
         // one argument
         const shared = of(42).pipe(
           shareReplay(1)
-          ~~~~~~~~~~~ [forbidden]
+          ~~~~~~~~~~~ [forbiddenWithoutConfig]
         );
       `
     ),
@@ -61,7 +60,7 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
         // two arguments
         const shared = of(42).pipe(
           shareReplay(1, 100)
-          ~~~~~~~~~~~ [forbidden]
+          ~~~~~~~~~~~ [forbiddenWithoutConfig]
         );
       `
     ),
@@ -70,7 +69,7 @@ ruleTester({ types: false }).run("no-sharereplay", rule, {
         // three arguments
         const shared = of(42).pipe(
           shareReplay(1, 100, asapScheduler)
-          ~~~~~~~~~~~ [forbidden]
+          ~~~~~~~~~~~ [forbiddenWithoutConfig]
         );
       `
     ),

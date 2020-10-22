@@ -6,7 +6,7 @@ The behaviour of `shareReplay` has changed several times - see the blog post lin
 
 ## Options
 
-This rule accepts a single option which is an object with a `allowConfig` property that that determines whether `shareReplay` is allow if a config argument is specified. By default, `allowConfig` is `false`.
+This rule accepts a single option which is an object with a `allowConfig` property that that determines whether `shareReplay` is allow if a config argument is specified. By default, `allowConfig` is `true`.
 
 ```json
 {
