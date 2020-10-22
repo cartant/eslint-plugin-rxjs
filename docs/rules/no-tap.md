@@ -1,3 +1,7 @@
-# no-tap
+# Avoid `tap` (`no-tap`)
 
-TK
+This rule effects failures if the `tap` operator is used.
+
+## Options
+
+This rule has no options.

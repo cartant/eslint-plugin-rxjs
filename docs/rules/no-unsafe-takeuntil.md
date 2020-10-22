@@ -1,3 +1,50 @@
-# no-unsafe-takeuntil
+# Avoid `takeUntil` subscription leaks  (`no-unsafe-takeuntil`)
 
-TK
+This rule effects failures whenever `takeUntil` is using in observable compositions that can leak subscriptions.
+
+## Rule details
+
+Examples of **incorrect** code for this rule:
+
+```ts
+const combined = source
+  .pipe(
+    takeUntil(notifier),
+    combineLatest(b)
+  )
+  .subscribe((value) => console.log(value));
+```
+
+Examples of **correct** code for this rule:
+
+```ts
+const combined = source
+  .pipe(
+    combineLatest(b),
+    takeUntil(notifier)
+  )
+  .subscribe((value) => console.log(value));
+```
+
+## Options
+
+This rule accepts a single option which is an object with `alias` and `allow` properties. The `alias` property is an array of names of operators that should be treated similarly to `takeUntil` and the `allow` property is an array of names of operators that are safe to use after `takeUntil`.
+
+By default, the `allow` property contains all of the built-in operators that are safe to use after `takeUntil`.
+
+```json
+{
+  "rxjs/no-unsafe-takeuntil": [
+    "error",
+    {
+      "alias": ["takeUntilDestroyed"]
+    }
+  ]
+}
+```
+
+The properties in the options object are themselves optional; they do not all have to be specified.
+
+## Further reading
+
+- [Avoiding takeUntil leaks](https://ncjamieson.com/avoiding-takeuntil-leaks/)

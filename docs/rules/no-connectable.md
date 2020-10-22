@@ -1,3 +1,7 @@
-# no-connectable
+# Avoid connectable observables (`no-connectable`)
 
-TK
+This rule prevents the use of connectable observables.
+
+## Options
+
+This rule has no options.
