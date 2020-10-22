@@ -15,7 +15,7 @@
     "skipLibCheck": true,
     "sourceMap": false,
     "suppressImplicitAnyIndexErrors": true,
-    "target": "esnext"
+    "target": "es2019"
   },
   "exclude": [],
   "include": [
