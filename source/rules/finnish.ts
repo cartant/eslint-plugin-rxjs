@@ -68,7 +68,7 @@ const rule = ruleCreator({
       parameters: true,
       properties: true,
       variables: true,
-      ...(config as {}),
+      ...(config as Record<string, unknown>),
     };
 
     const names: { regExp: RegExp; validate: boolean }[] = [];

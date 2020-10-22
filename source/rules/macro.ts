@@ -32,6 +32,7 @@ const rule = ruleCreator({
 
     function fix(fixer: eslint.RuleFixer) {
       return fixer.insertTextBefore(
+        /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
         program!,
         `import "babel-plugin-rxjs-tools/macro";\n`
       );
