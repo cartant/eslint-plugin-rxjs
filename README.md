@@ -8,9 +8,11 @@
 [![devDependency Status](https://img.shields.io/david/dev/cartant/eslint-plugin-rxjs.svg)](https://david-dm.org/cartant/eslint-plugin-rxjs#info=devDependencies)
 [![peerDependency Status](https://img.shields.io/david/peer/cartant/eslint-plugin-rxjs.svg)](https://david-dm.org/cartant/eslint-plugin-rxjs#info=peerDependencies)
 
-This repo is a WIP.
+This package contains a bunch of ESLint rules for RxJS. Essentially, it's a re-implementation of the rules that were in the [`rxjs-tslint-rules`](https://github.com/cartant/rxjs-tslint-rules) package.
 
-Eventually, it will contain ESLint versions of the rules in the [`rxjs-tslint-rules`](https://github.com/cartant/rxjs-tslint-rules) package.
+Some of the rules are rather opinionated and are not included in the `recommended` configuration. Developers can decide for themselves whether they want to enable opinionated rules.
+
+Almost all of these rules require the TypeScript parser for ESLint.
 
 # Install
 
