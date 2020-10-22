@@ -37,7 +37,7 @@ By default, the `allow` property contains all of the built-in operators that are
   "rxjs/no-unsafe-takeuntil": [
     "error",
     {
-      "alias": ["takeUntilDestroyed"]
+      "alias": ["untilDestroyed"]
     }
   ]
 }
