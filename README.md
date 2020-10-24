@@ -95,7 +95,7 @@ The package includes the following rules:
 | [`no-index`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-index.md) | Forbids the importation from index modules - for the reason, see [this issue](https://github.com/ReactiveX/rxjs/issues/4230). | Yes |
 | [`no-internal`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-internal.md) | Forbids the importation of internals. | Yes |
 | [`no-nested-subscribe`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-nested-subscribe.md) | Forbids the calling of `subscribe` within a `subscribe` callback. | Yes |
-| [`no-redundant-notify`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-redundant-notify.md) | Disallows redundant notifications from completed or errored observables. | Yes |
+| [`no-redundant-notify`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-redundant-notify.md) | Forbids redundant notifications from completed or errored observables. | Yes |
 | [`no-sharereplay`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-sharereplay.md) | Forbids using the `shareReplay` operator. | Yes |
 | [`no-subclass`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-subclass.md) | Forbids subclassing RxJS classes. | No |
 | [`no-subject-unsubscribe`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-subject-unsubscribe.md) | Forbids calling the `unsubscribe` method of a subject instance. | Yes |
