@@ -9,6 +9,7 @@ import { ruleCreator } from "../utils";
 const rule = ruleCreator({
   defaultOptions: [],
   meta: {
+    deprecated: true,
     docs: {
       category: "Best Practices",
       description: "Forbids the use of the `tap` operator.",
@@ -18,6 +19,7 @@ const rule = ruleCreator({
     messages: {
       forbidden: "The tap operator is forbidden.",
     },
+    replacedBy: ["ban-operators"],
     schema: [],
     type: "problem",
   },
