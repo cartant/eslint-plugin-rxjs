@@ -8,26 +8,32 @@ Examples of **incorrect** code for this rule:
 
 ```ts
 return this.http
-  .get<Something>("https://api.some.com/things/1")
-  .pipe(map(this.extractSomeProperty), catchError(this.handleError));
+    .get<Something>("https://api.some.com/things/1")
+    .pipe(
+        map(this.extractSomeProperty),
+        catchError(this.handleError)
+    );
 ```
 
 Examples of **correct** code for this rule:
 
 ```ts
-return this.http.get<Something>("https://api.some.com/things/1").pipe(
-  map((s) => this.extractSomeProperty(s)),
-  catchError((e) => this.handleError(e))
+return this.http
+  .get<Something>("https://api.some.com/things/1")
+  .pipe(
+    map((s) => this.extractSomeProperty(s)),
+    catchError((e) => this.handleError(e)
+  )
 );
 ```
 
 ```ts
 return this.http
-  .get<Something>("https://api.some.com/things/1")
-  .pipe(
-    map(this.extractSomeProperty.bind(this)),
-    catchError(this.handleError.bind(this))
-  );
+    .get<Something>("https://api.some.com/things/1")
+    .pipe(
+        map(this.extractSomeProperty.bind(this)),
+        catchError(this.handleError.bind(this))
+    );
 ```
 
 ## Options
@@ -36,4 +42,4 @@ This rule has no options.
 
 ## Further reading
 
-- [Avoiding unbound methods](https://ncjamieson.com/avoiding-unbound-methods/)
+-   [Avoiding unbound methods](https://ncjamieson.com/avoiding-unbound-methods/)
