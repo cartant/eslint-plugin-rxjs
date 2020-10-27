@@ -1,3 +1,10 @@
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/cartant/eslint-plugin-rxjs/compare/v1.0.2...v1.0.3) (2020-10-27)
+
+## Changes
+
+* Specify Node 10 as the minimum `engines` in `package.json` and downlevel to ES2018.
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/cartant/eslint-plugin-rxjs/compare/v1.0.1...v1.0.2) (2020-10-25)
 
