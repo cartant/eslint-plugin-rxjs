@@ -12,8 +12,14 @@ import {
   hasTypeAnnotation,
   isArrowFunctionExpression,
   isFunctionExpression,
+  isIdentifier,
+  isObjectExpression,
 } from "eslint-etc";
 import { ruleCreator } from "../utils";
+
+function isProperty(node: es.Node): node is es.Property {
+  return node.type === "Property";
+}
 
 const defaultOptions: {
   allowExplicitAny?: boolean;
@@ -54,62 +60,31 @@ const rule = ruleCreator({
   create: (context, unused: typeof defaultOptions) => {
     const [config = {}] = context.options;
     const { allowExplicitAny = false } = config;
-    return {
-      "CallExpression[callee.name='catchError']": (node: es.CallExpression) => {
-        const [arg] = node.arguments;
-        if (!arg) {
+
+    function checkCallback(callback: es.Node) {
+      if (
+        isArrowFunctionExpression(callback) ||
+        isFunctionExpression(callback)
+      ) {
+        const [param] = callback.params;
+        if (!param) {
           return;
         }
-        if (isArrowFunctionExpression(arg) || isFunctionExpression(arg)) {
-          const [param] = arg.params;
-          if (!param) {
-            return;
-          }
-          if (hasTypeAnnotation(param)) {
-            const { typeAnnotation } = param;
-            const {
-              typeAnnotation: { type },
-            } = typeAnnotation;
-            if (type === AST_NODE_TYPES.TSAnyKeyword) {
-              if (allowExplicitAny) {
-                return;
-              }
-              function fix(fixer: eslint.RuleFixer) {
-                return fixer.replaceText(typeAnnotation, ": unknown");
-              }
-              context.report({
-                fix,
-                messageId: "explicitAny",
-                node: param,
-                suggest: [
-                  {
-                    messageId: "suggestExplicitUnknown",
-                    fix,
-                  },
-                ],
-              });
-            } else if (type !== AST_NODE_TYPES.TSUnknownKeyword) {
-              function fix(fixer: eslint.RuleFixer) {
-                return fixer.replaceText(typeAnnotation, ": unknown");
-              }
-              context.report({
-                messageId: "narrowed",
-                node: param,
-                suggest: [
-                  {
-                    messageId: "suggestExplicitUnknown",
-                    fix,
-                  },
-                ],
-              });
+        if (hasTypeAnnotation(param)) {
+          const { typeAnnotation } = param;
+          const {
+            typeAnnotation: { type },
+          } = typeAnnotation;
+          if (type === AST_NODE_TYPES.TSAnyKeyword) {
+            if (allowExplicitAny) {
+              return;
             }
-          } else {
             function fix(fixer: eslint.RuleFixer) {
-              return fixer.insertTextAfter(param, ": unknown");
+              return fixer.replaceText(typeAnnotation, ": unknown");
             }
             context.report({
               fix,
-              messageId: "implicitAny",
+              messageId: "explicitAny",
               node: param,
               suggest: [
                 {
@@ -118,6 +93,63 @@ const rule = ruleCreator({
                 },
               ],
             });
+          } else if (type !== AST_NODE_TYPES.TSUnknownKeyword) {
+            function fix(fixer: eslint.RuleFixer) {
+              return fixer.replaceText(typeAnnotation, ": unknown");
+            }
+            context.report({
+              messageId: "narrowed",
+              node: param,
+              suggest: [
+                {
+                  messageId: "suggestExplicitUnknown",
+                  fix,
+                },
+              ],
+            });
+          }
+        } else {
+          function fix(fixer: eslint.RuleFixer) {
+            return fixer.insertTextAfter(param, ": unknown");
+          }
+          context.report({
+            fix,
+            messageId: "implicitAny",
+            node: param,
+            suggest: [
+              {
+                messageId: "suggestExplicitUnknown",
+                fix,
+              },
+            ],
+          });
+        }
+      }
+    }
+
+    return {
+      "CallExpression[callee.name='catchError']": (node: es.CallExpression) => {
+        const [callback] = node.arguments;
+        if (!callback) {
+          return;
+        }
+        checkCallback(callback);
+      },
+      "CallExpression[callee.property.name='subscribe'],CallExpression[callee.name='tap']": (
+        node: es.CallExpression
+      ) => {
+        const [observer, callback] = node.arguments;
+        if (callback) {
+          checkCallback(callback);
+        } else if (observer && isObjectExpression(observer)) {
+          const errorProperty = observer.properties.find(
+            (property) =>
+              isProperty(property) &&
+              isIdentifier(property.key) &&
+              property.key.name === "error"
+          ) as es.Property;
+          if (errorProperty) {
+            checkCallback(errorProperty.value);
           }
         }
       },
