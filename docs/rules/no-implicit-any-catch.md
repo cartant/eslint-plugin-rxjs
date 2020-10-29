@@ -11,7 +11,24 @@ import { throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 
 throwError(() => new Error("Kaboom!")).pipe(
-  catchError(error => console.error(error))
+  catchError((error) => console.error(error))
+);
+```
+
+```ts
+import { throwError } from "rxjs";
+
+throwError(() => new Error("Kaboom!")).subscribe({
+  error: (error) => console.error(error)
+});
+```
+
+```ts
+import { throwError } from "rxjs";
+import { tap } from "rxjs/operators";
+
+throwError(() => new Error("Kaboom!")).pipe(
+  tap(undefined, (error) => console.error(error))
 );
 ```
 
@@ -23,6 +40,23 @@ import { catchError } from "rxjs/operators";
 
 throwError(() => new Error("Kaboom!")).pipe(
   catchError((error: unknown) => console.error(error))
+);
+```
+
+```ts
+import { throwError } from "rxjs";
+
+throwError(() => new Error("Kaboom!")).subscribe({
+  error: (error: unknown) => console.error(error)
+});
+```
+
+```ts
+import { throwError } from "rxjs";
+import { tap } from "rxjs/operators";
+
+throwError(() => new Error("Kaboom!")).pipe(
+  tap(undefined, (error: unknown) => console.error(error))
 );
 ```
 
