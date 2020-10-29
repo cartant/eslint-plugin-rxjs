@@ -1,3 +1,10 @@
+<a name="2.0.0"></a>
+## [2.0.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v1.0.3...v2.0.0) (2020-10-29)
+
+## Breaking Changes
+
+* `no-implicit-any-catch` is now enforced for error callbacks - and error methods on observers - passed to `subscribe` and `tap`, too. ([1b9234b](https://github.com/cartant/eslint-plugin-rxjs/commit/1b9234b))
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/cartant/eslint-plugin-rxjs/compare/v1.0.2...v1.0.3) (2020-10-27)
 
