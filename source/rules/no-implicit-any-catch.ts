@@ -29,7 +29,7 @@ const rule = ruleCreator({
   defaultOptions,
   meta: {
     docs: {
-      category: "Best Practices",
+      category: "Possible Errors",
       description:
         "Forbids implicit `any` error parameters in `catchError` operators.",
       recommended: false,

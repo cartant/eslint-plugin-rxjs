@@ -26,7 +26,7 @@ const rule = ruleCreator({
   defaultOptions,
   meta: {
     docs: {
-      category: "Best Practices",
+      category: "Possible Errors",
       description: "Forbids unsafe `switchMap` usage in effects and epics.",
       recommended: false,
     },

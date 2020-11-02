@@ -10,7 +10,7 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
+      category: "Stylistic Issues",
       description: "Enforces the use of a `just` alias for `of`.",
       recommended: false,
     },

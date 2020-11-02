@@ -17,7 +17,7 @@ const rule = ruleCreator({
   defaultOptions,
   meta: {
     docs: {
-      category: "Best Practices",
+      category: "Possible Errors",
       description: "Forbids unsafe `first`/`take` usage in effects and epics.",
       recommended: false,
     },

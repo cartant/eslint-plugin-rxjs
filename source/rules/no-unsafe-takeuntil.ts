@@ -22,7 +22,7 @@ const rule = ruleCreator({
   defaultOptions,
   meta: {
     docs: {
-      category: "Best Practices",
+      category: "Possible Errors",
       description: "Forbids the application of operators after `takeUntil`.",
       recommended: false,
     },

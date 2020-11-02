@@ -23,7 +23,7 @@ const rule = ruleCreator({
   defaultOptions,
   meta: {
     docs: {
-      category: "Best Practices",
+      category: "Possible Errors",
       description: "Forbids unsafe `catchError` usage in effects and epics.",
       recommended: false,
     },

@@ -15,7 +15,7 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
+      category: "Possible Errors",
       description:
         "Forbids observables not composed from the `repeatWhen` or `retryWhen` notifier.",
       recommended: false,

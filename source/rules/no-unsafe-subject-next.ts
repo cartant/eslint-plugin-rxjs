@@ -18,7 +18,7 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
+      category: "Possible Errors",
       description: "Forbids unsafe optional `next` calls.",
       recommended: false,
     },

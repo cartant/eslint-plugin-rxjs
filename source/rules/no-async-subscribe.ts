@@ -11,7 +11,7 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
+      category: "Possible Errors",
       description: "Forbids passing `async` functions to `subscribe`.",
       recommended: false,
     },

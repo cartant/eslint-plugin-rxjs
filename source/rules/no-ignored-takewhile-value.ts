@@ -11,7 +11,7 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
+      category: "Possible Errors",
       description: "Forbids ignoring the value within `takeWhile`.",
       recommended: false,
     },

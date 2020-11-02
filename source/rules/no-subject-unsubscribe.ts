@@ -11,7 +11,7 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
+      category: "Possible Errors",
       description:
         "Forbids calling the `unsubscribe` method of a subject instance.",
       recommended: false,
