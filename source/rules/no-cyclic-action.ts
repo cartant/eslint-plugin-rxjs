@@ -10,24 +10,8 @@ import ts from "typescript";
 import { defaultObservable } from "../constants";
 import { ruleCreator } from "../utils";
 
-function getTypeArguments(type: ts.Type): ts.Type[] {
-  return type.aliasTypeArguments || (type as any).typeArguments || [];
-}
-
-function getActionTypes(type: ts.Type, typeChecker: ts.TypeChecker): string[] {
-  if (type.isUnion()) {
-    const memberActionTypes: string[] = [];
-    for (const memberType of type.types) {
-      memberActionTypes.push(...getActionTypes(memberType, typeChecker));
-    }
-    return memberActionTypes;
-  }
-  const symbol = typeChecker.getPropertyOfType(type, "type");
-  const actionType = typeChecker.getTypeOfSymbolAtLocation(
-    symbol,
-    symbol.valueDeclaration
-  );
-  return [typeChecker.typeToString(actionType)];
+function isTypeReference(type: ts.Type): type is ts.TypeReference {
+  return Boolean((type as any).target);
 }
 
 const defaultOptions: {
@@ -80,7 +64,10 @@ const rule = ruleCreator({
         return;
       }
       const pipeType = getType(pipeCallExpression);
-      const [pipeElementType] = getTypeArguments(pipeType);
+      if (!isTypeReference(pipeType)) {
+        return;
+      }
+      const [pipeElementType] = typeChecker.getTypeArguments(pipeType);
       if (!pipeElementType) {
         return;
       }
@@ -96,16 +83,18 @@ const rule = ruleCreator({
       const operatorReturnType = typeChecker.getReturnTypeOfSignature(
         signature
       );
-      const [operatorElementType] = getTypeArguments(operatorReturnType);
+      if (!isTypeReference(operatorReturnType)) {
+        return;
+      }
+      const [operatorElementType] = typeChecker.getTypeArguments(
+        operatorReturnType
+      );
       if (!operatorElementType) {
         return;
       }
 
-      const pipeActionTypes = getActionTypes(pipeElementType, typeChecker);
-      const operatorActionTypes = getActionTypes(
-        operatorElementType,
-        typeChecker
-      );
+      const pipeActionTypes = getActionTypes(pipeElementType);
+      const operatorActionTypes = getActionTypes(operatorElementType);
 
       for (const actionType of operatorActionTypes) {
         if (pipeActionTypes.includes(actionType)) {
@@ -116,6 +105,22 @@ const rule = ruleCreator({
           return;
         }
       }
+    }
+
+    function getActionTypes(type: ts.Type): string[] {
+      if (type.isUnion()) {
+        const memberActionTypes: string[] = [];
+        for (const memberType of type.types) {
+          memberActionTypes.push(...getActionTypes(memberType));
+        }
+        return memberActionTypes;
+      }
+      const symbol = typeChecker.getPropertyOfType(type, "type");
+      const actionType = typeChecker.getTypeOfSymbolAtLocation(
+        symbol,
+        symbol.valueDeclaration
+      );
+      return [typeChecker.typeToString(actionType)];
     }
 
     return {
