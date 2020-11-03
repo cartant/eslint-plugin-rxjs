@@ -8,7 +8,7 @@ This rule accepts a single option which is an object with an `observable` proper
 
 ```json
 {
-  "rxjs/no-unsafe-catch": [
+  "rxjs/no-unsafe-first": [
     "error",
     { "observable": "[Aa]ction(s|s\\$|\\$)$" }
   ]
