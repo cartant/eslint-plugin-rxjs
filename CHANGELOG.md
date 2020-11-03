@@ -1,3 +1,10 @@
+<a name="2.1.1"></a>
+## [2.1.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.0...v2.1.1) (2020-11-03)
+
+## Changes
+
+* Use the public TypeScript API (`getTypeOfSymbolAtLocation`) to obtain the action type in the `no-cyclic-action` rule. ([56687db](https://github.com/cartant/eslint-plugin-rxjs/commit/56687db))
+
 <a name="2.1.0"></a>
 ## [2.1.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.0.1...v2.1.0) (2020-11-03)
 
