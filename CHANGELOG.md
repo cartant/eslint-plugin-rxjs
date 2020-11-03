@@ -1,3 +1,10 @@
+<a name="2.1.2"></a>
+## [2.1.2](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.1...v2.1.2) (2020-11-03)
+
+## Changes
+
+* Use the public TypeScript API (`getTypeArguments`) to obtain the type arguments in the `no-cyclic-action` rule. ([7f55bcb](https://github.com/cartant/eslint-plugin-rxjs/commit/7f55bcb))
+
 <a name="2.1.1"></a>
 ## [2.1.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.0...v2.1.1) (2020-11-03)
 
