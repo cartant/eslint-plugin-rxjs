@@ -81,6 +81,7 @@ The package includes the following rules:
 | [`no-compat`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-compat.md) | Forbids importation from locations that depend upon `rxjs-compat`. | No |
 | [`no-connectable`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-connectable.md) | Forbids operators that return connectable observables. | No |
 | [`no-create`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-create.md) | Forbids the calling of `Observable.create`. | Yes |
+| [`no-cyclic-action`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-cyclic-action.md) | Forbids effects and epics that re-emit filtered actions. | No |
 | [`no-explicit-generics`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-explicit-generics.md) | Forbids explicit generic type arguments. | No |
 | [`no-exposed-subjects`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-exposed-subjects.md) | Forbids exposed  (i.e. non-private) subjects. | No |
 | [`no-finnish`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-finnish.md) | Forbids the use of Finnish notation. | No |
