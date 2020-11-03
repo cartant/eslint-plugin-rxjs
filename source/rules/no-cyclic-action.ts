@@ -22,14 +22,12 @@ function getActionTypes(type: ts.Type, typeChecker: ts.TypeChecker): string[] {
     }
     return memberActionTypes;
   }
-  const symbol: any = typeChecker.getPropertyOfType(type, "type");
-  if (symbol?.type) {
-    return [typeChecker.typeToString(symbol.type)];
-  }
-  if (symbol?.mapper?.target) {
-    return [typeChecker.typeToString(symbol.mapper.target)];
-  }
-  return [];
+  const symbol = typeChecker.getPropertyOfType(type, "type");
+  const actionType = typeChecker.getTypeOfSymbolAtLocation(
+    symbol,
+    symbol.valueDeclaration
+  );
+  return [typeChecker.typeToString(actionType)];
 }
 
 const defaultOptions: {
