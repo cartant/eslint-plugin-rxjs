@@ -1,3 +1,10 @@
+<a name="2.1.0"></a>
+## [2.1.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.0.1...v2.1.0) (2020-11-03)
+
+## Changes
+
+* Added the `no-cyclic-action` rule for effects and epics. ([5e03092](https://github.com/cartant/eslint-plugin-rxjs/commit/5e03092))
+
 <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.0.0...v2.0.1) (2020-11-03)
 
