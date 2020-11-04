@@ -53,26 +53,16 @@ const rule = ruleCreator({
     const { getType, typeChecker } = getTypeServices(context);
 
     function checkNode(pipeCallExpression: es.CallExpression) {
-      const args = pipeCallExpression.arguments;
-      const ofTypeCallExpression = args.find(
+      const operatorCallExpression = pipeCallExpression.arguments.find(
         (arg) =>
           isCallExpression(arg) &&
           isIdentifier(arg.callee) &&
           arg.callee.name === "ofType"
       );
-      if (!ofTypeCallExpression) {
+      if (!operatorCallExpression) {
         return;
       }
-      const pipeType = getType(pipeCallExpression);
-      if (!isTypeReference(pipeType)) {
-        return;
-      }
-      const [pipeElementType] = typeChecker.getTypeArguments(pipeType);
-      if (!pipeElementType) {
-        return;
-      }
-
-      const operatorType = getType(ofTypeCallExpression);
+      const operatorType = getType(operatorCallExpression);
       const [signature] = typeChecker.getSignaturesOfType(
         operatorType,
         ts.SignatureKind.Call
@@ -93,9 +83,17 @@ const rule = ruleCreator({
         return;
       }
 
-      const pipeActionTypes = getActionTypes(pipeElementType);
-      const operatorActionTypes = getActionTypes(operatorElementType);
+      const pipeType = getType(pipeCallExpression);
+      if (!isTypeReference(pipeType)) {
+        return;
+      }
+      const [pipeElementType] = typeChecker.getTypeArguments(pipeType);
+      if (!pipeElementType) {
+        return;
+      }
 
+      const operatorActionTypes = getActionTypes(operatorElementType);
+      const pipeActionTypes = getActionTypes(pipeElementType);
       for (const actionType of operatorActionTypes) {
         if (pipeActionTypes.includes(actionType)) {
           context.report({
