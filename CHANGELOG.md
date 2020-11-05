@@ -1,3 +1,10 @@
+<a name="2.1.3"></a>
+## [2.1.3](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.2...v2.1.3) (2020-11-05)
+
+## Fixes
+
+* `no-ignored-subscription` should not effect failures for `Subscriber` instances passed to `subscribe`. ([72e11ec](https://github.com/cartant/eslint-plugin-rxjs/commit/72e11ec))
+
 <a name="2.1.2"></a>
 ## [2.1.2](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.1...v2.1.2) (2020-11-03)
 
