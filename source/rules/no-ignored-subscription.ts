@@ -4,7 +4,7 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { getTypeServices } from "eslint-etc";
+import { getParent, getTypeServices } from "eslint-etc";
 import { ruleCreator } from "../utils";
 
 const rule = ruleCreator({
@@ -24,13 +24,20 @@ const rule = ruleCreator({
   },
   name: "no-ignored-subscription",
   create: (context) => {
-    const { couldBeObservable } = getTypeServices(context);
+    const { couldBeObservable, couldBeType } = getTypeServices(context);
 
     return {
       "ExpressionStatement > CallExpression > MemberExpression[property.name='subscribe']": (
         node: es.MemberExpression
       ) => {
         if (couldBeObservable(node.object)) {
+          const callExpression = getParent(node) as es.CallExpression;
+          if (
+            callExpression.arguments.length === 1 &&
+            couldBeType(callExpression.arguments[0], "Subscriber")
+          ) {
+            return;
+          }
           context.report({
             messageId: "forbidden",
             node: node.property,

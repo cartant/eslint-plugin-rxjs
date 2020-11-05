@@ -32,6 +32,12 @@ ruleTester({ types: true }).run("no-ignored-subscription", rule, {
       import { of } from "rxjs";
       const d = { subscription: of(42).subscribe() };
     `,
+    stripIndent`
+      // subscriber
+      import { of, Subscriber } from "rxjs";
+      const subscriber = new Subscriber<number>();
+      of(42).subscribe(subscriber);
+    `,
   ],
   invalid: [
     fromFixture(

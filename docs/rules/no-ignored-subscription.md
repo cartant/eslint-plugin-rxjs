@@ -20,6 +20,14 @@ const subscription = interval(1e3).subscribe(
 );
 ```
 
+When subscribers are passed to `subscribe` they are chained, so the returned subscription can be ignored:
+
+```ts
+const numbers = new Observable<number(subscriber => {
+  interval(1e3).subscribe(subscriber);
+});
+```
+
 ## Options
 
 This rule has no options.
