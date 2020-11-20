@@ -1,3 +1,10 @@
+<a name="2.1.4"></a>
+## [2.1.4](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.3...v2.1.4) (2020-11-21)
+
+## Fixes
+
+* Fixed a problem with `no-cyclic-action` when used with effects/epics that return `Observable<void>`. ([79b9e82](https://github.com/cartant/eslint-plugin-rxjs/commit/79b9e82))
+
 <a name="2.1.3"></a>
 ## [2.1.3](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.2...v2.1.3) (2020-11-05)
 
