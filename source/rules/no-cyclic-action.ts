@@ -114,6 +114,9 @@ const rule = ruleCreator({
         return memberActionTypes;
       }
       const symbol = typeChecker.getPropertyOfType(type, "type");
+      if (!symbol) {
+        return [];
+      }
       const actionType = typeChecker.getTypeOfSymbolAtLocation(
         symbol,
         symbol.valueDeclaration

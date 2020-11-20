@@ -48,6 +48,13 @@ ruleTester({ types: true }).run("no-cyclic-action", rule, {
         const d = (action$: Actions) => action$.pipe(ofType(SOMETHING), mapTo({ type: SOMETHING_ELSE } as const));
       `,
     },
+    {
+      code: stripIndent`
+        // https://github.com/cartant/eslint-plugin-rxjs/issues/54
+        ${setup}
+        const a = actions.pipe(ofType("SOMETHING"), map(() => {}));
+      `,
+    },
   ],
   invalid: [
     fromFixture(
