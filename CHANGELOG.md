@@ -1,3 +1,10 @@
+<a name="2.1.5"></a>
+## [2.1.5](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.4...v2.1.5) (2020-11-28)
+
+## Changes
+
+* Use `files` in `package.json` instead of `.npmignore`. ([99cb9ec](https://github.com/cartant/eslint-plugin-rxjs/commit/99cb9ec))
+
 <a name="2.1.4"></a>
 ## [2.1.4](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.3...v2.1.4) (2020-11-21)
 
