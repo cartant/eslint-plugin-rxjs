@@ -1,8 +1,0 @@
-/.circleci
-/build
-/node_modules
-/source
-/temp
-/tests
-/ts*.json
-yarn.lock
