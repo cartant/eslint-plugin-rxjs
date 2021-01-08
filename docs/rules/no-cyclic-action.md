@@ -22,6 +22,32 @@ actions.pipe(
 );
 ```
 
+This rule can be used with effects _and epics_, so it makes __no attempt__ to discern whether or not dispatching is disabled for an NgRx effect. That is, code like this will effect (🙈) a failure:
+
+```ts
+someEffect = createEffect(() =>
+  this.actions$.pipe(
+    ofType("SOMETHING"),
+    tap(() => console.log("do something")),
+  ),
+  { dispatch: false }
+);
+```
+
+Instead, you can use the the RxJS [`ignoreElements`](https://rxjs.dev/api/operators/ignoreElements) operator:
+
+```ts
+someEffect = createEffect(() =>
+  this.actions$.pipe(
+    ofType("SOMETHING"),
+    tap(() => console.log("do something")),
+    ignoreElements()
+  )
+);
+```
+
+Or you can use an ESLint [inline comment](https://eslint.org/docs/user-guide/configuring#disabling-rules-with-inline-comments) to disable the rule for a specific effect.
+
 ## Options
 
 This rule accepts a single option which is an object with an `observable` property that is a regular expression used to match an effect or epic's actions observable. The default `observable` regular expression should match most effect and epic action sources.
