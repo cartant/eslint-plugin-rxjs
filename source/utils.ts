@@ -20,5 +20,5 @@ export function createRegExpForWords(config: string | string[]): RegExp | null {
 
 export const ruleCreator = ESLintUtils.RuleCreator(
   (name) =>
-    `https://github/cartant/eslint-plugin-rxjs/tree/main/docs/rules/${name}.md`
+    `https://github.com/cartant/eslint-plugin-rxjs/tree/main/docs/rules/${name}.md`
 );
