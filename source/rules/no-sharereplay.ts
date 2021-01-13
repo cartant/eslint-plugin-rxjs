@@ -16,7 +16,7 @@ const rule = ruleCreator({
     docs: {
       category: "Best Practices",
       description: "Forbids using the `shareReplay` operator.",
-      recommended: false,
+      recommended: "error",
     },
     fixable: undefined,
     messages: {

@@ -18,7 +18,7 @@ const rule = ruleCreator({
     docs: {
       category: "Best Practices",
       description: "Forbids the passing of unbound methods.",
-      recommended: false,
+      recommended: "error",
     },
     fixable: undefined,
     messages: {

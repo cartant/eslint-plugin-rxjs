@@ -18,7 +18,7 @@ const rule = ruleCreator({
       category: "Possible Errors",
       description:
         "Forbids observables not composed from the `repeatWhen` or `retryWhen` notifier.",
-      recommended: false,
+      recommended: "error",
     },
     fixable: undefined,
     messages: {

@@ -25,7 +25,7 @@ const rule = ruleCreator({
       category: "Best Practices",
       description:
         "Forbids redundant notifications from completed or errored observables.",
-      recommended: false,
+      recommended: "error",
     },
     fixable: undefined,
     messages: {

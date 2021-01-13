@@ -14,7 +14,7 @@ const rule = ruleCreator({
       category: "Best Practices",
       description:
         "Forbids using `ReplaySubject`, `publishReplay` or `shareReplay` without specifying the buffer size.",
-      recommended: false,
+      recommended: "error",
     },
     fixable: undefined,
     messages: {

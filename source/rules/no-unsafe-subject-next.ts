@@ -20,7 +20,7 @@ const rule = ruleCreator({
     docs: {
       category: "Possible Errors",
       description: "Forbids unsafe optional `next` calls.",
-      recommended: false,
+      recommended: "error",
     },
     fixable: undefined,
     messages: {

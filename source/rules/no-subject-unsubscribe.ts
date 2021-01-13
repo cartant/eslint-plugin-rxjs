@@ -14,7 +14,7 @@ const rule = ruleCreator({
       category: "Possible Errors",
       description:
         "Forbids calling the `unsubscribe` method of a subject instance.",
-      recommended: false,
+      recommended: "error",
     },
     fixable: undefined,
     messages: {

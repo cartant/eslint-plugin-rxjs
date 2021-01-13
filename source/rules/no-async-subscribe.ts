@@ -13,7 +13,7 @@ const rule = ruleCreator({
     docs: {
       category: "Possible Errors",
       description: "Forbids passing `async` functions to `subscribe`.",
-      recommended: false,
+      recommended: "error",
     },
     fixable: undefined,
     messages: {

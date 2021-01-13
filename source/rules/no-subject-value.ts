@@ -14,7 +14,7 @@ const rule = ruleCreator({
       category: "Best Practices",
       description:
         "Forbids accessing the `value` property of a `BehaviorSubject` instance.",
-      recommended: false,
+      recommended: "error",
     },
     fixable: undefined,
     messages: {

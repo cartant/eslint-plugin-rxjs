@@ -24,7 +24,7 @@ const rule = ruleCreator({
     docs: {
       category: "Possible Errors",
       description: "Forbids the application of operators after `takeUntil`.",
-      recommended: false,
+      recommended: "error",
     },
     fixable: undefined,
     messages: {

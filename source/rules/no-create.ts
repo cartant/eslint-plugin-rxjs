@@ -13,7 +13,7 @@ const rule = ruleCreator({
     docs: {
       category: "Best Practices",
       description: "Forbids the calling of `Observable.create`.",
-      recommended: false,
+      recommended: "error",
     },
     fixable: undefined,
     messages: {

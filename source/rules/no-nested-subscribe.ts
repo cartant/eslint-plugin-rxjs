@@ -14,7 +14,7 @@ const rule = ruleCreator({
       category: "Best Practices",
       description:
         "Forbids the calling of `subscribe` within a `subscribe` callback.",
-      recommended: false,
+      recommended: "error",
     },
     fixable: undefined,
     messages: {

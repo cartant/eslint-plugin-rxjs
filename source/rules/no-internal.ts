@@ -12,7 +12,7 @@ const rule = ruleCreator({
     docs: {
       category: "Best Practices",
       description: "Forbids the importation of internals.",
-      recommended: false,
+      recommended: "error",
     },
     fixable: undefined,
     messages: {
