@@ -1,3 +1,10 @@
+<a name="2.1.7"></a>
+## [2.1.7](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.6...v2.1.7) (2021-01-19)
+
+## Fixes
+
+* Don't insist on type references when checking for obserables. ([521fe55](https://github.com/cartant/eslint-plugin-rxjs/commit/521fe55))
+
 <a name="2.1.6"></a>
 ## [2.1.6](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.5...v2.1.6) (2021-01-11)
 
