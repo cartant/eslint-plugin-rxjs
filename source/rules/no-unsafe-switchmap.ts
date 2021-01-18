@@ -96,7 +96,7 @@ const rule = ruleCreator({
       observableRegExp = new RegExp(defaultObservable);
     }
 
-    const { couldBeObservable, isReferenceType } = getTypeServices(context);
+    const { couldBeObservable } = getTypeServices(context);
 
     function shouldDisallow(args: es.Node[]): boolean {
       const names = args
@@ -126,11 +126,7 @@ const rule = ruleCreator({
     }
 
     function checkNode(node: es.CallExpression) {
-      if (
-        !node.arguments ||
-        !isReferenceType(node) ||
-        !couldBeObservable(node)
-      ) {
+      if (!node.arguments || !couldBeObservable(node)) {
         return;
       }
 

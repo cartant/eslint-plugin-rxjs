@@ -80,7 +80,7 @@ const rule = ruleCreator({
       );
     }
 
-    const { couldBeObservable, isReferenceType } = getTypeServices(context);
+    const { couldBeObservable } = getTypeServices(context);
 
     return {
       [`CallExpression[callee.property.name='pipe'] > CallExpression[callee.name=${checkedOperatorsRegExp}]`]: (
@@ -89,7 +89,6 @@ const rule = ruleCreator({
         const pipeCallExpression = getParent(node) as es.CallExpression;
         if (
           !pipeCallExpression.arguments ||
-          !isReferenceType(pipeCallExpression) ||
           !couldBeObservable(pipeCallExpression)
         ) {
           return;

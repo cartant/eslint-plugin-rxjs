@@ -52,7 +52,7 @@ const rule = ruleCreator({
     const { observable = defaultObservable } = config;
     const observableRegExp = new RegExp(observable);
 
-    const { couldBeObservable, isReferenceType } = getTypeServices(context);
+    const { couldBeObservable } = getTypeServices(context);
 
     function isUnsafe([arg]: es.Node[]) {
       if (
@@ -69,11 +69,7 @@ const rule = ruleCreator({
     }
 
     function checkNode(node: es.CallExpression) {
-      if (
-        !node.arguments ||
-        !isReferenceType(node) ||
-        !couldBeObservable(node)
-      ) {
+      if (!node.arguments || !couldBeObservable(node)) {
         return;
       }
 

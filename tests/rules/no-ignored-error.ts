@@ -63,5 +63,22 @@ ruleTester({ types: true }).run("no-ignored-error", rule, {
                 ~~~~~~~~~ [forbidden]
       `
     ),
+    fromFixture(
+      stripIndent`
+        // https://github.com/cartant/eslint-plugin-rxjs/issues/60
+        import { Observable } from "rxjs"
+        interface ISomeExtension {
+          sayHi(): void
+        }
+        function subscribeObservable<T>(obs: Observable<T>) {
+          return obs.subscribe((v: T) => {})
+                     ~~~~~~~~~ [forbidden]
+        }
+        function subscribeObservableWithExtension<T>(obs: Observable<T> & ISomeExtension) {
+          return obs.subscribe((v: T) => {})
+                     ~~~~~~~~~ [forbidden]
+        }
+      `
+    ),
   ],
 });

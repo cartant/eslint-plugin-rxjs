@@ -25,11 +25,7 @@ const rule = ruleCreator({
   },
   name: "no-ignored-error",
   create: (context) => {
-    const {
-      couldBeObservable,
-      isReferenceType,
-      couldBeFunction,
-    } = getTypeServices(context);
+    const { couldBeObservable, couldBeFunction } = getTypeServices(context);
 
     return {
       "CallExpression[arguments.length > 0] > MemberExpression > Identifier[name='subscribe']": (
@@ -40,7 +36,6 @@ const rule = ruleCreator({
 
         if (
           callExpression.arguments.length < 2 &&
-          isReferenceType(memberExpression.object) &&
           couldBeObservable(memberExpression.object) &&
           couldBeFunction(callExpression.arguments[0])
         ) {
