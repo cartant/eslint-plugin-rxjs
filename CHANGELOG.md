@@ -1,3 +1,14 @@
+<a name="3.0.0"></a>
+## [3.0.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.7...v3.0.0) (2021-01-30)
+
+## Breaking Changes
+
+* Check for an `Observable` type in `no-implicit-any-catch` - a breaking change because the previous version of this rule didn't require type information. ([ebfb553](https://github.com/cartant/eslint-plugin-rxjs/commit/ebfb553))
+
+## Fixes
+
+* Check for an `Observable` type in `prefer-observer`. ([30012be](https://github.com/cartant/eslint-plugin-rxjs/commit/30012be))
+
 <a name="2.1.7"></a>
 ## [2.1.7](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.6...v2.1.7) (2021-01-19)
 
