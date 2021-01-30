@@ -8,7 +8,7 @@ import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-implicit-any-catch");
 import { ruleTester } from "../utils";
 
-ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
+ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
   valid: [
     {
       code: stripIndent`

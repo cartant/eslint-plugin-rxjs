@@ -9,10 +9,12 @@ import {
   TSESTree as es,
 } from "@typescript-eslint/experimental-utils";
 import {
+  getTypeServices,
   hasTypeAnnotation,
   isArrowFunctionExpression,
   isFunctionExpression,
   isIdentifier,
+  isMemberExpression,
   isObjectExpression,
 } from "eslint-etc";
 import { ruleCreator } from "../utils";
@@ -60,6 +62,7 @@ const rule = ruleCreator({
   create: (context, unused: typeof defaultOptions) => {
     const [config = {}] = context.options;
     const { allowExplicitAny = false } = config;
+    const { couldBeObservable } = getTypeServices(context);
 
     function checkCallback(callback: es.Node) {
       if (
@@ -138,6 +141,10 @@ const rule = ruleCreator({
       "CallExpression[callee.property.name='subscribe'],CallExpression[callee.name='tap']": (
         node: es.CallExpression
       ) => {
+        const { callee } = node;
+        if (isMemberExpression(callee) && !couldBeObservable(callee.object)) {
+          return;
+        }
         const [observer, callback] = node.arguments;
         if (callback) {
           checkCallback(callback);
