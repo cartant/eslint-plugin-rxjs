@@ -6,7 +6,7 @@
   "dependencies": {
     "@typescript-eslint/experimental-utils": "^4.0.0",
     "common-tags": "^1.8.0",
-    "decamelize": "^4.0.0",
+    "decamelize": "^5.0.0",
     "eslint-etc": "^4.0.0",
     "requireindex": "~1.2.0",
     "rxjs-report-usage": "^1.0.4",
