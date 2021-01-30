@@ -8,6 +8,7 @@ import {
   getTypeServices,
   isArrowFunctionExpression,
   isFunctionExpression,
+  isMemberExpression,
 } from "eslint-etc";
 import { ruleCreator } from "../utils";
 
@@ -41,12 +42,15 @@ const rule = ruleCreator({
   },
   name: "prefer-observer",
   create: (context, unused: typeof defaultOptions) => {
-    const { couldBeFunction } = getTypeServices(context);
+    const { couldBeFunction, couldBeObservable } = getTypeServices(context);
     const [config = {}] = context.options;
     const { allowNext = true } = config;
 
     function checkArgs(callExpression: es.CallExpression, reportNode: es.Node) {
-      const { arguments: args } = callExpression;
+      const { arguments: args, callee } = callExpression;
+      if (isMemberExpression(callee) && !couldBeObservable(callee.object)) {
+        return;
+      }
       if (args.length > 1) {
         context.report({
           messageId: "forbidden",
