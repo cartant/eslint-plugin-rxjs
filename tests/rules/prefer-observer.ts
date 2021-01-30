@@ -179,6 +179,18 @@ ruleTester({ types: true }).run("prefer-observer", rule, {
       `,
       options: [{}],
     },
+    {
+      code: stripIndent`
+        // https://github.com/cartant/eslint-plugin-rxjs/issues/61
+        const whatever = {
+          pipe(...value: unknown[]) {},
+          subscribe(callback?: (value: unknown) => void) {}
+        };
+        whatever.pipe(() => {});
+        whatever.subscribe(() => {});
+      `,
+      options: [{ allowNext: false }],
+    },
   ],
   invalid: [
     fromFixture(

@@ -194,6 +194,19 @@ ruleTester({ types: false }).run("no-implicit-any-catch", rule, {
       `,
       options: [{ allowExplicitAny: true }],
     },
+    {
+      code: stripIndent`
+        // https://github.com/cartant/eslint-plugin-rxjs/issues/61
+        const whatever = {
+          subscribe(
+            next?: (value: unknown) => void,
+            error?: (error: unknown) => void
+          ) {}
+        };
+        whatever.subscribe(() => {}, (error) => {});
+      `,
+      options: [{}],
+    },
   ],
   invalid: [
     fromFixture(

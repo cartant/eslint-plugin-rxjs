@@ -28,6 +28,13 @@ ruleTester({ types: true }).run("no-async-subscribe", rule, {
       const SomeComponent: FC<{}> = () => <span>some component</span>;
       const someElement = <SomeComponent />;
     `,
+    stripIndent`
+      // https://github.com/cartant/eslint-plugin-rxjs/issues/61
+      const whatever = {
+        subscribe(next?: (value: unknown) => void) {}
+      };
+      whatever.subscribe(async () => { await 42; });
+    `,
   ],
   invalid: [
     fromFixture(

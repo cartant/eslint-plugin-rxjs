@@ -23,6 +23,16 @@ ruleTester({ types: true }).run("no-ignored-error", rule, {
       const observable = of([1, 2]);
       observable.subscribe(subject);
     `,
+    stripIndent`
+      // https://github.com/cartant/eslint-plugin-rxjs/issues/61
+      const whatever = {
+        subscribe(
+          next?: (value: unknown) => void,
+          error?: (error: unknown) => void
+        ) {}
+      };
+      whatever.subscribe();
+    `,
   ],
   invalid: [
     fromFixture(

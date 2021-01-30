@@ -38,6 +38,13 @@ ruleTester({ types: true }).run("no-ignored-subscription", rule, {
       const subscriber = new Subscriber<number>();
       of(42).subscribe(subscriber);
     `,
+    stripIndent`
+      // https://github.com/cartant/eslint-plugin-rxjs/issues/61
+      const whatever = {
+        subscribe(callback?: (value: unknown) => void) {}
+      };
+      whatever.subscribe(() => {});
+    `,
   ],
   invalid: [
     fromFixture(

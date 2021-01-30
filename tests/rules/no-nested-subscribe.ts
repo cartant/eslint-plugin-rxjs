@@ -51,6 +51,15 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
         }
       });
     `,
+    stripIndent`
+      // https://github.com/cartant/eslint-plugin-rxjs/issues/61
+      const whatever = {
+        subscribe(callback?: (value: unknown) => void) {}
+      };
+      whatever.subscribe(() => {
+        whatever.subscribe(() => {})
+      });
+    `,
   ],
   invalid: [
     fromFixture(
