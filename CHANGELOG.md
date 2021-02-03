@@ -1,3 +1,10 @@
+<a name="3.0.1"></a>
+## [3.0.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.0.0...v3.0.1) (2021-02-03)
+
+## Fixes
+
+* Support arrow functions without parameter parentheses in `no-implicit-any-catch`. ([37427ad](https://github.com/cartant/eslint-plugin-rxjs/commit/37427ad))
+
 <a name="3.0.0"></a>
 ## [3.0.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.7...v3.0.0) (2021-01-30)
 
