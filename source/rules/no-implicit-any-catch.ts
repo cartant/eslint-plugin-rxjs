@@ -19,6 +19,21 @@ import {
 } from "eslint-etc";
 import { ruleCreator } from "../utils";
 
+function isParenthesised(
+  sourceCode: Readonly<eslint.SourceCode>,
+  node: es.Node
+) {
+  const before = sourceCode.getTokenBefore(node);
+  const after = sourceCode.getTokenAfter(node);
+  return (
+    Boolean(before && after) &&
+    before.value === "(" &&
+    before.range[1] <= node.range[0] &&
+    after.value === ")" &&
+    after.range[0] >= node.range[1]
+  );
+}
+
 function isProperty(node: es.Node): node is es.Property {
   return node.type === "Property";
 }
@@ -63,6 +78,7 @@ const rule = ruleCreator({
     const [config = {}] = context.options;
     const { allowExplicitAny = false } = config;
     const { couldBeObservable } = getTypeServices(context);
+    const sourceCode = context.getSourceCode();
 
     function checkCallback(callback: es.Node) {
       if (
@@ -113,7 +129,13 @@ const rule = ruleCreator({
           }
         } else {
           function fix(fixer: eslint.RuleFixer) {
-            return fixer.insertTextAfter(param, ": unknown");
+            if (isParenthesised(sourceCode, param)) {
+              return fixer.insertTextAfter(param, ": unknown");
+            }
+            return [
+              fixer.insertTextBefore(param, "("),
+              fixer.insertTextAfter(param, ": unknown)"),
+            ];
           }
           context.report({
             fix,
