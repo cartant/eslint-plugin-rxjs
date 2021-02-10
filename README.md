@@ -71,7 +71,7 @@ module.exports = {
 
 The package includes the following rules.
 
-Rules marked with ✅ are recommended and rules marked with 🔧 have fixers
+Rules marked with ✅ are recommended and rules marked with 🔧 have fixers.
 
 | Rule | Description | | |
 | --- | --- | --- | --- |
