@@ -1,3 +1,10 @@
+<a name="3.1.0"></a>
+## [3.1.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.0.1...v3.1.0) (2021-02-13)
+
+## Features
+
+* Added a `strict` option to the `finnish` rule. ([8bf0d1d](https://github.com/cartant/eslint-plugin-rxjs/commit/8bf0d1d))
+
 <a name="3.0.1"></a>
 ## [3.0.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.0.0...v3.0.1) (2021-02-03)
 
