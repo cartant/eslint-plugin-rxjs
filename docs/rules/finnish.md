@@ -18,28 +18,32 @@ const answer$ = of(42, 54);
 
 ## Options
 
-This rule accepts a single option which is an object with properties that determine whether Finnish notation is enforced for `functions`, `methods`, `parameters`, `properties` and `variables`. It also contains `names` and `types` properties that determine whether of not Finnish notation is to be enforced for specific names or types.
+This rule accepts a single option which is an object with properties that determine whether Finnish notation is enforced for `functions`, `methods`, `parameters`, `properties` and `variables`. It also contains:
+
+-   `names` and `types` properties that determine whether of not Finnish notation is to be enforced for specific names or types.
+-   a `strict` property that, if `true`, disallows the use of a `$` suffix with non-`Observable` identifiers.
 
 The default (Angular-friendly) configuration looks like this:
 
 ```json
 {
-  "rxjs/finnish": [
-    "error",
-    {
-      "functions": true,
-      "methods": true,
-      "names": {
-        "^(canActivate|canActivateChild|canDeactivate|canLoad|intercept|resolve|validate)$": false
-      },
-      "parameters": true,
-      "properties": true,
-      "types": {
-        "^EventEmitter$": false
-      },
-      "variables": true
-    }
-  ]
+    "rxjs/finnish": [
+        "error",
+        {
+            "functions": true,
+            "methods": true,
+            "names": {
+                "^(canActivate|canActivateChild|canDeactivate|canLoad|intercept|resolve|validate)$": false
+            },
+            "parameters": true,
+            "properties": true,
+            "strict": false,
+            "types": {
+                "^EventEmitter$": false
+            },
+            "variables": true
+        }
+    ]
 }
 ```
 
@@ -47,4 +51,4 @@ The properties in the options object are themselves optional; they do not all ha
 
 ## Further reading
 
-- [Observables and Finnish Notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b)
+-   [Observables and Finnish Notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b)
