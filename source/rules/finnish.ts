@@ -19,6 +19,7 @@ const defaultOptions: {
   names?: Record<string, boolean>;
   parameters?: boolean;
   properties?: boolean;
+  strict?: boolean;
   types?: Record<string, boolean>;
   variables?: boolean;
 }[] = [];
@@ -33,7 +34,8 @@ const rule = ruleCreator({
     },
     fixable: undefined,
     messages: {
-      forbidden: "Use Finnish notation.",
+      shouldBeFinnish: "Finnish notation should be used here.",
+      shouldNotBeFinnish: "Finnish notation should not be used here.",
     },
     schema: [
       {
@@ -43,6 +45,7 @@ const rule = ruleCreator({
           names: { type: "object" },
           parameters: { type: "boolean" },
           properties: { type: "boolean" },
+          strict: { type: "boolean" },
           types: { type: "object" },
           variables: { type: "boolean" },
         },
@@ -62,6 +65,7 @@ const rule = ruleCreator({
     } = getTypeServices(context);
     const [config = {}] = context.options;
 
+    const { strict = false } = config;
     const validate = {
       functions: true,
       methods: true,
@@ -102,14 +106,32 @@ const rule = ruleCreator({
     function checkNode(nameNode: es.Node, typeNode?: es.Node) {
       let tsNode = esTreeNodeToTSNodeMap.get(nameNode);
       const text = tsNode.getText();
+      const hasFinnish = /\$$/.test(text);
+      if (hasFinnish && !strict) {
+        return;
+      }
+      const shouldBeFinnish = hasFinnish
+        ? () => {}
+        : () =>
+            context.report({
+              loc: getLoc(tsNode),
+              messageId: "shouldBeFinnish",
+            });
+      const shouldNotBeFinnish = hasFinnish
+        ? () =>
+            context.report({
+              loc: getLoc(tsNode),
+              messageId: "shouldNotBeFinnish",
+            })
+        : () => {};
       if (
-        !/\$$/.test(text) &&
-        (couldBeObservable(typeNode || nameNode) ||
-          couldReturnObservable(typeNode || nameNode))
+        couldBeObservable(typeNode || nameNode) ||
+        couldReturnObservable(typeNode || nameNode)
       ) {
         for (const name of names) {
           const { regExp, validate } = name;
           if (regExp.test(text) && !validate) {
+            shouldNotBeFinnish();
             return;
           }
         }
@@ -120,18 +142,18 @@ const rule = ruleCreator({
               couldReturnType(typeNode || nameNode, regExp)) &&
             !validate
           ) {
+            shouldNotBeFinnish();
             return;
           }
         }
-        context.report({
-          loc: getLoc(tsNode),
-          messageId: "forbidden",
-        });
+        shouldBeFinnish();
+      } else {
+        shouldNotBeFinnish();
       }
     }
 
     return {
-      "ArrayPattern > Identifier[name=/[^$]$/]": (node: es.Identifier) => {
+      "ArrayPattern > Identifier": (node: es.Identifier) => {
         const found = findParent(
           node,
           "ArrowFunctionExpression",
@@ -150,9 +172,7 @@ const rule = ruleCreator({
         }
         checkNode(node);
       },
-      "ArrowFunctionExpression > Identifier[name=/[^$]$/]": (
-        node: es.Identifier
-      ) => {
+      "ArrowFunctionExpression > Identifier": (node: es.Identifier) => {
         if (validate.parameters) {
           const parent = getParent(node) as es.ArrowFunctionExpression;
           if (node !== parent.body) {
@@ -160,15 +180,12 @@ const rule = ruleCreator({
           }
         }
       },
-      "ClassProperty[key.name=/[^$]$/][computed=false]": (node: es.Node) => {
-        const anyNode = node as any;
+      "ClassProperty[computed=false]": (node: es.ClassProperty) => {
         if (validate.properties) {
-          checkNode(anyNode.key);
+          checkNode(node.key);
         }
       },
-      "FunctionDeclaration > Identifier[name=/[^$]$/]": (
-        node: es.Identifier
-      ) => {
+      "FunctionDeclaration > Identifier": (node: es.Identifier) => {
         const parent = getParent(node) as es.FunctionDeclaration;
         if (node === parent.id) {
           if (validate.functions) {
@@ -180,9 +197,7 @@ const rule = ruleCreator({
           }
         }
       },
-      "FunctionExpression > Identifier[name=/[^$]$/]": (
-        node: es.Identifier
-      ) => {
+      "FunctionExpression > Identifier": (node: es.Identifier) => {
         const parent = getParent(node) as es.FunctionExpression;
         if (node === parent.id) {
           if (validate.functions) {
@@ -194,29 +209,29 @@ const rule = ruleCreator({
           }
         }
       },
-      "MethodDefinition[kind='get'][key.name=/[^$]$/][computed=false]": (
+      "MethodDefinition[kind='get'][computed=false]": (
         node: es.MethodDefinition
       ) => {
         if (validate.properties) {
           checkNode(node.key, node);
         }
       },
-      "MethodDefinition[kind='method'][key.name=/[^$]$/][computed=false]": (
+      "MethodDefinition[kind='method'][computed=false]": (
         node: es.MethodDefinition
       ) => {
         if (validate.methods) {
           checkNode(node.key, node);
         }
       },
-      "MethodDefinition[kind='set'][key.name=/[^$]$/][computed=false]": (
+      "MethodDefinition[kind='set'][computed=false]": (
         node: es.MethodDefinition
       ) => {
         if (validate.properties) {
           checkNode(node.key, node);
         }
       },
-      "ObjectExpression > Property[computed=false] > Identifier[name=/[^$]$/]": (
-        node: es.ObjectExpression
+      "ObjectExpression > Property[computed=false] > Identifier": (
+        node: es.Identifier
       ) => {
         if (validate.properties) {
           const parent = getParent(node) as es.Property;
@@ -225,9 +240,7 @@ const rule = ruleCreator({
           }
         }
       },
-      "ObjectPattern > Property > Identifier[name=/[^$]$/]": (
-        node: es.Identifier
-      ) => {
+      "ObjectPattern > Property > Identifier": (node: es.Identifier) => {
         const found = findParent(
           node,
           "ArrowFunctionExpression",
@@ -249,47 +262,35 @@ const rule = ruleCreator({
           checkNode(node);
         }
       },
-      "TSCallSignatureDeclaration > Identifier[name=/[^$]$/]": (
-        node: es.Node
-      ) => {
+      "TSCallSignatureDeclaration > Identifier": (node: es.Identifier) => {
         if (validate.parameters) {
           checkNode(node);
         }
       },
-      "TSConstructSignatureDeclaration > Identifier[name=/[^$]$/]": (
-        node: es.Node
-      ) => {
+      "TSConstructSignatureDeclaration > Identifier": (node: es.Identifier) => {
         if (validate.parameters) {
           checkNode(node);
         }
       },
-      "TSMethodSignature[computed=false]": (node: es.Node) => {
-        const anyNode = node as any;
+      "TSMethodSignature[computed=false]": (node: es.TSMethodSignature) => {
         if (validate.methods) {
-          checkNode(anyNode.key, node);
+          checkNode(node.key, node);
         }
         if (validate.parameters) {
-          anyNode.params.forEach((param: es.Node) => checkNode(param));
+          node.params.forEach((param: es.Node) => checkNode(param));
         }
       },
-      "TSParameterProperty > Identifier[name=/[^$]$/]": (
-        node: es.Identifier
-      ) => {
+      "TSParameterProperty > Identifier": (node: es.Identifier) => {
         if (validate.parameters || validate.properties) {
           checkNode(node);
         }
       },
-      "TSPropertySignature[key.name=/[^$]$/][computed=false]": (
-        node: es.Node
-      ) => {
-        const anyNode = node as any;
+      "TSPropertySignature[computed=false]": (node: es.TSPropertySignature) => {
         if (validate.properties) {
-          checkNode(anyNode.key);
+          checkNode(node.key);
         }
       },
-      "VariableDeclarator > Identifier[name=/[^$]$/]": (
-        node: es.Identifier
-      ) => {
+      "VariableDeclarator > Identifier": (node: es.Identifier) => {
         const parent = getParent(node) as es.VariableDeclarator;
         if (validate.variables && node === parent.id) {
           checkNode(node);

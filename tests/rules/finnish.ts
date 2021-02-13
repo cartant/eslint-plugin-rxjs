@@ -156,7 +156,7 @@ ruleTester({ types: true }).run("finnish", rule, {
         import { Observable, of } from "rxjs";
 
         const someOptionalObservable: Observable<any> | undefined = of();
-              ~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+              ~~~~~~~~~~~~~~~~~~~~~~ [shouldBeFinnish]
       `
     ),
     fromFixture(
@@ -170,9 +170,9 @@ ruleTester({ types: true }).run("finnish", rule, {
 
         class SomeSubject<T> extends Subject<T> {}
         let someSubject: SomeSubject<any>;
-            ~~~~~~~~~~~ [forbidden]
+            ~~~~~~~~~~~ [shouldBeFinnish]
         const finnish = of(1);
-              ~~~~~~~ [forbidden]
+              ~~~~~~~ [shouldBeFinnish]
       `,
       {
         options: [
@@ -199,7 +199,7 @@ ruleTester({ types: true }).run("finnish", rule, {
 
         class SomeSubject<T> extends Subject<T> {}
         let someSubject: SomeSubject<any> | undefined;
-            ~~~~~~~~~~~ [forbidden]
+            ~~~~~~~~~~~ [shouldBeFinnish]
       `,
       {
         options: [
@@ -220,7 +220,7 @@ ruleTester({ types: true }).run("finnish", rule, {
         const someObservable$ = of(0);
         const someArray = [someObservable$];
         function someFunction(someParam$: Observable<any>): Observable<any> { return someParam$; }
-                 ~~~~~~~~~~~~ [forbidden]
+                 ~~~~~~~~~~~~ [shouldBeFinnish]
       `
     ),
     fromFixture(
@@ -230,12 +230,12 @@ ruleTester({ types: true }).run("finnish", rule, {
 
         class SomeClass {
           someMethod(someParam$: Observable<any>): Observable<any> { return someParam$; }
-          ~~~~~~~~~~ [forbidden]
+          ~~~~~~~~~~ [shouldBeFinnish]
         }
 
         interface SomeInterface {
           someMethod(someParam$: Observable<any>): Observable<any>;
-          ~~~~~~~~~~ [forbidden]
+          ~~~~~~~~~~ [shouldBeFinnish]
         }
       `
     ),
@@ -247,29 +247,29 @@ ruleTester({ types: true }).run("finnish", rule, {
         const someObservable$ = of(0);
         const someArray = [someObservable$];
         someArray.forEach(function (element: Observable<any>): void {});
-                                    ~~~~~~~ [forbidden]
+                                    ~~~~~~~ [shouldBeFinnish]
         someArray.forEach((element: Observable<any>) => {});
-                           ~~~~~~~ [forbidden]
+                           ~~~~~~~ [shouldBeFinnish]
 
         function someFunction$(someParam: Observable<any>): Observable<any> { return someParam; }
-                               ~~~~~~~~~ [forbidden]
+                               ~~~~~~~~~ [shouldBeFinnish]
 
         class SomeClass {
           constructor(someParam: Observable<any>) {}
-                      ~~~~~~~~~ [forbidden]
+                      ~~~~~~~~~ [shouldBeFinnish]
           set someSetter$(someParam: Observable<any>) {}
-                          ~~~~~~~~~ [forbidden]
+                          ~~~~~~~~~ [shouldBeFinnish]
           someMethod$(someParam: Observable<any>): Observable<any> { return someParam; }
-                      ~~~~~~~~~ [forbidden]
+                      ~~~~~~~~~ [shouldBeFinnish]
         }
 
         interface SomeInterface {
           someMethod$(someParam: Observable<any>): Observable<any>;
-                      ~~~~~~~~~ [forbidden]
+                      ~~~~~~~~~ [shouldBeFinnish]
           new (someParam: Observable<any>);
-               ~~~~~~~~~ [forbidden]
+               ~~~~~~~~~ [shouldBeFinnish]
           (someParam: Observable<any>): void;
-           ~~~~~~~~~ [forbidden]
+           ~~~~~~~~~ [shouldBeFinnish]
         }
       `
     ),
@@ -281,20 +281,20 @@ ruleTester({ types: true }).run("finnish", rule, {
         const someObservable$ = of(0);
         const someEmptyObject = {};
         const someObject = { ...someEmptyObject, someKey: someObservable$ };
-                                                 ~~~~~~~ [forbidden]
+                                                 ~~~~~~~ [shouldBeFinnish]
 
         class SomeClass {
           someProperty: Observable<any>;
-          ~~~~~~~~~~~~ [forbidden]
+          ~~~~~~~~~~~~ [shouldBeFinnish]
           get someGetter(): Observable<any> { throw new Error("Some error."); }
-              ~~~~~~~~~~ [forbidden]
+              ~~~~~~~~~~ [shouldBeFinnish]
           set someSetter(someParam$: Observable<any>) {}
-              ~~~~~~~~~~ [forbidden]
+              ~~~~~~~~~~ [shouldBeFinnish]
         }
 
         interface SomeInterface {
           someProperty: Observable<any>;
-          ~~~~~~~~~~~~ [forbidden]
+          ~~~~~~~~~~~~ [shouldBeFinnish]
         }
       `
     ),
@@ -304,17 +304,17 @@ ruleTester({ types: true }).run("finnish", rule, {
         import { Observable, of } from "rxjs";
 
         const someObservable = of(0);
-              ~~~~~~~~~~~~~~ [forbidden]
+              ~~~~~~~~~~~~~~ [shouldBeFinnish]
         const someEmptyObject = {};
         const someObject = { ...someEmptyObject, someKey: someObservable };
-                                                 ~~~~~~~ [forbidden]
+                                                 ~~~~~~~ [shouldBeFinnish]
         const { someKey } = someObject;
-                ~~~~~~~ [forbidden]
+                ~~~~~~~ [shouldBeFinnish]
         const { someKey: someRenamedKey } = someObject;
-                         ~~~~~~~~~~~~~~ [forbidden]
+                         ~~~~~~~~~~~~~~ [shouldBeFinnish]
         const someArray = [someObservable];
         const [someElement] = someArray;
-               ~~~~~~~~~~~ [forbidden]
+               ~~~~~~~~~~~ [shouldBeFinnish]
       `
     ),
     fromFixture(
@@ -325,7 +325,7 @@ ruleTester({ types: true }).run("finnish", rule, {
         const someObservable = of(0);
         const someEmptyObject = {};
         const someObject = { ...someEmptyObject, someKey: someObservable };
-                                                 ~~~~~~~ [forbidden]
+                                                 ~~~~~~~ [shouldBeFinnish]
         const { someKey } = someObject;
         const { someKey: someRenamedKey } = someObject;
         const someArray = [someObservable];
@@ -339,18 +339,18 @@ ruleTester({ types: true }).run("finnish", rule, {
         import { Observable } from "rxjs";
 
         function someFunction(someParam: Observable<any>): void {}
-                              ~~~~~~~~~ [forbidden]
+                              ~~~~~~~~~ [shouldBeFinnish]
 
         class SomeClass {
           someMethod(someParam: Observable<any>): void {}
-                     ~~~~~~~~~ [forbidden]
+                     ~~~~~~~~~ [shouldBeFinnish]
         }
 
         interface SomeInterface {
           someMethod(someParam: Observable<any>): void;
-                     ~~~~~~~~~ [forbidden]
+                     ~~~~~~~~~ [shouldBeFinnish]
           (someParam: Observable<any>): void;
-           ~~~~~~~~~ [forbidden]
+           ~~~~~~~~~ [shouldBeFinnish]
         }
       `
     ),
@@ -360,16 +360,16 @@ ruleTester({ types: true }).run("finnish", rule, {
         import { Observable, of } from "rxjs";
 
         function someFunction(someValue: any): Observable<any> { return of(someValue); }
-                 ~~~~~~~~~~~~ [forbidden]
+                 ~~~~~~~~~~~~ [shouldBeFinnish]
 
         class SomeClass {
           someMethod(someValue: any): Observable<any> { return of(someValue); }
-          ~~~~~~~~~~ [forbidden]
+          ~~~~~~~~~~ [shouldBeFinnish]
         }
 
         interface SomeInterface {
           someMethod(someValue: any): Observable<any>;
-          ~~~~~~~~~~ [forbidden]
+          ~~~~~~~~~~ [shouldBeFinnish]
           (someValue: any): Observable<any>;
         }
       `
@@ -380,11 +380,11 @@ ruleTester({ types: true }).run("finnish", rule, {
         import { Observable } from "rxjs";
 
         function someFunction([someParam]: Observable<any>[]): void {}
-                               ~~~~~~~~~ [forbidden]
+                               ~~~~~~~~~ [shouldBeFinnish]
 
         class SomeClass {
           someMethod([someParam]: Observable<any>[]): void {}
-                      ~~~~~~~~~ [forbidden]
+                      ~~~~~~~~~ [shouldBeFinnish]
         }
       `
     ),
@@ -394,11 +394,11 @@ ruleTester({ types: true }).run("finnish", rule, {
         import { Observable } from "rxjs";
 
         function someFunction({ source }: Record<string, Observable<any>>): void {}
-                                ~~~~~~ [forbidden]
+                                ~~~~~~ [shouldBeFinnish]
 
         class SomeClass {
           someMethod({ source }: Record<string, Observable<any>>): void {}
-                       ~~~~~~ [forbidden]
+                       ~~~~~~ [shouldBeFinnish]
         }
       `
     ),
@@ -409,9 +409,17 @@ ruleTester({ types: true }).run("finnish", rule, {
 
         class SomeClass {
           constructor(public someProp: Observable<any>) {}
-                             ~~~~~~~~ [forbidden]
+                             ~~~~~~~~ [shouldBeFinnish]
         }
       `
+    ),
+    fromFixture(
+      stripIndent`
+        // non-Observable variable with $
+        const answer$ = 42;
+              ~~~~~~~ [shouldNotBeFinnish]
+      `,
+      { options: [{ strict: true }] }
     ),
   ],
 });
