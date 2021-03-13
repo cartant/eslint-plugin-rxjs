@@ -28,7 +28,7 @@ const rule = ruleCreator({
     },
     fixable: undefined,
     messages: {
-      forbidden: "Applying operators after takeUntil are forbidden.",
+      forbidden: "Applying operators after takeUntil is forbidden.",
     },
     schema: [
       {
