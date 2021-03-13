@@ -1,3 +1,10 @@
+<a name="3.1.1"></a>
+## [3.1.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.0...v3.1.1) (2021-02-14)
+
+## Changes
+
+* Improve `no-unsafe-takeuntil` docs and fix failure message grammar. ([e3e8fed](https://github.com/cartant/eslint-plugin-rxjs/commit/e3e8fed))
+
 <a name="3.1.0"></a>
 ## [3.1.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.0.1...v3.1.0) (2021-02-13)
 
