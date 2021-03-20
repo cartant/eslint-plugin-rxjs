@@ -6,7 +6,7 @@
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
 import { ruleCreator } from "../utils";
 
-const defaultOptions: {
+const defaultOptions: readonly {
   allowConfig?: boolean;
 }[] = [];
 

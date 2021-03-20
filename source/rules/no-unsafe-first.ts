@@ -9,7 +9,7 @@ import { getTypeServices, isCallExpression, isIdentifier } from "eslint-etc";
 import { defaultObservable } from "../constants";
 import { ruleCreator } from "../utils";
 
-const defaultOptions: {
+const defaultOptions: readonly {
   observable?: string;
 }[] = [];
 

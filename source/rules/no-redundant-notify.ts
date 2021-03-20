@@ -43,6 +43,9 @@ const rule = ruleCreator({
         node: es.ExpressionStatement
       ) => {
         const parent = getParent(node);
+        if (!parent) {
+          return;
+        }
         if (!isBlockStatement(parent) && !isProgram(parent)) {
           return;
         }

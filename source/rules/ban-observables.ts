@@ -7,7 +7,7 @@ import { TSESTree as es } from "@typescript-eslint/experimental-utils";
 import { stripIndent } from "common-tags";
 import { ruleCreator } from "../utils";
 
-const defaultOptions: Record<string, boolean | string>[] = [];
+const defaultOptions: readonly Record<string, boolean | string>[] = [];
 
 const rule = ruleCreator({
   defaultOptions,

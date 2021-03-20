@@ -13,7 +13,7 @@ import {
 } from "eslint-etc";
 import { ruleCreator } from "../utils";
 
-const defaultOptions: {
+const defaultOptions: readonly {
   functions?: boolean;
   methods?: boolean;
   names?: Record<string, boolean>;

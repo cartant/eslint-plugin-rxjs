@@ -8,7 +8,7 @@ import { getTypeServices, isIdentifier } from "eslint-etc";
 import { ruleCreator } from "../utils";
 
 const defaultAllowedTypesRegExp = /^EventEmitter$/;
-const defaultOptions: {
+const defaultOptions: readonly {
   allowProtected?: boolean;
 }[] = [];
 

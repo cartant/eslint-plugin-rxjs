@@ -5,9 +5,11 @@
 
 import { ESLintUtils } from "@typescript-eslint/experimental-utils";
 
-export function createRegExpForWords(config: string | string[]): RegExp | null {
+export function createRegExpForWords(
+  config: string | string[]
+): RegExp | undefined {
   if (!config || !config.length) {
-    return null;
+    return undefined;
   }
   const flags = "i";
   if (typeof config === "string") {

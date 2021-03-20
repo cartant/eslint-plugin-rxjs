@@ -16,7 +16,7 @@ import {
 import { defaultObservable } from "../constants";
 import { createRegExpForWords, ruleCreator } from "../utils";
 
-const defaultOptions: {
+const defaultOptions: readonly {
   allow?: string | string[];
   disallow?: string | string[];
   observable?: string;
@@ -81,17 +81,17 @@ const rule = ruleCreator({
       "update",
     ];
 
-    let allowRegExp: RegExp | null;
-    let disallowRegExp: RegExp | null;
+    let allowRegExp: RegExp | undefined;
+    let disallowRegExp: RegExp | undefined;
     let observableRegExp: RegExp;
 
     const [config = {}] = context.options;
     if (config.allow || config.disallow) {
-      allowRegExp = createRegExpForWords(config.allow);
-      disallowRegExp = createRegExpForWords(config.disallow);
-      observableRegExp = new RegExp(config.observable || defaultObservable);
+      allowRegExp = createRegExpForWords(config.allow ?? []);
+      disallowRegExp = createRegExpForWords(config.disallow ?? []);
+      observableRegExp = new RegExp(config.observable ?? defaultObservable);
     } else {
-      allowRegExp = null;
+      allowRegExp = undefined;
       disallowRegExp = createRegExpForWords(defaultDisallow);
       observableRegExp = new RegExp(defaultObservable);
     }
@@ -116,10 +116,10 @@ const rule = ruleCreator({
         .map((name) => decamelize(name));
 
       if (allowRegExp) {
-        return !names.every((name) => allowRegExp.test(name));
+        return !names.every((name) => allowRegExp?.test(name));
       }
       if (disallowRegExp) {
-        return names.some((name) => disallowRegExp.test(name));
+        return names.some((name) => disallowRegExp?.test(name));
       }
 
       return false;

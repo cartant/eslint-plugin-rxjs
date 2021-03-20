@@ -9,7 +9,7 @@ import { createRegExpForWords } from "../source/utils";
 
 describe("utils", () => {
   describe("createRegExpForWords", () => {
-    const regExp = createRegExpForWords(["add"]);
+    const regExp = createRegExpForWords(["add"]) as RegExp;
 
     it("should match action literals", () => {
       expect(`"ADD"`).to.match(regExp);
@@ -47,7 +47,7 @@ describe("utils", () => {
     });
 
     it("should create a RegExp from a string", () => {
-      expect(createRegExpForWords(".").toString()).to.equal("/./i");
+      expect((createRegExpForWords(".") as RegExp).toString()).to.equal("/./i");
     });
   });
 });

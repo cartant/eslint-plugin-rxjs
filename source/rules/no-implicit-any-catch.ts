@@ -16,6 +16,7 @@ import {
   isIdentifier,
   isMemberExpression,
   isObjectExpression,
+  isProperty,
 } from "eslint-etc";
 import { ruleCreator } from "../utils";
 
@@ -26,7 +27,8 @@ function isParenthesised(
   const before = sourceCode.getTokenBefore(node);
   const after = sourceCode.getTokenAfter(node);
   return (
-    Boolean(before && after) &&
+    before &&
+    after &&
     before.value === "(" &&
     before.range[1] <= node.range[0] &&
     after.value === ")" &&
@@ -34,11 +36,7 @@ function isParenthesised(
   );
 }
 
-function isProperty(node: es.Node): node is es.Property {
-  return node.type === "Property";
-}
-
-const defaultOptions: {
+const defaultOptions: readonly {
   allowExplicitAny?: boolean;
 }[] = [];
 

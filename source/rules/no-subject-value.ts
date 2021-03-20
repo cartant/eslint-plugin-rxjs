@@ -32,7 +32,7 @@ const rule = ruleCreator({
       "Identifier[name=/^(value|getValue)$/]": (node: es.Identifier) => {
         const parent = getParent(node);
 
-        if (!("object" in parent)) {
+        if (!parent || !("object" in parent)) {
           return;
         }
 

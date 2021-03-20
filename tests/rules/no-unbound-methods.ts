@@ -10,8 +10,8 @@ import rule = require("../../source/rules/no-unbound-methods");
 import { ruleTester } from "../utils";
 
 interface Tests {
-  valid?: (string | eslint.ValidTestCase<unknown[]>)[];
-  invalid?: eslint.InvalidTestCase<string, unknown[]>[];
+  valid: (string | eslint.ValidTestCase<any>)[];
+  invalid: eslint.InvalidTestCase<any, any>[];
 }
 
 const arrowTests: Tests = {

@@ -108,7 +108,7 @@ const rule = ruleCreator({
         }
       },
       "VariableDeclarator[id.name=/[$]+$/]": (node: es.VariableDeclarator) =>
-        checkNode(node.id, node.init || node),
+        checkNode(node.id, node.init ?? node),
     };
   },
 });

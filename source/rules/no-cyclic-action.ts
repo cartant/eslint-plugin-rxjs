@@ -14,7 +14,7 @@ function isTypeReference(type: ts.Type): type is ts.TypeReference {
   return Boolean((type as any).target);
 }
 
-const defaultOptions: {
+const defaultOptions: readonly {
   observable?: string;
 }[] = [];
 
