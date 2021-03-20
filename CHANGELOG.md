@@ -1,3 +1,10 @@
+<a name="3.1.2"></a>
+## [3.1.2](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.1...v3.1.2) (2021-03-20)
+
+## Fixes
+
+* Enable TypeScript's `strict` option and fix related problems. ([2bea9e0](https://github.com/cartant/eslint-plugin-rxjs/commit/2bea9e0))
+
 <a name="3.1.1"></a>
 ## [3.1.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.0...v3.1.1) (2021-02-14)
 
