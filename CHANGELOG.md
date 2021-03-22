@@ -1,3 +1,10 @@
+<a name="3.1.3"></a>
+## [3.1.3](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.2...v3.1.3) (2021-03-22)
+
+## Fixes
+
+* Set minimum `eslint-etc` version. ([4fae336](https://github.com/cartant/eslint-plugin-rxjs/commit/4fae336))
+
 <a name="3.1.2"></a>
 ## [3.1.2](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.1...v3.1.2) (2021-03-20)
 
