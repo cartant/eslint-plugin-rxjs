@@ -1,3 +1,10 @@
+<a name="3.1.4"></a>
+## [3.1.4](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.3...v3.1.4) (2021-04-05)
+
+## Fixes
+
+* Allow `takeUntil` after `takeUntil`. ([d1a2549](https://github.com/cartant/eslint-plugin-rxjs/commit/d1a2549))
+
 <a name="3.1.3"></a>
 ## [3.1.3](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.2...v3.1.3) (2021-03-22)
 
