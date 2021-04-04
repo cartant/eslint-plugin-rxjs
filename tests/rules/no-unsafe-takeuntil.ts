@@ -53,7 +53,7 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
     {
       code: stripIndent`
         // before allowed
-        import { of } from "rxjs";
+        import { of, Subscription } from "rxjs";
         import {
           count,
           defaultIfEmpty,
@@ -81,7 +81,7 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
         const a = of("a");
         const b = of("b");
 
-        let r: Observable<any>;
+        let r: Subscription;
 
         r = a.pipe(takeUntil(b), count()).subscribe();
         r = a.pipe(takeUntil(b), defaultIfEmpty('empty')).subscribe();
@@ -137,6 +137,31 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
         const c = of("d");
 
         const d = a.pipe(switchMap(_ => b), untilDestroyed()).subscribe();
+      `,
+      options: [
+        {
+          alias: ["untilDestroyed"],
+        },
+      ],
+    },
+    {
+      code: stripIndent`
+        // https://github.com/cartant/eslint-plugin-rxjs/issues/66
+        // before allowed
+        import { of, Subscription } from "rxjs";
+        import { takeUntil } from "rxjs/operators";
+
+        declare const untilDestroyed: Function;
+
+        const a = of("a");
+        const b = of("b");
+        const c = of("c");
+
+        let r: Subscription;
+
+        r = a.pipe(takeUntil(b), takeUntil(c)).subscribe();
+        r = a.pipe(takeUntil(b), untilDestroyed()).subscribe();
+        r = a.pipe(untilDestroyed(), takeUntil(c)).subscribe();
       `,
       options: [
         {
