@@ -106,7 +106,13 @@ const rule = ruleCreator({
             });
           }
 
-          return isError || !allow.includes(arg.callee.name);
+          return (
+            isError ||
+            !(
+              checkedOperatorsRegExp.test(arg.callee.name) ||
+              allow.includes(arg.callee.name)
+            )
+          );
         }, false);
       },
     };
