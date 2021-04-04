@@ -25,7 +25,7 @@
     "@typescript-eslint/parser": "^4.0.0",
     "chai": "^4.2.0",
     "eslint": "^7.0.0",
-    "husky": "^4.0.0",
+    "husky": "^6.0.0",
     "lint-staged": "^10.1.1",
     "mocha": "^8.0.0",
     "prettier": "^2.0.0",
@@ -41,11 +41,6 @@
     "docs"
   ],
   "homepage": "https://github.com/cartant/eslint-plugin-rxjs",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "keywords": [
     "lint",
     "rules",
@@ -76,6 +71,7 @@
     "dist:build": "yarn run dist:clean && tsc -p tsconfig-dist.json",
     "dist:clean": "rimraf dist",
     "lint": "eslint source/**/*.ts tests/**/*.ts",
+    "prepare": "husky install",
     "prepublishOnly": "yarn run test && yarn run dist",
     "prettier": "prettier --write \"./{src,tests}/**/*.{js,json,ts,tsx}\"",
     "prettier:ci": "prettier --check \"./{src,tests}/**/*.{js,json,ts,tsx}\"",
