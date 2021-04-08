@@ -60,6 +60,13 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
         whatever.subscribe(() => {})
       });
     `,
+    stripIndent`
+      // https://github.com/cartant/eslint-plugin-rxjs/issues/67
+      import { Observable, of } from "rxjs";
+      new Observable<number>(subscriber => {
+        of(42).subscribe(subscriber);
+      }).subscribe();
+    `,
   ],
   invalid: [
     fromFixture(
