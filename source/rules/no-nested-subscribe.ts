@@ -26,7 +26,7 @@ const rule = ruleCreator({
   name: "no-nested-subscribe",
   create: (context) => {
     const { couldBeObservable } = getTypeServices(context);
-    const subscribeCallMap = new WeakMap<es.Node, void>();
+    const argumentsMap = new WeakMap<es.Node, void>();
     return {
       [`CallExpression > MemberExpression[property.name='subscribe']`]: (
         node: es.MemberExpression
@@ -37,7 +37,7 @@ const rule = ruleCreator({
         const callExpression = getParent(node) as es.CallExpression;
         let parent = getParent(callExpression);
         while (parent) {
-          if (subscribeCallMap.has(parent)) {
+          if (argumentsMap.has(parent)) {
             context.report({
               messageId: "forbidden",
               node: node.property,
@@ -46,7 +46,9 @@ const rule = ruleCreator({
           }
           parent = getParent(parent);
         }
-        subscribeCallMap.set(callExpression);
+        for (const arg of callExpression.arguments) {
+          argumentsMap.set(arg);
+        }
       },
     };
   },
