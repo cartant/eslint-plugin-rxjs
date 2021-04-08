@@ -1,3 +1,10 @@
+<a name="3.1.5"></a>
+## [3.1.5](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.4...v3.1.5) (2021-04-08)
+
+## Fixes
+
+* Match only `subscribe` calls that are nested in arguments. ([0dc28aa](https://github.com/cartant/eslint-plugin-rxjs/commit/0dc28aa))
+
 <a name="3.1.4"></a>
 ## [3.1.4](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.3...v3.1.4) (2021-04-05)
 
