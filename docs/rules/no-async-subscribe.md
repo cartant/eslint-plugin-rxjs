@@ -8,7 +8,7 @@ Examples of **incorrect** code for this rule:
 
 ```ts
 import { of } from "rxjs";
-of(42).subscribe(async () => {console.log(value));
+of(42).subscribe(async () => console.log(value));
 ```
 
 Examples of **correct** code for this rule:
