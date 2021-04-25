@@ -162,5 +162,16 @@ ruleTester({ types: true }).run("no-nested-subscribe", rule, {
         });
       `
     ),
+    fromFixture(
+      stripIndent`
+        // https://github.com/cartant/eslint-plugin-rxjs/issues/69
+        import { Subscribable } from "rxjs";
+        declare const subscribable: Subscribable<unknown>;
+        subscribable.subscribe(
+          () => subscribable.subscribe()
+                             ~~~~~~~~~ [forbidden]
+        );
+      `
+    ),
   ],
 });

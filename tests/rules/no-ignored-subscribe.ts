@@ -16,7 +16,8 @@ ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
         import { of } from "rxjs";
 
         const observable = of([1, 2]);
-        observable.subscribe(value => console.log(value));`,
+        observable.subscribe(value => console.log(value));
+      `,
     },
     {
       code: stripIndent`
@@ -24,7 +25,8 @@ ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
         import { Subject } from "rxjs";
 
         const subject = new Subject<any>();
-        subject.subscribe(value => console.log(value));`,
+        subject.subscribe(value => console.log(value));
+      `,
     },
     {
       code: stripIndent`
@@ -36,7 +38,8 @@ ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
         }
 
         const observable = of([1, 2]);
-        observable.subscribe(log);`,
+        observable.subscribe(log);
+      `,
     },
     {
       code: stripIndent`
@@ -45,6 +48,14 @@ ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
           subscribe(callback?: (value: unknown) => void) {}
         };
         whatever.subscribe();
+      `,
+    },
+    {
+      code: stripIndent`
+        // https://github.com/cartant/eslint-plugin-rxjs/issues/69
+        import { Subscribable } from "rxjs";
+        declare const subscribable: Subscribable<unknown>;
+        subscribable.subscribe((value) => console.log(value));
       `,
     },
   ],
@@ -67,6 +78,15 @@ ruleTester({ types: true }).run("no-ignored-subscribe", rule, {
         const subject = new Subject<any>();
         subject.subscribe();
                 ~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
+        // https://github.com/cartant/eslint-plugin-rxjs/issues/69
+        import { Subscribable } from "rxjs";
+        declare const subscribable: Subscribable<unknown>;
+        subscribable.subscribe();
+                     ~~~~~~~~~ [forbidden]
       `
     ),
   ],

@@ -25,13 +25,16 @@ const rule = ruleCreator({
   },
   name: "no-nested-subscribe",
   create: (context) => {
-    const { couldBeObservable } = getTypeServices(context);
+    const { couldBeObservable, couldBeType } = getTypeServices(context);
     const argumentsMap = new WeakMap<es.Node, void>();
     return {
       [`CallExpression > MemberExpression[property.name='subscribe']`]: (
         node: es.MemberExpression
       ) => {
-        if (!couldBeObservable(node.object)) {
+        if (
+          !couldBeObservable(node.object) &&
+          !couldBeType(node.object, "Subscribable")
+        ) {
           return;
         }
         const callExpression = getParent(node) as es.CallExpression;
