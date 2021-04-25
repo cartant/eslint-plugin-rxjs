@@ -1,3 +1,10 @@
+<a name="3.2.0"></a>
+## [3.2.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.5...v3.2.0) (2021-04-25)
+
+## Features
+
+* The `no-ignored-subscribe` and `no-nested-subscribe` rules now support types that implement `Subscribable`. ([57f6e3f](https://github.com/cartant/eslint-plugin-rxjs/commit/57f6e3f))
+
 <a name="3.1.5"></a>
 ## [3.1.5](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.4...v3.1.5) (2021-04-08)
 
