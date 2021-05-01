@@ -1,3 +1,10 @@
+<a name="3.3.0"></a>
+## [3.3.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.2.0...v3.3.0) (2021-05-01)
+
+## Features
+
+* The `no-internal` rule now has a fixer. ([dc480b2](https://github.com/cartant/eslint-plugin-rxjs/commit/dc480b2))
+
 <a name="3.2.0"></a>
 ## [3.2.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.5...v3.2.0) (2021-04-25)
 
