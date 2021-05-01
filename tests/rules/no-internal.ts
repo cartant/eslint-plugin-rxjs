@@ -29,7 +29,14 @@ ruleTester({ types: false }).run("no-internal", rule, {
                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
         import { map } from "rxjs/internal/operators/map";
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
-      `
+      `,
+      {
+        output: stripIndent`
+          // internal double quote
+          import { concat } from "rxjs";
+          import { map } from "rxjs/operators";
+        `,
+      }
     ),
     fromFixture(
       stripIndent`
@@ -38,7 +45,118 @@ ruleTester({ types: false }).run("no-internal", rule, {
                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
         import { map } from 'rxjs/internal/operators/map';
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
-      `
+      `,
+      {
+        output: stripIndent`
+          // internal single quote
+          import { concat } from 'rxjs';
+          import { map } from 'rxjs/operators';
+        `,
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // internal ajax
+        import { ajax } from "rxjs/internal/observable/ajax/ajax";
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+      `,
+      {
+        output: stripIndent`
+          // internal ajax
+          import { ajax } from "rxjs";
+        `,
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // internal fetch
+        import { fromFetch } from "rxjs/internal/observable/dom/fetch";
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+      `,
+      {
+        output: stripIndent`
+          // internal fetch
+          import { fromFetch } from "rxjs/fetch";
+        `,
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // internal webSocket
+        import { webSocket } from "rxjs/internal/observable/dom/webSocket";
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+      `,
+      {
+        output: stripIndent`
+          // internal webSocket
+          import { webSocket } from "rxjs/webSocket";
+        `,
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // internal observable
+        import { concat } from "rxjs/internal/observable/concat";
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+      `,
+      {
+        output: stripIndent`
+          // internal observable
+          import { concat } from "rxjs";
+        `,
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // internal operator
+        import { map } from "rxjs/internal/operators/map";
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+      `,
+      {
+        output: stripIndent`
+          // internal operator
+          import { map } from "rxjs/operators";
+        `,
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // internal scheduled
+        import { scheduled } from "rxjs/internal/scheduled/scheduled";
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+      `,
+      {
+        output: stripIndent`
+          // internal scheduled
+          import { scheduled } from "rxjs";
+        `,
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // internal scheduler
+        import { asap } from "rxjs/internal/scheduler/asap";
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+      `,
+      {
+        output: stripIndent`
+          // internal scheduler
+          import { asap } from "rxjs";
+        `,
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // internal testing
+        import { TestScheduler } from "rxjs/internal/testing/TestScheduler";
+                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+      `,
+      {
+        output: stripIndent`
+          // internal testing
+          import { TestScheduler } from "rxjs/testing";
+        `,
+      }
     ),
   ],
 });
