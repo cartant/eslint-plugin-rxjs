@@ -18,7 +18,6 @@ export = {
     "rxjs/no-redundant-notify": "error",
     "rxjs/no-sharereplay": ["error", { allowConfig: true }],
     "rxjs/no-subject-unsubscribe": "error",
-    "rxjs/no-subject-value": "error",
     "rxjs/no-unbound-methods": "error",
     "rxjs/no-unsafe-subject-next": "error",
     "rxjs/no-unsafe-takeuntil": "error",
