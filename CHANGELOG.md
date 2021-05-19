@@ -1,3 +1,10 @@
+<a name="3.3.1"></a>
+## [3.3.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.0...v3.3.1) (2021-05-19)
+
+## Changes
+
+* Remove the `no-subject-value` rule from recommended configuration. This was an oversight. Personally, I use the rule, but it's probably too opinionated to be in the recommended configuration. ([79b7bc0](https://github.com/cartant/eslint-plugin-rxjs/commit/79b7bc0))
+
 <a name="3.3.0"></a>
 ## [3.3.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.2.0...v3.3.0) (2021-05-01)
 
