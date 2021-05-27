@@ -59,6 +59,34 @@ ruleTester({ types: true }).run("throw-error", rule, {
       }
     `,
     stripIndent`
+      // throwError Error with factory
+      import { throwError } from "rxjs";
+
+      const ob1 = throwError(() => new Error("Boom!"));
+    `,
+    stripIndent`
+      // throwError DOMException with factory
+      import { throwError } from "rxjs";
+
+      const ob1 = throwError(() => new DOMException("Boom!"));
+    `,
+    stripIndent`
+      // throwError any with factory
+      import { throwError } from "rxjs";
+
+      const ob1 = throwError(() => "Boom!" as any);
+    `,
+    stripIndent`
+      // throwError returned any with factory
+      import { throwError } from "rxjs";
+
+      const ob1 = throwError(() => errorMessage());
+
+      function errorMessage(): any {
+        return "error";
+      }
+    `,
+    stripIndent`
       // no signature
       // There will be no signature for callback and
       // that should not effect an internal error.
@@ -136,6 +164,28 @@ ruleTester({ types: true }).run("throw-error", rule, {
             { code: "NOT_FOUND" }
           );
         };
+      `
+    ),
+    fromFixture(
+      stripIndent`
+        // throwError string with factory
+        import { throwError } from "rxjs";
+
+        const ob1 = throwError(() => "Boom!");
+                               ~~~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
+        // throwError returned string with factory
+        import { throwError } from "rxjs";
+
+        const ob1 = throwError(() => errorMessage());
+                               ~~~~~~~~~~~~~~~~~~~~ [forbidden]
+
+        function errorMessage() {
+          return "Boom!";
+        }
       `
     ),
   ],
