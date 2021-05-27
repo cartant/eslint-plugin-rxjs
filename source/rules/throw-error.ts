@@ -4,7 +4,9 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { getTypeServices } from "eslint-etc";
+import { getParserServices, getTypeServices } from "eslint-etc";
+import { couldBeFunction, couldBeType, isAny } from "tsutils-etc";
+import * as ts from "typescript";
 import { ruleCreator } from "../utils";
 
 const rule = ruleCreator({
@@ -25,10 +27,20 @@ const rule = ruleCreator({
   },
   name: "throw-error",
   create: (context) => {
-    const { isAny, couldBeObservable, couldBeType } = getTypeServices(context);
+    const { esTreeNodeToTSNodeMap, program } = getParserServices(context);
+    const { couldBeObservable, getType } = getTypeServices(context);
 
     function checkNode(node: es.Node) {
-      if (!isAny(node) && !couldBeType(node, /^(Error|DOMException)$/)) {
+      let type = getType(node);
+      if (couldBeFunction(type)) {
+        const tsNode = esTreeNodeToTSNodeMap.get(node);
+        const returnType = (tsNode as ts.ArrowFunction).type;
+        const bodyType = (tsNode as ts.ArrowFunction).body;
+        type = program
+          .getTypeChecker()
+          .getTypeAtLocation(returnType ?? bodyType);
+      }
+      if (!isAny(type) && !couldBeType(type, /^(Error|DOMException)$/)) {
         context.report({
           messageId: "forbidden",
           node,
@@ -40,7 +52,10 @@ const rule = ruleCreator({
       "ThrowStatement > *": checkNode,
       "CallExpression[callee.name='throwError']": (node: es.CallExpression) => {
         if (couldBeObservable(node)) {
-          node.arguments.forEach(checkNode);
+          const [arg] = node.arguments;
+          if (arg) {
+            checkNode(arg);
+          }
         }
       },
     };
