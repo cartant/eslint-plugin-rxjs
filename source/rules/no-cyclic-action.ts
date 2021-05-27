@@ -70,15 +70,13 @@ const rule = ruleCreator({
       if (!signature) {
         return;
       }
-      const operatorReturnType = typeChecker.getReturnTypeOfSignature(
-        signature
-      );
+      const operatorReturnType =
+        typeChecker.getReturnTypeOfSignature(signature);
       if (!isTypeReference(operatorReturnType)) {
         return;
       }
-      const [operatorElementType] = typeChecker.getTypeArguments(
-        operatorReturnType
-      );
+      const [operatorElementType] =
+        typeChecker.getTypeArguments(operatorReturnType);
       if (!operatorElementType) {
         return;
       }
@@ -114,7 +112,7 @@ const rule = ruleCreator({
         return memberActionTypes;
       }
       const symbol = typeChecker.getPropertyOfType(type, "type");
-      if (!symbol) {
+      if (!symbol || !symbol.valueDeclaration) {
         return [];
       }
       const actionType = typeChecker.getTypeOfSymbolAtLocation(
@@ -125,8 +123,10 @@ const rule = ruleCreator({
     }
 
     return {
-      [`CallExpression[callee.property.name='pipe'][callee.object.name=${observableRegExp}]`]: checkNode,
-      [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]`]: checkNode,
+      [`CallExpression[callee.property.name='pipe'][callee.object.name=${observableRegExp}]`]:
+        checkNode,
+      [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]`]:
+        checkNode,
     };
   },
 });
