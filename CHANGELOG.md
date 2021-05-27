@@ -1,3 +1,10 @@
+<a name="3.3.2"></a>
+## [3.3.2](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.1...v3.3.2) (2021-05-28)
+
+## Fixes
+
+* Support factories in the `throw-error` rule. ([f4e8835](https://github.com/cartant/eslint-plugin-rxjs/commit/f4e8835))
+
 <a name="3.3.1"></a>
 ## [3.3.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.0...v3.3.1) (2021-05-19)
 
