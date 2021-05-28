@@ -15,6 +15,11 @@ import { throwError } from "rxjs";
 throwError("Kaboom!");
 ```
 
+```ts
+import { throwError } from "rxjs";
+throwError(() => "Kaboom!");
+```
+
 Examples of **correct** code for this rule:
 
 ```ts
@@ -32,6 +37,11 @@ throw new DOMException("Kaboom!");
 ```ts
 import { throwError } from "rxjs";
 throwError(new Error("Kaboom!"));
+```
+
+```ts
+import { throwError } from "rxjs";
+throwError(() => new Error("Kaboom!"));
 ```
 
 ## Options
