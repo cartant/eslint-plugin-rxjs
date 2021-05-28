@@ -34,11 +34,9 @@ const rule = ruleCreator({
       let type = getType(node);
       if (couldBeFunction(type)) {
         const tsNode = esTreeNodeToTSNodeMap.get(node);
-        const returnType = (tsNode as ts.ArrowFunction).type;
-        const bodyType = (tsNode as ts.ArrowFunction).body;
-        type = program
-          .getTypeChecker()
-          .getTypeAtLocation(returnType ?? bodyType);
+        const annotation = (tsNode as ts.ArrowFunction).type;
+        const body = (tsNode as ts.ArrowFunction).body;
+        type = program.getTypeChecker().getTypeAtLocation(annotation ?? body);
       }
       if (!isAny(type) && !couldBeType(type, /^(Error|DOMException)$/)) {
         context.report({
