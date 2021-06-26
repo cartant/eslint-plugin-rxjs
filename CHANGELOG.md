@@ -1,3 +1,10 @@
+<a name="3.3.4"></a>
+## [3.3.4](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.3...v3.3.4) (2021-06-26)
+
+## Fixes
+
+* Check for non-RxJS `takeWhile` imports in `no-ignored-takewhile-value`. ([476fc29](https://github.com/cartant/eslint-plugin-rxjs/commit/476fc29))
+
 <a name="3.3.3"></a>
 ## [3.3.3](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.2...v3.3.3) (2021-05-29)
 
