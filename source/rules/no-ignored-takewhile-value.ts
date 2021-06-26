@@ -5,7 +5,7 @@
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
 import { isIdentifier } from "eslint-etc";
-import { ruleCreator } from "../utils";
+import { isRxJSImport, ruleCreator } from "../utils";
 
 const rule = ruleCreator({
   defaultOptions: [],
@@ -27,8 +27,11 @@ const rule = ruleCreator({
     function checkNode(
       expression: es.ArrowFunctionExpression | es.FunctionExpression
     ) {
-      let ignored = true;
       const scope = context.getScope();
+      if (!isRxJSImport("takeWhile", scope)) {
+        return;
+      }
+      let ignored = true;
       const [param] = expression.params;
       if (param && isIdentifier(param)) {
         const variable = scope.variables.find(

@@ -49,6 +49,19 @@ ruleTester({ types: true }).run("no-ignored-takewhile-value", rule, {
         }
       };
     `,
+    stripIndent`
+      // https://github.com/cartant/eslint-plugin-rxjs/issues/75
+      import {
+        equals,
+        takeWhile,
+        toPairs,
+      } from 'remeda'
+
+      return takeWhile(
+        sizesAsArray,
+        ([_, width]) => w.innerWidth >= width,
+      )
+    `,
   ],
   invalid: [
     fromFixture(
