@@ -815,10 +815,10 @@ escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-etc@^4.0.7:
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-4.0.7.tgz#e821a96b15dd737e8bdb6a5e16780da99929b1ac"
-  integrity sha512-K7IxtkhYGaje03RlsXp5gJvghbHs2ayO+YNlBpB6RWToGN2RFPy0Tt0l78pYmA9UqFv0P3TfdNqlKxF9CnoxYQ==
+eslint-etc@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-4.1.0.tgz#5176b70b33abc4548775b0c140a26c86fbcb4a28"
+  integrity sha512-ACYd3MAKSlHlsYEZFzLbse4e9v3iYffGhzRnH4slDh82Z9MooNhkRAN9VWPaZvV2fEz82TzgOw/lwKVcA3ayRQ==
   dependencies:
     "@typescript-eslint/experimental-utils" "^4.0.0"
     tsutils "^3.17.1"
