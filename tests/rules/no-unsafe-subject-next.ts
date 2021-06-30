@@ -61,6 +61,14 @@ ruleTester({ types: true }).run("no-unsafe-subject-next", rule, {
         s.next();
       `,
     },
+    {
+      code: stripIndent`
+        // https://github.com/cartant/eslint-plugin-rxjs/issues/76
+        import { Subject } from "rxjs";
+        const s = new Subject();
+        s.next();
+      `,
+    },
   ],
   invalid: [
     fromFixture(
