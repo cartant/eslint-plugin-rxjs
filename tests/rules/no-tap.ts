@@ -18,6 +18,13 @@ ruleTester({ types: false }).run("no-tap", rule, {
         map(x => x * 2)
       );
     `,
+    stripIndent`
+      // no tap with shallow import
+      import { map, of } from "rxjs";
+      const ob = of(1).pipe(
+        map(x => x * 2)
+      );
+    `,
   ],
   invalid: [
     fromFixture(
@@ -26,6 +33,17 @@ ruleTester({ types: false }).run("no-tap", rule, {
         import { of } from "rxjs";
         import { map, tap } from "rxjs/operators";
                       ~~~ [forbidden]
+        const ob = of(1).pipe(
+          map(x => x * 2),
+          tap(value => console.log(value))
+        );
+      `
+    ),
+    fromFixture(
+      stripIndent`
+        // tap with shallow import
+        import { map, of, tap } from "rxjs";
+                          ~~~ [forbidden]
         const ob = of(1).pipe(
           map(x => x * 2),
           tap(value => console.log(value))

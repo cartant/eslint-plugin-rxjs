@@ -13,11 +13,30 @@ ruleTester({ types: false }).run("ban-operators", rule, {
     {
       code: `import { concat, merge as m, mergeMap as mm } from "rxjs/operators";`,
     },
+    {
+      code: `import { concat, merge as m, mergeMap as mm } from "rxjs";`,
+    },
   ],
   invalid: [
     fromFixture(
       stripIndent`
         import { concat, merge as m, mergeMap as mm } from "rxjs/operators";
+                 ~~~~~~ [forbidden { "name": "concat", "explanation": "" }]
+                         ~~~~~ [forbidden { "name": "merge", "explanation": ": because I say so" }]
+      `,
+      {
+        options: [
+          {
+            concat: true,
+            merge: "because I say so",
+            mergeMap: false,
+          },
+        ],
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        import { concat, merge as m, mergeMap as mm } from "rxjs";
                  ~~~~~~ [forbidden { "name": "concat", "explanation": "" }]
                          ~~~~~ [forbidden { "name": "merge", "explanation": ": because I say so" }]
       `,

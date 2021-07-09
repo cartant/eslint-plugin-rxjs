@@ -26,21 +26,20 @@ const rule = ruleCreator({
   name: "no-tap",
   create: (context) => {
     return {
-      "ImportDeclaration[source.value='rxjs/operators'] > ImportSpecifier[imported.name='tap']": (
-        node: es.ImportSpecifier
-      ) => {
-        const { loc } = node;
-        context.report({
-          messageId: "forbidden",
-          loc: {
-            ...loc,
-            end: {
-              ...loc.start,
-              column: loc.start.column + 3,
+      [String.raw`ImportDeclaration[source.value=/^rxjs(\u002foperators)?$/] > ImportSpecifier[imported.name='tap']`]:
+        (node: es.ImportSpecifier) => {
+          const { loc } = node;
+          context.report({
+            messageId: "forbidden",
+            loc: {
+              ...loc,
+              end: {
+                ...loc.start,
+                column: loc.start.column + 3,
+              },
             },
-          },
-        });
-      },
+          });
+        },
     };
   },
 });
