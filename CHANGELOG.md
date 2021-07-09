@@ -1,3 +1,10 @@
+<a name="3.3.5"></a>
+## [3.3.5](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.4...v3.3.5) (2021-07-09)
+
+## Fixes
+
+* Support shallow/root operator imports - introduced in RxJS 7.2 - in the `ban-operators` and `no-tap` rules. ([009381f](https://github.com/cartant/eslint-plugin-rxjs/commit/009381f))
+
 <a name="3.3.4"></a>
 ## [3.3.4](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.3...v3.3.4) (2021-06-26)
 
