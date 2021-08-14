@@ -64,7 +64,7 @@ const rule = ruleCreator({
     }
 
     return {
-      [String.raw`ImportDeclaration[source.value=/^rxjs(\u002foperators)?$/] > ImportSpecifier`]:
+      [String.raw`ImportDeclaration[source.value=/^rxjs\u002foperators$/] > ImportSpecifier`]:
         (node: es.ImportSpecifier) => {
           const identifier = node.imported;
           const failure = getFailure(identifier.name);

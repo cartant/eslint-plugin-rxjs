@@ -16,27 +16,24 @@ ruleTester({ types: false }).run("ban-operators", rule, {
     {
       code: `import { concat, merge as m, mergeMap as mm } from "rxjs";`,
     },
+    {
+      // This won't effect errors, because only imports from "rxjs/operators"
+      // are checked. To support banning operators from "rxjs", it'll need to
+      // check types.
+      code: `import { concat, merge as m, mergeMap as mm } from "rxjs";`,
+      options: [
+        {
+          concat: true,
+          merge: "because I say so",
+          mergeMap: false,
+        },
+      ],
+    },
   ],
   invalid: [
     fromFixture(
       stripIndent`
         import { concat, merge as m, mergeMap as mm } from "rxjs/operators";
-                 ~~~~~~ [forbidden { "name": "concat", "explanation": "" }]
-                         ~~~~~ [forbidden { "name": "merge", "explanation": ": because I say so" }]
-      `,
-      {
-        options: [
-          {
-            concat: true,
-            merge: "because I say so",
-            mergeMap: false,
-          },
-        ],
-      }
-    ),
-    fromFixture(
-      stripIndent`
-        import { concat, merge as m, mergeMap as mm } from "rxjs";
                  ~~~~~~ [forbidden { "name": "concat", "explanation": "" }]
                          ~~~~~ [forbidden { "name": "merge", "explanation": ": because I say so" }]
       `,
