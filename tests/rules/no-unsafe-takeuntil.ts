@@ -147,7 +147,6 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
     {
       code: stripIndent`
         // https://github.com/cartant/eslint-plugin-rxjs/issues/66
-        // before allowed
         import { of, Subscription } from "rxjs";
         import { takeUntil } from "rxjs/operators";
 
@@ -168,6 +167,23 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
           alias: ["untilDestroyed"],
         },
       ],
+    },
+    {
+      code: stripIndent`
+        // https://github.com/cartant/eslint-plugin-rxjs/issues/79
+        import { of } from "rxjs";
+        import { repeatWhen, takeUntil } from "rxjs/operators";
+
+        const a = of("a");
+        const b = of("b");
+        const c = of("c");
+
+        const r = a.pipe(
+          takeUntil(b),
+          repeatWhen(() => of(true)),
+          takeUntil(c)
+        ).subscribe();
+      `,
     },
   ],
   invalid: [
