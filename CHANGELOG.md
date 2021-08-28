@@ -1,3 +1,10 @@
+<a name="3.3.7"></a>
+## [3.3.7](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.6...v3.3.7) (2021-08-29)
+
+## Fixes
+
+* Allow multiple `takeUntil` operators with other operators placed in between. ([e66478c](https://github.com/cartant/eslint-plugin-rxjs/commit/e66478c))
+
 <a name="3.3.6"></a>
 ## [3.3.6](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.5...v3.3.6) (2021-08-14)
 
