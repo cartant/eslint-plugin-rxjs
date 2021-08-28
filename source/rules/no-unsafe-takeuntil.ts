@@ -83,38 +83,43 @@ const rule = ruleCreator({
     const { couldBeObservable } = getTypeServices(context);
 
     return {
-      [`CallExpression[callee.property.name='pipe'] > CallExpression[callee.name=${checkedOperatorsRegExp}]`]: (
-        node: es.CallExpression
-      ) => {
-        const pipeCallExpression = getParent(node) as es.CallExpression;
-        if (
-          !pipeCallExpression.arguments ||
-          !couldBeObservable(pipeCallExpression)
-        ) {
-          return;
-        }
-
-        pipeCallExpression.arguments.reduceRight((isError, arg) => {
-          if (!isCallExpression(arg) || !isIdentifier(arg.callee)) {
-            return true;
+      [`CallExpression[callee.property.name='pipe'] > CallExpression[callee.name=${checkedOperatorsRegExp}]`]:
+        (node: es.CallExpression) => {
+          const pipeCallExpression = getParent(node) as es.CallExpression;
+          if (
+            !pipeCallExpression.arguments ||
+            !couldBeObservable(pipeCallExpression)
+          ) {
+            return;
           }
 
-          if (isError && checkedOperatorsRegExp.test(arg.callee.name)) {
-            context.report({
-              messageId: "forbidden",
-              node: arg.callee,
-            });
-          }
+          type State = "allowed" | "disallowed" | "taken";
 
-          return (
-            isError ||
-            !(
-              checkedOperatorsRegExp.test(arg.callee.name) ||
-              allow.includes(arg.callee.name)
-            )
-          );
-        }, false);
-      },
+          pipeCallExpression.arguments.reduceRight((state, arg) => {
+            if (state === "taken") {
+              return state;
+            }
+
+            if (!isCallExpression(arg) || !isIdentifier(arg.callee)) {
+              return "disallowed";
+            }
+
+            if (checkedOperatorsRegExp.test(arg.callee.name)) {
+              if (state === "disallowed") {
+                context.report({
+                  messageId: "forbidden",
+                  node: arg.callee,
+                });
+              }
+              return "taken";
+            }
+
+            if (!allow.includes(arg.callee.name)) {
+              return "disallowed";
+            }
+            return state;
+          }, "allowed" as State);
+        },
     };
   },
 });
