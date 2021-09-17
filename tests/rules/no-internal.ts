@@ -26,9 +26,9 @@ ruleTester({ types: false }).run("no-internal", rule, {
       stripIndent`
         // internal double quote
         import { concat } from "rxjs/internal/observable/concat";
-                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden suggest 0]
         import { map } from "rxjs/internal/operators/map";
-                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden suggest 1]
       `,
       {
         output: stripIndent`
@@ -36,15 +36,33 @@ ruleTester({ types: false }).run("no-internal", rule, {
           import { concat } from "rxjs";
           import { map } from "rxjs/operators";
         `,
+        suggestions: [
+          {
+            messageId: "suggest",
+            output: stripIndent`
+              // internal double quote
+              import { concat } from "rxjs";
+              import { map } from "rxjs/internal/operators/map";
+            `,
+          },
+          {
+            messageId: "suggest",
+            output: stripIndent`
+              // internal double quote
+              import { concat } from "rxjs/internal/observable/concat";
+              import { map } from "rxjs/operators";
+            `,
+          },
+        ],
       }
     ),
     fromFixture(
       stripIndent`
         // internal single quote
         import { concat } from 'rxjs/internal/observable/concat';
-                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden suggest 0]
         import { map } from 'rxjs/internal/operators/map';
-                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden suggest 1]
       `,
       {
         output: stripIndent`
@@ -52,6 +70,24 @@ ruleTester({ types: false }).run("no-internal", rule, {
           import { concat } from 'rxjs';
           import { map } from 'rxjs/operators';
         `,
+        suggestions: [
+          {
+            messageId: "suggest",
+            output: stripIndent`
+              // internal single quote
+              import { concat } from 'rxjs';
+              import { map } from 'rxjs/internal/operators/map';
+            `,
+          },
+          {
+            messageId: "suggest",
+            output: stripIndent`
+              // internal single quote
+              import { concat } from 'rxjs/internal/observable/concat';
+              import { map } from 'rxjs/operators';
+            `,
+          },
+        ],
       }
     ),
     fromFixture(
@@ -65,6 +101,15 @@ ruleTester({ types: false }).run("no-internal", rule, {
           // internal ajax
           import { ajax } from "rxjs";
         `,
+        suggestions: [
+          {
+            messageId: "suggest",
+            output: stripIndent`
+              // internal ajax
+              import { ajax } from "rxjs";
+            `,
+          },
+        ],
       }
     ),
     fromFixture(
@@ -78,6 +123,15 @@ ruleTester({ types: false }).run("no-internal", rule, {
           // internal fetch
           import { fromFetch } from "rxjs/fetch";
         `,
+        suggestions: [
+          {
+            messageId: "suggest",
+            output: stripIndent`
+              // internal fetch
+              import { fromFetch } from "rxjs/fetch";
+            `,
+          },
+        ],
       }
     ),
     fromFixture(
@@ -91,6 +145,15 @@ ruleTester({ types: false }).run("no-internal", rule, {
           // internal webSocket
           import { webSocket } from "rxjs/webSocket";
         `,
+        suggestions: [
+          {
+            messageId: "suggest",
+            output: stripIndent`
+              // internal webSocket
+              import { webSocket } from "rxjs/webSocket";
+            `,
+          },
+        ],
       }
     ),
     fromFixture(
@@ -104,6 +167,15 @@ ruleTester({ types: false }).run("no-internal", rule, {
           // internal observable
           import { concat } from "rxjs";
         `,
+        suggestions: [
+          {
+            messageId: "suggest",
+            output: stripIndent`
+              // internal observable
+              import { concat } from "rxjs";
+            `,
+          },
+        ],
       }
     ),
     fromFixture(
@@ -117,6 +189,15 @@ ruleTester({ types: false }).run("no-internal", rule, {
           // internal operator
           import { map } from "rxjs/operators";
         `,
+        suggestions: [
+          {
+            messageId: "suggest",
+            output: stripIndent`
+              // internal operator
+              import { map } from "rxjs/operators";
+            `,
+          },
+        ],
       }
     ),
     fromFixture(
@@ -130,6 +211,15 @@ ruleTester({ types: false }).run("no-internal", rule, {
           // internal scheduled
           import { scheduled } from "rxjs";
         `,
+        suggestions: [
+          {
+            messageId: "suggest",
+            output: stripIndent`
+              // internal scheduled
+              import { scheduled } from "rxjs";
+            `,
+          },
+        ],
       }
     ),
     fromFixture(
@@ -143,6 +233,15 @@ ruleTester({ types: false }).run("no-internal", rule, {
           // internal scheduler
           import { asap } from "rxjs";
         `,
+        suggestions: [
+          {
+            messageId: "suggest",
+            output: stripIndent`
+              // internal scheduler
+              import { asap } from "rxjs";
+            `,
+          },
+        ],
       }
     ),
     fromFixture(
@@ -156,6 +255,15 @@ ruleTester({ types: false }).run("no-internal", rule, {
           // internal testing
           import { TestScheduler } from "rxjs/testing";
         `,
+        suggestions: [
+          {
+            messageId: "suggest",
+            output: stripIndent`
+              // internal testing
+              import { TestScheduler } from "rxjs/testing";
+            `,
+          },
+        ],
       }
     ),
   ],
