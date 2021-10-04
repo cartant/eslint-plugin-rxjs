@@ -21,7 +21,7 @@ const answer$ = of(42, 54);
 This rule accepts a single option which is an object with properties that determine whether Finnish notation is enforced for `functions`, `methods`, `parameters`, `properties` and `variables`. It also contains:
 
 -   `names` and `types` properties that determine whether of not Finnish notation is to be enforced for specific names or types.
--   a `strict` property that, if `true`, disallows the use of a `$` suffix with non-`Observable` identifiers.
+-   a `strict` property that, if `true`, allows the `$` suffix to be used _only_ with identifiers that have an `Observable` type.
 
 The default (Angular-friendly) configuration looks like this:
 
