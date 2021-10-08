@@ -77,6 +77,59 @@ ruleTester({ types: true }).run("finnish", rule, {
     },
     {
       code: stripIndent`
+        // strict default angular whitelist
+        import { Observable, of, Subject } from "rxjs";
+
+        class EventEmitter<T> extends Subject<T> {}
+
+        class Something {
+          public somethingChanged: EventEmitter<any>;
+          public canActivate(): Observable<any> { return of(); }
+          public canActivateChild(): Observable<any> { return of(); }
+          public canDeactivate(): Observable<any> { return of(); }
+          public canLoad(): Observable<any> { return of(); }
+          public intercept(): Observable<any> { return of(); }
+          public resolve(): Observable<any> { return of(); }
+          public validate(): Observable<any> { return of(); }
+        }
+      `,
+      options: [{ strict: true }],
+    },
+    {
+      code: stripIndent`
+        // explicit whitelist
+        import { Subject } from "rxjs";
+
+        class EventEmitter<T> extends Subject<T> {}
+        let eventEmitter: EventEmitter<any> | undefined;
+      `,
+      options: [
+        {
+          types: {
+            "^EventEmitter$": false,
+          },
+        },
+      ],
+    },
+    {
+      code: stripIndent`
+        // strict explicit whitelist
+        import { Subject } from "rxjs";
+
+        class EventEmitter<T> extends Subject<T> {}
+        let eventEmitter: EventEmitter<any> | undefined;
+      `,
+      options: [
+        {
+          strict: true,
+          types: {
+            "^EventEmitter$": false,
+          },
+        },
+      ],
+    },
+    {
+      code: stripIndent`
         // functions without $, but not enforced
         import { Observable, of } from "rxjs";
 
