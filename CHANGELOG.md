@@ -1,3 +1,10 @@
+<a name="4.0.0"></a>
+## [4.0.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.7...v4.0.0) (2021-10-17)
+
+## Breaking Changes
+
+* Support `eslint` v8 and `@typescript-eslint` v5. ([644953a](https://github.com/cartant/eslint-plugin-rxjs/commit/644953a))
+
 <a name="3.3.7"></a>
 ## [3.3.7](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.6...v3.3.7) (2021-08-29)
 
