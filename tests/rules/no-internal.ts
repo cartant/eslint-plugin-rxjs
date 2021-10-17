@@ -94,7 +94,7 @@ ruleTester({ types: false }).run("no-internal", rule, {
       stripIndent`
         // internal ajax
         import { ajax } from "rxjs/internal/observable/ajax/ajax";
-                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden suggest]
       `,
       {
         output: stripIndent`
@@ -116,7 +116,7 @@ ruleTester({ types: false }).run("no-internal", rule, {
       stripIndent`
         // internal fetch
         import { fromFetch } from "rxjs/internal/observable/dom/fetch";
-                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden suggest]
       `,
       {
         output: stripIndent`
@@ -138,7 +138,7 @@ ruleTester({ types: false }).run("no-internal", rule, {
       stripIndent`
         // internal webSocket
         import { webSocket } from "rxjs/internal/observable/dom/webSocket";
-                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden suggest]
       `,
       {
         output: stripIndent`
@@ -160,7 +160,7 @@ ruleTester({ types: false }).run("no-internal", rule, {
       stripIndent`
         // internal observable
         import { concat } from "rxjs/internal/observable/concat";
-                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden suggest]
       `,
       {
         output: stripIndent`
@@ -182,7 +182,7 @@ ruleTester({ types: false }).run("no-internal", rule, {
       stripIndent`
         // internal operator
         import { map } from "rxjs/internal/operators/map";
-                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden suggest]
       `,
       {
         output: stripIndent`
@@ -204,7 +204,7 @@ ruleTester({ types: false }).run("no-internal", rule, {
       stripIndent`
         // internal scheduled
         import { scheduled } from "rxjs/internal/scheduled/scheduled";
-                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden suggest]
       `,
       {
         output: stripIndent`
@@ -226,7 +226,7 @@ ruleTester({ types: false }).run("no-internal", rule, {
       stripIndent`
         // internal scheduler
         import { asap } from "rxjs/internal/scheduler/asap";
-                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden suggest]
       `,
       {
         output: stripIndent`
@@ -248,7 +248,7 @@ ruleTester({ types: false }).run("no-internal", rule, {
       stripIndent`
         // internal testing
         import { TestScheduler } from "rxjs/internal/testing/TestScheduler";
-                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [forbidden suggest]
       `,
       {
         output: stripIndent`

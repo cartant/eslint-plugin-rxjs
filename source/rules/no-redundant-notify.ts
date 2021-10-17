@@ -22,12 +22,12 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description:
         "Forbids redundant notifications from completed or errored observables.",
       recommended: "error",
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Redundant notifications are forbidden.",
     },
@@ -39,45 +39,44 @@ const rule = ruleCreator({
     const sourceCode = context.getSourceCode();
     const { couldBeType } = getTypeServices(context);
     return {
-      "ExpressionStatement[expression.callee.property.name=/^(complete|error)$/] + ExpressionStatement[expression.callee.property.name=/^(next|complete|error)$/]": (
-        node: es.ExpressionStatement
-      ) => {
-        const parent = getParent(node);
-        if (!parent) {
-          return;
-        }
-        if (!isBlockStatement(parent) && !isProgram(parent)) {
-          return;
-        }
-        const { body } = parent;
-        const index = body.indexOf(node);
-        const sibling = body[index - 1] as es.ExpressionStatement;
-        if (
-          getExpressionText(sibling, sourceCode) !==
-          getExpressionText(node, sourceCode)
-        ) {
-          return;
-        }
-        if (
-          !isExpressionObserver(sibling, couldBeType) ||
-          !isExpressionObserver(node, couldBeType)
-        ) {
-          return;
-        }
-        const { expression } = node;
-        if (isCallExpression(expression)) {
-          const { callee } = expression;
-          if (isMemberExpression(callee)) {
-            const { property } = callee;
-            if (isIdentifier(property)) {
-              context.report({
-                messageId: "forbidden",
-                node: property,
-              });
+      "ExpressionStatement[expression.callee.property.name=/^(complete|error)$/] + ExpressionStatement[expression.callee.property.name=/^(next|complete|error)$/]":
+        (node: es.ExpressionStatement) => {
+          const parent = getParent(node);
+          if (!parent) {
+            return;
+          }
+          if (!isBlockStatement(parent) && !isProgram(parent)) {
+            return;
+          }
+          const { body } = parent;
+          const index = body.indexOf(node);
+          const sibling = body[index - 1] as es.ExpressionStatement;
+          if (
+            getExpressionText(sibling, sourceCode) !==
+            getExpressionText(node, sourceCode)
+          ) {
+            return;
+          }
+          if (
+            !isExpressionObserver(sibling, couldBeType) ||
+            !isExpressionObserver(node, couldBeType)
+          ) {
+            return;
+          }
+          const { expression } = node;
+          if (isCallExpression(expression)) {
+            const { callee } = expression;
+            if (isMemberExpression(callee)) {
+              const { property } = callee;
+              if (isIdentifier(property)) {
+                context.report({
+                  messageId: "forbidden",
+                  node: property,
+                });
+              }
             }
           }
-        }
-      },
+        },
     };
   },
 });

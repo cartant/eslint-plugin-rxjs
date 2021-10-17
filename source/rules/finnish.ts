@@ -28,11 +28,11 @@ const rule = ruleCreator({
   defaultOptions,
   meta: {
     docs: {
-      category: "Stylistic Issues",
       description: "Enforces the use of Finnish notation.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       shouldBeFinnish: "Finnish notation should be used here.",
       shouldNotBeFinnish: "Finnish notation should not be used here.",
@@ -84,7 +84,8 @@ const rule = ruleCreator({
       );
     } else {
       names.push({
-        regExp: /^(canActivate|canActivateChild|canDeactivate|canLoad|intercept|resolve|validate)$/,
+        regExp:
+          /^(canActivate|canActivateChild|canDeactivate|canLoad|intercept|resolve|validate)$/,
         validate: false,
       });
     }
@@ -180,7 +181,7 @@ const rule = ruleCreator({
           }
         }
       },
-      "ClassProperty[computed=false]": (node: es.ClassProperty) => {
+      "PropertyDefinition[computed=false]": (node: es.PropertyDefinition) => {
         if (validate.properties) {
           checkNode(node.key);
         }

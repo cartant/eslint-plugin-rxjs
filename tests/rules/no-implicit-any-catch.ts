@@ -240,7 +240,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").pipe(
           catchError(error => console.error(error))
-                     ~~~~~ [implicitAny]
+                     ~~~~~ [implicitAny suggest]
         );
       `,
       {
@@ -277,7 +277,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").pipe(
           catchError(function (error) { console.error(error); })
-                               ~~~~~ [implicitAny]
+                               ~~~~~ [implicitAny suggest]
         );
       `,
       {
@@ -314,7 +314,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").pipe(
           catchError((error: any) => console.error(error))
-                      ~~~~~~~~~~ [explicitAny]
+                      ~~~~~~~~~~ [explicitAny suggest]
         );
       `,
       {
@@ -351,7 +351,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").pipe(
           catchError(function (error: any) { console.error(error); })
-                               ~~~~~~~~~~ [explicitAny]
+                               ~~~~~~~~~~ [explicitAny suggest]
         );
       `,
       {
@@ -388,7 +388,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").pipe(
           catchError((error: any) => console.error(error))
-                      ~~~~~~~~~~ [explicitAny]
+                      ~~~~~~~~~~ [explicitAny suggest]
         );
       `,
       {
@@ -426,7 +426,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").pipe(
           catchError(function (error: any) { console.error(error); })
-                               ~~~~~~~~~~ [explicitAny]
+                               ~~~~~~~~~~ [explicitAny suggest]
         );
       `,
       {
@@ -488,7 +488,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
         throwError("Kaboom!").subscribe(
           undefined,
           (error) => console.error(error)
-           ~~~~~ [implicitAny]
+           ~~~~~ [implicitAny suggest]
         );
       `,
       {
@@ -525,7 +525,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
         throwError("Kaboom!").subscribe(
           undefined,
           error => console.error(error)
-          ~~~~~ [implicitAny]
+          ~~~~~ [implicitAny suggest]
         );
       `,
       {
@@ -562,7 +562,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
         throwError("Kaboom!").subscribe(
           undefined,
           (error: any) => console.error(error)
-           ~~~~~~~~~~ [explicitAny]
+           ~~~~~~~~~~ [explicitAny suggest]
         );
       `,
       {
@@ -599,7 +599,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
         throwError("Kaboom!").subscribe(
           undefined,
           (error: any) => console.error(error)
-           ~~~~~~~~~~ [explicitAny]
+           ~~~~~~~~~~ [explicitAny suggest]
         );
       `,
       {
@@ -648,7 +648,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").subscribe({
           error: (error) => console.error(error)
-                  ~~~~~ [implicitAny]
+                  ~~~~~ [implicitAny suggest]
         });
       `,
       {
@@ -682,7 +682,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").subscribe({
           error: error => console.error(error)
-                 ~~~~~ [implicitAny]
+                 ~~~~~ [implicitAny suggest]
         });
       `,
       {
@@ -716,7 +716,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").subscribe({
           error: (error: any) => console.error(error)
-                  ~~~~~~~~~~ [explicitAny]
+                  ~~~~~~~~~~ [explicitAny suggest]
         });
       `,
       {
@@ -750,7 +750,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").subscribe({
           error: (error: any) => console.error(error)
-                  ~~~~~~~~~~ [explicitAny]
+                  ~~~~~~~~~~ [explicitAny suggest]
         });
       `,
       {
@@ -798,7 +798,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
         throwError("Kaboom!").pipe(tap(
           undefined,
           (error) => console.error(error)
-           ~~~~~ [implicitAny]
+           ~~~~~ [implicitAny suggest]
         ));
       `,
       {
@@ -838,7 +838,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
         throwError("Kaboom!").pipe(tap(
           undefined,
           error => console.error(error)
-          ~~~~~ [implicitAny]
+          ~~~~~ [implicitAny suggest]
         ));
       `,
       {
@@ -878,7 +878,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
         throwError("Kaboom!").pipe(tap(
           undefined,
           (error: any) => console.error(error)
-           ~~~~~~~~~~ [explicitAny]
+           ~~~~~~~~~~ [explicitAny suggest]
         ));
       `,
       {
@@ -918,7 +918,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
         throwError("Kaboom!").pipe(tap(
           undefined,
           (error: any) => console.error(error)
-           ~~~~~~~~~~ [explicitAny]
+           ~~~~~~~~~~ [explicitAny suggest]
         ));
       `,
       {
@@ -971,7 +971,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").pipe(tap({
           error: (error) => console.error(error)
-                  ~~~~~ [implicitAny]
+                  ~~~~~ [implicitAny suggest]
         }));
       `,
       {
@@ -1008,7 +1008,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").pipe(tap({
           error: error => console.error(error)
-                 ~~~~~ [implicitAny]
+                 ~~~~~ [implicitAny suggest]
         }));
       `,
       {
@@ -1045,7 +1045,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").pipe(tap({
           error: (error: any) => console.error(error)
-                  ~~~~~~~~~~ [explicitAny]
+                  ~~~~~~~~~~ [explicitAny suggest]
         }));
       `,
       {
@@ -1082,7 +1082,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").pipe(tap({
           error: (error: any) => console.error(error)
-                  ~~~~~~~~~~ [explicitAny]
+                  ~~~~~~~~~~ [explicitAny suggest]
         }));
       `,
       {

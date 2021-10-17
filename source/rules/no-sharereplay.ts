@@ -14,11 +14,11 @@ const rule = ruleCreator({
   defaultOptions,
   meta: {
     docs: {
-      category: "Best Practices",
       description: "Forbids using the `shareReplay` operator.",
       recommended: "error",
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "shareReplay is forbidden.",
       forbiddenWithoutConfig:

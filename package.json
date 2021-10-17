@@ -4,10 +4,10 @@
     "url": "https://github.com/cartant/eslint-plugin-rxjs/issues"
   },
   "dependencies": {
-    "@typescript-eslint/experimental-utils": "^4.0.0",
+    "@typescript-eslint/experimental-utils": "^5.0.0",
     "common-tags": "^1.8.0",
     "decamelize": "^5.0.0",
-    "eslint-etc": "^4.1.0",
+    "eslint-etc": "^5.0.0",
     "requireindex": "~1.2.0",
     "rxjs-report-usage": "^1.0.4",
     "tslib": "^2.0.0",
@@ -16,15 +16,15 @@
   },
   "description": "ESLint rules for RxJS",
   "devDependencies": {
-    "@cartant/eslint-config": "^2.0.0",
+    "@cartant/eslint-config": "^3.0.0",
     "@types/chai": "^4.2.0",
     "@types/common-tags": "^1.8.0",
     "@types/eslint": "^7.0.0",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.0.0",
-    "@typescript-eslint/parser": "^4.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
     "chai": "^4.2.0",
-    "eslint": "^7.0.0",
+    "eslint": "^8.0.0",
     "husky": "^7.0.0",
     "lint-staged": "^11.0.0",
     "mocha": "^9.0.0",
@@ -33,9 +33,6 @@
     "rxjs": "^7.0.0",
     "ts-node": "^10.0.0",
     "typescript": "~4.4.2"
-  },
-  "engines": {
-    "node": ">=10"
   },
   "files": [
     "dist",
@@ -56,8 +53,8 @@
   "name": "eslint-plugin-rxjs",
   "optionalDependencies": {},
   "peerDependencies": {
-    "eslint": ">=5.0.0",
-    "typescript": ">=3.0.0"
+    "eslint": "^8.0.0",
+    "typescript": "^4.0.0"
   },
   "private": false,
   "publishConfig": {

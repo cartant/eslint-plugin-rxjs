@@ -11,12 +11,12 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description:
         "Forbids the calling of `subscribe` without specifying an error handler.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Calling subscribe without an error handler is forbidden.",
     },
@@ -28,23 +28,24 @@ const rule = ruleCreator({
     const { couldBeObservable, couldBeFunction } = getTypeServices(context);
 
     return {
-      "CallExpression[arguments.length > 0] > MemberExpression > Identifier[name='subscribe']": (
-        node: es.Identifier
-      ) => {
-        const memberExpression = getParent(node) as es.MemberExpression;
-        const callExpression = getParent(memberExpression) as es.CallExpression;
+      "CallExpression[arguments.length > 0] > MemberExpression > Identifier[name='subscribe']":
+        (node: es.Identifier) => {
+          const memberExpression = getParent(node) as es.MemberExpression;
+          const callExpression = getParent(
+            memberExpression
+          ) as es.CallExpression;
 
-        if (
-          callExpression.arguments.length < 2 &&
-          couldBeObservable(memberExpression.object) &&
-          couldBeFunction(callExpression.arguments[0])
-        ) {
-          context.report({
-            messageId: "forbidden",
-            node,
-          });
-        }
-      },
+          if (
+            callExpression.arguments.length < 2 &&
+            couldBeObservable(memberExpression.object) &&
+            couldBeFunction(callExpression.arguments[0])
+          ) {
+            context.report({
+              messageId: "forbidden",
+              node,
+            });
+          }
+        },
     };
   },
 });

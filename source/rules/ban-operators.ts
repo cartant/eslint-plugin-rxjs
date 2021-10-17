@@ -13,11 +13,11 @@ const rule = ruleCreator({
   defaultOptions,
   meta: {
     docs: {
-      category: "Best Practices",
       description: "Forbids the use of banned operators.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "RxJS operator is banned: {{name}}{{explanation}}.",
     },

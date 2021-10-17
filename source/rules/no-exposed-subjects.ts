@@ -16,11 +16,11 @@ const rule = ruleCreator({
   defaultOptions,
   meta: {
     docs: {
-      category: "Best Practices",
       description: "Forbids exposed (i.e. non-private) subjects.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Subject '{{subject}}' must be private.",
       forbiddenAllowProtected:
@@ -54,8 +54,8 @@ const rule = ruleCreator({
     }
 
     return {
-      [`ClassProperty[accessibility!=${accessibilityRexExp}]`]: (
-        node: es.ClassProperty
+      [`PropertyDefinition[accessibility!=${accessibilityRexExp}]`]: (
+        node: es.PropertyDefinition
       ) => {
         if (isSubject(node)) {
           const { key } = node;
@@ -70,65 +70,62 @@ const rule = ruleCreator({
           }
         }
       },
-      [`MethodDefinition[kind='constructor'] > FunctionExpression > TSParameterProperty[accessibility!=${accessibilityRexExp}] > Identifier`]: (
-        node: es.Identifier
-      ) => {
-        if (isSubject(node)) {
-          const { loc } = node;
-          context.report({
-            messageId,
-            loc: {
-              ...loc,
-              end: {
-                ...loc.start,
-                column: loc.start.column + node.name.length,
+      [`MethodDefinition[kind='constructor'] > FunctionExpression > TSParameterProperty[accessibility!=${accessibilityRexExp}] > Identifier`]:
+        (node: es.Identifier) => {
+          if (isSubject(node)) {
+            const { loc } = node;
+            context.report({
+              messageId,
+              loc: {
+                ...loc,
+                end: {
+                  ...loc.start,
+                  column: loc.start.column + node.name.length,
+                },
               },
-            },
-            data: {
-              subject: node.name,
-            },
-          });
-        }
-      },
-      [`MethodDefinition[accessibility!=${accessibilityRexExp}][kind=/^(get|set)$/]`]: (
-        node: es.MethodDefinition
-      ) => {
-        if (isSubject(node)) {
-          const key = node.key as es.Identifier;
-          context.report({
-            messageId,
-            node: key,
-            data: {
-              subject: key.name,
-            },
-          });
-        }
-      },
-      [`MethodDefinition[accessibility!=${accessibilityRexExp}][kind='method']`]: (
-        node: es.MethodDefinition
-      ) => {
-        const functionExpression = node.value as any;
-        const returnType = functionExpression.returnType;
-        if (!returnType) {
-          return;
-        }
+              data: {
+                subject: node.name,
+              },
+            });
+          }
+        },
+      [`MethodDefinition[accessibility!=${accessibilityRexExp}][kind=/^(get|set)$/]`]:
+        (node: es.MethodDefinition) => {
+          if (isSubject(node)) {
+            const key = node.key as es.Identifier;
+            context.report({
+              messageId,
+              node: key,
+              data: {
+                subject: key.name,
+              },
+            });
+          }
+        },
+      [`MethodDefinition[accessibility!=${accessibilityRexExp}][kind='method']`]:
+        (node: es.MethodDefinition) => {
+          const functionExpression = node.value as any;
+          const returnType = functionExpression.returnType;
+          if (!returnType) {
+            return;
+          }
 
-        const typeAnnotation = returnType.typeAnnotation;
-        if (!typeAnnotation) {
-          return;
-        }
+          const typeAnnotation = returnType.typeAnnotation;
+          if (!typeAnnotation) {
+            return;
+          }
 
-        if (isSubject(typeAnnotation)) {
-          const key = node.key as es.Identifier;
-          context.report({
-            messageId,
-            node: key,
-            data: {
-              subject: key.name,
-            },
-          });
-        }
-      },
+          if (isSubject(typeAnnotation)) {
+            const key = node.key as es.Identifier;
+            context.report({
+              messageId,
+              node: key,
+              data: {
+                subject: key.name,
+              },
+            });
+          }
+        },
     };
   },
 });

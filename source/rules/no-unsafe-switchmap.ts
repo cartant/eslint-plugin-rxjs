@@ -26,11 +26,11 @@ const rule = ruleCreator({
   defaultOptions,
   meta: {
     docs: {
-      category: "Possible Errors",
       description: "Forbids unsafe `switchMap` usage in effects and epics.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Unsafe switchMap usage in effects and epics is forbidden.",
     },
@@ -159,8 +159,10 @@ const rule = ruleCreator({
     }
 
     return {
-      [`CallExpression[callee.property.name='pipe'][callee.object.name=${observableRegExp}]`]: checkNode,
-      [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]`]: checkNode,
+      [`CallExpression[callee.property.name='pipe'][callee.object.name=${observableRegExp}]`]:
+        checkNode,
+      [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]`]:
+        checkNode,
     };
   },
 });

@@ -15,12 +15,12 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Possible Errors",
       description:
         "Forbids observables not composed from the `repeatWhen` or `retryWhen` notifier.",
       recommended: "error",
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Ignoring the notifier is forbidden.",
     },

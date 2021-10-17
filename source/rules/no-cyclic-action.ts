@@ -22,11 +22,11 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Possible Errors",
       description: "Forbids effects and epics that re-emit filtered actions.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden:
         "Effects and epics that re-emit filtered actions are forbidden.",

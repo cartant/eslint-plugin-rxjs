@@ -11,11 +11,11 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Possible Errors",
       description: "Forbids passing `async` functions to `subscribe`.",
       recommended: "error",
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Passing async functions to subscribe is forbidden.",
     },
@@ -50,8 +50,10 @@ const rule = ruleCreator({
       }
     }
     return {
-      "CallExpression[callee.property.name='subscribe'] > FunctionExpression[async=true]": checkNode,
-      "CallExpression[callee.property.name='subscribe'] > ArrowFunctionExpression[async=true]": checkNode,
+      "CallExpression[callee.property.name='subscribe'] > FunctionExpression[async=true]":
+        checkNode,
+      "CallExpression[callee.property.name='subscribe'] > ArrowFunctionExpression[async=true]":
+        checkNode,
     };
   },
 });

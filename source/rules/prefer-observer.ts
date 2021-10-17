@@ -20,12 +20,12 @@ const rule = ruleCreator({
   defaultOptions,
   meta: {
     docs: {
-      category: "Best Practices",
       description:
         "Forbids the passing separate callbacks to `subscribe` and `tap`.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden:
         "Passing separate callbacks is forbidden; pass an observer instead.",
@@ -72,9 +72,8 @@ const rule = ruleCreator({
     }
 
     return {
-      "CallExpression[callee.property.name='pipe'] > CallExpression[callee.name='tap']": (
-        node: es.CallExpression
-      ) => checkArgs(node, node.callee),
+      "CallExpression[callee.property.name='pipe'] > CallExpression[callee.name='tap']":
+        (node: es.CallExpression) => checkArgs(node, node.callee),
       "CallExpression[callee.property.name='subscribe']": (
         node: es.CallExpression
       ) => checkArgs(node, (node.callee as es.MemberExpression).property),

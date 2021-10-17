@@ -10,11 +10,11 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description: "Forbids the importation from index modules.",
       recommended: "error",
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "RxJS imports from index modules are forbidden.",
     },
@@ -24,14 +24,13 @@ const rule = ruleCreator({
   name: "no-index",
   create: (context) => {
     return {
-      [String.raw`ImportDeclaration Literal[value=/^rxjs(?:\u002f\w+)?\u002findex/]`]: (
-        node: es.Literal
-      ) => {
-        context.report({
-          messageId: "forbidden",
-          node,
-        });
-      },
+      [String.raw`ImportDeclaration Literal[value=/^rxjs(?:\u002f\w+)?\u002findex/]`]:
+        (node: es.Literal) => {
+          context.report({
+            messageId: "forbidden",
+            node,
+          });
+        },
     };
   },
 });

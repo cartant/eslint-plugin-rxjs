@@ -18,11 +18,11 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Possible Errors",
       description: "Forbids unsafe optional `next` calls.",
       recommended: "error",
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Unsafe optional next calls are forbidden.",
     },

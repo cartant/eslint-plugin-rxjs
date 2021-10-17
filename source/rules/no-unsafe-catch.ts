@@ -23,11 +23,11 @@ const rule = ruleCreator({
   defaultOptions,
   meta: {
     docs: {
-      category: "Possible Errors",
       description: "Forbids unsafe `catchError` usage in effects and epics.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Unsafe catchError usage in effects and epics are forbidden.",
     },
@@ -89,8 +89,10 @@ const rule = ruleCreator({
     }
 
     return {
-      [`CallExpression[callee.property.name='pipe'][callee.object.name=${observableRegExp}]`]: checkNode,
-      [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]`]: checkNode,
+      [`CallExpression[callee.property.name='pipe'][callee.object.name=${observableRegExp}]`]:
+        checkNode,
+      [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]`]:
+        checkNode,
     };
   },
 });

@@ -25,11 +25,11 @@ const rule = ruleCreator({
   defaultOptions,
   meta: {
     docs: {
-      category: "Best Practices",
       description: "Enforces the use of a suffix in subject identifiers.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: `Subject identifiers must end with "{{suffix}}".`,
     },
@@ -126,7 +126,9 @@ const rule = ruleCreator({
           }
         }
       },
-      "ClassProperty[key.name=/[^$]$/][computed=false]": (node: es.Node) => {
+      "PropertyDefinition[key.name=/[^$]$/][computed=false]": (
+        node: es.PropertyDefinition
+      ) => {
         const anyNode = node as any;
         if (validate.properties) {
           checkNode(anyNode.key);

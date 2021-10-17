@@ -11,12 +11,12 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description:
         "Forbids the calling of `subscribe` without specifying arguments.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Calling subscribe without arguments is forbidden.",
     },
@@ -28,20 +28,19 @@ const rule = ruleCreator({
     const { couldBeObservable, couldBeType } = getTypeServices(context);
 
     return {
-      "CallExpression[arguments.length = 0][callee.property.name='subscribe']": (
-        node: es.CallExpression
-      ) => {
-        const callee = node.callee as es.MemberExpression;
-        if (
-          couldBeObservable(callee.object) ||
-          couldBeType(callee.object, "Subscribable")
-        ) {
-          context.report({
-            messageId: "forbidden",
-            node: callee.property,
-          });
-        }
-      },
+      "CallExpression[arguments.length = 0][callee.property.name='subscribe']":
+        (node: es.CallExpression) => {
+          const callee = node.callee as es.MemberExpression;
+          if (
+            couldBeObservable(callee.object) ||
+            couldBeType(callee.object, "Subscribable")
+          ) {
+            context.report({
+              messageId: "forbidden",
+              node: callee.property,
+            });
+          }
+        },
     };
   },
 });

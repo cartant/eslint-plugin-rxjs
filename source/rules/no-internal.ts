@@ -13,11 +13,11 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description: "Forbids the importation of internals.",
       recommended: "error",
     },
     fixable: "code",
+    hasSuggestions: true,
     messages: {
       forbidden: "RxJS imports from internal are forbidden.",
       suggest: "Import from a non-internal location.",

@@ -22,11 +22,11 @@ const rule = ruleCreator({
   defaultOptions,
   meta: {
     docs: {
-      category: "Possible Errors",
       description: "Forbids the application of operators after `takeUntil`.",
       recommended: "error",
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Applying operators after takeUntil is forbidden.",
     },

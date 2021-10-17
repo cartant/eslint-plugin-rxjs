@@ -11,11 +11,11 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description: "Forbids operators that return connectable observables.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Connectable observables are forbidden.",
     },
@@ -34,16 +34,15 @@ const rule = ruleCreator({
           });
         }
       },
-      "CallExpression[callee.name=/^(publish|publishBehavior|publishLast|publishReplay)$/]": (
-        node: es.CallExpression
-      ) => {
-        if (!node.arguments.some((arg) => couldBeFunction(arg))) {
-          context.report({
-            messageId: "forbidden",
-            node: node.callee,
-          });
-        }
-      },
+      "CallExpression[callee.name=/^(publish|publishBehavior|publishLast|publishReplay)$/]":
+        (node: es.CallExpression) => {
+          if (!node.arguments.some((arg) => couldBeFunction(arg))) {
+            context.report({
+              messageId: "forbidden",
+              node: node.callee,
+            });
+          }
+        },
     };
   },
 });

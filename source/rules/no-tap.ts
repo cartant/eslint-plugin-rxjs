@@ -11,11 +11,11 @@ const rule = ruleCreator({
   meta: {
     deprecated: true,
     docs: {
-      category: "Best Practices",
       description: "Forbids the use of the `tap` operator.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "The tap operator is forbidden.",
     },

@@ -16,11 +16,11 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Stylistic Issues",
       description: "Forbids the use of Finnish notation.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Finnish notation is forbidden.",
     },
@@ -30,9 +30,8 @@ const rule = ruleCreator({
   name: "no-finnish",
   create: (context) => {
     const { esTreeNodeToTSNodeMap } = getParserServices(context);
-    const { couldBeObservable, couldReturnObservable } = getTypeServices(
-      context
-    );
+    const { couldBeObservable, couldReturnObservable } =
+      getTypeServices(context);
 
     function checkNode(nameNode: es.Node, typeNode?: es.Node) {
       if (
@@ -60,8 +59,9 @@ const rule = ruleCreator({
           checkNode(node);
         }
       },
-      "ClassProperty[key.name=/[$]+$/] > Identifier": (node: es.Identifier) =>
-        checkNode(node, getParent(node)),
+      "PropertyDefinition[key.name=/[$]+$/] > Identifier": (
+        node: es.Identifier
+      ) => checkNode(node, getParent(node)),
       "FunctionDeclaration > Identifier[name=/[$]+$/]": (
         node: es.Identifier
       ) => {

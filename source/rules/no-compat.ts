@@ -10,12 +10,12 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description:
         "Forbids importation from locations that depend upon `rxjs-compat`.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "'rxjs-compat'-dependent import locations are forbidden.",
     },
@@ -25,14 +25,13 @@ const rule = ruleCreator({
   name: "no-compat",
   create: (context) => {
     return {
-      [String.raw`ImportDeclaration Literal[value=/^rxjs\u002f/]:not(Literal[value=/^rxjs\u002f(ajax|fetch|operators|testing|webSocket)/])`]: (
-        node: es.Literal
-      ) => {
-        context.report({
-          messageId: "forbidden",
-          node,
-        });
-      },
+      [String.raw`ImportDeclaration Literal[value=/^rxjs\u002f/]:not(Literal[value=/^rxjs\u002f(ajax|fetch|operators|testing|webSocket)/])`]:
+        (node: es.Literal) => {
+          context.report({
+            messageId: "forbidden",
+            node,
+          });
+        },
     };
   },
 });

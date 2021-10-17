@@ -11,11 +11,11 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description: "Forbids explicit generic type arguments.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Explicit generic type arguments are forbidden.",
     },
@@ -54,10 +54,14 @@ const rule = ruleCreator({
     }
 
     return {
-      "CallExpression[callee.property.name='pipe'] > CallExpression[typeParameters.params.length > 0] > Identifier": report,
-      "NewExpression[typeParameters.params.length > 0] > Identifier[name='BehaviorSubject']": checkBehaviorSubjects,
-      "CallExpression[typeParameters.params.length > 0] > Identifier[name=/^(from|of)$/]": report,
-      "NewExpression[typeParameters.params.length > 0][arguments.0.value='N'] > Identifier[name='Notification']": checkNotifications,
+      "CallExpression[callee.property.name='pipe'] > CallExpression[typeParameters.params.length > 0] > Identifier":
+        report,
+      "NewExpression[typeParameters.params.length > 0] > Identifier[name='BehaviorSubject']":
+        checkBehaviorSubjects,
+      "CallExpression[typeParameters.params.length > 0] > Identifier[name=/^(from|of)$/]":
+        report,
+      "NewExpression[typeParameters.params.length > 0][arguments.0.value='N'] > Identifier[name='Notification']":
+        checkNotifications,
     };
   },
 });

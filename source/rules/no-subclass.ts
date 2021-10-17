@@ -11,11 +11,11 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description: "Forbids subclassing RxJS classes.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Subclassing RxJS classes is forbidden.",
     },

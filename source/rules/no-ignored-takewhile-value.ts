@@ -11,11 +11,11 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Possible Errors",
       description: "Forbids ignoring the value within `takeWhile`.",
       recommended: "error",
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Ignoring the value within takeWhile is forbidden.",
     },

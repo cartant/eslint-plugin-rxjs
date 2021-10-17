@@ -44,13 +44,13 @@ const rule = ruleCreator({
   defaultOptions,
   meta: {
     docs: {
-      category: "Possible Errors",
       description:
         "Forbids implicit `any` error parameters in `catchError` operators.",
       recommended: "error",
       suggestion: true,
     },
     fixable: "code",
+    hasSuggestions: true,
     messages: {
       explicitAny: "Explicit `any` in `catchError`.",
       implicitAny: "Implicit `any` in `catchError`.",
@@ -158,28 +158,27 @@ const rule = ruleCreator({
         }
         checkCallback(callback);
       },
-      "CallExpression[callee.property.name='subscribe'],CallExpression[callee.name='tap']": (
-        node: es.CallExpression
-      ) => {
-        const { callee } = node;
-        if (isMemberExpression(callee) && !couldBeObservable(callee.object)) {
-          return;
-        }
-        const [observer, callback] = node.arguments;
-        if (callback) {
-          checkCallback(callback);
-        } else if (observer && isObjectExpression(observer)) {
-          const errorProperty = observer.properties.find(
-            (property) =>
-              isProperty(property) &&
-              isIdentifier(property.key) &&
-              property.key.name === "error"
-          ) as es.Property;
-          if (errorProperty) {
-            checkCallback(errorProperty.value);
+      "CallExpression[callee.property.name='subscribe'],CallExpression[callee.name='tap']":
+        (node: es.CallExpression) => {
+          const { callee } = node;
+          if (isMemberExpression(callee) && !couldBeObservable(callee.object)) {
+            return;
           }
-        }
-      },
+          const [observer, callback] = node.arguments;
+          if (callback) {
+            checkCallback(callback);
+          } else if (observer && isObjectExpression(observer)) {
+            const errorProperty = observer.properties.find(
+              (property) =>
+                isProperty(property) &&
+                isIdentifier(property.key) &&
+                property.key.name === "error"
+            ) as es.Property;
+            if (errorProperty) {
+              checkCallback(errorProperty.value);
+            }
+          }
+        },
     };
   },
 });

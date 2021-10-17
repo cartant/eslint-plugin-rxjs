@@ -13,12 +13,12 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description:
         "Enforces the passing of `Error` values to error notifications.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Passing non-Error values are forbidden.",
     },

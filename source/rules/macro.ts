@@ -13,11 +13,11 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description: "Enforces the use of the RxJS Tools Babel macro.",
       recommended: false,
     },
     fixable: "code",
+    hasSuggestions: false,
     messages: {
       macro: "Use the RxJS Tools Babel macro.",
     },

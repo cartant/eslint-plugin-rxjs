@@ -11,12 +11,12 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description:
         "Forbids accessing the `value` property of a `BehaviorSubject` instance.",
       recommended: "error",
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden:
         "Accessing the value property of a BehaviorSubject is forbidden.",

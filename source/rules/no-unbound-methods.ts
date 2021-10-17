@@ -16,11 +16,11 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description: "Forbids the passing of unbound methods.",
       recommended: "error",
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Unbound methods are forbidden.",
     },
@@ -29,9 +29,8 @@ const rule = ruleCreator({
   },
   name: "no-unbound-methods",
   create: (context) => {
-    const { couldBeObservable, couldBeSubscription, getType } = getTypeServices(
-      context
-    );
+    const { couldBeObservable, couldBeSubscription, getType } =
+      getTypeServices(context);
     const nodeMap = new WeakMap<es.Node, void>();
 
     function mapArguments(node: es.CallExpression | es.NewExpression) {

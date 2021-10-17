@@ -11,12 +11,12 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description:
         "Forbids using `ReplaySubject`, `publishReplay` or `shareReplay` without specifying the buffer size.",
       recommended: "error",
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Ignoring the buffer size is forbidden.",
     },

@@ -11,12 +11,12 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description:
         "Forbids the calling of `subscribe` within a `subscribe` callback.",
       recommended: "error",
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden: "Nested subscribe calls are forbidden.",
     },
