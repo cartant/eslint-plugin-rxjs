@@ -103,6 +103,7 @@ Rules marked with ✅ are recommended and rules marked with 🔧 have fixers.
 | [`no-subclass`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-subclass.md) | Forbids subclassing RxJS classes. | | |
 | [`no-subject-unsubscribe`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-subject-unsubscribe.md) | Forbids calling the `unsubscribe` method of a subject instance. | ✅ | |
 | [`no-subject-value`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-subject-value.md) | Forbids accessing the `value` property of a `BehaviorSubject` instance. | | |
+| [`no-subscribe-callbacks`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-subscribe-callbacks.md) | Forbids the calling of `subscribe` with arguments. | | |
 | [`no-topromise`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-topromise.md) | Forbids the use of the `toPromise` method. | | |
 | [`no-unbound-methods`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-unbound-methods.md) | Forbids the passing of unbound methods. | ✅ | |
 | [`no-unsafe-catch`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-unsafe-catch.md) | Forbids unsafe `catchError` usage in effects and epics. | | |
