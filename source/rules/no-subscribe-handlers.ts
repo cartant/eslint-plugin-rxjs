@@ -11,19 +11,18 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      description:
-        "Forbids the calling of `subscribe` with arguments.",
+      description: "Forbids the passing of handlers to `subscribe`.",
       recommended: false,
     },
     fixable: undefined,
     hasSuggestions: false,
     messages: {
-      forbidden: "Calling subscribe with arguments is forbidden.",
+      forbidden: "Passing handlers to subscribe is forbidden.",
     },
     schema: [],
     type: "problem",
   },
-  name: "no-subscribe-callbacks",
+  name: "no-subscribe-handlers",
   create: (context) => {
     const { couldBeObservable, couldBeType } = getTypeServices(context);
 

@@ -1,6 +1,6 @@
-# Avoid separate callbacks (`prefer-observer`)
+# Avoid separate handlers (`prefer-observer`)
 
-This rule effects failures if `subscribe` - or `tap` - is called with separate callbacks instead of an observer.
+This rule effects failures if `subscribe` - or `tap` - is called with separate handlers instead of an observer.
 
 ## Rule details
 

@@ -21,14 +21,14 @@ const rule = ruleCreator({
   meta: {
     docs: {
       description:
-        "Forbids the passing separate callbacks to `subscribe` and `tap`.",
+        "Forbids the passing separate handlers to `subscribe` and `tap`.",
       recommended: false,
     },
     fixable: undefined,
     hasSuggestions: false,
     messages: {
       forbidden:
-        "Passing separate callbacks is forbidden; pass an observer instead.",
+        "Passing separate handlers is forbidden; pass an observer instead.",
     },
     schema: [
       {

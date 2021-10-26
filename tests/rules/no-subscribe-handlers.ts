@@ -5,10 +5,10 @@
 
 import { stripIndent } from "common-tags";
 import { fromFixture } from "eslint-etc";
-import rule = require("../../source/rules/no-subscribe-callbacks");
+import rule = require("../../source/rules/no-subscribe-handlers");
 import { ruleTester } from "../utils";
 
-ruleTester({ types: true }).run("no-subscribe-callbacks", rule, {
+ruleTester({ types: true }).run("no-subscribe-handlers", rule, {
   valid: [
     {
       code: stripIndent`
@@ -93,6 +93,16 @@ ruleTester({ types: true }).run("no-subscribe-callbacks", rule, {
         declare const subscribable: Subscribable<unknown>;
         subscribable.subscribe((value) => console.log(value));
                      ~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
+        import { Subscribable } from "rxjs";
+        declare const subscribable: Subscribable<unknown>;
+        subscribable.subscribe({
+                     ~~~~~~~~~ [forbidden]
+          next: (value) => console.log(value)
+        });
       `
     ),
   ],

@@ -1,6 +1,6 @@
-# Use type-safe error callbacks (`no-implicit-any-catch`)
+# Use type-safe error handlers (`no-implicit-any-catch`)
 
-This rule requires an explicit type annotation for error parameters in error callbacks. It's similar to the TypeScript [`no-implicit-any-catch`](https://github.com/typescript-eslint/typescript-eslint/blob/e01204931e460f5e6731abc443c88d666ca0b07a/packages/eslint-plugin/docs/rules/no-implicit-any-catch.md) rule, but is for observables - not `try`/`catch` statements.
+This rule requires an explicit type annotation for error parameters in error handlers. It's similar to the TypeScript [`no-implicit-any-catch`](https://github.com/typescript-eslint/typescript-eslint/blob/e01204931e460f5e6731abc443c88d666ca0b07a/packages/eslint-plugin/docs/rules/no-implicit-any-catch.md) rule, but is for observables - not `try`/`catch` statements.
 
 ## Rule details
 
