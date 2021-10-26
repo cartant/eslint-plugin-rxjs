@@ -1,3 +1,10 @@
+<a name="4.0.1"></a>
+## [4.0.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.0...v4.0.1) (2021-10-26)
+
+## Features
+
+* Add `no-subscribe-handlers` rule. ([ea36a6d](https://github.com/cartant/eslint-plugin-rxjs/commit/ea36a6d))
+
 <a name="4.0.0"></a>
 ## [4.0.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.7...v4.0.0) (2021-10-17)
 
