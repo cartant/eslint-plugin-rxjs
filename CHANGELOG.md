@@ -1,3 +1,10 @@
+<a name="4.0.2"></a>
+## [4.0.2](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.1...v4.0.2) (2021-11-08)
+
+## Fixes
+
+- Don't effect failures in the `throw-error` rule when `unknown` is thrown. See [this issue](https://github.com/cartant/eslint-plugin-etc/issues/39). ([784f463](https://github.com/cartant/eslint-plugin-etc/commit/784f463))
+
 <a name="4.0.1"></a>
 ## [4.0.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.0...v4.0.1) (2021-10-26)
 
