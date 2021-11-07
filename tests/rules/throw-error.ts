@@ -59,6 +59,22 @@ ruleTester({ types: true }).run("throw-error", rule, {
       }
     `,
     stripIndent`
+      // throwError unknown
+      import { throwError } from "rxjs";
+
+      const ob1 = throwError("Boom!" as unknown);
+    `,
+    stripIndent`
+      // throwError returned unknown
+      import { throwError } from "rxjs";
+
+      const ob1 = throwError(errorMessage());
+
+      function errorMessage(): unknown {
+        return "error";
+      }
+    `,
+    stripIndent`
       // throwError Error with factory
       import { throwError } from "rxjs";
 

@@ -5,7 +5,7 @@
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
 import { getParserServices, getTypeServices } from "eslint-etc";
-import { couldBeFunction, couldBeType, isAny } from "tsutils-etc";
+import { couldBeFunction, couldBeType, isAny, isUnknown } from "tsutils-etc";
 import * as ts from "typescript";
 import { ruleCreator } from "../utils";
 
@@ -38,7 +38,11 @@ const rule = ruleCreator({
         const body = (tsNode as ts.ArrowFunction).body;
         type = program.getTypeChecker().getTypeAtLocation(annotation ?? body);
       }
-      if (!isAny(type) && !couldBeType(type, /^(Error|DOMException)$/)) {
+      if (
+        !isAny(type) &&
+        !isUnknown(type) &&
+        !couldBeType(type, /^(Error|DOMException)$/)
+      ) {
         context.report({
           messageId: "forbidden",
           node,
