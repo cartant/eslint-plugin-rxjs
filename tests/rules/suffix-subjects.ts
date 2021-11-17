@@ -268,6 +268,25 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
       `,
       options: [{ variables: false }],
     },
+    {
+      code: stripIndent`
+        // BehaviorSubject with default suffix
+        import { BehaviorSubject } from "rxjs";
+
+        const subject = new BehaviorSubject<number>(42);
+        const someSubject = new BehaviorSubject<number>(54);
+      `,
+    },
+    {
+      code: stripIndent`
+        // MySubject with default suffix
+        import { Subject } from "rxjs";
+        class MySubject extends Subject {}
+
+        const subject = new MySubject<number>();
+        const mySubject = new MySubject<number>();
+      `,
+    },
   ],
   invalid: [
     fromFixture(
@@ -561,6 +580,25 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
           constructor(public some: Subject<any>) {}
                              ~~~~ [forbidden { "suffix": "Subject" }]
         }
+      `
+    ),
+    fromFixture(
+      stripIndent`
+        // BehaviorSubject without suffix
+        import { BehaviorSubject } from "rxjs";
+
+        const source = new BehaviorSubject<number>(42);
+              ~~~~~~ [forbidden { "suffix": "Subject" }]
+      `
+    ),
+    fromFixture(
+      stripIndent`
+        // MySubject without suffix
+        import { Subject } from "rxjs";
+        class MySubject<T> extends Subject<T> {}
+
+        const source = new MySubject<number>();
+              ~~~~~~ [forbidden { "suffix": "Subject" }]
       `
     ),
   ],
