@@ -3,15 +3,15 @@
 
 ## Fixes
 
-- Escape `RegExp` characters in the `suffix-subjects` rule's `suffix` option. See [this issue](https://github.com/cartant/eslint-plugin-etc/issues/88). ([a23a69c](https://github.com/cartant/eslint-plugin-etc/commit/a23a69c))
-- Don't effect failures for inner `first`-like operators in the `no-unsafe-first` rule. See [this issue](https://github.com/cartant/eslint-plugin-etc/issues/89). ([19806a4](https://github.com/cartant/eslint-plugin-etc/commit/19806a4))
+- Escape `RegExp` characters in the `suffix-subjects` rule's `suffix` option. See [this issue](https://github.com/cartant/eslint-plugin-rxjs/issues/88). ([a23a69c](https://github.com/cartant/eslint-plugin-rxjs/commit/a23a69c))
+- Don't effect failures for inner `first`-like operators in the `no-unsafe-first` rule. See [this issue](https://github.com/cartant/eslint-plugin-rxjs/issues/89). ([19806a4](https://github.com/cartant/eslint-plugin-rxjs/commit/19806a4))
 
 <a name="4.0.2"></a>
 ## [4.0.2](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.1...v4.0.2) (2021-11-08)
 
 ## Fixes
 
-- Don't effect failures in the `throw-error` rule when `unknown` is thrown. See [this issue](https://github.com/cartant/eslint-plugin-etc/issues/39). ([784f463](https://github.com/cartant/eslint-plugin-etc/commit/784f463))
+- Don't effect failures in the `throw-error` rule when `unknown` is thrown. See [this issue](https://github.com/cartant/eslint-plugin-etc/issues/39). ([784f463](https://github.com/cartant/eslint-plugin-rxjs/commit/784f463))
 
 <a name="4.0.1"></a>
 ## [4.0.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.0...v4.0.1) (2021-10-26)
