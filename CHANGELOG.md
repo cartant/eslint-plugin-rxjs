@@ -1,3 +1,11 @@
+<a name="4.0.3"></a>
+## [4.0.3](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.2...v4.0.3) (2021-11-19)
+
+## Fixes
+
+- Escape `RegExp` characters in the `suffix-subjects` rule's `suffix` option. See [this issue](https://github.com/cartant/eslint-plugin-etc/issues/88). ([a23a69c](https://github.com/cartant/eslint-plugin-etc/commit/a23a69c))
+- Don't effect failures for inner `first`-like operators in the `no-unsafe-first` rule. See [this issue](https://github.com/cartant/eslint-plugin-etc/issues/89). ([19806a4](https://github.com/cartant/eslint-plugin-etc/commit/19806a4))
+
 <a name="4.0.2"></a>
 ## [4.0.2](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.1...v4.0.2) (2021-11-08)
 
