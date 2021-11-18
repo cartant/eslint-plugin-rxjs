@@ -48,6 +48,7 @@ const rule = ruleCreator({
     const observableRegExp = new RegExp(observable);
 
     const { couldBeObservable } = getTypeServices(context);
+    const nodes: es.CallExpression[] = [];
 
     function checkNode(node: es.CallExpression) {
       if (!node.arguments || !couldBeObservable(node)) {
@@ -68,9 +69,25 @@ const rule = ruleCreator({
 
     return {
       [`CallExpression[callee.property.name='pipe'][callee.object.name=${observableRegExp}]`]:
-        checkNode,
+        (node: es.CallExpression) => {
+          if (nodes.push(node) === 1) {
+            checkNode(node);
+          }
+        },
+      [`CallExpression[callee.property.name='pipe'][callee.object.name=${observableRegExp}]:exit`]:
+        () => {
+          nodes.pop();
+        },
       [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]`]:
-        checkNode,
+        (node: es.CallExpression) => {
+          if (nodes.push(node) === 1) {
+            checkNode(node);
+          }
+        },
+      [`CallExpression[callee.property.name='pipe'][callee.object.property.name=${observableRegExp}]:exit`]:
+        () => {
+          nodes.pop();
+        },
     };
   },
 });

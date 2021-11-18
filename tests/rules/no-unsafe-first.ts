@@ -126,6 +126,23 @@ ruleTester({ types: true }).run("no-unsafe-first", rule, {
         );
       `,
     },
+    {
+      code: stripIndent`
+        // https://github.com/cartant/eslint-plugin-rxjs/issues/89
+        ${setup}
+        const safeEffect$ = actions$.pipe(
+          ofType("SAVING"),
+          mergeMap(({ entity }) =>
+            actions$.pipe(
+              ofType("ADDED", "MODIFIED"),
+              tap(() => {}),
+              first(),
+              tap(() => {}),
+            ),
+          ),
+        );
+      `,
+    },
   ],
   invalid: [
     fromFixture(
