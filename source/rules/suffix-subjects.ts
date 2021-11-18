@@ -11,7 +11,7 @@ import {
   getParserServices,
   getTypeServices,
 } from "eslint-etc";
-import { ruleCreator } from "../utils";
+import { escapeRegExp, ruleCreator } from "../utils";
 
 const defaultOptions: readonly {
   parameters?: boolean;
@@ -75,7 +75,10 @@ const rule = ruleCreator({
     }
 
     const { suffix = "Subject" } = config;
-    const suffixRegex = new RegExp(String.raw`${suffix}\$?$`, "i");
+    const suffixRegex = new RegExp(
+      String.raw`${escapeRegExp(suffix)}\$?$`,
+      "i"
+    );
 
     function checkNode(nameNode: es.Node, typeNode?: es.Node) {
       let tsNode = esTreeNodeToTSNodeMap.get(nameNode);

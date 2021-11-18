@@ -20,6 +20,11 @@ export function createRegExpForWords(
   return new RegExp(`(${joined})`, flags);
 }
 
+export function escapeRegExp(text: string): string {
+  // https://stackoverflow.com/a/3561711/6680611
+  return text.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+}
+
 export const ruleCreator = ESLintUtils.RuleCreator(
   (name) =>
     `https://github.com/cartant/eslint-plugin-rxjs/tree/main/docs/rules/${name}.md`
