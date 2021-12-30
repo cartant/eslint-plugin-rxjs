@@ -10,12 +10,14 @@ import {
   getTypeServices,
   isCallExpression,
   isIdentifier,
+  isMemberExpression,
 } from "eslint-etc";
 import { ruleCreator } from "../utils";
 
 const defaultOptions: readonly {
   alias?: string[];
   allow?: string[];
+  acceptObjectProperties?: boolean;
 }[] = [];
 
 const rule = ruleCreator({
@@ -83,7 +85,7 @@ const rule = ruleCreator({
     const { couldBeObservable } = getTypeServices(context);
 
     return {
-      [`CallExpression[callee.property.name='pipe'] > CallExpression[callee.name=${checkedOperatorsRegExp}]`]:
+      [`CallExpression[callee.property.name='pipe'] > CallExpression[callee.name=${checkedOperatorsRegExp}], CallExpression[callee.property.name=${checkedOperatorsRegExp}]`]:
         (node: es.CallExpression) => {
           const pipeCallExpression = getParent(node) as es.CallExpression;
           if (
@@ -100,11 +102,24 @@ const rule = ruleCreator({
               return state;
             }
 
-            if (!isCallExpression(arg) || !isIdentifier(arg.callee)) {
+            if (!isCallExpression(arg)) {
               return "disallowed";
             }
 
-            if (checkedOperatorsRegExp.test(arg.callee.name)) {
+            let operatorName: string
+            if (isIdentifier(arg.callee)) {
+              operatorName = arg.callee.name
+            } else if (
+              config.acceptObjectProperties
+              && isMemberExpression(arg.callee)
+              && isIdentifier(arg.callee.property)
+            ) {
+              operatorName = arg.callee.property.name;
+            } else {
+              return "disallowed";
+            }
+
+            if (checkedOperatorsRegExp.test(operatorName)) {
               if (state === "disallowed") {
                 context.report({
                   messageId: "forbidden",
@@ -114,7 +129,7 @@ const rule = ruleCreator({
               return "taken";
             }
 
-            if (!allow.includes(arg.callee.name)) {
+            if (!allow.includes(operatorName)) {
               return "disallowed";
             }
             return state;
