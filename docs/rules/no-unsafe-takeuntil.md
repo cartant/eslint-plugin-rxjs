@@ -24,7 +24,7 @@ const combined = source
 
 ## Options
 
-This rule accepts a single option which is an object with `alias` and `allow` properties. The `alias` property is an array of names of operators that should be treated similarly to `takeUntil` and the `allow` property is an array of names of operators that are safe to use after `takeUntil`.
+This rule accepts a single option which is an object with `alias`, `acceptObjectProperties` and `allow` properties. The `alias` property is an array of names of operators that should be treated similarly to `takeUntil`, the `acceptObjectProperties` property accepts operators as object properties or class methods (such as `operators.takeUntil` or `this.takeUntil`), and the `allow` property is an array of names of operators that are safe to use after `takeUntil`.
 
 By default, the `allow` property contains all of the built-in operators that are safe to use after `takeUntil`.
 
