@@ -170,6 +170,26 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
     },
     {
       code: stripIndent`
+        // before switchMap as an alias and a class member without acceptObjectProperties
+        import { of } from "rxjs";
+        import { switchMap, takeUntil } from "rxjs/operators";
+
+        declare const untilDestroyed: Function;
+
+        const a = of("a");
+        const b = of("b");
+        const c = of("d");
+
+        const d = a.pipe(this.untilDestroyed(), switchMap(_ => b)).subscribe();
+      `,
+      options: [
+        {
+          alias: ["untilDestroyed"],
+        },
+      ],
+    },
+    {
+      code: stripIndent`
         // https://github.com/cartant/eslint-plugin-rxjs/issues/79
         import { of } from "rxjs";
         import { repeatWhen, takeUntil } from "rxjs/operators";
@@ -284,6 +304,30 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
         options: [
           {
             alias: ["untilDestroyed"],
+          },
+        ],
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // before switchMap as an alias and a class member with acceptObjectProperties
+        import { of } from "rxjs";
+        import { switchMap, takeUntil } from "rxjs/operators";
+
+        declare const untilDestroyed: Function;
+
+        const a = of("a");
+        const b = of("b");
+        const c = of("d");
+
+        const d = a.pipe(this.untilDestroyed(), switchMap(_ => b)).subscribe();
+                         ~~~~~~~~~~~~~~~~~~~ [forbidden]
+      `,
+      {
+        options: [
+          {
+            alias: ["untilDestroyed"],
+            acceptObjectProperties: true,
           },
         ],
       }
