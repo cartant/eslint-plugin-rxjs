@@ -17,7 +17,6 @@ import { ruleCreator } from "../utils";
 const defaultOptions: readonly {
   alias?: string[];
   allow?: string[];
-  acceptObjectProperties?: boolean;
 }[] = [];
 
 const rule = ruleCreator({
@@ -109,11 +108,7 @@ const rule = ruleCreator({
             let operatorName: string
             if (isIdentifier(arg.callee)) {
               operatorName = arg.callee.name
-            } else if (
-              config.acceptObjectProperties
-              && isMemberExpression(arg.callee)
-              && isIdentifier(arg.callee.property)
-            ) {
+            } else if (isMemberExpression(arg.callee) && isIdentifier(arg.callee.property)) {
               operatorName = arg.callee.property.name;
             } else {
               return "disallowed";
