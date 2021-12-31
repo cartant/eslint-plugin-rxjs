@@ -1,3 +1,10 @@
+<a name="4.0.4"></a>
+## [4.0.4](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.3...v4.0.4) (2021-12-31)
+
+## Fixes
+
+- The `alias` option of the `no-unsafe-takeuntil` rule now supports method calls. See [this PR](https://github.com/cartant/eslint-plugin-rxjs/pull/90). ([4fe7423](https://github.com/cartant/eslint-plugin-rxjs/commit/4fe7423))
+
 <a name="4.0.3"></a>
 ## [4.0.3](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.2...v4.0.3) (2021-11-19)
 
