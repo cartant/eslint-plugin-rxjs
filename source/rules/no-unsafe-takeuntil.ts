@@ -83,53 +83,60 @@ const rule = ruleCreator({
 
     const { couldBeObservable } = getTypeServices(context);
 
-    return {
-      [`CallExpression[callee.property.name='pipe'] > CallExpression[callee.name=${checkedOperatorsRegExp}], CallExpression[callee.property.name=${checkedOperatorsRegExp}]`]:
-        (node: es.CallExpression) => {
-          const pipeCallExpression = getParent(node) as es.CallExpression;
-          if (
-            !pipeCallExpression.arguments ||
-            !couldBeObservable(pipeCallExpression)
-          ) {
-            return;
+    function checkNode(node: es.CallExpression) {
+      const pipeCallExpression = getParent(node) as es.CallExpression;
+      if (
+        !pipeCallExpression.arguments ||
+        !couldBeObservable(pipeCallExpression)
+      ) {
+        return;
+      }
+
+      type State = "allowed" | "disallowed" | "taken";
+
+      pipeCallExpression.arguments.reduceRight((state, arg) => {
+        if (state === "taken") {
+          return state;
+        }
+
+        if (!isCallExpression(arg)) {
+          return "disallowed";
+        }
+
+        let operatorName: string;
+        if (isIdentifier(arg.callee)) {
+          operatorName = arg.callee.name;
+        } else if (
+          isMemberExpression(arg.callee) &&
+          isIdentifier(arg.callee.property)
+        ) {
+          operatorName = arg.callee.property.name;
+        } else {
+          return "disallowed";
+        }
+
+        if (checkedOperatorsRegExp.test(operatorName)) {
+          if (state === "disallowed") {
+            context.report({
+              messageId: "forbidden",
+              node: arg.callee,
+            });
           }
+          return "taken";
+        }
 
-          type State = "allowed" | "disallowed" | "taken";
+        if (!allow.includes(operatorName)) {
+          return "disallowed";
+        }
+        return state;
+      }, "allowed" as State);
+    }
 
-          pipeCallExpression.arguments.reduceRight((state, arg) => {
-            if (state === "taken") {
-              return state;
-            }
-
-            if (!isCallExpression(arg)) {
-              return "disallowed";
-            }
-
-            let operatorName: string
-            if (isIdentifier(arg.callee)) {
-              operatorName = arg.callee.name
-            } else if (isMemberExpression(arg.callee) && isIdentifier(arg.callee.property)) {
-              operatorName = arg.callee.property.name;
-            } else {
-              return "disallowed";
-            }
-
-            if (checkedOperatorsRegExp.test(operatorName)) {
-              if (state === "disallowed") {
-                context.report({
-                  messageId: "forbidden",
-                  node: arg.callee,
-                });
-              }
-              return "taken";
-            }
-
-            if (!allow.includes(operatorName)) {
-              return "disallowed";
-            }
-            return state;
-          }, "allowed" as State);
-        },
+    return {
+      [`CallExpression[callee.property.name='pipe'] > CallExpression[callee.name=${checkedOperatorsRegExp}]`]:
+        checkNode,
+      [`CallExpression[callee.property.name='pipe'] > CallExpression[callee.property.name=${checkedOperatorsRegExp}]`]:
+        checkNode,
     };
   },
 });
