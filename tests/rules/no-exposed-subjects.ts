@@ -200,5 +200,22 @@ ruleTester({ types: true }).run("no-exposed-subjects", rule, {
         }
       `
     ),
+    fromFixture(
+      stripIndent`
+        // https://github.com/cartant/eslint-plugin-rxjs/issues/91
+        import { Subject } from "rxjs";
+
+        class AppComponent {
+          public foo$: Subject<unknown>;
+                 ~~~~ [forbidden { "subject": "foo$" }]
+          public bar$ = new Subject<unknown>();
+                 ~~~~ [forbidden { "subject": "bar$" }]
+          public getFoo(): Subject<unknown> {
+                 ~~~~~~ [forbidden { "subject": "getFoo" }]
+            return this.foo$;
+          }
+        }
+      `
+    ),
   ],
 });
