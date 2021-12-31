@@ -294,14 +294,14 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
         import { of } from "rxjs";
         import { switchMap, takeUntil } from "rxjs/operators";
 
-        declare const untilDestroyed: Function;
+        declare const obj: { untilDestroyed: Function };
 
         const a = of("a");
         const b = of("b");
         const c = of("d");
 
-        const d = a.pipe(this.untilDestroyed(), switchMap(_ => b)).subscribe();
-                         ~~~~~~~~~~~~~~~~~~~ [forbidden]
+        const d = a.pipe(obj.untilDestroyed(), switchMap(_ => b)).subscribe();
+                         ~~~~~~~~~~~~~~~~~~ [forbidden]
       `,
       {
         options: [
