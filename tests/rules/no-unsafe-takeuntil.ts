@@ -18,7 +18,7 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
 
         const a = of("a");
         const b = of("b");
-        const c = of("d");
+        const c = of("c");
 
         const d = a.pipe(switchMap(_ => b), takeUntil(c)).subscribe();
       `,
@@ -45,7 +45,7 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
 
         const a = of("a");
         const b = of("b");
-        const c = of("d");
+        const c = of("c");
 
         const d = a.pipe(switchMap(_ => b), pipe(takeUntil(d), switchMap(_ => b))).subscribe();
       `,
@@ -134,7 +134,7 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
 
         const a = of("a");
         const b = of("b");
-        const c = of("d");
+        const c = of("c");
 
         const d = a.pipe(switchMap(_ => b), untilDestroyed()).subscribe();
       `,
@@ -195,7 +195,7 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
 
         const a = of("a");
         const b = of("b");
-        const c = of("d");
+        const c = of("c");
 
         const d = a.pipe(takeUntil(c), switchMap(_ => b)).subscribe();
                          ~~~~~~~~~ [forbidden]
@@ -275,7 +275,7 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
 
         const a = of("a");
         const b = of("b");
-        const c = of("d");
+        const c = of("c");
 
         const d = a.pipe(untilDestroyed(), switchMap(_ => b)).subscribe();
                          ~~~~~~~~~~~~~~ [forbidden]
@@ -298,7 +298,7 @@ ruleTester({ types: true }).run("no-unsafe-takeuntil", rule, {
 
         const a = of("a");
         const b = of("b");
-        const c = of("d");
+        const c = of("c");
 
         const d = a.pipe(obj.untilDestroyed(), switchMap(_ => b)).subscribe();
                          ~~~~~~~~~~~~~~~~~~ [forbidden]
