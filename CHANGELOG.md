@@ -1,3 +1,10 @@
+<a name="5.0.0"></a>
+## [5.0.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.4...v5.0.0) (2022-01-06)
+
+## Breaking Changes
+
+- The `prefer-observer` rule now has a fixer. ([d40b0a0](https://github.com/cartant/eslint-plugin-rxjs/commit/d40b0a0))
+
 <a name="4.0.4"></a>
 ## [4.0.4](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.3...v4.0.4) (2021-12-31)
 
