@@ -111,6 +111,6 @@ Rules marked with ✅ are recommended and rules marked with 🔧 have fixers.
 | [`no-unsafe-subject-next`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-unsafe-subject-next.md) | Forbids unsafe optional `next` calls. | ✅ | |
 | [`no-unsafe-switchmap`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-unsafe-switchmap.md) | Forbids unsafe `switchMap` usage in effects and epics. | | |
 | [`no-unsafe-takeuntil`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/no-unsafe-takeuntil.md) | Forbids the application of operators after `takeUntil`. | ✅ | |
-| [`prefer-observer`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/prefer-observer.md) | Forbids the passing separate handlers to `subscribe` and `tap`. | | |
+| [`prefer-observer`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/prefer-observer.md) | Forbids the passing separate handlers to `subscribe` and `tap`. | | 🔧 |
 | [`suffix-subjects`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/suffix-subjects.md) | Enforces the use of a suffix in subject identifiers. | | |
 | [`throw-error`](https://github.com/cartant/eslint-plugin-rxjs/blob/main/docs/rules/throw-error.md) | Enforces the passing of `Error` values to error notifications. | | |
