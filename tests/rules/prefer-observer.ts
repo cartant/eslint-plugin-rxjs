@@ -270,7 +270,54 @@ ruleTester({ types: true }).run("prefer-observer", rule, {
           undefined,
           () => console.log("complete")
         )).subscribe();
-      `
+      `,
+      {
+        output: stripIndent`
+        // default
+        import { of } from "rxjs";
+        import { tap } from "rxjs/operators";
+
+        const source = of(42);
+
+        source.subscribe(
+          { next: value => console.log(value), error: error => console.log(error) }
+        );
+        source.subscribe(
+          { next: value => console.log(value), error: error => console.log(error), complete: () => console.log("complete") }
+        );
+        source.subscribe(
+          { next: value => console.log(value), complete: () => console.log("complete") }
+        );
+        source.subscribe(
+          { error: error => console.log(error) }
+        );
+        source.subscribe(
+          { error: error => console.log(error), complete: () => console.log("complete") }
+        );
+        source.subscribe(
+          { complete: () => console.log("complete") }
+        );
+
+        source.pipe(tap(
+          { next: value => console.log(value), error: error => console.log(error) }
+        )).subscribe();
+        source.pipe(tap(
+          { next: value => console.log(value), error: error => console.log(error), complete: () => console.log("complete") }
+        )).subscribe();
+        source.pipe(tap(
+          { next: value => console.log(value), complete: () => console.log("complete") }
+        )).subscribe();
+        source.pipe(tap(
+          { error: error => console.log(error) }
+        )).subscribe();
+        source.pipe(tap(
+          { error: error => console.log(error), complete: () => console.log("complete") }
+        )).subscribe();
+        source.pipe(tap(
+          { complete: () => console.log("complete") }
+        )).subscribe();
+      `,
+      }
     ),
     fromFixture(
       stripIndent`
@@ -290,7 +337,24 @@ ruleTester({ types: true }).run("prefer-observer", rule, {
           value => console.log(value)
         )).subscribe();
       `,
-      { options: [{ allowNext: false }] }
+      {
+        options: [{ allowNext: false }],
+        output: stripIndent`
+        // disallow-next
+        import { of } from "rxjs";
+        import { tap } from "rxjs/operators";
+
+        const source = of(42);
+
+        source.subscribe(
+          { next: value => console.log(value) }
+        );
+
+        source.pipe(tap(
+          { next: value => console.log(value) }
+        )).subscribe();
+      `,
+      }
     ),
     fromFixture(
       stripIndent`
@@ -318,7 +382,28 @@ ruleTester({ types: true }).run("prefer-observer", rule, {
         source.pipe(tap(nextNonArrow));
                     ~~~ [forbidden]
       `,
-      { options: [{ allowNext: false }] }
+      {
+        options: [{ allowNext: false }],
+        output: stripIndent`
+        // named
+        import { of } from "rxjs";
+        import { tap } from "rxjs/operators";
+
+        const nextArrow = (value: number) => { console.log(value); };
+        function nextNamed(value: number): void { console.log(value); }
+        const nextNonArrow = nextNamed;
+
+        const source = of(42);
+
+        source.subscribe({ next: nextArrow });
+        source.subscribe({ next: nextNamed });
+        source.subscribe({ next: nextNonArrow });
+
+        source.pipe(tap({ next: nextArrow }));
+        source.pipe(tap({ next: nextNamed }));
+        source.pipe(tap({ next: nextNonArrow }));
+      `,
+      }
     ),
     fromFixture(
       stripIndent`
@@ -397,7 +482,398 @@ ruleTester({ types: true }).run("prefer-observer", rule, {
           undefined,
           function () { console.log("complete"); }
         )).subscribe();
-      `
+      `,
+      {
+        output: stripIndent`
+          // non-arrow functions
+          import { of } from "rxjs";
+          import { tap } from "rxjs/operators";
+
+          const source = of(42);
+
+          source.subscribe(
+            { next: function (value) { console.log(value); }, error: function (error) { console.log(error); } }
+          );
+          source.subscribe(
+            { next: function (value) { console.log(value); }, error: function (error) { console.log(error); }, complete: function () { console.log("complete"); } }
+          );
+          source.subscribe(
+            { next: function (value) { console.log(value); }, complete: function () { console.log("complete"); } }
+          );
+          source.subscribe(
+            { error: function (error) { console.log(error); } }
+          );
+          source.subscribe(
+            { error: function (error) { console.log(error); }, complete: function () { console.log("complete"); } }
+          );
+          source.subscribe(
+            { complete: function () { console.log("complete"); } }
+          );
+
+          source.pipe(tap(
+            { next: function (value) { console.log(value); }, error: function (error) { console.log(error); } }
+          )).subscribe();
+          source.pipe(tap(
+            { next: function (value) { console.log(value); }, error: function (error) { console.log(error); }, complete: function () { console.log("complete"); } }
+          )).subscribe();
+          source.pipe(tap(
+            { next: function (value) { console.log(value); }, complete: function () { console.log("complete"); } }
+          )).subscribe();
+          source.pipe(tap(
+            { error: function (error) { console.log(error); } }
+          )).subscribe();
+          source.pipe(tap(
+            { error: function (error) { console.log(error); }, complete: function () { console.log("complete"); } }
+          )).subscribe();
+          source.pipe(tap(
+            { complete: function () { console.log("complete"); } }
+          )).subscribe();
+        `,
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        import { of } from "rxjs";
+        const fn = () => {};
+
+        of(42).subscribe(fn, fn, fn);
+               ~~~~~~~~~ [forbidden suggest 0]
+      `,
+      {
+        output: stripIndent`
+          import { of } from "rxjs";
+          const fn = () => {};
+
+          of(42).subscribe({ next: fn, error: fn, complete: fn });
+        `,
+        suggestions: [
+          {
+            messageId: "forbidden",
+            output: stripIndent`
+                import { of } from "rxjs";
+                const fn = () => {};
+                
+                of(42).subscribe({ next: fn, error: fn, complete: fn });
+              `,
+          },
+        ],
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        import { of } from "rxjs";
+        const fn = () => {};
+
+        of(42).subscribe(fn, null, fn);
+               ~~~~~~~~~ [forbidden suggest 0]
+      `,
+      {
+        output: stripIndent`
+          import { of } from "rxjs";
+          const fn = () => {};
+          
+          of(42).subscribe({ next: fn, complete: fn });
+        `,
+        suggestions: [
+          {
+            messageId: "forbidden",
+            output: stripIndent`
+                import { of } from "rxjs";
+                const fn = () => {};
+                
+                of(42).subscribe({ next: fn, complete: fn });
+              `,
+          },
+        ],
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        import { of } from "rxjs";
+        const fn = () => {};
+
+        of(42).subscribe(null, undefined, fn);
+               ~~~~~~~~~ [forbidden suggest 0]
+      `,
+      {
+        output: stripIndent`
+          import { of } from "rxjs";
+          const fn = () => {};
+          
+          of(42).subscribe({ complete: fn });
+        `,
+        suggestions: [
+          {
+            messageId: "forbidden",
+            output: stripIndent`
+                import { of } from "rxjs";
+                const fn = () => {};
+                
+                of(42).subscribe({ complete: fn });
+              `,
+          },
+        ],
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        import { of } from "rxjs";
+        const fn = () => {};
+
+        of(42).subscribe(undefined, fn);
+               ~~~~~~~~~ [forbidden suggest 0]
+      `,
+      {
+        output: stripIndent`
+          import { of } from "rxjs";
+          const fn = () => {};
+          
+          of(42).subscribe({ error: fn });
+        `,
+        suggestions: [
+          {
+            messageId: "forbidden",
+            output: stripIndent`
+                import { of } from "rxjs";
+                const fn = () => {};
+                
+                of(42).subscribe({ error: fn });
+              `,
+          },
+        ],
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        import { of } from "rxjs";
+        const fn = () => {};
+
+        of(42).subscribe(undefined, fn, null);
+               ~~~~~~~~~ [forbidden suggest 0]
+      `,
+      {
+        output: stripIndent`
+          import { of } from "rxjs";
+          const fn = () => {};
+          
+          of(42).subscribe({ error: fn });
+        `,
+        suggestions: [
+          {
+            messageId: "forbidden",
+            output: stripIndent`
+                import { of } from "rxjs";
+                const fn = () => {};
+                
+                of(42).subscribe({ error: fn });
+              `,
+          },
+        ],
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        import { of } from "rxjs";
+        const fn = () => {};
+
+        // super wrong
+        of(42).subscribe(undefined, fn, fn, fn, fn, fn, fn);
+               ~~~~~~~~~ [forbidden suggest 0]
+      `,
+      {
+        output: stripIndent`
+          import { of } from "rxjs";
+          const fn = () => {};
+          
+          // super wrong
+          of(42).subscribe({ error: fn, complete: fn });
+        `,
+        suggestions: [
+          {
+            messageId: "forbidden",
+            output: stripIndent`
+                import { of } from "rxjs";
+                const fn = () => {};
+                
+                // super wrong
+                of(42).subscribe({ error: fn, complete: fn });
+              `,
+          },
+        ],
+      }
+    ),
+
+    // tap
+    fromFixture(
+      stripIndent`
+        import { of, tap } from "rxjs";
+        const fn = () => {};
+
+        of(42).pipe(tap(fn, fn, fn));
+                    ~~~ [forbidden suggest 0]
+      `,
+      {
+        output: stripIndent`
+          import { of, tap } from "rxjs";
+          const fn = () => {};
+          
+          of(42).pipe(tap({ next: fn, error: fn, complete: fn }));
+        `,
+        suggestions: [
+          {
+            messageId: "forbidden",
+            output: stripIndent`
+                import { of, tap } from "rxjs";
+                const fn = () => {};
+                
+                of(42).pipe(tap({ next: fn, error: fn, complete: fn }));
+              `,
+          },
+        ],
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        import { of, tap } from "rxjs";
+        const fn = () => {};
+
+        of(42).pipe(tap(fn, null, fn));
+                    ~~~ [forbidden suggest 0]
+      `,
+      {
+        output: stripIndent`
+          import { of, tap } from "rxjs";
+          const fn = () => {};
+          
+          of(42).pipe(tap({ next: fn, complete: fn }));
+        `,
+        suggestions: [
+          {
+            messageId: "forbidden",
+            output: stripIndent`
+                import { of, tap } from "rxjs";
+                const fn = () => {};
+                
+                of(42).pipe(tap({ next: fn, complete: fn }));
+              `,
+          },
+        ],
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        import { of, tap } from "rxjs";
+        const fn = () => {};
+
+        of(42).pipe(tap(null, undefined, fn));
+                    ~~~ [forbidden suggest 0]
+      `,
+      {
+        output: stripIndent`
+          import { of, tap } from "rxjs";
+          const fn = () => {};
+          
+          of(42).pipe(tap({ complete: fn }));
+        `,
+        suggestions: [
+          {
+            messageId: "forbidden",
+            output: stripIndent`
+                import { of, tap } from "rxjs";
+                const fn = () => {};
+                
+                of(42).pipe(tap({ complete: fn }));
+              `,
+          },
+        ],
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        import { of, tap } from "rxjs";
+        const fn = () => {};
+
+        of(42).pipe(tap(undefined, fn));
+                    ~~~ [forbidden suggest 0]
+      `,
+      {
+        output: stripIndent`
+          import { of, tap } from "rxjs";
+          const fn = () => {};
+          
+          of(42).pipe(tap({ error: fn }));
+        `,
+        suggestions: [
+          {
+            messageId: "forbidden",
+            output: stripIndent`
+                import { of, tap } from "rxjs";
+                const fn = () => {};
+                
+                of(42).pipe(tap({ error: fn }));
+              `,
+          },
+        ],
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        import { of, tap } from "rxjs";
+        const fn = () => {};
+
+        of(42).pipe(tap(undefined, fn, null));
+                    ~~~ [forbidden suggest 0]
+      `,
+      {
+        output: stripIndent`
+          import { of, tap } from "rxjs";
+          const fn = () => {};
+          
+          of(42).pipe(tap({ error: fn }));
+        `,
+        suggestions: [
+          {
+            messageId: "forbidden",
+            output: stripIndent`
+                import { of, tap } from "rxjs";
+                const fn = () => {};
+                
+                of(42).pipe(tap({ error: fn }));
+              `,
+          },
+        ],
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        import { of, tap } from "rxjs";
+        const fn = () => {};
+
+        // super wrong
+        of(42).pipe(tap(undefined, fn, fn, fn, fn, fn, fn));
+                    ~~~ [forbidden suggest 0]
+      `,
+      {
+        output: stripIndent`
+          import { of, tap } from "rxjs";
+          const fn = () => {};
+          
+          // super wrong
+          of(42).pipe(tap({ error: fn, complete: fn }));
+        `,
+        suggestions: [
+          {
+            messageId: "forbidden",
+            output: stripIndent`
+                import { of, tap } from "rxjs";
+                const fn = () => {};
+                
+                // super wrong
+                of(42).pipe(tap({ error: fn, complete: fn }));
+              `,
+          },
+        ],
+      }
     ),
   ],
 });
