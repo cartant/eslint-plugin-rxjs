@@ -1,3 +1,10 @@
+<a name="5.0.1"></a>
+## [5.0.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v5.0.0...v5.0.1) (2022-01-12)
+
+## Fixes
+
+- The `no-ignored-takewhile-value` rule is now aware of array and object destructuring patterns. ([f0f0cf3](https://github.com/cartant/eslint-plugin-rxjs/commit/f0f0cf3))
+
 <a name="5.0.0"></a>
 ## [5.0.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.4...v5.0.0) (2022-01-06)
 
