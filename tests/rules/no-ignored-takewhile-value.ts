@@ -62,6 +62,19 @@ ruleTester({ types: true }).run("no-ignored-takewhile-value", rule, {
         ([_, width]) => w.innerWidth >= width,
       )
     `,
+    stripIndent`
+      // https://github.com/cartant/eslint-plugin-rxjs/issues/93
+      import { Observable } from "rxjs";
+      import { takeWhile } from "rxjs/operators";
+
+      class Something {
+        constructor(private _source: Observable<{ name: string }>) {
+          _source.pipe(
+            takeWhile(({ name }) => { return name; })
+          ).subscribe();
+        }
+      };
+    `,
   ],
   invalid: [
     fromFixture(
