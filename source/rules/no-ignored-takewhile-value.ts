@@ -4,7 +4,12 @@
  */
 
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { isIdentifier, isImport } from "eslint-etc";
+import {
+  isArrayPattern,
+  isIdentifier,
+  isImport,
+  isObjectPattern,
+} from "eslint-etc";
 import { ruleCreator } from "../utils";
 
 const rule = ruleCreator({
@@ -33,11 +38,17 @@ const rule = ruleCreator({
       }
       let ignored = true;
       const [param] = expression.params;
-      if (param && isIdentifier(param)) {
-        const variable = scope.variables.find(
-          ({ name }) => name === param.name
-        );
-        if (variable && variable.references.length > 0) {
+      if (param) {
+        if (isIdentifier(param)) {
+          const variable = scope.variables.find(
+            ({ name }) => name === param.name
+          );
+          if (variable && variable.references.length > 0) {
+            ignored = false;
+          }
+        } else if (isArrayPattern(param)) {
+          ignored = false;
+        } else if (isObjectPattern(param)) {
           ignored = false;
         }
       }

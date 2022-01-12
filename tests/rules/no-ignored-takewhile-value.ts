@@ -70,7 +70,20 @@ ruleTester({ types: true }).run("no-ignored-takewhile-value", rule, {
       class Something {
         constructor(private _source: Observable<{ name: string }>) {
           _source.pipe(
-            takeWhile(({ name }) => { return name; })
+            takeWhile(({ name }) => name)
+          ).subscribe();
+        }
+      };
+    `,
+    stripIndent`
+      // Array destructuring
+      import { Observable } from "rxjs";
+      import { takeWhile } from "rxjs/operators";
+
+      class Something {
+        constructor(private _source: Observable<string[]>) {
+          _source.pipe(
+            takeWhile(([name]) => name)
           ).subscribe();
         }
       };
