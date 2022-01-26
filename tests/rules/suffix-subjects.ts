@@ -606,6 +606,19 @@ ruleTester({ types: true }).run("suffix-subjects", rule, {
     ),
     fromFixture(
       stripIndent`
+        // Property with $$ suffix
+        // https://github.com/cartant/eslint-plugin-rxjs/issues/88#issuecomment-1020645186
+        import { Subject } from "rxjs";
+
+        class SomeClass {
+          public someProperty$: Subject<unknown>;
+                 ~~~~~~~~~~~~~ [forbidden { "suffix": "$$" }]
+        }
+      `,
+      { options: [{ suffix: "$$" }] }
+    ),
+    fromFixture(
+      stripIndent`
         // MySubject without suffix
         import { Subject } from "rxjs";
         class MySubject<T> extends Subject<T> {}
