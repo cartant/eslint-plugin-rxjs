@@ -1,3 +1,10 @@
+<a name="5.0.2"></a>
+## [5.0.2](https://github.com/cartant/eslint-plugin-rxjs/compare/v5.0.1...v5.0.2) (2022-01-26)
+
+## Fixes
+
+- Don't ignore `$`-suffixed properties in the `suffix-subjects` rule. ([d4a94c0](https://github.com/cartant/eslint-plugin-rxjs/commit/d4a94c0))
+
 <a name="5.0.1"></a>
 ## [5.0.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v5.0.0...v5.0.1) (2022-01-12)
 
