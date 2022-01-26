@@ -129,9 +129,7 @@ const rule = ruleCreator({
           }
         }
       },
-      "PropertyDefinition[key.name=/[^$]$/][computed=false]": (
-        node: es.PropertyDefinition
-      ) => {
+      "PropertyDefinition[computed=false]": (node: es.PropertyDefinition) => {
         const anyNode = node as any;
         if (validate.properties) {
           checkNode(anyNode.key);
@@ -219,9 +217,7 @@ const rule = ruleCreator({
           checkNode(node);
         }
       },
-      "TSPropertySignature[key.name=/[^$]$/][computed=false]": (
-        node: es.Node
-      ) => {
+      "TSPropertySignature[computed=false]": (node: es.Node) => {
         const anyNode = node as any;
         if (validate.properties) {
           checkNode(anyNode.key);
