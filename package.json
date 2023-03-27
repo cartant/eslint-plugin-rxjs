@@ -54,7 +54,7 @@
   "optionalDependencies": {},
   "peerDependencies": {
     "eslint": "^8.0.0",
-    "typescript": "^4.0.0"
+    "typescript": ">=4.0.0"
   },
   "private": false,
   "publishConfig": {
