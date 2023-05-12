@@ -129,6 +129,16 @@ ruleTester({ types: false }).run("no-ignored-replay-buffer", rule, {
     ),
     fromFixture(
       stripIndent`
+        // namespace shareReplay ignored
+        import * as Rx from "rxjs";
+        import { shareReplay } from "rxjs/operators";
+
+        const a = Rx.of(42).pipe(shareReplay({ refCount: 1 }));
+                                 ~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
         // namespace class ignored
         import * as Rx from "rxjs";
 
