@@ -3,7 +3,10 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import {
+  AST_NODE_TYPES,
+  TSESTree as es,
+} from "@typescript-eslint/experimental-utils";
 import { getParent } from "eslint-etc";
 import { ruleCreator } from "../utils";
 
@@ -56,6 +59,24 @@ const rule = ruleCreator({
       ) => {
         const callExpression = getParent(node) as es.CallExpression;
         checkNode(node, callExpression);
+
+        const shareReplayConfig = callExpression.arguments[0];
+
+        if (shareReplayConfig?.type === AST_NODE_TYPES.ObjectExpression) {
+          const bufferSizeProp = shareReplayConfig.properties.find(
+            (p) =>
+              p.type === AST_NODE_TYPES.Property &&
+              p.key.type === AST_NODE_TYPES.Identifier &&
+              p.key.name === "bufferSize"
+          );
+
+          if (!bufferSizeProp) {
+            context.report({
+              messageId: "forbidden",
+              node,
+            });
+          }
+        }
       },
     };
   },
