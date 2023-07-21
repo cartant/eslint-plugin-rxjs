@@ -21,7 +21,7 @@ import { of, timer } from "rxjs";
 import { mapTo, mergeMap } from "rxjs/operators";
 
 of(42, 54).pipe(
-  mergeMap((value) => timer(1e3).pipe(mapTo(value)))
+  mergeMap((value) => timer(1e3).pipe(map(() => value)))
 ).subscribe((value) => console.log(value));
 ```
 
