@@ -1,6 +1,6 @@
 # Avoid public and protected subjects (`no-exposed-subjects`)
 
-This rule prevents the public or protected subjects. Developers should instead expose observables via the subjects' `toObservable` method.
+This rule prevents the public or protected subjects. Developers should instead expose observables via the subjects' `asObservable` method.
 
 ## Rule details
 
@@ -20,7 +20,7 @@ import { Subject } from "rxjs";
 class Answers {
   private _answers: Subject<string>;
   get answers() {
-    return this._answers.toObservable();
+    return this._answers.asObservable();
   }
 }
 ```
