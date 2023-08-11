@@ -13,7 +13,6 @@ ruleTester({ types: false }).run("no-compat", rule, {
     `import { Observable } from "rxjs";`,
     `import { ajax } from "rxjs/ajax";`,
     `import { fromFetch } from "rxjs/fetch";`,
-    `import { concatMap } from "rxjs/operators";`,
     `import { TestScheduler } from "rxjs/testing";`,
     `import { webSocket } from "rxjs/webSocket";`,
     `import * as prefixedPackage from "rxjs-prefixed-package";`,
@@ -47,6 +46,12 @@ ruleTester({ types: false }).run("no-compat", rule, {
       stripIndent`
         import { merge } from "rxjs/operator/merge";
                               ~~~~~~~~~~~~~~~~~~~~~ [forbidden]
+      `
+    ),
+    fromFixture(
+      stripIndent`
+        import { merge } from "rxjs/operators";
+                              ~~~~~~~~~~~~~~~~ [forbidden]
       `
     ),
     fromFixture(
