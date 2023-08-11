@@ -25,7 +25,7 @@ const rule = ruleCreator({
   name: "no-compat",
   create: (context) => {
     return {
-      [String.raw`ImportDeclaration Literal[value=/^rxjs\u002f/]:not(Literal[value=/^rxjs\u002f(ajax|fetch|operators|testing|webSocket)/])`]:
+      [String.raw`ImportDeclaration Literal[value=/^rxjs\u002f/]:not(Literal[value=/^rxjs\u002f(ajax|fetch|testing|webSocket)/])`]:
         (node: es.Literal) => {
           context.report({
             messageId: "forbidden",
