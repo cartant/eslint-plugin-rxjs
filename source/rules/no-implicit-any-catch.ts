@@ -10,7 +10,6 @@ import {
 } from "@typescript-eslint/experimental-utils";
 import {
   getTypeServices,
-  hasTypeAnnotation,
   isArrowFunctionExpression,
   isFunctionExpression,
   isIdentifier,
@@ -87,7 +86,7 @@ const rule = ruleCreator({
         if (!param) {
           return;
         }
-        if (hasTypeAnnotation(param)) {
+        if (param.typeAnnotation) {
           const { typeAnnotation } = param;
           const {
             typeAnnotation: { type },
