@@ -1,4 +1,8 @@
-# Avoid unnecessary explicit type arguments (`no-explicit-generics`)
+# Disallow unnecessary explicit generic type arguments (`rxjs-x/no-explicit-generics`)
+
+💼 This rule is enabled in the 🔒 `strict` config.
+
+<!-- end auto-generated rule header -->
 
 This rule prevents the use of explicit type arguments when the type arguments can be inferred.
 
@@ -17,7 +21,3 @@ Examples of **correct** code for this rule:
 import { BehaviorSubject } from "rxjs";
 const subject = new BehaviorSubject(42);
 ```
-
-## Options
-
-This rule has no options.

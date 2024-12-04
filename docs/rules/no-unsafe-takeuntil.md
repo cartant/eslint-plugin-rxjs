@@ -1,4 +1,10 @@
-# Avoid `takeUntil` subscription leaks (`no-unsafe-takeuntil`)
+# Disallow applying operators after `takeUntil` (`rxjs-x/no-unsafe-takeuntil`)
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, 🔒 `strict`.
+
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures whenever `takeUntil` is used in observable compositions that can leak subscriptions.
 
@@ -24,13 +30,22 @@ const combined = source
 
 ## Options
 
+<!-- begin auto-generated rule options list -->
+
+| Name    | Description                                                                 | Type     | Default                                                                                                                                                                                                                                                    |
+| :------ | :-------------------------------------------------------------------------- | :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `alias` | An array of operator names that should be treated similarly to `takeUntil`. | String[] |                                                                                                                                                                                                                                                            |
+| `allow` | An array of operator names that are allowed to follow `takeUntil`.          | String[] | [`count`, `defaultIfEmpty`, `endWith`, `every`, `finalize`, `finally`, `isEmpty`, `last`, `max`, `min`, `publish`, `publishBehavior`, `publishLast`, `publishReplay`, `reduce`, `share`, `shareReplay`, `skipLast`, `takeLast`, `throwIfEmpty`, `toArray`] |
+
+<!-- end auto-generated rule options list -->
+
 This rule accepts a single option which is an object with `alias` and `allow` properties. The `alias` property is an array of names of operators that should be treated similarly to `takeUntil` and the `allow` property is an array of names of operators that are safe to use after `takeUntil`.
 
 By default, the `allow` property contains all of the built-in operators that are safe to use after `takeUntil`.
 
 ```json
 {
-    "rxjs/no-unsafe-takeuntil": [
+    "rxjs-x/no-unsafe-takeuntil": [
         "error",
         {
             "alias": ["untilDestroyed"]
@@ -43,4 +58,4 @@ The properties in the options object are themselves optional; they do not all ha
 
 ## Further reading
 
--   [Avoiding takeUntil leaks](https://ncjamieson.com/avoiding-takeuntil-leaks/)
+- [Avoiding takeUntil leaks](https://ncjamieson.com/avoiding-takeuntil-leaks/)

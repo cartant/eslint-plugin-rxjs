@@ -1,0 +1,57 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request: {}
+  workflow_call: {}
+
+concurrency:
+  group: '${{ github.workflow }} - ${{ github.head_ref || github.ref }}'
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+
+  check:
+    strategy:
+      matrix:
+        node-version: [18, 20]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Setup LCOV
+        uses: hrishikesh-kadam/setup-lcov@v1
+      - name: Setup Yarn
+        run: corepack enable
+
+      - name: Install Packages
+        run: yarn install
+
+      - name: Type Check
+        run: yarn typecheck
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Test Coverage
+        run: yarn coverage
+
+      - name: Report Coverage
+        if: ${{ matrix.node-version == 20 && github.event_name == 'pull_request' }}
+        uses: zgosalvez/github-actions-report-lcov@v4
+        with:
+          coverage-files: coverage/lcov.info
+          minimum-coverage: 90
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          update-comment: true

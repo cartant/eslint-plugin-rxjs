@@ -1,4 +1,8 @@
-# Use returned subscriptions (`no-ignored-subscription`)
+# Disallow ignoring the subscription returned by `subscribe` (`rxjs-x/no-ignored-subscription`)
+
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 The effects failures if an subscription returned by call to `subscribe` is neither assigned to a variable or property or passed to a function.
 
@@ -27,7 +31,3 @@ const numbers = new Observable<number>(subscriber => {
   interval(1e3).subscribe(subscriber);
 });
 ```
-
-## Options
-
-This rule has no options.

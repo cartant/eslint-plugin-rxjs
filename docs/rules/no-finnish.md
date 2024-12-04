@@ -1,4 +1,8 @@
-# Avoid Finnish notation (`no-finnish`)
+# Disallow Finnish notation (`rxjs-x/no-finnish`)
+
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule prevents the use of Finnish notation.
 
@@ -15,10 +19,6 @@ Examples of **correct** code for this rule:
 ```ts
 const answers = of(42, 54);
 ```
-
-## Options
-
-This rule has no options.
 
 ## Further reading
 

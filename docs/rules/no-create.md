@@ -1,4 +1,10 @@
-# Avoid the static `create` function (`no-create`)
+# Disallow the static `Observable.create` function (`rxjs-x/no-create`)
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, 🔒 `strict`.
+
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule prevents the use of the static `create` function in `Observable`. Developers should use `new` and the constructor instead.
 
@@ -23,7 +29,3 @@ const answers = new Observable<number>(subscriber => {
   subscriber.complete();
 });
 ```
-
-## Options
-
-This rule has no options.

@@ -1,4 +1,6 @@
-# Avoid banned observable creators (`ban-observables`)
+# Disallow banned observable creators (`rxjs-x/ban-observables`)
+
+<!-- end auto-generated rule header -->
 
 This rule can be configured so that developers can ban any observable creators they want to avoid in their project.
 
@@ -10,7 +12,7 @@ The following configuration bans `partition` and `onErrorResumeNext`:
 
 ```json
 {
-  "rxjs/ban-observables": [
+  "rxjs-x/ban-observables": [
     "error",
     {
       "partition": true,

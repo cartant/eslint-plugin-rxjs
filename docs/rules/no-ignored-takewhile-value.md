@@ -1,4 +1,8 @@
-# Avoid unused `takeWhile` values (`no-ignored-takewhile-value`)
+# Disallow ignoring the value within `takeWhile` (`rxjs-x/no-ignored-takewhile-value`)
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, 🔒 `strict`.
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures if the value received by a `takeWhile` callback is not used in an expression.
 
@@ -20,7 +24,3 @@ import { takeWhile } from "rxjs/operators";
 
 const whilst = source.pipe(takeWhile(value => value));
 ```
-
-## Options
-
-This rule has no options.

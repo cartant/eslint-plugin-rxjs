@@ -1,8 +1,22 @@
-# Avoid `switchMap` bugs in effects and epics (`no-unsafe-switchmap`)
+# Disallow unsafe `switchMap` usage in effects and epics (`rxjs-x/no-unsafe-switchmap`)
+
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures if `switchMap` is used in effects or epics that perform actions other than reads. For a detailed explanation, see the blog post linked below.
 
 ## Options
+
+<!-- begin auto-generated rule options list -->
+
+| Name         | Description                                                                                  | Type   | Default                  |
+| :----------- | :------------------------------------------------------------------------------------------- | :----- | :----------------------- |
+| `allow`      | Action types that are allowed to be used with switchMap. Mutually exclusive with `disallow`. |        |                          |
+| `disallow`   | Action types that are disallowed to be used with switchMap. Mutually exclusive with `allow`. |        |                          |
+| `observable` | A RegExp that matches an effect or epic's actions observable.                                | String | `[Aa]ction(s\|s\$\|\$)$` |
+
+<!-- end auto-generated rule options list -->
 
 This rule accepts a single option which is an object with `allow`, `disallow` and `observable` properties.
 
@@ -12,7 +26,7 @@ The `allow` or `disallow` properties are mutually exclusive. Whether or not `swi
 
 ```json
 {
-  "rxjs/no-unsafe-switchmap": [
+  "rxjs-x/no-unsafe-switchmap": [
     "error",
     {
       "disallow": [

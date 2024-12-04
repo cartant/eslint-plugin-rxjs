@@ -1,4 +1,8 @@
-# Avoid cyclic actions in effects and epics (`no-cyclic-action`)
+# Disallow cyclic actions in effects and epics (`rxjs-x/no-cyclic-action`)
+
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures for effects and epics that emit actions that would pass their `ofType` filter. Such actions are cyclic and, upon emission, immediately re-trigger the effect or epic.
 
@@ -22,7 +26,7 @@ actions.pipe(
 );
 ```
 
-This rule can be used with effects _and epics_, so it makes __no attempt__ to discern whether or not dispatching is disabled for an NgRx effect. That is, code like this will effect (🙈) a failure:
+This rule can be used with effects _and epics_, so it makes **no attempt** to discern whether or not dispatching is disabled for an NgRx effect. That is, code like this will effect (🙈) a failure:
 
 ```ts
 someEffect = createEffect(() =>
@@ -50,11 +54,19 @@ Or you can use an ESLint [inline comment](https://eslint.org/docs/user-guide/con
 
 ## Options
 
+<!-- begin auto-generated rule options list -->
+
+| Name         | Description                                                   | Type   | Default                  |
+| :----------- | :------------------------------------------------------------ | :----- | :----------------------- |
+| `observable` | A RegExp that matches an effect or epic's actions observable. | String | `[Aa]ction(s\|s\$\|\$)$` |
+
+<!-- end auto-generated rule options list -->
+
 This rule accepts a single option which is an object with an `observable` property that is a regular expression used to match an effect or epic's actions observable. The default `observable` regular expression should match most effect and epic action sources.
 
 ```json
 {
-  "rxjs/no-cyclic-action": [
+  "rxjs-x/no-cyclic-action": [
     "error",
     { "observable": "[Aa]ction(s|s\\$|\\$)$" }
   ]

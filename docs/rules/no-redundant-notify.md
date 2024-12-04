@@ -1,4 +1,10 @@
-# Avoid sending redundant notifications (`no-redundant-notify`)
+# Disallow sending redundant notifications from completed or errored observables (`rxjs-x/no-redundant-notify`)
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, 🔒 `strict`.
+
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures if an attempt is made to send a notification to an observer after a `complete` or `error` notification has already been sent.
 
@@ -26,7 +32,3 @@ const subject = new Subject<number>();
 subject.next(42);
 subject.error(new Error("Kaboom!"));
 ```
-
-## Options
-
-This rule has no options.

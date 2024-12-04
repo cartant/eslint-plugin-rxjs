@@ -1,4 +1,8 @@
-# Forbid the passing of handlers to `subscribe` (`no-subscribe-handlers`)
+# Disallow passing handlers to `subscribe` (`rxjs-x/no-subscribe-handlers`)
+
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures whenever `subscribe` is called with handlers.
 
@@ -13,7 +17,6 @@ import { tap } from "rxjs/operators";
 of(42, 54).subscribe((value) => console.log(value));
 ```
 
-<!-- prettier-ignore -->
 ```ts
 import { of } from "rxjs";
 import { tap } from "rxjs/operators";
@@ -25,7 +28,6 @@ of(42, 54).subscribe({
 
 Examples of **correct** code for this rule:
 
-<!-- prettier-ignore -->
 ```ts
 import { of } from "rxjs";
 
@@ -33,7 +35,3 @@ of(42, 54)
   .pipe(tap((value) => console.log(value)))
   .subscribe();
 ```
-
-## Options
-
-This rule has no options.

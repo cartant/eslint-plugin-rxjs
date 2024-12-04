@@ -1,278 +1,144 @@
-<a name="5.0.3"></a>
-## [5.0.3](https://github.com/cartant/eslint-plugin-rxjs/compare/v5.0.2...v5.0.3) (2023-03-28)
+# Changelog
 
-## Fixes
+[npm history](https://www.npmjs.com/package/eslint-plugin-rxjs-x?activeTab=versions)
 
-- Widen the TypeScript peer dependency. ([e9ed8b3](https://github.com/cartant/eslint-plugin-rxjs/commit/e9ed8b3))
+## v0.5.1 (2024-12-03)
 
-<a name="5.0.2"></a>
-## [5.0.2](https://github.com/cartant/eslint-plugin-rxjs/compare/v5.0.1...v5.0.2) (2022-01-26)
+### Features
 
-## Fixes
+- **no-misused-observables**: new rule similar to `@typescript-eslint/no-misused-promises`. ([#58](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/58)) ([41c7be8](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/41c7be8976b3941b4a9f3e9bb4aa6105978509b6))
+- add `name` to each configuration. ([#75](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/75)) ([c3b3b33](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/c3b3b33e42235936ad2b6e49231c579088acc52c))
 
-- Don't ignore `$`-suffixed properties in the `suffix-subjects` rule. ([d4a94c0](https://github.com/cartant/eslint-plugin-rxjs/commit/d4a94c0))
+## v0.5.0 (2024-11-28)
 
-<a name="5.0.1"></a>
-## [5.0.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v5.0.0...v5.0.1) (2022-01-12)
+### Breaking Changes
 
-## Fixes
+- **no-ignored-observable**: rule removed. Use `no-floating-observables` instead. ([#55](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/55)) ([1268dc8](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/1268dc86741a37a71d5b1994b8702a8c3874db4d))
 
-- The `no-ignored-takewhile-value` rule is now aware of array and object destructuring patterns. ([f0f0cf3](https://github.com/cartant/eslint-plugin-rxjs/commit/f0f0cf3))
+### Features
 
-<a name="5.0.0"></a>
-## [5.0.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.4...v5.0.0) (2022-01-06)
+- **no-floating-observables**: new rule which re-implements `no-ignored-observable`. Adds `ignoreVoid` option which defaults to `true`. ([#55](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/55)) ([1268dc8](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/1268dc86741a37a71d5b1994b8702a8c3874db4d))
+- **recommended configuration**: enabled `no-topromise`, `prefer-observer`, `prefer-root-operators`, and `throw-error`. ([#56](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/56)) ([ada5d55](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/ada5d55ef29aa07ece11a72a0322dc58c686498a))
 
-## Breaking Changes
+## v0.4.1 (2024-11-26)
 
-- The `prefer-observer` rule now has a fixer. ([d40b0a0](https://github.com/cartant/eslint-plugin-rxjs/commit/d40b0a0))
+No updates!
 
-<a name="4.0.4"></a>
-## [4.0.4](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.3...v4.0.4) (2021-12-31)
+## v0.4.0 (2024-11-24)
 
-## Fixes
+### Breaking Changes
 
-- The `alias` option of the `no-unsafe-takeuntil` rule now supports method calls. See [this PR](https://github.com/cartant/eslint-plugin-rxjs/pull/90). ([4fe7423](https://github.com/cartant/eslint-plugin-rxjs/commit/4fe7423))
+- **no-implicit-any-catch**: default to allow explicit `any` ([#42](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/42)) ([93ef8e8](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/93ef8e8c7a0d3d93142e901dabb17db78a84a2cd))
 
-<a name="4.0.3"></a>
-## [4.0.3](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.2...v4.0.3) (2021-11-19)
+### Features
 
-## Fixes
+- add a strict configuration: ([#41](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/41)) ([f2bf3fa](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/f2bf3fadcbe72dfec5c69db8ec683dc2b7a62a2a))
 
-- Escape `RegExp` characters in the `suffix-subjects` rule's `suffix` option. See [this issue](https://github.com/cartant/eslint-plugin-rxjs/issues/88). ([a23a69c](https://github.com/cartant/eslint-plugin-rxjs/commit/a23a69c))
-- Don't effect failures for inner `first`-like operators in the `no-unsafe-first` rule. See [this issue](https://github.com/cartant/eslint-plugin-rxjs/issues/89). ([19806a4](https://github.com/cartant/eslint-plugin-rxjs/commit/19806a4))
+## v0.3.2 (2024-11-21)
 
-<a name="4.0.2"></a>
-## [4.0.2](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.1...v4.0.2) (2021-11-08)
+### Features
 
-## Fixes
+- **prefer-root-operators**: new rule for migrating from `rxjs/operators` to `rxjs` ([#34](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/34)) ([e3b8090](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/e3b8090a6f2ad346ddeaedb9f5d46543c497f323))
+- **no-topromise**: suggest `lastValueFrom` or `firstValueFrom` ([#38](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/38)) ([cec2d60](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/cec2d604931a2862aff38a3d4354dea8a7b66ada))
 
-- Don't effect failures in the `throw-error` rule when `unknown` is thrown. See [this issue](https://github.com/cartant/eslint-plugin-etc/issues/39). ([784f463](https://github.com/cartant/eslint-plugin-rxjs/commit/784f463))
+### Chores
 
-<a name="4.0.1"></a>
-## [4.0.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v4.0.0...v4.0.1) (2021-10-26)
+- **no-compat**: deprecated ([#32](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/32)) ([05862a3](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/05862a334ea6e7139fa8f809a6da0c008d4af2e6))
 
-## Features
+## v0.3.1 (2024-11-16)
 
-* Add `no-subscribe-handlers` rule. ([ea36a6d](https://github.com/cartant/eslint-plugin-rxjs/commit/ea36a6d))
+### Bug Fixes
 
-<a name="4.0.0"></a>
-## [4.0.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.7...v4.0.0) (2021-10-17)
+- **no-ignored-error**: fix observer objects not getting checked for `error` property ([#27](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/27)) ([46e105f](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/46e105fde371a2013713f5e141b2c67ab039bd07))
 
-## Breaking Changes
+## v0.3.0 (2024-11-15)
 
-* Support `eslint` v8 and `@typescript-eslint` v5. ([644953a](https://github.com/cartant/eslint-plugin-rxjs/commit/644953a))
+### Breaking Changes
 
-<a name="3.3.7"></a>
-## [3.3.7](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.6...v3.3.7) (2021-08-29)
+- **ban-operators**: improve type checking of banned operators, report error at usage instead of in import statement ([#25](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/25)) ([994ff25](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/994ff25391cc4efbb2f2cfa99c323c7280e9d1b5))
+- **throw-error**: stop linting regular `throw` statements ([#22](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/22)) ([02fdffd](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/02fdffde6b9376621b902d2ebbae4fb8080d29f1))
 
-## Fixes
+### Features
 
-* Allow multiple `takeUntil` operators with other operators placed in between. ([e66478c](https://github.com/cartant/eslint-plugin-rxjs/commit/e66478c))
+- **no-ignored-default-value**: new rule for enforcing `defaultValue` ([#15](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/15)) ([9bd896e](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/9bd896e0acb87cce2931ecda8b683fb5e9a8837c))
 
-<a name="3.3.6"></a>
-## [3.3.6](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.5...v3.3.6) (2021-08-14)
+## v0.2.4 (2024-11-09)
 
-## Fixes
+### Features
 
-* Don't attempt to ban shallow/root operator imports - introduced in RxJS 7.2 - in the `ban-operators`. ([489a72e](https://github.com/cartant/eslint-plugin-rxjs/commit/489a72e))
+- **macro**: deprecated ([#13](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/13)) ([39be258](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/39be258ad359bd1e79f057302d7ffe12954f9c14))
 
-<a name="3.3.5"></a>
-## [3.3.5](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.4...v3.3.5) (2021-07-09)
+## v0.2.3 (2024-11-08)
 
-## Fixes
+### Bug Fixes
 
-* Support shallow/root operator imports - introduced in RxJS 7.2 - in the `ban-operators` and `no-tap` rules. ([009381f](https://github.com/cartant/eslint-plugin-rxjs/commit/009381f))
+- **no-ignored-replay-buffer**: check config bufferSize ([#12](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/12)) ([ef2f886](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/ef2f8866684ed6f918eb8c465e90a1de8982186a))
 
-<a name="3.3.4"></a>
-## [3.3.4](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.3...v3.3.4) (2021-06-26)
+### Chores
 
-## Fixes
+- change `rxjs` to an optional peer dependency ([90b03e6](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/90b03e6a01e0357603eb6426638ca43e0f392dca))
 
-* Check for non-RxJS `takeWhile` imports in `no-ignored-takewhile-value`. ([476fc29](https://github.com/cartant/eslint-plugin-rxjs/commit/476fc29))
+## v0.2.2 (2024-11-07)
 
-<a name="3.3.3"></a>
-## [3.3.3](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.2...v3.3.3) (2021-05-29)
+### Breaking Changes
 
-## Fixes
+- TypeScript >=4.7.4 is required
 
-* Bump `eslint-etc` version. ([ca61caa](https://github.com/cartant/eslint-plugin-rxjs/commit/ca61caa))
+### Bug Fixes
 
-<a name="3.3.2"></a>
-## [3.3.2](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.1...v3.3.2) (2021-05-28)
+- fix broken imports in ESM configs using TypeScript versions lower than 5.5 ([#11](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/11)) ([1693df0](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/1693df0423acb1eb7cef237620ed31d2ee5520fa))
 
-## Fixes
+## v0.2.1 (2024-11-07)
 
-* Support factories in the `throw-error` rule. ([f4e8835](https://github.com/cartant/eslint-plugin-rxjs/commit/f4e8835))
+### Chores
 
-<a name="3.3.1"></a>
-## [3.3.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.3.0...v3.3.1) (2021-05-19)
+- decrease minimum `typescript-eslint` version to ^8.1.0 ([#10](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/10)) ([e7d0d70](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/e7d0d7078b50d1ef72c48318159a80ce481ef73c))
 
-## Changes
+## v0.2.0 (2024-11-05)
 
-* Remove the `no-subject-value` rule from recommended configuration. This was an oversight. Personally, I use the rule, but it's probably too opinionated to be in the recommended configuration. ([79b7bc0](https://github.com/cartant/eslint-plugin-rxjs/commit/79b7bc0))
+### Breaking Changes
 
-<a name="3.3.0"></a>
-## [3.3.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.2.0...v3.3.0) (2021-05-01)
+- improve CommonJS typing to avoid needing `.default` ([#4](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/4)) ([0b47390](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/0b473900c141403a1eb45e5a44fd2f2b43ebb6d5))
 
-## Features
+### Documentation
 
-* The `no-internal` rule now has a fixer. ([dc480b2](https://github.com/cartant/eslint-plugin-rxjs/commit/dc480b2))
+- add options documentation to rule docs ([#6](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/6)) ([ee705d2](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/ee705d23efe7c779bfabb855e82130c664ba35c4))
 
-<a name="3.2.0"></a>
-## [3.2.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.5...v3.2.0) (2021-04-25)
+## v0.1.0 (2024-11-04)
 
-## Features
+### Breaking Changes
 
-* The `no-ignored-subscribe` and `no-nested-subscribe` rules now support types that implement `Subscribable`. ([57f6e3f](https://github.com/cartant/eslint-plugin-rxjs/commit/57f6e3f))
+- TypeScript >=4.2.0 is required
+- `tslib` ^2.1.0 is required
 
-<a name="3.1.5"></a>
-## [3.1.5](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.4...v3.1.5) (2021-04-08)
+### Chores
 
-## Fixes
+- drop dependencies `tsutils` and `tsutils-etc`, add dependency `ts-api-utils` ([#3](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/3)) ([c64f9f6](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/c64f9f6bd810f7d114c9dac9f6ab72df1b2d2e31))
 
-* Match only `subscribe` calls that are nested in arguments. ([0dc28aa](https://github.com/cartant/eslint-plugin-rxjs/commit/0dc28aa))
+## v0.0.2 (2024-11-01)
 
-<a name="3.1.4"></a>
-## [3.1.4](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.3...v3.1.4) (2021-04-05)
+### Bug Fixes
 
-## Fixes
+- fix wrong types for CommonJS ([#2](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/pull/2)) ([2d330aa](https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/commit/2d330aa943f31bbb7831607c0573b9c8e41d8268))
 
-* Allow `takeUntil` after `takeUntil`. ([d1a2549](https://github.com/cartant/eslint-plugin-rxjs/commit/d1a2549))
+## v0.0.1 (2024-11-01)
 
-<a name="3.1.3"></a>
-## [3.1.3](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.2...v3.1.3) (2021-03-22)
+Initial prerelease version.
 
-## Fixes
+### Breaking Changes
 
-* Set minimum `eslint-etc` version. ([4fae336](https://github.com/cartant/eslint-plugin-rxjs/commit/4fae336))
+- `eslint` ^8.57.0 || 9.0.0 is required
+- `typescript-eslint` ^8 is required
+- Node.js ^18.18.0 || ^20.9.0 || >= 21.1.0 is required
 
-<a name="3.1.2"></a>
-## [3.1.2](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.1...v3.1.2) (2021-03-20)
+### Bug Fixes
 
-## Fixes
+- **no-implicit-any-catch**: fix `typeAnnotation` bug breaking linting.
 
-* Enable TypeScript's `strict` option and fix related problems. ([2bea9e0](https://github.com/cartant/eslint-plugin-rxjs/commit/2bea9e0))
+### Chores
 
-<a name="3.1.1"></a>
-## [3.1.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.1.0...v3.1.1) (2021-02-14)
-
-## Changes
-
-* Improve `no-unsafe-takeuntil` docs and fix failure message grammar. ([e3e8fed](https://github.com/cartant/eslint-plugin-rxjs/commit/e3e8fed))
-
-<a name="3.1.0"></a>
-## [3.1.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.0.1...v3.1.0) (2021-02-13)
-
-## Features
-
-* Added a `strict` option to the `finnish` rule. ([8bf0d1d](https://github.com/cartant/eslint-plugin-rxjs/commit/8bf0d1d))
-
-<a name="3.0.1"></a>
-## [3.0.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v3.0.0...v3.0.1) (2021-02-03)
-
-## Fixes
-
-* Support arrow functions without parameter parentheses in `no-implicit-any-catch`. ([37427ad](https://github.com/cartant/eslint-plugin-rxjs/commit/37427ad))
-
-<a name="3.0.0"></a>
-## [3.0.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.7...v3.0.0) (2021-01-30)
-
-## Breaking Changes
-
-* Check for an `Observable` type in `no-implicit-any-catch` - a breaking change because the previous version of this rule didn't require type information. ([ebfb553](https://github.com/cartant/eslint-plugin-rxjs/commit/ebfb553))
-
-## Fixes
-
-* Check for an `Observable` type in `prefer-observer`. ([30012be](https://github.com/cartant/eslint-plugin-rxjs/commit/30012be))
-
-<a name="2.1.7"></a>
-## [2.1.7](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.6...v2.1.7) (2021-01-19)
-
-## Fixes
-
-* Don't insist on type references when checking for obserables. ([521fe55](https://github.com/cartant/eslint-plugin-rxjs/commit/521fe55))
-
-<a name="2.1.6"></a>
-## [2.1.6](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.5...v2.1.6) (2021-01-11)
-
-## Changes
-
-* Fix GitHub URL for docs. ([a238c2d](https://github.com/cartant/eslint-plugin-rxjs/commit/a238c2d))
-
-<a name="2.1.5"></a>
-## [2.1.5](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.4...v2.1.5) (2020-11-28)
-
-## Changes
-
-* Use `files` in `package.json` instead of `.npmignore`. ([99cb9ec](https://github.com/cartant/eslint-plugin-rxjs/commit/99cb9ec))
-
-<a name="2.1.4"></a>
-## [2.1.4](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.3...v2.1.4) (2020-11-21)
-
-## Fixes
-
-* Fixed a problem with `no-cyclic-action` when used with effects/epics that return `Observable<void>`. ([79b9e82](https://github.com/cartant/eslint-plugin-rxjs/commit/79b9e82))
-
-<a name="2.1.3"></a>
-## [2.1.3](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.2...v2.1.3) (2020-11-05)
-
-## Fixes
-
-* `no-ignored-subscription` should not effect failures for `Subscriber` instances passed to `subscribe`. ([72e11ec](https://github.com/cartant/eslint-plugin-rxjs/commit/72e11ec))
-
-<a name="2.1.2"></a>
-## [2.1.2](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.1...v2.1.2) (2020-11-03)
-
-## Changes
-
-* Use the public TypeScript API (`getTypeArguments`) to obtain the type arguments in the `no-cyclic-action` rule. ([7f55bcb](https://github.com/cartant/eslint-plugin-rxjs/commit/7f55bcb))
-
-<a name="2.1.1"></a>
-## [2.1.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.1.0...v2.1.1) (2020-11-03)
-
-## Changes
-
-* Use the public TypeScript API (`getTypeOfSymbolAtLocation`) to obtain the action type in the `no-cyclic-action` rule. ([56687db](https://github.com/cartant/eslint-plugin-rxjs/commit/56687db))
-
-<a name="2.1.0"></a>
-## [2.1.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.0.1...v2.1.0) (2020-11-03)
-
-## Changes
-
-* Added the `no-cyclic-action` rule for effects and epics. ([5e03092](https://github.com/cartant/eslint-plugin-rxjs/commit/5e03092))
-
-<a name="2.0.1"></a>
-## [2.0.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v2.0.0...v2.0.1) (2020-11-03)
-
-## Changes
-
-* Update rule metadata.
-
-<a name="2.0.0"></a>
-## [2.0.0](https://github.com/cartant/eslint-plugin-rxjs/compare/v1.0.3...v2.0.0) (2020-10-29)
-
-## Breaking Changes
-
-* `no-implicit-any-catch` is now enforced for error callbacks - and error methods on observers - passed to `subscribe` and `tap`, too. ([1b9234b](https://github.com/cartant/eslint-plugin-rxjs/commit/1b9234b))
-
-<a name="1.0.3"></a>
-## [1.0.3](https://github.com/cartant/eslint-plugin-rxjs/compare/v1.0.2...v1.0.3) (2020-10-27)
-
-## Changes
-
-* Specify Node 10 as the minimum `engines` in `package.json` and downlevel to ES2018.
-
-<a name="1.0.2"></a>
-## [1.0.2](https://github.com/cartant/eslint-plugin-rxjs/compare/v1.0.1...v1.0.2) (2020-10-25)
-
-## Changes
-
-* Deprecate `no-tap` in favour of `ban-operators`. `no-do`/`no-tap` was an early TSLint rule and `ban-operators` is the preferred rule for banning operators as it allows a message to be specified.
-
-<a name="1.0.1"></a>
-## [1.0.1](https://github.com/cartant/eslint-plugin-rxjs/compare/v1.0.0...v1.0.1) (2020-10-23)
-
-## Changes
-
-* Specify `engines` in `package.json`.
-* Downlevel the TypeScript output to ES2019.
+- drop dependency `eslint-etc`
+- drop dependency `requireindex`
+- add `rxjs` >=7 as peer dependency
+- add `requiresTypeChecking` to `meta.docs` of relevant rules
+- switch from mocha to vitest

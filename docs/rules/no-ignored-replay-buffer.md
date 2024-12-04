@@ -1,4 +1,8 @@
-# Avoid unbounded replay buffers (`no-ignored-replay-buffer`)
+# Disallow using `ReplaySubject`, `publishReplay` or `shareReplay` without specifying the buffer size (`rxjs-x/no-ignored-replay-buffer`)
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, 🔒 `strict`.
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures if the buffer size of a replay buffer is not explicitly specified.
 
@@ -9,6 +13,11 @@ Examples of **incorrect** code for this rule:
 ```ts
 import { ReplaySubject } from "rxjs";
 const subject = new ReplaySubject<number>();
+```
+
+```ts
+import { of, shareReplay } from "rxjs";
+of(42).pipe(shareReplay({ refCount: true }));
 ```
 
 Examples of **correct** code for this rule:
@@ -23,6 +32,7 @@ import { ReplaySubject } from "rxjs";
 const subject = new ReplaySubject<number>(Infinity);
 ```
 
-## Options
-
-This rule has no options.
+```ts
+import { of, shareReplay } from "rxjs";
+of(42).pipe(shareReplay({ refCount: true, bufferSize: 1 }));
+```

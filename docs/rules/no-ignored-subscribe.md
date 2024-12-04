@@ -1,4 +1,8 @@
-# Enforce the passing of handlers to `subscribe` (`no-ignored-subscribe`)
+# Disallow calling `subscribe` without specifying arguments (`rxjs-x/no-ignored-subscribe`)
+
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures whenever `subscribe` is called without handlers.
 
@@ -22,7 +26,3 @@ import { of } from "rxjs";
 
 of(42, 54).subscribe((value) => console.log(value));
 ```
-
-## Options
-
-This rule has no options.
